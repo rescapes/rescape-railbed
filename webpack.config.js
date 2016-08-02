@@ -11,11 +11,16 @@
 
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const PUBLIC = __dirname + '/app/public';
+
 const APP = __dirname + '/app';
 const BUILD = __dirname + '/build';
 const STYLE = __dirname + '/app/style.css';
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 8080;
+const TEMPLATE = __dirname + '/app/templates/index_default.html'
+const PostcssImport = require('postcss-easy-import');
 
 var path = require('path');
 var mainPath = path.resolve(__dirname, 'app', 'index.js');
@@ -25,6 +30,8 @@ var googleStyle = path.resolve(__dirname, 'app', 'fonts.googleapis.com.css');
 // with an updated version at some point by requested a model from 3d warehouse and copying the
 // startup_*.js and compiled_*.js code that is returned
 var sketchupStartupPath = path.resolve(__dirname, 'app', 'startup_b56fb52.js');
+const precss = require('precss');
+const autoprefixer = require('autoprefixer');
 
 module.exports = {
     entry: {
@@ -61,12 +68,14 @@ module.exports = {
                 test: /\.jsx?$/,
                 loaders: ['babel?cacheDirectory'],
                 include: APP
-            },
-            {
+            }, {
                 test: /\.css$/,
-                loaders: ['style', 'css'],
+                loaders: ['style', 'css', 'postcss'],
                 include: APP
             }]
+    },
+    postcss: function () {
+        return [precss, autoprefixer];
     },
     devtool: 'eval-source-map',
     devServer: {
@@ -80,13 +89,17 @@ module.exports = {
         port: PORT
     },
     plugins: [
-        /*
         new HtmlWebpackPlugin({
-            template: 'node_modules/html-webpack-template/index.ejs', title: 'Rescape: The AMTRAK Standard',
-            appMountId: 'app',
-            inject: false
+            template: TEMPLATE, inject: 'body'
         }),
-        */
-        new webpack.HotModuleReplacementPlugin()
-    ]
+        new webpack.HotModuleReplacementPlugin(),
+
+        new CopyWebpackPlugin([
+            {from: PUBLIC, to: BUILD}
+        ], {
+            ignore: [
+                '.DS_Store'
+            ]
+        }),
+    ],
 };
