@@ -79,9 +79,9 @@ export class Site extends Component {
 };
 
 Site.propTypes = {
-    settings: PropTypes.object.isRequired,
-    documents: PropTypes.object.isRequired,
-    models: PropTypes.object.isRequired,
+    settings: PropTypes.object,
+    documents: PropTypes.object,
+    models: PropTypes.object
 }
 
 /***

@@ -31,7 +31,6 @@ class Showcase extends Component {
 
     componentDidMount() {
         const { dispatch, url } = this.props
-        //dispatch(fetchDocument(url))
     }
 
     render() {
