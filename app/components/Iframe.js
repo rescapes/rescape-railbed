@@ -19,16 +19,13 @@ class Iframe extends Component {
     }
 
     render() {
-        return <object
+        return <iframe
+           frameBorder="0"
+           scrolling="no"
+           marginHeight="0"
+           marginWidth="0"
+           allowFullscreen="false"
             {...this.props}
-        />
-        return <frame 
-                       frameborder="0"
-                       scrolling="no"
-                       marginheight="0"
-                       marginwidth="0"
-                       allowfullscreen="false"
-                        {...this.props}
         />
     }
 }

@@ -11,7 +11,7 @@ $sand: color(wheat lightness(80%));
 $gray: color($black lightness(80%));
 
 $font-stack: Arial, Helvetica, sans-serif;
-$page-background: $white;
+$page-background: $black;
 $page-padding: 2em;
 
 $h1-font-size: 3em;

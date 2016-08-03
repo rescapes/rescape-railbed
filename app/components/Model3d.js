@@ -117,36 +117,67 @@ class Model3d extends Component {
         if (!settings)
             return <div/>
         const url = this.props.model && this.props.model.get('url')
-        const style = {position: 'fixed', top: '100px', zIndex: 0, width: settings.get('modelWidth'), height: settings.get('modelHeight')}
+        const divTemplateStyle = {
+            zIndex: 0,
+            width: settings.get('modelWidth'),
+            height: settings.get('modelHeight'),
+        }
+        // Create gradiants to fade the iframe edge. I can't find a better way to do this than
+        // to create four divs for each edge
+        const gradiant = (direction) => ({
+            position:'absolute',
+            'z-index':2,
+            left:0, top: 0, right: 0, bottom: 0,
+            width: settings.get('modelWidth'),
+            height: settings.get('modelHeight'),
+            background: `linear-gradient(to ${direction}, rgba(77, 78, 83,0), rgba(77, 78, 83,1))`
+        })
+        const gradiantLeft = Object.assign({}, gradiant('left'), {width:10, right: undefined})
+        const gradiantRight = Object.assign({}, gradiant('right'), {width:10, left: undefined})
+        const gradiantTop = Object.assign({}, gradiant('top'), {height:10, bottom: undefined})
+        const gradiantBottom = Object.assign({}, gradiant('bottom'), {height:10, top: undefined})
 
-        const models = this.props.models
+        const modelEntries = this.props.models && this.props.models.get('entries')
         const model = this.props.model
+        const loadingOrReady = Statuses.LOADING | Statuses.READY
+        const modelLoadingOrReady = model && (model.get('status') & loadingOrReady)
         // Maintain an iframe for each model. Only the iframe of the current model is ever visible.
         // We don't want to set the url of the iframe until it is desired to load a certain model
         // (e.g. when it is the current model or about to become the current one)
         // Once the model is loaded, we never want to unload it by clearing its URL
-        const iframes = ((model && models) ? models.toArray() : []).map(function(model) {
-            if (!url)
-                return null;
+        const iframes = (modelLoadingOrReady && modelEntries) ? modelEntries.map(function(iterModel, key) {
+            const status = iterModel.status
+            const isAlreadyLoaded = !!(status & loadingOrReady)
+            const isCurrentModel = model == iterModel
+            const iframeUrl = (isAlreadyLoaded || isCurrentModel) ? url : null
+            const iframeWidth = isCurrentModel ? settings.get('modelWidth') : 0
+            const iframeHeight = isCurrentModel ? settings.get('modelHeight') : 0
+            const devStyle = Object.assign({},
+                divTemplateStyle, {
+                    display: isCurrentModel ? 'block' : 'none',
+                    width: iframeWidth,
+                    height: iframeHeight
+                }
+            )
 
-            const status = this.props.model.status
-            const isAlreadyLoaded = (status == Statuses.LOADING || status == Statuses.READY)
-            const isCurrentModel = this.props.model == model
-            const iframeUrl = isAlreadyLoaded || isCurrentModel ? url : null
-            const iframeStyle = Object.assign(style, {display: isCurrentModel ? 'inline' : 'none'})
             // Return the iframe wrapped in a div. The div must have a unique key for React
-            return <div key={model.id} style={iframeStyle}><Iframe
+            return <div key={key} style={devStyle}><Iframe key={key}
                 src={iframeUrl}
-                name="iframe"
+                name={`iframe_${key}`}
                 onLoad={this.frameDidLoad.bind(this)}
-                width={settings.get('modelWidth')}
-                height={settings.get('modelHeight')}
+                width={iframeWidth}
+                height={iframeHeight}
             /></div>
-        }, this);
+        }, this).toArray() : [];
         // Our final product is the list of iframes. All have the same styling except that only
         // the one of the current model is visible
-        return <div>
-            {iframes.filter(Boolean)}
+        console.log(gradiantLeft)
+        return <div style={{position:'relative'}}>
+            {iframes},
+            <div class='model3d-gradiant' style={gradiantLeft}/>
+            <div class='model3d-gradiant' style={gradiantRight}/>
+            <div class='model3d-gradiant' style={gradiantTop}/>
+            <div class='model3d-gradiant' style={gradiantBottom}/>
         </div>
     }
 }
