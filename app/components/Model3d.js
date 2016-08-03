@@ -118,17 +118,36 @@ class Model3d extends Component {
             return <div/>
         const url = this.props.model && this.props.model.get('url')
         const style = {position: 'fixed', top: '100px', zIndex: 0, width: settings.get('modelWidth'), height: settings.get('modelHeight')}
-        const iframe = url ? <div style={style}>  
-            <Iframe
-                data={url}
+
+        const models = this.props.models
+        const model = this.props.model
+        // Maintain an iframe for each model. Only the iframe of the current model is ever visible.
+        // We don't want to set the url of the iframe until it is desired to load a certain model
+        // (e.g. when it is the current model or about to become the current one)
+        // Once the model is loaded, we never want to unload it by clearing its URL
+        const iframes = ((model && models) ? models.toArray() : []).map(function(model) {
+            if (!url)
+                return null;
+
+            const status = this.props.model.status
+            const isAlreadyLoaded = (status == Statuses.LOADING || status == Statuses.READY)
+            const isCurrentModel = this.props.model == model
+            const iframeUrl = isAlreadyLoaded || isCurrentModel ? url : null
+            const iframeStyle = Object.assign(style, {display: isCurrentModel ? 'inline' : 'none'})
+            // Return the iframe wrapped in a div. The div must have a unique key for React
+            return <div key={model.id} style={iframeStyle}><Iframe
+                src={iframeUrl}
                 name="iframe"
                 onLoad={this.frameDidLoad.bind(this)}
                 width={settings.get('modelWidth')}
                 height={settings.get('modelHeight')}
-            />
-            </div> : <div style={style}/>
-
-        return iframe
+            /></div>
+        }, this);
+        // Our final product is the list of iframes. All have the same styling except that only
+        // the one of the current model is visible
+        return <div>
+            {iframes.filter(Boolean)}
+        </div>
     }
 }
 Model3d.propTypes = {
