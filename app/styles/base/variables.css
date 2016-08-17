@@ -1,14 +1,27 @@
-$model-width: 800px;
-$model-height: 500px;
 
 $header-top: 0px;
 $header-height: 100px;
 $header-bottom: calc( $header-top + $header-height );
 
+$footer-height: 50px;
+
 $showcase-top: calc( $header-bottom + 10px );
+$showcase-height: calc(100% - $footer-height);
+
+$media-height: 100px;
+
+$model-width: 800px;
+$model-bottom: $media-height;
+$model-document-overlap: 100px;
 
 $document-top: calc( $header-bottom + 10px );
-$document-left: calc( $model-width - 50px );
+/*
+    The left side of the document bleeds over the 3d model
+    The 3d model's right gradient fades the 3d model away so we can see the document
+*/
+$document-left: calc( $model-width - $model-document-overlap);
+
+
 
 $white: floralwhite;
 $blue: color(deepskyblue lightness(30%));

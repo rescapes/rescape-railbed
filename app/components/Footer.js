@@ -14,12 +14,7 @@ import React, { Component, PropTypes } from 'react'
 class Footer extends Component {
 
     render() {
-        var divStyle = {
-            marginLeft: 10,
-            marginRight: 10,
-            backgroundColor: 'pink'
-        };
-        return <div style={divStyle}>Footer</div>
+        return <div className='footer'>Footer</div>
     }
 }
 

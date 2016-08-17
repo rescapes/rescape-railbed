@@ -5,11 +5,12 @@
 .document {
     top: $document-top;
     left: $document-left;
-    right: 10px;
-    /* Create a bit of overlap between the document and 3d model */
-    margin-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 10px;
     z-index: 50;
-    /* needed to position the div over the floating 3d model div */
-    position: relative;
-    background: rgba(255,255,255,.9);
+    text-align: justify;
+    position: absolute;
+    background: rgba(255,255,255,.4);
 }
