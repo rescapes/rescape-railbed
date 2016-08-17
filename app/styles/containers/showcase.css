@@ -1,5 +1,5 @@
 .showcase {
     /* allows z-indexing to work with iframes */
     position: fixed;
-    top: 100px;
+    top: $showcase-top;
 }

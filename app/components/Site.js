@@ -46,21 +46,26 @@ export class Site extends Component {
         // our existing <head> tags
         const currentDocumentKey = this.props.documents.get('current');
         const document = currentDocumentKey && this.props.documents.getIn(['entries', currentDocumentKey]);
-        // In addition to the document's <head> tags add in a title since the document meta data doesn't include it
-        const meta = document && document.get('content') && himalaya.parse(document.getIn(['content', 'head']))
-            .reduce(function (o,v) {
-                // sometimes garbage is parsed, so check for the tagName property
-                if (v['tagName']) {
-                    // Set the tagName value key to the attributes 
-                    o[v['tagName']] = v['attributes'];
-                    // Use _text to indicate text node content, if any
-                    o[v['tagName']]._text = v.content 
-                    // A title tag has the text in the children
-                    o[v['tagName']].title = v.children && v.children[0].content
-                }
-                return o
-            }, {title: document.get('title')});
-        
+        var meta = {}
+        if (document) {
+            const head = himalaya.parse(document.getIn(['content', 'head']))
+            // In addition to the document's <head> tags add in a title since the document meta data doesn't include it
+            meta = document && document.get('content') && head.reduce(function (o, v) {
+                    // sometimes garbage is parsed, so check for the tagName property
+                    if (v['tagName']) {
+                        // Set the tagName value key to the attributes
+                        o[v['tagName']] = v['attributes'];
+                        // Use _text to indicate text node content, if any
+                        o[v['tagName']]._text = v.content
+                        // A title tag has the text in the children
+                        if (v['tagName'] == 'title')
+                            o[v['tagName']] = v.children && v.children[0].content
+                    }
+                    return o
+                }, {});
+        }
+        console.log(meta)
+
         // TODO I feel like I should pass props to Showcase and Document, but they have access
         // to the state and use mapStateToProps, so why bother?
         // DocumentMeta merges the head tag data in from the document's head tag data

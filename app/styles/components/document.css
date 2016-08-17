@@ -3,12 +3,13 @@
     intended to be additions and overrides
 ***/
 .document {
-    top: $header-height;
+    top: $document-top;
+    left: $document-left;
+    right: 10px;
+    /* Create a bit of overlap between the document and 3d model */
+    margin-right: 10px;
     z-index: 50;
     /* needed to position the div over the floating 3d model div */
     position: relative;
     background: rgba(255,255,255,.9);
-    margin-left: $document-margin-left;
-    /* Create a bit of overlap between the document and 3d model */
-    margin-right: 10px;
 }
