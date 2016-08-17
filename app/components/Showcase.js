@@ -34,15 +34,9 @@ class Showcase extends Component {
     }
 
     render() {
-
-        const style = {
-            position: 'fixed',
-            top: '100px',
-        }
-
         const model = this.props.model
         const media = this.props.model && this.props.model.media
-        return <div style={style}>Showcase
+        return <div className='showcase'>
             <Model model={model} />
             <Media media={media}/>
         </div>;

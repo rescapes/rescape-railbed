@@ -1,0 +1,14 @@
+/***
+    Note that the Document component's content uses styles that come from Google Docs. These are thus
+    intended to be additions and overrides
+***/
+.document {
+    top: $header-height;
+    z-index: 50;
+    /* needed to position the div over the floating 3d model div */
+    position: relative;
+    background: rgba(255,255,255,.9);
+    margin-left: $document-margin-left;
+    /* Create a bit of overlap between the document and 3d model */
+    margin-right: 10px;
+}

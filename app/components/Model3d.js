@@ -117,25 +117,8 @@ class Model3d extends Component {
         if (!settings)
             return <div/>
         const url = this.props.model && this.props.model.get('url')
-        const divTemplateStyle = {
-            zIndex: 0,
-            width: settings.get('modelWidth'),
-            height: settings.get('modelHeight'),
-        }
-        // Create gradiants to fade the iframe edge. I can't find a better way to do this than
-        // to create four divs for each edge
-        const gradiant = (direction) => ({
-            position:'absolute',
-            'z-index':2,
-            left:0, top: 0, right: 0, bottom: 0,
-            width: settings.get('modelWidth'),
-            height: settings.get('modelHeight'),
-            background: `linear-gradient(to ${direction}, rgba(77, 78, 83,0), rgba(77, 78, 83,1))`
-        })
-        const gradiantLeft = Object.assign({}, gradiant('left'), {width:10, right: undefined})
-        const gradiantRight = Object.assign({}, gradiant('right'), {width:10, left: undefined})
-        const gradiantTop = Object.assign({}, gradiant('top'), {height:10, bottom: undefined})
-        const gradiantBottom = Object.assign({}, gradiant('bottom'), {height:10, top: undefined})
+
+
 
         const modelEntries = this.props.models && this.props.models.get('entries')
         const model = this.props.model
@@ -150,34 +133,24 @@ class Model3d extends Component {
             const isAlreadyLoaded = !!(status & loadingOrReady)
             const isCurrentModel = model == iterModel
             const iframeUrl = (isAlreadyLoaded || isCurrentModel) ? url : null
-            const iframeWidth = isCurrentModel ? settings.get('modelWidth') : 0
-            const iframeHeight = isCurrentModel ? settings.get('modelHeight') : 0
-            const devStyle = Object.assign({},
-                divTemplateStyle, {
-                    display: isCurrentModel ? 'block' : 'none',
-                    width: iframeWidth,
-                    height: iframeHeight
-                }
-            )
+            const current = isCurrentModel ? 'current' : ''
+            const divClass = `model-3d ${current}`
 
             // Return the iframe wrapped in a div. The div must have a unique key for React
-            return <div key={key} style={devStyle}><Iframe key={key}
+            return <div key={key} className={divClass}><Iframe key={key}
                 src={iframeUrl}
                 name={`iframe_${key}`}
                 onLoad={this.frameDidLoad.bind(this)}
-                width={iframeWidth}
-                height={iframeHeight}
             /></div>
         }, this).toArray() : [];
         // Our final product is the list of iframes. All have the same styling except that only
         // the one of the current model is visible
-        console.log(gradiantLeft)
         return <div style={{position:'relative'}}>
-            {iframes},
-            <div class='model3d-gradiant' style={gradiantLeft}/>
-            <div class='model3d-gradiant' style={gradiantRight}/>
-            <div class='model3d-gradiant' style={gradiantTop}/>
-            <div class='model3d-gradiant' style={gradiantBottom}/>
+            {iframes}
+            <div className='model-3d-gradiant left' />
+            <div className='model-3d-gradiant right' />
+            <div className='model-3d-gradiant top' />
+            <div className='model-3d-gradiant bottom' />
         </div>
     }
 }

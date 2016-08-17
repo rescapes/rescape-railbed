@@ -14,18 +14,7 @@ import React, { Component, PropTypes } from 'react'
 class Header extends Component {
 
     render() {
-        var divStyle = {
-            position: 'fixed',
-            zIndex: 100, // Above the document
-            left: 0,
-            right: 0,
-            top: 0,
-            height: 100,
-            marginLeft: 10,
-            marginRight: 10,
-            backgroundColor: 'pink'
-        };
-        return <div style={divStyle}>Header</div>
+        return <div className='header'>Header</div>
     }
 }
 

@@ -20,12 +20,10 @@ const STYLE = __dirname + '/app/style.css';
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 8080;
 const TEMPLATE = __dirname + '/app/templates/index_default.html'
-const PostcssImport = require('postcss-easy-import');
+const postcssImport = require('postcss-easy-import');
 
 var path = require('path');
 var mainPath = path.resolve(__dirname, 'app', 'index.js');
-var googlePath = path.resolve(__dirname, 'app', 'apis.google.com.js');
-var googleStyle = path.resolve(__dirname, 'app', 'fonts.googleapis.com.css');
 // Note that the hex code here is the version of Sketchup's js code. It might need to be replaced
 // with an updated version at some point by requested a model from 3d warehouse and copying the
 // startup_*.js and compiled_*.js code that is returned
@@ -74,8 +72,14 @@ module.exports = {
                 include: APP
             }]
     },
-    postcss: function () {
-        return [precss, autoprefixer];
+    postcss: function processPostcss(webpack) {  // eslint-disable-line no-shadow
+        return [
+            postcssImport({
+                addDependencyTo: webpack
+            }),
+            precss,
+            autoprefixer({ browsers: ['last 2 versions'] })
+        ];
     },
     devtool: 'eval-source-map',
     devServer: {

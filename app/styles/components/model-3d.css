@@ -1,0 +1,48 @@
+/*
+    The 3d model is contained in an iframe. The width and height must be passed to the iframe here.
+    It is also used for the
+*/
+iframe {
+    width: $model-width;
+    height: $model-height;
+}
+
+.model-3d {
+    zIndex: 0;
+    width: $model-width;
+    height: $model-height;
+    display: none;
+
+    &.current {
+        display: block;
+    }
+}
+
+.model-3d-gradiant {
+    position: absolute;
+    z-index: 2;
+    left:0; top: 0; right: 0; bottom: 0;
+    width: $model-width;
+    height: $model-height;
+
+    &.left {
+        background: linear-gradient(to left, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
+        width: 10px;
+        right: auto;
+    }
+    &.right {
+         background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
+         width: 10px;
+         left: auto;
+    }
+    &.top {
+        background: linear-gradient(to top, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
+        height: 10px;
+        bottom: auto;
+    }
+    &.bottom {
+        background: linear-gradient(to bottom, rgba(77, 78, 83,0), rgba(77, 78, 83,1));
+        height: 10px;
+        top: auto;
+    }
+}
