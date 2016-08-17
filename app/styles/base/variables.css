@@ -1,3 +1,8 @@
+$model-width: 800px;
+$model-height: 500px;
+$header-height: 100px;
+$document-margin-left: calc( $model-width - 50px );
+
 $white: floralwhite;
 $blue: color(deepskyblue lightness(30%));
 $red: tomato;

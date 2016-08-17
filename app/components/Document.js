@@ -124,16 +124,8 @@ class Document extends Component {
      * @returns {XML}
      */
     render() {
-        var divStyle = {
-            top: 100,
-            zIndex: 50,
-            position: 'relative', // needed to position the div over the floating 3d model div
-            background: 'rgba(255,255,255,.9)',
-            // Create a bit of overlap between the document and 3d model
-            marginLeft: this.props.settings.get('modelWidth')-50,
-            marginRight: 10,
-        };
-        return <div style={divStyle} dangerouslySetInnerHTML={{__html: this.props.document.getIn(['content', 'body'])}}></div>
+        // Since the HTML comes from a Google doc or similar we can completely trust it
+        return <div className='document' dangerouslySetInnerHTML={{__html: this.props.document.getIn(['content', 'body'])}}></div>
     }
 }
 

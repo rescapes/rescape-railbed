@@ -1,5 +1,8 @@
-@import 'styles/theme';
+@import 'normalize-css/normalize.css';
+@import 'styles/base/variables';
 @import 'styles/base';
 @import 'styles/type';
-@import 'styles/document';
-@import 'styles/model3d';
+@import 'styles/containers/header';
+@import 'styles/containers/showcase';
+@import 'styles/components/document';
+@import 'styles/components/model-3d';
