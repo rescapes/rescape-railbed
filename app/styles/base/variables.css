@@ -1,7 +1,14 @@
 $model-width: 800px;
 $model-height: 500px;
+
+$header-top: 0px;
 $header-height: 100px;
-$document-margin-left: calc( $model-width - 50px );
+$header-bottom: calc( $header-top + $header-height );
+
+$showcase-top: calc( $header-bottom + 10px );
+
+$document-top: calc( $header-bottom + 10px );
+$document-left: calc( $model-width - 50px );
 
 $white: floralwhite;
 $blue: color(deepskyblue lightness(30%));
