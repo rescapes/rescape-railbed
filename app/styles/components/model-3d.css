@@ -7,10 +7,17 @@ iframe {
     height: $model-height;
 }
 
+.model-3ds {
+    position: relative;
+    top: 0px;
+    bottom: 0px;
+}
+
 .model-3d {
-    zIndex: 0;
+    z-index: 0;
     width: $model-width;
-    height: $model-height;
+    top: 0px;
+    bottom: $model-bottom;
     display: none;
 
     &.current {
@@ -21,7 +28,10 @@ iframe {
 .model-3d-gradiant {
     position: absolute;
     z-index: 2;
-    left:0; top: 0; right: 0; bottom: 0;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right: 0;
     width: $model-width;
     height: $model-height;
 
@@ -30,9 +40,11 @@ iframe {
         width: 10px;
         right: auto;
     }
+     /* This gradient matches the overlap of the 3d model and document so that the 3d model
+     fades away where ever the document overlaps */
     &.right {
          background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
-         width: 10px;
+         width: $model-document-overlap;
          left: auto;
     }
     &.top {

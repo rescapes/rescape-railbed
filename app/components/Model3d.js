@@ -145,7 +145,7 @@ class Model3d extends Component {
         }, this).toArray() : [];
         // Our final product is the list of iframes. All have the same styling except that only
         // the one of the current model is visible
-        return <div style={{position:'relative'}}>
+        return <div className="model-3ds">
             {iframes}
             <div className='model-3d-gradiant left' />
             <div className='model-3d-gradiant right' />

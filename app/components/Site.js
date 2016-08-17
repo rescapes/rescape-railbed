@@ -73,7 +73,7 @@ export class Site extends Component {
         // Displays the current 3D model and accompanying media
         // Displays the document, which is loaded from Google Docs or similar
         // Footer of the overall web page
-        return <div>
+        return <div className='site'>
             <DocumentMeta {...meta} extend />
             <Header />
             <Showcase />
