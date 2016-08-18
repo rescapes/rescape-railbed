@@ -6,16 +6,18 @@
   "scripts": {
     "start": "NODE_ENV=development webpack-dev-server",
     "build": "NODE_ENV=production webpack --config webpack.prod.config.js",
+    "buildDev": "NODE_ENV=development webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "file-loader": "^0.9.0",
     "himalaya": "^0.2.0",
     "react": "^15.3.0",
     "react-document-meta": "^2.0.3",
     "react-dom": "^15.3.0",
-    "react-lightbox": "^0.4.0",
+    "react-images": "^0.4.11",
     "react-router": "^2.6.1",
     "redux-immutable": "^3.0.6",
     "redux-logger": "^2.6.1",

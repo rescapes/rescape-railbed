@@ -1,5 +1,5 @@
 /**
- * Created by Andy Likuski on 2016.06.01
+ * Created by Andy Likuski on 2016.08.18
  * Copyright (c) 2016 Andy Likuski
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -12,24 +12,23 @@
 import React, { Component, PropTypes } from 'react'
 import {Map} from 'immutable'
 import {connect} from 'react-redux';
-import Lightbox from 'react-lightbox';
+import Gallery from './Gallery';
 
-class Controls extends Component {
-    /***
-     * This seems like the place to bind methods (?)
-     * @param props
-     */
-    constructor(props) {
-        super(props)
-    }
-
-    render() {
-        return <div className='my-controls'>
-            <div className='my-button my-button-left' onClick={this.props.backward}></div>
-            <div className='my-button my-button-left' onClick={this.props.forward}></div>
-        </div>
-    }
+function capitalizeFirstLetter (str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
+const IMAGE_NAMES = ['cat', 'cats', 'chameleon', 'dog', 'ducks', 'goat', 'ostrich', 'pigeon', 'pigs', 'seagulls', 'wasp', 'yawn'];
+const IMAGE_MAP = IMAGE_NAMES.map(img => ({
+    src: `../images/800-${img}.jpg`,
+    thumbnail: `../images/thumbnail-${img}.jpg`,
+    srcset: [
+        `../images/1024-${img}.jpg 1024w`,
+        `../images/800-${img}.jpg 800w`,
+        `../images/500-${img}.jpg 500w`,
+        `../images/320-${img}.jpg 320w`,
+    ],
+    caption: capitalizeFirstLetter(img),
+}));
 
 class Media extends Component {
     /***
@@ -42,15 +41,7 @@ class Media extends Component {
 
     render() {
         return <div className='media'>
-            <Lightbox pictures={[
-            'https://pbs.twimg.com/profile_images/269279233/llama270977_smiling_llama_400x400.jpg',
-            'https://pbs.twimg.com/profile_images/1905729715/llamas_1_.jpg',
-            'http://static.comicvine.com/uploads/original/12/129924/3502918-llama.jpg',
-            'http://fordlog.com/wp-content/uploads/2010/11/llama-smile.jpg'
-        ]}
-             keyboard
-             controls={Controls}
-            />
+            <Gallery images={IMAGE_MAP} />
         </div>
     }
 }

@@ -20,6 +20,7 @@ const STYLE = __dirname + '/app/style.css';
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 8080;
 const TEMPLATE = __dirname + '/app/templates/index_default.html'
+const IMAGES = APP + '/images';
 const postcssImport = require('postcss-easy-import');
 
 var path = require('path');
@@ -70,6 +71,10 @@ module.exports = {
                 test: /\.css$/,
                 loaders: ['style', 'css', 'postcss'],
                 include: APP
+            }, {
+                test: /\.(jpg|png)$/,
+                loader: 'file-loader?name=/images/[name].[ext]',
+                include: APP
             }]
     },
     postcss: function processPostcss(webpack) {  // eslint-disable-line no-shadow
@@ -88,7 +93,9 @@ module.exports = {
         historyApiFallback: true,
         inline: true,
         progress: true,
-        stats: 'errors-only',
+        //stats: 'errors-only',
+        'display-reasons': true,
+        'display-modules': true,
         host: HOST,
         port: PORT
     },
