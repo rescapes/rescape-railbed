@@ -10,16 +10,22 @@ $showcase-height: calc(100% - $footer-height);
 
 $media-height: 100px;
 
-$model-width: 800px;
-$model-bottom: $media-height;
-$model-document-overlap: 100px;
+/*
+    The media covers the bottom of the model, but we want the model to extend through
+*/
+$model-3d-height: 100%;
+/*
+$model-3d-height: 800px;
+*/
+$model-3d-width: 800px;
+$model-3d-document-overlap: 100px;
 
-$document-top: calc( $header-bottom + 10px );
+$document-top: calc( $header-bottom );
 /*
     The left side of the document bleeds over the 3d model
     The 3d model's right gradient fades the 3d model away so we can see the document
 */
-$document-left: calc( $model-width - $model-document-overlap);
+$document-left: calc( $model-3d-width - $model-3d-document-overlap);
 
 
 

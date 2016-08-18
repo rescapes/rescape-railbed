@@ -308,7 +308,7 @@ export default Map({
     settings: Map({
         // These are in here since they are used for arguments to the iframe URL, and hence can't be in css
         modelWidth: 800,
-        modelHeight: 500 
+        modelHeight: 800
     }),
     documents: Map({
         keys: List(['amtrak_standard', 'the_new_rules_of_the_road']),

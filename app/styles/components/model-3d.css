@@ -3,21 +3,22 @@
     It is also used for the
 */
 iframe {
-    width: $model-width;
-    height: $model-height;
+    width: $model-3d-width;
+    height: 100%;
 }
 
 .model-3ds {
     position: relative;
-    top: 0px;
-    bottom: 0px;
+    height: $model-3d-height;
+    /* Matches the Sketchup load color, which we can't change */
+    background: white;
 }
 
 .model-3d {
     z-index: 0;
-    width: $model-width;
+    width: 100%;
+    height: 100%;
     top: 0px;
-    bottom: $model-bottom;
     display: none;
 
     &.current {
@@ -32,8 +33,8 @@ iframe {
     bottom: 0;
     left:0;
     right: 0;
-    width: $model-width;
-    height: $model-height;
+    width: $model-3d-width;
+    height: $model-3d-height;
 
     &.left {
         background: linear-gradient(to left, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
@@ -44,7 +45,7 @@ iframe {
      fades away where ever the document overlaps */
     &.right {
          background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
-         width: $model-document-overlap;
+         width: $model-3d-document-overlap;
          left: auto;
     }
     &.top {

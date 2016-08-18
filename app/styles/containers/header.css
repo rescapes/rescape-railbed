@@ -8,5 +8,9 @@
     height: $header-height;
     margin-left: 10px;
     margin-right: 10px;
-    background: $black;
+    background: linear-gradient(to right, rgba(77, 78, 83, .7), rgba(77, 78, 83, 1) 40%);
 };
+
+.header-icon {
+
+}
