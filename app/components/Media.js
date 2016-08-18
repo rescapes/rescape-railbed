@@ -12,6 +12,24 @@
 import React, { Component, PropTypes } from 'react'
 import {Map} from 'immutable'
 import {connect} from 'react-redux';
+import Lightbox from 'react-lightbox';
+
+class Controls extends Component {
+    /***
+     * This seems like the place to bind methods (?)
+     * @param props
+     */
+    constructor(props) {
+        super(props)
+    }
+
+    render() {
+        return <div className='my-controls'>
+            <div className='my-button my-button-left' onClick={this.props.backward}></div>
+            <div className='my-button my-button-left' onClick={this.props.forward}></div>
+        </div>
+    }
+}
 
 class Media extends Component {
     /***
@@ -22,19 +40,21 @@ class Media extends Component {
         super(props)
     }
 
-    componentDidMount() {
-        const { dispatch, url } = this.props
-        // Hard-code the initial models and doFetch them here, instead of relying on the user scroll.
-        const initialModel = 'train'
-        //dispatch(registerModel(initialModel))
-        //dispatch(showModel(initialModel))
-    }
-
     render() {
-        return <div>Media
-        </div>;
+        return <div className='media'>
+            <Lightbox pictures={[
+            'https://pbs.twimg.com/profile_images/269279233/llama270977_smiling_llama_400x400.jpg',
+            'https://pbs.twimg.com/profile_images/1905729715/llamas_1_.jpg',
+            'http://static.comicvine.com/uploads/original/12/129924/3502918-llama.jpg',
+            'http://fordlog.com/wp-content/uploads/2010/11/llama-smile.jpg'
+        ]}
+             keyboard
+             controls={Controls}
+            />
+        </div>
     }
 }
+
 Media.propTypes = {
     media: PropTypes.object,
 }
