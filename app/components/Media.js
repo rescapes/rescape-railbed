@@ -17,7 +17,7 @@ import Gallery from './Gallery';
 function capitalizeFirstLetter (str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
-const IMAGE_NAMES = ['cat', 'cats', 'chameleon', 'dog', 'ducks', 'goat', 'ostrich', 'pigeon', 'pigs', 'seagulls', 'wasp', 'yawn'];
+const IMAGE_NAMES = ['cat', 'cats', 'chameleon', 'dog', 'ducks', 'goat', 'ostrich', 'pigeon'];
 const IMAGE_MAP = IMAGE_NAMES.map(img => ({
     src: `../images/800-${img}.jpg`,
     thumbnail: `../images/thumbnail-${img}.jpg`,

@@ -117,9 +117,6 @@ class Model3d extends Component {
         if (!settings)
             return <div/>
         const url = this.props.model && this.props.model.get('url')
-
-
-
         const modelEntries = this.props.models && this.props.models.get('entries')
         const model = this.props.model
         const loadingOrReady = Statuses.LOADING | Statuses.READY

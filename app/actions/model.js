@@ -65,8 +65,8 @@ class ModelLoader extends ActionLoader {
      * @returns {*}
      */
     makeLoadUrl(settings, state, entry) {
-        // This will normally need overriding
-        return state.get('baseUrl')(entry.get('id'), settings.get('modelWidth'), settings.get('modelHeight'))
+        // The last parameter here is blank to indicate a 3D image, as opposed to 2D
+        return state.get('baseUrl')(entry.get('id'), settings.get('modelWidth'), settings.get('modelHeight'), '')
     }
 
     /***
@@ -74,11 +74,13 @@ class ModelLoader extends ActionLoader {
      * @param url: The url of the model (e.g. the 3D warehouse url)
      * @returns {{type: string, url: *}}
      */
-    loadIt(key, url) {
+    loadIt(state, key, url) {
+        const entry = state.getIn(['models', 'entries', key])
         return {
             type: LOAD_MODEL,
             key,
-            url
+            url,
+            url2d: state.getIn(['models', 'baseUrl'])(entry.get('id'), state.getIn(['settings', 'modelWidth']), state.getIn(['settings', 'modelHeight']), 'im')
         }
     }
 
@@ -197,7 +199,7 @@ class MediumLoader extends ActionLoader {
      * @param key: The invariable key of the medium (e.g. 'denver_train_station_exterior')
      * @returns {{type: string, key: *}}
      */
-    loadIt(key) {
+    loadIt(state, key) {
         return { type: LOAD_MEDIUM, key }
     }
 

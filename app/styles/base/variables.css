@@ -6,14 +6,17 @@ $header-bottom: calc( $header-top + $header-height );
 $footer-height: 50px;
 
 $showcase-top: calc( $header-bottom + 10px );
-$showcase-height: calc(100% - $footer-height);
+/*
+    Make the showcase extend half way into the footer
+*/
+$showcase-height: calc(100% - ($footer-height / 2));
 
 $media-height: 100px;
 
 /*
-    The media covers the bottom of the model, but we want the model to extend through
+    The model extends to the top of the footer
 */
-$model-3d-height: 100%;
+$model-3d-height: calc(100% - ($footer-height / 2));
 /*
 $model-3d-height: 800px;
 */
