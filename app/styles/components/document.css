@@ -7,9 +7,9 @@
     left: $document-left;
     padding-top: 5px;
     padding-bottom: 5px;
-    padding-left: 5px;
-    padding-right: 10px;
+    padding-left: 30px;
+    padding-right: 20px;
     z-index: 50;
     position: absolute;
-    background: linear-gradient(to right, rgba(255, 255, 255, .7), $white); /* rgba(245, 222, 179, .5), white); */
+    background: linear-gradient(to right, rgba(255, 255, 255, .7), $white);
 }

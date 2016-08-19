@@ -328,7 +328,14 @@ export default Map({
     }),
     models: Map({
         keys: List(amtrakStandardModels.keys()),
-        baseUrl: (id, width, height) => (`https://3dwarehouse.sketchup.com/embed.html?mid=${id}&width=${width}&height=${height}`),
+        /**
+         * These parameters distinguish and size the 3d model. etp is used to get a 2d version
+         * @param id: The unique id of the Sketchup model
+         * @param width: The width to request. Make sure it matches the iframe size
+         * @param height: The height to request. make sure it matches the iframe size
+         * @param etp: 'im' for still images. Blank for 3d
+         */
+        baseUrl: (id, width, height, etp) => (`https://3dwarehouse.sketchup.com/embed.html?mid=${id}&width=${width}&height=${height}&etp=${etp}`),
         entries: amtrakStandardModels
     })
 })

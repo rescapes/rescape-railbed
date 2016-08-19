@@ -50,6 +50,7 @@ import Statuses from '../statuses'
  *            }
  *         }
  *         url: the url of the model, formed by combining the key with a base url
+ *         url2d: the 2d url of the model, formed by combining the key with a base url
  *      }
  *      ...
  *   }
@@ -76,7 +77,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                             // status is initialized, nothing is loaded yet
                             status: Statuses.INITIALIZED,
                             // Full url combines the baseUrl with the key
-                            url: state.get('baseUrl') + state.get('key')
+                            url: state.get('baseUrl') + state.get('key'),
                         }}}):
                         state;
         // Shows the given model by making it the current model
@@ -86,7 +87,8 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         case actions.LOAD_MODEL:
             return state.mergeDeep({entries: { [action.key] : {
                 status: Statuses.LOADING,
-                url: action.url
+                url: action.url,
+                url2d: action.url2d
             }}})
         // Upon loading indicates the model is ready for interaction
         case actions.RECEIVE_MODEL:

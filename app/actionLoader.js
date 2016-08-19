@@ -23,7 +23,7 @@ import fetch from 'isomorphic-fetch'
 export default class ActionLoader {
 
     // Abstract actions. Implement in subclass
-    loadIt(url) {}
+    loadIt(state, url) {}
     receive(url, json) {}
     erred(url) {}
     showIt(key) {}
@@ -143,7 +143,7 @@ export default class ActionLoader {
             
             // First dispatch: the app state is updated to inform
             // that the API call is starting.
-            dispatch(self.loadIt(entryKey, url));
+            dispatch(self.loadIt(state, entryKey, url));
             
             // Make the actual AJAX call. This can be overridden in the subclass
             return self.fetchIt(dispatch, entryKey, url)
