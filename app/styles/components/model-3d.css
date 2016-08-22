@@ -19,6 +19,7 @@ iframe {
     width: 100%;
     height: 100%;
     top: 0px;
+    position: absolute;
     display: none;
 
     &.current {
@@ -26,9 +27,11 @@ iframe {
     }
     &.previous {
         display: block;
+        top: -100%;
     }
     &.next {
         display: block;
+        top: 100%;
     }
 }
 
