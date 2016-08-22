@@ -24,11 +24,13 @@ $model-3d-width: 800px;
 $model-3d-document-overlap: 100px;
 
 $document-top: calc( $header-bottom );
+$document-height: calc( 100% - $footer-height );
 /*
     The left side of the document bleeds over the 3d model
     The 3d model's right gradient fades the 3d model away so we can see the document
 */
 $document-left: calc( $model-3d-width - $model-3d-document-overlap);
+$document-width: calc( 100% );
 
 
 

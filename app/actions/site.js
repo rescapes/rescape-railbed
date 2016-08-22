@@ -32,9 +32,9 @@ export function setState(state=null) {
  * Register the given unloaded documents when encountered in the DOM or via the browser URL/parameters
  * This does not load the model since we might want to skip, queue or otherwise delay loading
  *
- * @param key: The invariable key of the medium (e.g. 'denver_train_station_exterior')
+ * @param anchors: Immutable Map of anchors, containing keys 'current', 'previous', and 'next'
  * @returns {{type: string, key: *}}
  */
-export function documentTellModelAnchorChanged(anchor) {
-    return { type: DOCUMENT_TELL_MODEL_ANCHOR_CHANGED, anchor }
+export function documentTellModelAnchorsChanged(anchors) {
+    return { type: DOCUMENT_TELL_MODEL_ANCHOR_CHANGED, anchors }
 }

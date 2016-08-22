@@ -21,6 +21,8 @@ import Statuses from '../statuses'
  *  {
  *      keys: [],
  *      current: null,
+ *      previous: null,
+ *      next: null,
  *      baseUrl: null,
  *      entries: {
  *      }
@@ -28,6 +30,10 @@ import Statuses from '../statuses'
  *  {
  *   keys: [known model keys],
  *   current: model key of the current model,
+ *   previous: model key of the previous model if the previous anchor element relative to the document scroll position
+ *      represents a different model (not just a different scene)
+ *   next: model key of the next model if the next anchor element relative to the document scroll position
+ *      represents a different model (not just a different scene)
  *   baseUrl: base url of the models, the key completes the url
  *   entries: {
  *      model key: {
@@ -97,21 +103,43 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         case actions.MODEL_ERRED:
             return state.setIn(['entries', action.key, 'status'], Statuses.ERROR);
 
-        // Respond to the document's closest anchor to the scroll position changing by updating
+        // Respond to the document's current, previous, and next anchor to the scroll position changing by updating
         // the current model and scene of models
         case DOCUMENT_TELL_MODEL_ANCHOR_CHANGED:
-            const anchor = action.anchor
-            const [modelKey, sceneKey] = anchor.name ? anchor.name.split('_') : null
-            if (!modelKey || modelKey == 'undefined')
-                return state
-            return state
-                .set(
-                    'current', 
-                    modelKey)
-                .setIn(
-                    ['entries', modelKey, 'scenes', 'current'], 
-                    sceneKey ||  null)
-        
+            return ['current', 'previous', 'next'].reduce(function(state, anchorKey) {
+                const anchor = action.anchors.get(anchorKey)
+                if (!anchor)
+                    return state;
+                // Get the name of the anchor and look for an _, which divides the modelKey from sceneKey if
+                // a scene is associated with the anchor. Otherwise the anchor represents the entire model
+                const [modelKey, sceneKey] = anchor && anchor.name ? anchor.name.split('_') : null
+                // If there is no anchor don't change state
+                if (!modelKey || modelKey == 'undefined')
+                    return state;
+                // Store the current, previous or next model key. Only store previous/next if they are different
+                // than the current model.
+                // Optionally store the scene key of the current model (we don't care what the scene is of
+                // the previous and next models)
+                if (anchorKey == 'current') {
+                    return state
+                        .set(
+                            anchorKey,
+                            modelKey)
+                        .setIn(
+                            ['entries', modelKey, 'scenes', anchorKey],
+                            sceneKey || null)
+                }
+                // previous or next and diffent than current
+                else if (modelKey != state['current']) {
+                    return state
+                        .set(
+                            anchorKey,
+                            modelKey)
+                }
+                else
+                    return modelSetState
+            }, state)
+
         // Sets the current scene of the model
         case actions.SHOW_SCENE:
             return state.setIn(['entries', action.modelKey, 'scenes', 'current'], action.key);

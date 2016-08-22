@@ -80,24 +80,38 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                     }}})
         case actions.DOCUMENT_ERRED:
             return state.setIn(['entries', action.key, 'status'], Statuses.ERROR);
-        
+
         // When the document is fully loaded our Component inspects its DOM and sends
         // all of the <a id=...> tags it finds. These represent anchors to the models
         // or their scenes.
         case actions.REGISTER_ANCHORS:
             return state.setIn(['entries', state.get('current'), 'anchors'], action.anchors)
         // Sets the scroll position and closest anchor. The models reducer reacts to this by setting
-        // the current model and scene based on the model or scene matching the anchor
+        // the current model and scene based on the model or scene matching the anchor.
+        // Also set the distance from the scroll position to the closest anchor, previous anchor, and next anchor.
+        // These distances are used to calculate the vertical transition animation from one model to the next if the
+        // anchors represent different models (as opposed to different scenes)
         case actions.REGISTER_SCROLL_POSITION:
             const scrollPosition = action.position
             // Sort based on which anchor is closest to the scrollPosition
             // If a is closer the function will return <0, so a wins. If b is closer then >0 so b wins
-            const currentKey = state.get('current')
-            const sortedAnchors = (state.getIn(['entries', currentKey, 'anchors']) || List([])).sort((a, b) => Math.abs(scrollPosition-a.offsetTop) - Math.abs(scrollPosition-b.offsetTop))
-            console.log(sortedAnchors.first())
+            const currentDocumentKey = state.get('current')
+            const sortedAnchors = (state.getIn(['entries', currentDocumentKey, 'anchors']) || List([]))
+                .sort((a, b) => (scrollPosition-a.offsetTop) - (scrollPosition-b.offsetTop))
+            var current = sortedAnchors.find((anchor) => (scrollPosition-anchor.offsetTop) >= 0) || null;
+            // Closest anchor is the first with a non-negative distance from the scroll position
+            // The next anchor is the first negative one (position > than scroll position)
+            const nextAnchorIndex = sortedAnchors.indexOf(current) - 1
+            // The previous anchor is the next positive one
+            const previousAnchorIndex = sortedAnchors.indexOf(current) + 1
+
             return state
-                .setIn(['entries', state.get('current'), 'scrollPosition'], scrollPosition)
-                .setIn(['entries', state.get('current'), 'closestAnchor'], sortedAnchors.first() || null)
+                .setIn(['entries', currentDocumentKey, 'scrollPosition'], scrollPosition)
+                .setIn(['entries', currentDocumentKey, 'closestAnchors'], Map({
+                    current,
+                    previous: previousAnchorIndex > 0 ? sortedAnchors.get(previousAnchorIndex) : null,
+                    next: nextAnchorIndex < sortedAnchors.count() ? sortedAnchors.get(nextAnchorIndex) : null
+                }))
         default:
             return state
     }

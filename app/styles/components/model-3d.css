@@ -24,7 +24,14 @@ iframe {
     &.current {
         display: block;
     }
+    &.previous {
+        display: block;
+    }
+    &.next {
+        display: block;
+    }
 }
+
 
 .model-3d-gradiant {
     position: absolute;
