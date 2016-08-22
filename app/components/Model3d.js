@@ -11,11 +11,12 @@
 
 import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
-import {connect} from 'react-redux';
+import {connect} from 'react-redux'
 import Iframe from './Iframe'
 import * as actions from '../actions/model'
 import Statuses from '../statuses'
-import {Map} from 'immutable';
+import {Map} from 'immutable'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 class Model3d extends Component {
     /***
@@ -59,14 +60,22 @@ class Model3d extends Component {
      */
     componentWillReceiveProps(nextProps) {
 
-        // Not called for the initial render
-        // Previous props can be accessed by this.props
-        // Calling setState here does not trigger an an additional re-render
+        // If the current, previous, or next model changes, fetch them if needed
+        // which currently just sets the url of the model's state so the iframe can load it
+        const nextModels = nextProps.models,
+              models = this.props.models;
+        if (!models)
+            return
+        ['current', 'previous', 'next'].forEach(function(key) {
+            if (!nextModels )
+                this.props.fetchModelIfNeeded(models.get(key))
+            else if(nextModels.get(key) != models.get(key))
+                this.props.fetchModelIfNeeded(nextModels.get(key))
+        }, this)
+
+        // Set the current model and scene
         const nextModelKey = nextProps.modelKey
         const modelChanged = this.props.modelKey != nextModelKey
-        if (modelChanged)
-        // Fetch the model, which currently just sets the url of the model's state so the iframe can load it
-            this.props.fetchModelIfNeeded(nextModelKey)
         const sceneKey = this.currentSceneKey()
         const nextSceneKey = nextProps.model && nextProps.model.getIn(['scenes', 'current'])
         // If the model changed or the scene changed
@@ -138,20 +147,19 @@ class Model3d extends Component {
                 next: !isCurrentModel && modelKey == models.get('next'),
             })
             // Node the relevance if any
-            const relevance = modelRelevance.find((value, key)=>key)
+            const relevance = modelRelevance.findKey((value, key)=>value) || null
 
             // If it's already loaded, current, or in the loading queue (previous or next model), set the URL
             // Setting the url of the iframe forces it to load if not yet loaded
             // TODO. We should add more intelligence to not load next/previous until current is fully loaded
             const iframeUrl = (isAlreadyLoaded || relevance) ? url : null
 
-
             // When the previous/next model anchor is closer than the current, we want to show the closer
             // model above/below the current model to create a scroll-controlled transition effect
             const divClass = `model-3d ${relevance || ''}`.trim()
 
             const style = relevance && tops[relevance] ? {
-                top: tops[relevance]
+                top: `${Math.round(tops[relevance]*100)}%`
             } : {}
 
             // Return the iframe wrapped in a div. The div must have a unique key for React
@@ -189,31 +197,40 @@ class Model3d extends Component {
         const distances = this.props.closestAnchorDistances
         var tops = {}
         // If we don't have a current model, none of the tops matter
-        if (distances['current'] == null) {
+        if (distances.get('current') == null) {
             tops = {current: null, previous: null, next: null}
         }
-        if (distances.filter(x=>x) >= 2) {
-            const current = distances['current'],
-                previous = distances['previous']
-            const mostRelevant = (distances['previous'] || 0) > (distances['next'] || 0) ? 'previous' : 'next';
+        if (distances.filter(x=>x).count() >= 2) {
+            const current = distances.get('current'),
+                previous = distances.get('previous'),
+                next = distances.get('next')
+            const mostRelevant = (previous || Number.MAX_VALUE) < (next || Number.MAX_VALUE) ? 'previous' : 'next';
+            // If previous is the closest
             if (mostRelevant == 'previous') {
-                const total = previous + current
-                tops = {
-                    // The smaller the distance to previous relative to current,
-                    // the more current is pushed down and less negative previous is
-                    current: current / total,
-                    previous: (current / total) - 1,
-                    next: null
+                // If it's not the same model as current
+                if (this.props.models.get('previous') != this.props.models.get('current')) {
+                    const total = previous + current
+                    tops = {
+                        // The smaller the distance to previous relative to current,
+                        // the more current is pushed down and less negative previous is
+                        current: current / total,
+                        previous: (current / total) - 1,
+                        next: null
+                    }
                 }
             }
+            // If next is the closest
             else {
-                const total = next + current
-                tops = {
-                    // The smaller the distance to next relative to current,
-                    // the more current is pushed up and less positie previous is
-                    current: current / total,
-                    previous: null,
-                    next: 1 - (current / total)
+                // If it's not the same model as current
+                if (this.props.models.get('next') != this.props.models.get('current')) {
+                    const total = next + current
+                    tops = {
+                        // The smaller the distance to next relative to current,
+                        // the more current is pushed up and less positie previous is
+                        current: 0 - (current / total),
+                        previous: null,
+                        next: 1 - (current / total)
+                    }
                 }
             }
         }
@@ -222,7 +239,11 @@ class Model3d extends Component {
 }
 
 Model3d.propTypes = {
-    model: PropTypes.object
+    settings: ImmutablePropTypes.map,
+    model: ImmutablePropTypes.map,
+    modelKey: PropTypes.string,
+    models: ImmutablePropTypes.list,
+    closestAnchorDistances: ImmutablePropTypes.map
 }
 
 function mapStateToProps(state) {
@@ -236,10 +257,11 @@ function mapStateToProps(state) {
     const closestAnchors = state.getIn(['documents', 'entries', documentKey, 'closestAnchors'])
     const models = documentKey && state.get('models')
     // Calculate the absolute distance from the current, previous, and next anchor to the scroll position
-    // The distance is only valid if the model of the previous/next anchor is different than the current
-    // model. Otherwise we don't care because then next/previous model is the same model (just a different scene)
-    const closestAnchorDistances = (closestAnchors || []).map(
-        (value, key) => value && models[key] && models['current'] != models[key] ?
+    // The previous/next distance is only valid if the model of the previous/next anchor is different than the current
+    // model. If invalid we won't use it, but we still want to record it in case it's closer than the other one
+    // (e.g. next might be the same model but closer than previous, which is a different model)
+    const closestAnchorDistances = (closestAnchors || Map({})).map(
+        (value, key) => value && models.get(key) ?
             Math.abs(scrollPosition - value.offsetTop) : null
     )
 
