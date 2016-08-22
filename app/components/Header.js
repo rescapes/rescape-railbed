@@ -10,12 +10,15 @@
  */
 
 import React, { Component, PropTypes } from 'react'
+import rescape_png from '../images/320-rescape.png'
 
 class Header extends Component {
 
     render() {
-        return <div className='header'>Header</div>
+        return <div className='header'>
+            <img className='header-icon' src={rescape_png}/>
+            <div className='header-gradiant left' />
+        </div>
     }
 }
-
 export default Header

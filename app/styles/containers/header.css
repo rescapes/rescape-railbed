@@ -8,9 +8,46 @@
     height: $header-height;
     margin-left: 10px;
     margin-right: 10px;
-    background: linear-gradient(to right, rgba(77, 78, 83, .7), rgba(77, 78, 83, 1) 40%);
+    background: linear-gradient(to right, $white, rgba(77, 78, 83, 1) 60%);
 };
 
 .header-icon {
+    position: absolute;
+    height: 100px;
+    left: 10px;
+    width: 100px;
+}
 
+.header-gradiant {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+
+&.left {
+     background: linear-gradient(to left, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
+     width: 10px;
+     right: auto;
+ }
+/* This gradient matches the overlap of the 3d model and document so that the 3d model
+fades away where ever the document overlaps */
+&.right {
+     background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
+     width: 10px;
+     left: auto;
+ }
+&.top {
+     background: linear-gradient(to top, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
+     height: 10px;
+     bottom: auto;
+ }
+&.bottom {
+     background: linear-gradient(to bottom, rgba(77, 78, 83,0), rgba(77, 78, 83,1));
+     height: 10px;
+     top: auto;
+ }
 }

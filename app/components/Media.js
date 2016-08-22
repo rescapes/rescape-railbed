@@ -14,6 +14,11 @@ import {Map} from 'immutable'
 import {connect} from 'react-redux';
 import Gallery from './Gallery';
 
+var req = require.context('../images/', true, /\.(jpg|png)$/);
+req.keys().forEach(function(key){
+    req(key);
+});
+
 function capitalizeFirstLetter (str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }

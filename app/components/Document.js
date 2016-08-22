@@ -106,7 +106,7 @@ class Document extends Component {
     }
     
     /***
-     * Check for a propc change to document.closestAnchor, and inform the Showcase if it changes
+     * Check for a prop change to anchors, and inform the Document if any values changed
      * @param nextProps
      */
     componentWillReceiveProps(nextProps){
@@ -114,9 +114,11 @@ class Document extends Component {
         // Not called for the initial render
         // Previous props can be accessed by this.props
         // Calling setState here does not trigger an an additional re-render
-        const closestAnchor = nextProps.document.get('closestAnchor')
-        if (this.props.document.get('closestAnchor') != closestAnchor) 
-            this.props.documentTellModelAnchorChanged(closestAnchor)
+        const closestAnchors = nextProps.document.get('closestAnchors')
+        const previousClosestAnchors = this.props.document.get('closestsAnchors')
+        if ((!previousClosestAnchors && closestAnchors) || (previousClosestAnchors && !previousClosestAnchors.equals(closestAnchors))) {
+            this.props.documentTellModelAnchorsChanged(closestAnchors)
+        }
     }
 
     /***
@@ -125,7 +127,11 @@ class Document extends Component {
      */
     render() {
         // Since the HTML comes from a Google doc or similar we can completely trust it
-        return <div className='document' dangerouslySetInnerHTML={{__html: this.props.document.getIn(['content', 'body'])}}></div>
+        return <div className='document'>
+            <div dangerouslySetInnerHTML={{__html: this.props.document.getIn(['content', 'body'])}}>
+            </div>
+            <div className='document-gradiant right' />
+        </div>
     }
 }
 
