@@ -66,11 +66,12 @@ class Model3d extends Component {
               models = this.props.models;
         if (!models)
             return
-        ['current', 'previous', 'next'].forEach(function(key) {
-            if (!nextModels )
-                this.props.fetchModelIfNeeded(models.get(key))
-            else if(nextModels.get(key) != models.get(key))
-                this.props.fetchModelIfNeeded(nextModels.get(key))
+        ['current', 'previousForDistinctModel', 'nextForDistinctModel'].forEach(function(key) {
+            if (!nextModels || (nextModels.get(key) != models.get(key))) {
+                const modelKeyToLoad = (nextModels || models).get(key)
+                if (modelKeyToLoad)
+                    this.props.fetchModelIfNeeded(modelKeyToLoad)
+            }
         }, this)
 
         // Set the current model and scene

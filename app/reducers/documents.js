@@ -94,25 +94,68 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         case actions.REGISTER_SCROLL_POSITION:
             const scrollPosition = action.position
             // Sort based on which anchor is closest to the scrollPosition
+            // Filter out anchors with an undefined name, meaning they didn't match anything in our initial state
             // If a is closer the function will return <0, so a wins. If b is closer then >0 so b wins
             const currentDocumentKey = state.get('current')
-            const sortedAnchors = (state.getIn(['entries', currentDocumentKey, 'anchors']) || List([]))
+            const sortedAnchors = (state.getIn(['entries', currentDocumentKey, 'anchors'])
+                .filter(anchor=>anchor.name != 'undefined') || List([]))
                 .sort((a, b) => (scrollPosition-a.offsetTop) - (scrollPosition-b.offsetTop))
             var current = sortedAnchors.find((anchor) => (scrollPosition-anchor.offsetTop) >= 0) || null;
             // Closest anchor is the first with a non-negative distance from the scroll position
             // The next anchor is the first negative one (position > than scroll position)
             const nextAnchorIndex = sortedAnchors.indexOf(current) - 1
+            const next = nextAnchorIndex < sortedAnchors.count() ? sortedAnchors.get(nextAnchorIndex) : null
+            // We also need to find the next anchor key of a unique model if one exists. This is only needed
+            // to queue the model for loading
+            const nextForDistinctModel = findForDistinctModel(
+                sortedAnchors.slice(0, nextAnchorIndex).reverse(),
+                resolveModelKeyFromAnchor(next)
+            )
+
             // The previous anchor is the next positive one
             const previousAnchorIndex = sortedAnchors.indexOf(current) + 1
+            const previous = previousAnchorIndex > 0 ? sortedAnchors.get(previousAnchorIndex) : null
+            // We also need to find the previous anchor key of a unique model if one exists. This is only needed
+            // to queue the model for loading
+            const previousForDistinctModel = findForDistinctModel(
+                sortedAnchors.slice(previousAnchorIndex+1),
+                resolveModelKeyFromAnchor(previous)
+            )
+
 
             return state
                 .setIn(['entries', currentDocumentKey, 'scrollPosition'], scrollPosition)
                 .setIn(['entries', currentDocumentKey, 'closestAnchors'], Map({
                     current,
-                    previous: previousAnchorIndex > 0 ? sortedAnchors.get(previousAnchorIndex) : null,
-                    next: nextAnchorIndex < sortedAnchors.count() ? sortedAnchors.get(nextAnchorIndex) : null
+                    previous,
+                    next,
+                    previousForDistinctModel,
+                    nextForDistinctModel
                 }))
         default:
             return state
     }
+}
+
+/***
+ * Finds the first anchor in the list with a model distinct from the defaultModelKey. Return that
+ * found model key or default to defaultModelKey
+ * @param anchors
+ * @param defaultModelKey
+ * @returns {*}
+ */
+function findForDistinctModel(anchors, defaultModelKey) {
+    const forDistinctModel = anchors.find(function (anchor) {
+        const seek = resolveModelKeyFromAnchor(anchor)
+        if (seek != 'undefined' && seek != defaultModelKey)
+            return true
+        return seek
+    })
+    return forDistinctModel ?
+        resolveModelKeyFromAnchor(forDistinctModel) :
+        defaultModelKey
+}
+
+function resolveModelKeyFromAnchor(anchor) {
+    return anchor && anchor.name ? anchor.name.split('_')[0] : null
 }
