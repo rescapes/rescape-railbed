@@ -13,11 +13,13 @@
  * Showcase contains the current 3D model and the media associated with the 3D model
  */
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import Model from './Model3d'
 import Media from './Media'
 import {connect} from 'react-redux';
 import {Map} from 'immutable'
+import ImmutablePropTypes from 'react-immutable-proptypes'
+
 // Fraction of space between current model and previous/next when scrolling
 const MODEL_PADDING = .1
 
@@ -37,13 +39,13 @@ class Showcase extends Component {
 
     render() {
         const model = this.props.model
-        const media = this.props.model && this.props.model.media
+        const media = this.props.model && this.props.model.get('media')
         // Both model and media need to know the calculated model tops.
         // If the next or previous model is at all visible, we don't want to show the media
         const modelTops = this.modelTops()
         return <div className='showcase'>
-            <Model model={model} modelTops={modelTops}/>
-            <Media media={media} modelTops={modelTops}/>
+            <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops}/>
+            <Media media={media} modelKey={this.props.modelKey} modelTops={modelTops}/>
         </div>;
     }
 
@@ -106,7 +108,7 @@ class Showcase extends Component {
 }
 
 Showcase.propTypes = {
-    model: PropTypes.object,
+    model: ImmutablePropTypes.map
 }
 
 function mapStateToProps(state) {
@@ -132,6 +134,7 @@ function mapStateToProps(state) {
     return {
         models,
         model,
+        modelKey,
         closestAnchorDistances
     }
 }

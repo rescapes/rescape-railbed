@@ -231,7 +231,7 @@ class MediumLoader extends ActionLoader {
      * @returns {{type: string, key: *}}
      */
     showIt(key) {
-        return { type: SHOW_MODEL, key }
+        return { type: SHOW_MEDIUM, key }
     }
 }
 

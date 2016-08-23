@@ -86,7 +86,7 @@ module.exports = {
             autoprefixer({ browsers: ['last 2 versions'] })
         ];
     },
-    devtool: 'eval-source-map',
+    devtool: 'inline-source-map',
     devServer: {
         contentBase: './dist',
         hot: true,

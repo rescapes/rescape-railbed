@@ -10,7 +10,7 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import rescape_png from '../images/samples/320-rescape.png'
+import rescape_png from '../imageSamples/320-rescape.png'
 
 class Header extends Component {
 
