@@ -129,12 +129,18 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                             ['entries', modelKey, 'scenes', anchorKey],
                             sceneKey || null)
                 }
-                // previous or next and diffent than current
+                // previous or next
                 else if (modelKey != state['current']) {
                     return state
                         .set(
                             anchorKey,
                             modelKey)
+                        // Also store the anchor for the previous/next anchor of a distinct model
+                        // We just need this to queue preloading of previous/next models
+                        .set(
+                            `${anchorKey}ForDistinctModel`,
+                            action.anchors && action.anchors.get(`${anchorKey}ForDistinctModel`)
+                        )
                 }
                 else
                     return modelSetState
