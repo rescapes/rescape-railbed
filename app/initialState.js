@@ -9,7 +9,7 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {Map, List} from 'immutable'
+import {OrderedMap, Map, List} from 'immutable'
 import Statuses from './statuses'
 
 
@@ -20,7 +20,28 @@ var amtrakStandardModels = Map({
         anchorId: 'id.5ktmpvprnx88',
         scenes: Map({
 
+        }),
+        media: OrderedMap({
+            'Capitol Corridor Interior': Map({
+                caption: "Northern California's Capitol Corridor",
+                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
+                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
+                credit: 'Ever In Transit'
+            }),
+            'AMTRAK Superliner Café Lounge Car': Map({
+                caption: 'Casual food is available on most AMTRAK trains',
+                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
+                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
+                credit: 'Ever In Transit'
+            }),
+            'AMTRAK Superliner Dining Car': Map({
+                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
+                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
+                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
+                credit: 'Ever In Transit'
+            }),
         })
+
     }),
     'AMTRAK Café Car': Map({
         status: Statuses.INITIALIZED,
@@ -34,6 +55,26 @@ var amtrakStandardModels = Map({
             }),
             'Group Seating': Map({
                 anchorId: 'id.wcuwoy7h102u'
+            }),
+        }),
+        media: OrderedMap({
+            'Eastern Café Tables': Map({
+                caption: 'Eastern AMTRAK Café Car tables with bike space',
+                sourceImageUrl: 'http://www.bikenyc.org/sites/default/files/Bikes%20On%20Board%20Between%20ALB%20%26%20SDY.JPG'
+                sourceUrl: 'http://www.bikenyc.org/blog/bikes-amtrak-trains-northeast-nyc-summer',
+                credit: 'Bike NYC'
+            }),
+            'Western Café Tables': Map({
+                caption: 'Western AMTRAK Café Car tables',
+                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-CHSJLNj/0/M/sacramento-091445-M.jpg',
+                sourceUrll: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
+                credit: 'Ever In Transit'
+            }),
+            'San Joaquin Café Car': Map({
+                caption: "Café Car of AMTRAK's Central California service",
+                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-CHSJLNj/0/M/sacramento-091445-M.jpg',
+                sourceUrll: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
+                credit: 'Ever In Transit'
             }),
         })
     }),
@@ -68,6 +109,30 @@ var amtrakStandardModels = Map({
             }),
             'Class C ROW': Map({
                 anchorId: 'id.d35p1mlt87up'
+            }),
+        }),
+        media: OrderedMap({
+            'St Charles Streetcar': Map({
+                caption: 'The iconic St Charles Streetcar of New Orleans travels part of its route on unimpeded class B right-of-way. Other parts of the route are unfortunately in mixed traffic',
+                sourceImageUrl: 'http://www.tribunetalk.com/wp-content/uploads/2014/12/Streetcar.jpg',
+                sourceUrl: 'http://www.tribunetalk.com/wp-content/uploads/2014/12/Streetcar.jpg',
+                credit: 'Zach Schaner - Seattle Transit Blog',
+                date: 'December 2015'
+            }),
+            'Portland Streetcar in Traffic': Map({
+                caption: 'A streetcar investment needlessly discomforts and inconveniences its users by putting the streetcar in mixed traffic',
+                sourceImageUrl: 'http://image.oregonlive.com/home/olive-media/width960/img/oregonian/photo/2015/12/03/portland-streetcar-dcae5f69472d7f5e.jpg',
+                sourceUrl: 'http://www.oregonlive.com/commuting/index.ssf/2015/12/portland_streetcar_to_try_limi.html',
+                credit: 'Zach Schaner - Seattle Transit Blog',
+                date: 'November 2015'
+            }),
+            'Madison BRT Profile': Map({
+                type: 'png',
+                caption: 'A planned BRT route in Madison, Wisconsin is compromised by Class C right-of-way',
+                sourceImageUrl: 'http://s3.amazonaws.com/stb-wp/wp-content/uploads/2015/11/10113329/Madison-BRT-Profile-01.png',
+                sourceUrl: 'http://seattletransitblog.com/2015/11/11/madison-brt-creep/',
+                credit: 'Elliot Njus - The Orgonian/Oregon Live',
+                date: 'December 2015'
             }),
         })
     }),
@@ -158,9 +223,9 @@ var amtrakStandardModels = Map({
         })
     }),
 
-    'Personal Space and Privacy': Map({
+    'Transit Access to Amenities': Map({
         status: Statuses.INITIALIZED,
-        id: '268c95fd-8a33-4636-bf72-ceaff2c1e997',
+        id: '6d32b9a2-8ef9-4b3f-8065-00d08ee87c05',
         anchorId: 'id.c784pbnlt1sa',
         scenes: Map({
             'AMTRAK Toilet': Map({
@@ -263,7 +328,7 @@ var amtrakStandardModels = Map({
         })
     }),
 
-    'Station and Stop Amenities (Below)': Map({
+    'Station and Stop Amenities (Inside)': Map({
         status: Statuses.INITIALIZED,
         id: '731899d7-02b7-4f47-9a3b-7ae84454e0c7',
         anchorId: 'id.hcrfkm926ytq',
@@ -271,10 +336,23 @@ var amtrakStandardModels = Map({
             'New Station Amenities': Map({
                 anchorId: 'id.hcrfkm926ytq',
             }),
+        }),
+        media: OrderedMap({
+            'Denver Union Station': Map({
+                caption: 'Eastern AMTRAK Café Car tables with bike space',
+                sourceImageUrl: 'http://www.bikenyc.org/sites/default/files/Bikes%20On%20Board%20Between%20ALB%20%26%20SDY.JPG'
+                sourceUrl: 'http://www.bikenyc.org/blog/bikes-amtrak-trains-northeast-nyc-summer',
+                credit: 'Bike NYC'
+            }),
+            'Bakery in Munich Hauptbahnhof': Map({
+                caption: 'Fresh bakeries are common in train stations throughout Europe, but especially in Bavaria',
+                credit: 'Andy Likuski',
+                date: 'August 2014'
+            }),
         })
     }),
 
-    'Station and Stop Amenities (Above, Poor)': Map({
+    'Station and Stop Amenities (Outside, Poor)': Map({
         status: Statuses.INITIALIZED,
         id: '87320bcf-05d7-4df9-8e51-f5c1e8ed82d1',
         anchorId: 'id.360zh96s35x0',
@@ -285,7 +363,7 @@ var amtrakStandardModels = Map({
         })
     }),
 
-    'Station and Stop Amenities (Above, Improved)': Map({
+    'Station and Stop Amenities (Outside, Improved)': Map({
         status: Statuses.INITIALIZED,
         id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
         anchorId: 'id.wmbnbioo95zf',

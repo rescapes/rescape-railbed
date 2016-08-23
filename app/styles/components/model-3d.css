@@ -10,8 +10,7 @@ iframe {
 .model-3ds {
     position: relative;
     height: $model-3d-height;
-    /* Matches the Sketchup load color, which we can't change */
-    background: white;
+    background: $black;
 }
 
 .model-3d {
@@ -27,11 +26,11 @@ iframe {
     }
     &.previous {
         display: block;
-        top: -100%;
+        top: -110%;
     }
     &.next {
         display: block;
-        top: 100%;
+        top: 110%;
     }
 }
 

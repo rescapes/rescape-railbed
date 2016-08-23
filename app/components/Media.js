@@ -11,21 +11,22 @@
 
 import React, { Component, PropTypes } from 'react'
 import {Map} from 'immutable'
-import {connect} from 'react-redux';
-import Gallery from './Gallery';
+import {connect} from 'react-redux'
+import Gallery from './Gallery'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
-var req = require.context('../images/', true, /\.(jpg|png)$/);
+var req = require.context('../images/', true, /\.(jpg|png)$/)
 req.keys().forEach(function(key){
     req(key);
-});
+})
 
 function capitalizeFirstLetter (str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.charAt(0).toUpperCase() + str.slice(1)
 }
-const IMAGE_NAMES = ['cat', 'cats', 'chameleon', 'dog', 'ducks', 'goat', 'ostrich', 'pigeon'];
+const IMAGE_NAMES = ['cat', 'cats', 'chameleon', 'dog', 'ducks', 'goat', 'ostrich']
 const IMAGE_MAP = IMAGE_NAMES.map(img => ({
-    src: `../images/800-${img}.jpg`,
-    thumbnail: `../images/thumbnail-${img}.jpg`,
+    src: `../images/samples/800-${img}.jpg`,
+    thumbnail: `../images/samples/thumbnail-${img}.jpg`,
     srcset: [
         `../images/1024-${img}.jpg 1024w`,
         `../images/800-${img}.jpg 800w`,
@@ -33,7 +34,9 @@ const IMAGE_MAP = IMAGE_NAMES.map(img => ({
         `../images/320-${img}.jpg 320w`,
     ],
     caption: capitalizeFirstLetter(img),
-}));
+    sourceUrl: '',
+    credit: ''
+}))
 
 class Media extends Component {
     /***
@@ -45,19 +48,22 @@ class Media extends Component {
     }
 
     render() {
-        return <div className='media'>
-            <Gallery images={IMAGE_MAP} />
+        const fade = ['previous', 'next'].some(relevance => this.props.modelTops[relevance]) ? 'fade-out' : 'fade-in'
+        return <div className={`media ${fade}`}>
+            <Gallery images={this.props.images} />
         </div>
     }
 }
 
 Media.propTypes = {
-    media: PropTypes.object,
+    media: ImmutablePropTypes.list,
+    images: ImmutablePropTypes.list,
 }
 
 function mapStateToProps(state) {
     return {
         media: state.get('media'),
+        images: state.getIn([])
     }
 }
 
