@@ -198,7 +198,6 @@ function mapStateToProps(state) {
     const settings = state.get('settings')
     const documentKey = state.getIn(['documents', 'current'])
     const models = documentKey && state.get('models')
-    const modelKey = models && models.get('current')
     return {
         settings,
         models,

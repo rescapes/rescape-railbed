@@ -24,19 +24,7 @@ function capitalizeFirstLetter (str) {
     return str.charAt(0).toUpperCase() + str.slice(1)
 }
 const IMAGE_NAMES = ['cat', 'cats', 'chameleon', 'dog', 'ducks', 'goat', 'ostrich']
-const IMAGE_MAP = IMAGE_NAMES.map(img => ({
-    src: `../images/samples/800-${img}.jpg`,
-    thumbnail: `../images/samples/thumbnail-${img}.jpg`,
-    srcset: [
-        `../images/1024-${img}.jpg 1024w`,
-        `../images/800-${img}.jpg 800w`,
-        `../images/500-${img}.jpg 500w`,
-        `../images/320-${img}.jpg 320w`,
-    ],
-    caption: capitalizeFirstLetter(img),
-    sourceUrl: '',
-    credit: ''
-}))
+
 
 class Media extends Component {
     /***
@@ -50,20 +38,38 @@ class Media extends Component {
     render() {
         const fade = ['previous', 'next'].some(relevance => this.props.modelTops[relevance]) ? 'fade-out' : 'fade-in'
         return <div className={`media ${fade}`}>
-            <Gallery images={this.props.images} />
+            <Gallery images={this.configureMedia()} />
         </div>
     }
+
+    /***
+     * Configures the list of Medium maps for display in the Gallery
+     */
+    configureMedia() {
+
+        const dir = `../images/${this.props.modelKey}`
+        const type = this.props.media.type || 'jpg'
+        return this.props.media.map(media => ({
+            src: `${dir}/800-${img}.${type}`,
+            thumbnail: `${dir}/thumbnail-${img}.${type}`,
+            srcset: [
+                `${dir}/1024-${img}.${type} 1024w`,
+                `${dir}/800-${img}.${type} 800w`,
+                `${dir}/500-${img}.${type} 500w`,
+                `${dir}/320-${img}.${type} 320w`,
+            ],
+            caption: capitalizeFirstLetter(img),
+            sourceUrl: '',
+            credit: ''
+        }))    }
 }
 
 Media.propTypes = {
     media: ImmutablePropTypes.list,
-    images: ImmutablePropTypes.list,
 }
 
 function mapStateToProps(state) {
     return {
-        media: state.get('media'),
-        images: state.getIn([])
     }
 }
 

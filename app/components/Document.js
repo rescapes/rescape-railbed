@@ -20,6 +20,7 @@ import {connect} from 'react-redux';
 import {Map, List} from 'immutable'
 import * as actions from '../actions/document'
 import * as siteActions from '../actions/site'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 class Document extends Component {
 
@@ -136,7 +137,7 @@ class Document extends Component {
 }
 
 Document.propTypes = {
-    document: PropTypes.object
+    document: ImmutablePropTypes.map
 }
 
 /***

@@ -21,8 +21,9 @@ import Footer from './Footer'
 import Showcase from './Showcase'
 import Document from './Document'
 import {connect} from 'react-redux';
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
 import DocumentMeta from 'react-document-meta';
+import ImmutablePropTypes from 'react-immutable-proptypes'
 var himalaya = require('himalaya');
 
 export class Site extends Component {
@@ -84,9 +85,9 @@ export class Site extends Component {
 };
 
 Site.propTypes = {
-    settings: PropTypes.object,
-    documents: PropTypes.object,
-    models: PropTypes.object
+    settings: ImmutablePropTypes.map,
+    documents: ImmutablePropTypes.map,
+    models: ImmutablePropTypes.map
 }
 
 /***
