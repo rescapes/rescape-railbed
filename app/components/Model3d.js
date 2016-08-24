@@ -201,7 +201,6 @@ function mapStateToProps(state) {
     return {
         settings,
         models,
-        modelKey,
     }
 }
 

@@ -49,6 +49,10 @@ module.exports = {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract('style', 'css!postcss'),
                 include: APP
+            },  {
+                test: /\.(jpg|png)$/,
+                loader: 'file-loader?name=/images/[name].[ext]',
+                include: APP
             }]
     },
     postcss: function () {
