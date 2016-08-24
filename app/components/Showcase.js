@@ -63,53 +63,49 @@ class Showcase extends Component {
      *  to begin immediately because models without scenes or with little text will never be centered otherwise.
      * Previous or next models only show on the top or bottom if they are different models than the current
      * Returns a Map of modelTops for the 'current', 'previous', and 'next' keys.
-     * e.g. {current: .25, previous: -.75, null} or {current: 0, previous: null, next: null} or
-     * {current: -.25, previous: null, next: .75}
+     * e.g. {current: .25, previous: -.75-MODEL_PADDING, null} or {current: 0, previous: null, next: null} or
+     * {current: -.25, previous: null, next: .75+MODEL_PADDING}
      */
     modelTops() {
         const distances = this.props.closestAnchorDistances
-        var tops = {}
         // If we don't have a current model, none of the modelTops matter
         if (distances.get('current') == null) {
-            tops = {current: null, previous: null, next: null}
+            return {current: null, previous: null, next: null}
         }
-        if (distances.filter(x=>x).count() >= 2) {
-            const current = distances.get('current'),
-                previous = distances.get('previous'),
-                next = distances.get('next')
-            const mostRelevant = (previous || Number.MAX_VALUE) < (next || Number.MAX_VALUE) ? 'previous' : 'next';
-            // If previous is the closest
-            if (mostRelevant == 'previous') {
-                // If it's not the same model as current
-                if (this.props.models.get('previous') != this.props.models.get('current')) {
-                    const total = previous + current
-                    const fraction = current / total
-                    tops = {
-                        // The smaller the distance to previous relative to current,
-                        // the more current is pushed down and less negative previous is
-                        current: current / total,
-                        previous: (1-fraction) > MODEL_THRESHOLD ? (current / total) - 1 - MODEL_PADDING : null,
-                        next: null
-                    }
-                }
-            }
-            // If next is the closest
-            else {
-                // If it's not the same model as current
-                if (this.props.models.get('next') != this.props.models.get('current')) {
-                    const total = next + current
-                    const fraction = current / total
-                    tops = {
-                        // The smaller the distance to next relative to current,
-                        // the more current is pushed up and less positive previous is
-                        current: 0 - (current / total),
-                        previous: null,
-                        next: (1-fraction) > MODEL_THRESHOLD ? 1 + MODEL_PADDING - (current / total) : null
-                    }
-                }
+        const current = this.props.models.get('current'),
+            currentDistance = distances.get('current'),
+            previousDistance = distances.get('previousForDistinctModel'),
+            nextDistance = distances.get('nextForDistinctModel'),
+            // Increases as previous becomes more relevant
+            previousFraction = currentDistance / (previousDistance + currentDistance),
+            // Increases as next becomes more relevant
+            nextFraction = currentDistance / (nextDistance + currentDistance)
+        if (previousFraction > MODEL_THRESHOLD && this.props.models.get('previousForDistinctModel') != current) {
+            return {
+                // Start at 0 and scroll down as previous gets more relevant
+                current: currentDistance / (previousDistance + currentDistance),
+                // Start at above showcase at -(MODEL_PADDING + 1) and scroll down as previous gets more relevant
+                previous: previousFraction - (MODEL_PADDING + 1),
+                next: null
             }
         }
-        return tops
+        else if (nextFraction > MODEL_THRESHOLD && this.props.models.get('nextForDistinctModel') != current) {
+            return {
+                // Start at 0 and scroll up as next gets more relevant
+                current: 0 - (currentDistance / (nextDistance + currentDistance)),
+                previous: null,
+                // Start at 1 + MODEL_PADDING below screen and scroll up as next gets more relevant
+                next: (1 + MODEL_PADDING) - nextFraction
+            }
+        }
+        else {
+            return {
+                current: 0,
+                previous: null,
+                next: null
+            }
+        }
+
     }
 }
 

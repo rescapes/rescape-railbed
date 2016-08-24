@@ -27,10 +27,16 @@ iframe {
     &.previous {
         display: block;
         top: -110%;
+        &.active {
+            transition: 'top 1s linear';
+        }
     }
     &.next {
         display: block;
         top: 110%;
+        &.active {
+            transition: 'top 1s linear';
+        }
     }
 }
 
