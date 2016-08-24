@@ -22,6 +22,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 
 // Fraction of space between current model and previous/next when scrolling
 const MODEL_PADDING = .1
+const MODEL_THRESHOLD = .25
 
 class Showcase extends Component {
 
@@ -57,6 +58,9 @@ class Showcase extends Component {
      *  1) the current model display below/above the closer of the previous/netxt model
      *  2) the previous model if any and closer than the next model displays above the current
      *  3) the next model if any and closer than the previous model displays below the current
+     *  We also use the constant MODEL_PADDING to separate the bottom and top of two adjacent models.
+     *  We also have a threshold MODEL_THRESHOLD before we give the previous or next model a non-null value. We don't want the scroll
+     *  to begin immediately because models without scenes or with little text will never be centered otherwise.
      * Previous or next models only show on the top or bottom if they are different models than the current
      * Returns a Map of modelTops for the 'current', 'previous', and 'next' keys.
      * e.g. {current: .25, previous: -.75, null} or {current: 0, previous: null, next: null} or
@@ -79,11 +83,12 @@ class Showcase extends Component {
                 // If it's not the same model as current
                 if (this.props.models.get('previous') != this.props.models.get('current')) {
                     const total = previous + current
+                    const fraction = current / total
                     tops = {
                         // The smaller the distance to previous relative to current,
                         // the more current is pushed down and less negative previous is
                         current: current / total,
-                        previous: (current / total) - 1 - MODEL_PADDING,
+                        previous: (1-fraction) > MODEL_THRESHOLD ? (current / total) - 1 - MODEL_PADDING : null,
                         next: null
                     }
                 }
@@ -93,12 +98,13 @@ class Showcase extends Component {
                 // If it's not the same model as current
                 if (this.props.models.get('next') != this.props.models.get('current')) {
                     const total = next + current
+                    const fraction = current / total
                     tops = {
                         // The smaller the distance to next relative to current,
                         // the more current is pushed up and less positive previous is
                         current: 0 - (current / total),
                         previous: null,
-                        next: 1 + MODEL_PADDING - (current / total)
+                        next: (1-fraction) > MODEL_THRESHOLD ? 1 + MODEL_PADDING - (current / total) : null
                     }
                 }
             }
