@@ -15,16 +15,10 @@ import {connect} from 'react-redux'
 import Gallery from './Gallery'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
-var req = require.context('../images/', true, /\.(jpg|png)$/)
+var req = require.context('../images_dist/', true, /\.(jpg|png|gif)$/)
 req.keys().forEach(function(key){
     req(key);
 })
-
-function capitalizeFirstLetter (str) {
-    return str.charAt(0).toUpperCase() + str.slice(1)
-}
-const IMAGE_NAMES = ['cat', 'cats', 'chameleon', 'dog', 'ducks', 'goat', 'ostrich']
-
 
 class Media extends Component {
     /***
@@ -46,22 +40,28 @@ class Media extends Component {
      * Configures the list of Medium maps for display in the Gallery
      */
     configureMedia() {
-
-        const dir = `../images/${this.props.modelKey}`
-        const type = this.props.media.type || 'jpg'
-        return this.props.media.map(media => ({
-            src: `${dir}/800-${img}.${type}`,
-            thumbnail: `${dir}/thumbnail-${img}.${type}`,
-            srcset: [
-                `${dir}/1024-${img}.${type} 1024w`,
-                `${dir}/800-${img}.${type} 800w`,
-                `${dir}/500-${img}.${type} 500w`,
-                `${dir}/320-${img}.${type} 320w`,
-            ],
-            caption: capitalizeFirstLetter(img),
-            sourceUrl: '',
-            credit: ''
-        }))    }
+        // dir is a flat directory because webpack builds the images to this flat dir
+        const dir = '../images/'
+        const media = this.props.media || Map({})
+        return media.map(function(medium, key) {
+            const type = medium.type || 'jpg'
+            return {
+                src: `${dir}/${key}-800.${type}`,
+                thumbnail: `${dir}/${key}-thumbnail.${type}`,
+                srcset: [
+                    `${dir}/${key}-1024.${type} 1024w`,
+                    `${dir}/${key}-800.${type} 800w`,
+                    `${dir}/${key}-500.${type} 500w`,
+                    `${dir}/${key}-320.${type} 320w`,
+                ],
+                caption: key,
+                imageSourceUrl: medium.get('imageSourceUrl'),
+                sourceUrl: medium.get('sourceUrl'),
+                credit: medium.get('credit'),
+                date: medium.get('date')
+            }
+        }).toArray()
+    }
 }
 
 Media.propTypes = {

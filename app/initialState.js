@@ -41,6 +41,7 @@ var amtrakStandardModels = Map({
                 credit: 'Ever In Transit'
             }),
         })
+
     }),
     'AMTRAK Café Car': Map({
         status: Statuses.INITIALIZED,
@@ -91,26 +92,6 @@ var amtrakStandardModels = Map({
             }),
             'Not Fixed Guideway': Map({
                 anchorId: 'id.5dezdsk8y4kg'
-            }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
             }),
         })
     }),
@@ -176,26 +157,6 @@ var amtrakStandardModels = Map({
             'Consolidation Challenges': Map({
                 anchorId: 'id.ifjl8mnx6p4n'
             }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
         })
     }),
 
@@ -222,26 +183,6 @@ var amtrakStandardModels = Map({
             'Armrests and Recliners': Map({
                 anchorId: 'id.bbssm7d9ycql'
             })
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
         })
     }),
 
@@ -258,26 +199,6 @@ var amtrakStandardModels = Map({
             }),
             'Low-floor buses have rear-facing seats': Map({
                 anchorId: 'id.s9a7cdqojj39'
-            }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
             }),
         })
     }),
@@ -298,26 +219,6 @@ var amtrakStandardModels = Map({
             }),
             'Private Metro Compartments': Map({
                 anchorId: 'id.cf2ldt4sfy35'
-            }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
             }),
         })
     }),
@@ -342,26 +243,6 @@ var amtrakStandardModels = Map({
             'Tram Café': Map({
                 anchorId: 'id.5pgtgqe6khzj'
             })
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
         })
     }),
 
@@ -381,26 +262,6 @@ var amtrakStandardModels = Map({
             }),
             'Accessing Transit is Cumbersome': Map({
                 anchorId: 'id.p4m8oqotbbz'
-            }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
             }),
         })
     }),
@@ -425,26 +286,6 @@ var amtrakStandardModels = Map({
             'Luggage & Bike Conveyor': Map({
                 anchorId: 'id.bnqw4memdz2g'
             }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
         })
     }),
 
@@ -459,26 +300,6 @@ var amtrakStandardModels = Map({
             'Personal Bike Storage on Regional Trains': Map({
                 anchorId: 'id.9itw958nhuqz'
             }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
         })
     }),
 
@@ -489,26 +310,6 @@ var amtrakStandardModels = Map({
         scenes: Map({
             'A hundred bikes fit on a long metro': Map({
                 anchorId: 'id.3o0isfthvzsv'
-            }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
             }),
         })
     }),
@@ -522,27 +323,7 @@ var amtrakStandardModels = Map({
                 anchorId: 'id.ksrni4wfi211'
             }),
             'Trams have flush, level boarding': Map({
-                anchorId: 'id.qucp3cxv50h1'
-            }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
+                anchorId: 'id.xluw7fz8woop'
             }),
         })
     }),
@@ -556,27 +337,7 @@ var amtrakStandardModels = Map({
                 anchorId: 'id.b7ievcnhbpl7'
             }),
             'Wheelchairs on buses': Map({
-                anchorId: 'id.2ysychrprh9r'
-            }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
+                anchorId: 'id.xluw7fz8woop'
             }),
         })
     }),
@@ -602,26 +363,6 @@ var amtrakStandardModels = Map({
                 credit: 'Andy Likuski',
                 date: 'August 2014'
             }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
         })
     }),
 
@@ -632,26 +373,6 @@ var amtrakStandardModels = Map({
         scenes: Map({
             'Amenity-Poor Transit Center': Map({
                 anchorId: 'id.360zh96s35x0'
-            }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
             }),
         })
     }),
@@ -666,26 +387,6 @@ var amtrakStandardModels = Map({
             }),
             'Transit Center Amenities': Map({
                 anchorId: 'id.wmbnbioo95zf'
-            }),
-        }),
-        media: OrderedMap({
-            'Capitol Corridor Interior': Map({
-                caption: "Northern California's Capitol Corridor",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Café Lounge Car': Map({
-                caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
-            }),
-            'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
             }),
         })
     }),

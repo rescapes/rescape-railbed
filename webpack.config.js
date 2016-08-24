@@ -20,7 +20,6 @@ const STYLE = __dirname + '/app/style.css';
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 8080;
 const TEMPLATE = __dirname + '/app/templates/index_default.html'
-const IMAGES = APP + '/images';
 const postcssImport = require('postcss-easy-import');
 
 var path = require('path');
