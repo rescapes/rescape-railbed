@@ -3,5 +3,6 @@
     left: 10px;
     position: fixed;
     top: 0px;
-    height: $showcase-height
+    height: $showcase-height;
+    width: $showcase-width;
 }

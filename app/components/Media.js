@@ -45,16 +45,18 @@ class Media extends Component {
         const media = this.props.media || Map({})
         return media.map(function(medium, key) {
             const type = medium.type || 'jpg'
+            // We can't use spaces in our file names, it confuses babel or webpack or something
+            const file = key.replace(/ /g, '_')
             return {
-                src: `${dir}/${key}-800.${type}`,
-                thumbnail: `${dir}/${key}-thumbnail.${type}`,
+                src: `${dir}/${file}-800.${type}`,
+                thumbnail: `${dir}/${file}-thumbnail.${type}`,
                 srcset: [
-                    `${dir}/${key}-1024.${type} 1024w`,
-                    `${dir}/${key}-800.${type} 800w`,
-                    `${dir}/${key}-500.${type} 500w`,
-                    `${dir}/${key}-320.${type} 320w`,
+                    `${dir}/${file}-1024.${type} 1024w`,
+                    `${dir}/${file}-800.${type} 800w`,
+                    `${dir}/${file}-500.${type} 500w`,
+                    `${dir}/${file}-320.${type} 320w`,
                 ],
-                caption: key,
+                caption: file,
                 imageSourceUrl: medium.get('imageSourceUrl'),
                 sourceUrl: medium.get('sourceUrl'),
                 credit: medium.get('credit'),

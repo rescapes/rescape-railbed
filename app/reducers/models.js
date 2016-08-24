@@ -103,10 +103,12 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         case actions.MODEL_ERRED:
             return state.setIn(['entries', action.key, 'status'], Statuses.ERROR);
 
-        // Respond to the document's current, previous, and next anchor to the scroll position changing by updating
-        // the current model and scene of models
+        // Respond to the document's current, previous, previousForDistinctModel, and nextForDistinctModel
+        // anchor to the scroll position changing by updating the current model and scene of models
         case DOCUMENT_TELL_MODEL_ANCHOR_CHANGED:
-            return ['current', 'previous', 'next'].reduce(function(state, anchorKey) {
+            return ['current', 'previous', 'next', 'previousForDistinctModel', 'nextForDistinctModel']
+                .reduce(function(state, anchorKey) {
+
                 const anchor = action.anchors.get(anchorKey)
                 if (!anchor)
                     return state;
@@ -122,25 +124,12 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                 // the previous and next models)
                 if (anchorKey == 'current') {
                     return state
-                        .set(
-                            anchorKey,
-                            modelKey)
-                        .setIn(
-                            ['entries', modelKey, 'scenes', anchorKey],
-                            sceneKey || null)
+                        .set(anchorKey, modelKey)
+                        .setIn(['entries', modelKey, 'scenes', anchorKey], sceneKey || null)
                 }
-                // previous or next
+                // previous, next, previousForDistinctModel, nextForDistinctModel
                 else if (modelKey != state['current']) {
-                    return state
-                        .set(
-                            anchorKey,
-                            modelKey)
-                        // Also store the anchor for the previous/next anchor of a distinct model
-                        // We just need this to queue preloading of previous/next models
-                        .set(
-                            `${anchorKey}ForDistinctModel`,
-                            action.anchors && action.anchors.get(`${anchorKey}ForDistinctModel`)
-                        )
+                    return state.set(anchorKey, modelKey)
                 }
                 else
                     return modelSetState

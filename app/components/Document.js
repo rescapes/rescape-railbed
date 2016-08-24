@@ -32,6 +32,10 @@ class Document extends Component {
         this.indexAnchors()
     }
 
+    componentWillUnmount(){
+        window.removeEventListener('scroll', this.handleScroll.bind(this));
+    }
+
     /***
      * Likewkise when the Document content udpates we want to index anchors if we haven't done so.
      * I'm not sure if this is needed if componentDidMount fires at the right time, unless we
@@ -89,23 +93,26 @@ class Document extends Component {
         this.handleScroll()
     }
 
-    componentWillUnmount(){
-        window.removeEventListener('scroll', this.handleScroll.bind(this));
-    }
 
     /***
      * Whenever the scrollTop changes send an action so we can recalculate the closest anchor tag to the scroll
-     * position
+     * position. A timer is used to prevent too many events from passing through
      * @param event: The scroll event. If undefined we get the scrollTop from the body element (which we
      * could do in any case)
      */
     handleScroll(event) {
+
         let scrollTop = event ? event.srcElement.body.scrollTop : window.document.body.scrollTop
-        // Tell the reducers the scroll position so that they can determine what model and scene
-        // are current
-        this.props.registerScrollPosition(scrollTop)
+        const interval = 50
+        const now = new Date()
+        if (now - (this.state && this.state.lastScrollTime || 0) > interval) {
+            // Tell the reducers the scroll position so that they can determine what model and scene
+            // are current
+            this.props.registerScrollPosition(scrollTop)
+            this.setState({lastScrollTime: now })
+        }
     }
-    
+
     /***
      * Check for a prop change to anchors, and inform the Document if any values changed
      * @param nextProps
