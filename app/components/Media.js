@@ -30,8 +30,13 @@ class Media extends Component {
     }
 
     render() {
+        // If we previous or next models are present we want to fade out since the current model
+        // is no longer centered
         const fade = ['previous', 'next'].some(relevance => this.props.modelTops[relevance]) ? 'fade-out' : 'fade-in'
-        return <div className={`media ${fade}`}>
+        // Fade the media in the direction that the current model is scrolling, which is based
+        // on which mode is closer, previous or next.
+        const toward = fade=='fade-in' ? '' : (this.props.modelTops['next'] ? 'upward' : 'downward')
+        return <div className={`media ${fade} ${toward}`}>
             <Gallery images={this.configureMedia()} />
         </div>
     }
@@ -41,7 +46,7 @@ class Media extends Component {
      */
     configureMedia() {
         // dir is a flat directory because webpack builds the images to this flat dir
-        const dir = '../images/'
+        const dir = '../images'
         const media = this.props.media || Map({})
         return media.map(function(medium, key) {
             const type = medium.type || 'jpg'
@@ -49,7 +54,7 @@ class Media extends Component {
             const file = key.replace(/ /g, '_')
             return {
                 src: `${dir}/${file}-800.${type}`,
-                thumbnail: `${dir}/${file}-thumbnail.${type}`,
+                thumbnail: `${dir}/${file}-320.${type}`,
                 srcset: [
                     `${dir}/${file}-1024.${type} 1024w`,
                     `${dir}/${file}-800.${type} 800w`,

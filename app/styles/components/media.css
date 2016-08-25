@@ -1,24 +1,44 @@
 
+/*** Media consists of a Gallery containing images that can be clicked to show a Lightbox ***/
 .media {
     position: absolute;
-    z-index: 100;
-    height: 100px;
-    bottom: 0px;
+    z-index: 4;
+    height: 200px;
+    bottom: calc($footer-height / 2);
     width: 100%;
-    margin-left: 75px;
-    margin-right: 75px;
+    margin-left: 60px;
+    margin-right: 60px;
 
     &.fade-out {
-        visibility: hidden;
-        opacity: 0;
-        transition: visibility 200ms linear, opacity 200ms linear;
+
+        /*
+            The model is scrolling down
+        */
+        &.downward {
+            bottom: -15px;
+            opacity: 0;
+            visibility: hidden;
+            transition: visibility 300ms ease, opacity 300ms ease, bottom 300ms ease;
+        }
+
+        /*
+            The model is scrolling down
+        */
+        &.upward {
+            bottom: 15px;
+            opacity: .5;
+            visibility: hidden;
+            transition: visibility 300ms ease, opacity 300ms ease, bottom 300ms ease;
+        }
     }
     &.fade-in {
         visibility: visible;
         opacity: 1;
-        transition: visibility 1s linear, opacity 1s linear;
+        transition: visibility 1s linear, opacity 1s linear, bottom 100ms ease;
     }
 }
+
+/*** The following is all specific to the Gallery and Lightbox ***/
 
 $gutter:						20px;
 $table-cell-gutter:				10px;
@@ -175,7 +195,51 @@ $nav-padding:					$nav-gutter - $nav-item-padding;
 // ------------------------------
 
 .section {
-    margin-bottom: 40px;
+    width: 100%
+}
+.gallery {
+    margin-left: -5px;
+    margin-right: -5px;
+    overflow: hidden;
+    position: absolute;
+    display: flex;
+    bottom: 0px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    align-content: center;
+}
+.gallery-thumbnail {
+    background-size: cover;
+    border-radius: 3px;
+    float: left;
+    bottom: 0px;
+    height: auto;
+    margin: 5px;
+    overflow: hidden;
+    width: $gallery-thumbnail-width;
+    transition: width 300ms ease;
+    &:hover {
+        height: auto;
+        width: calc($gallery-thumbnail-width * 2);
+        transition: width 300ms ease;
+    }
+}
+
+.gallery-thumbnail-image {
+    display: block;
+    height: auto;
+    width: 100%;
+    max-width: 100%;
+    /*
+    // left: '50%',
+    // position: 'relative',
+    //
+    // WebkitTransform: 'translateX(-50%)',
+    // MozTransform:    'translateX(-50%)',
+    // msTransform:     'translateX(-50%)',
+    // transform:       'translateX(-50%)',
+    */
 }
 
 .hint {

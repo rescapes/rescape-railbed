@@ -46,28 +46,32 @@ class Gallery extends Component {
 
 		this.gotoNext();
 	}
+
+	/***
+	 * The thumbnail view of the images.
+	 * Hovering enlarges the image. Clicking creates the lightbox
+	 * @returns {XML}
+     */
 	renderGallery () {
 		if (!this.props.images) return;
 		const gallery = this.props.images.map((obj, i) => {
 			return (
 				<a
+                    className='gallery-thumbnail'
 					href={obj.src}
 					key={i}
 					onClick={(e) => this.openLightbox(i, e)}
-					style={styles.thumbnail}
 					>
 					<img
-						height={styles.thumbnail.size}
+                        className='gallery-thumbnail-image'
 						src={obj.thumbnail}
-						style={styles.thumbnailImage}
-						width={styles.thumbnail.size}
 					/>
 				</a>
 			);
 		});
 
 		return (
-			<div style={styles.gallery}>
+			<div className='gallery'>
 				{gallery}
 			</div>
 		);
@@ -106,38 +110,6 @@ Gallery.propTypes = {
 	images: PropTypes.array,
 	sepia: PropTypes.bool,
 	subheading: PropTypes.string,
-};
-
-const THUMBNAIL_SIZE = 72;
-
-const styles = {
-	gallery: {
-		marginLeft: -5,
-		marginRight: -5,
-		overflow: 'hidden',
-	},
-	thumbnail: {
-		backgroundSize: 'cover',
-		borderRadius: 3,
-		float: 'left',
-		height: THUMBNAIL_SIZE,
-		margin: 5,
-		overflow: 'hidden',
-		width: THUMBNAIL_SIZE,
-	},
-	thumbnailImage: {
-		display: 'block',
-		height: 'auto',
-		maxWidth: '100%',
-		// height: THUMBNAIL_SIZE,
-		// left: '50%',
-		// position: 'relative',
-		//
-		// WebkitTransform: 'translateX(-50%)',
-		// MozTransform:    'translateX(-50%)',
-		// msTransform:     'translateX(-50%)',
-		// transform:       'translateX(-50%)',
-	},
 };
 
 export default Gallery;

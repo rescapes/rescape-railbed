@@ -4,5 +4,6 @@
     position: fixed;
     top: 0px;
     height: $showcase-height;
-    width: $showcase-width;
+    right: $document-left;
+    z-index: 2;
 }
