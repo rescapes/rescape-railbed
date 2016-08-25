@@ -157,14 +157,25 @@ class Model3d extends Component {
 
             // When the previous/next model anchor is closer than the current, we want to show the closer
             // model above/below the current model to create a scroll-controlled transition effect
-            const divClass = `model-3d ${relevance || ''} ${tops[relevance] ? 'active' : 'inactive'}`.trim()
+            const divClass = `model-3d ${relevance || ''} `.trim()
+            var divStateClass = null
+            if (relevance == 'current') {
+                // Track whether the current is on its own or showing with previous or next
+                // We do this just to animate the transit of the 'top' property
+                divStateClass = tops['previous'] || tops['next'] ? 'duo' : 'solo'
+            }
+            else {
+                // Otherwise see if the previous or next is visible
+                // We do this just to animate the transit of the 'top' property
+                divStateClass = tops[relevance] ? 'active' : 'inactive'
+            }
 
             const style = relevance && tops[relevance] ? {
                 top: `${Math.round(tops[relevance]*100)}%`,
             } : {}
 
             // Return the iframe wrapped in a div. The div must have a unique key for React
-            return <div key={modelKey} className={divClass} style={style}>
+            return <div key={modelKey} className={`${divClass} ${divStateClass}`} style={style}>
                 <Iframe key={modelKey}
                   src={iframeUrl}
                   name={`iframe_${modelKey}`}

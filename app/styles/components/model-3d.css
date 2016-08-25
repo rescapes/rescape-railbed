@@ -9,6 +9,7 @@ iframe {
 
 .model-3ds {
     position: relative;
+    top: $model-3d-top;
     height: $model-3d-height;
     background: $black;
 }
@@ -23,19 +24,31 @@ iframe {
 
     &.current {
         display: block;
+        &.solo {
+            transition: top 1s ease 0s;
+        }
+        &.duo {
+            transition: top 1s ease 0s;
+        }
     }
     &.previous {
         display: block;
-        top: -110%;
+        top: -120%;
         &.active {
-            transition: 'top 1s linear';
+            transition: top 1s ease 0s;
+        }
+        &.inactive {
+            transition: top 1s ease 0s;
         }
     }
     &.next {
         display: block;
-        top: 110%;
+        top: 120%;
         &.active {
-            transition: 'top 1s linear';
+            transition: top 1s ease 0s;
+        }
+        &.inactive {
+            transition: top 1s ease 0s;
         }
     }
 }
