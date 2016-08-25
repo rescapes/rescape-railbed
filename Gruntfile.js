@@ -3,11 +3,7 @@ module.exports = function(grunt) {
         responsive_images: {
             dev: {
                 options: {
-                    sizes: [
-                    {
-                        name: 'thumbnail',
-                        width: 100
-                    }, {
+                    sizes: [{
                         width: 320
                     }, {
                         width: 500

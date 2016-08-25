@@ -1,6 +1,6 @@
 .footer {
     position: fixed;
-    z-index: 100;
+    z-index: 6;
     bottom: 0px;
     height: $footer-height;
     left: 0px;

@@ -67,15 +67,33 @@ var amtrakStandardModels = Map({
             'Western Cafe Tables': Map({
                 caption: 'Western AMTRAK Café Car tables',
                 sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-CHSJLNj/0/M/sacramento-091445-M.jpg',
-                sourceUrll: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
+                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
                 credit: 'Ever In Transit'
             }),
             'San Joaquin Cafe Car': Map({
                 caption: "Café Car of AMTRAK's Central California service",
                 sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-CHSJLNj/0/M/sacramento-091445-M.jpg',
-                sourceUrll: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
+                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
                 credit: 'Ever In Transit'
             }),
+            'Cafe Car Service': Map({
+                caption: "Café Car Service on AMTRAK's Northern California Capitol Corridor",
+                sourceImageUrl: 'http://ww3.hdnux.com/photos/07/63/06/2044314/5/1024x1024.jpg',
+                sourceUrl: 'http://www.sfgate.com/bayarea/article/Calif-Amtrak-ridership-rising-on-state-trains-2479851.php#photo-2044314',
+                credit: 'Carlos Avila Gonzalez, The San Francisco Chronicle'
+            }),
+            'Cafe Car Lounge Area': Map({
+                caption: "Café Car Lounge Area on AMTRAK's Central California San Joaquin",
+                sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Passengers_in_Amtrak_lounge_car_of_San_Joaquin_%28train%29_2014.jpg',
+                sourceUrl: 'https://en.wikipedia.org/wiki/California_Car_(railcar)',
+                credit: 'George Garrigues, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=42379331'
+            }),
+            'Deutsche Bahn Bordbistro': Map({
+                caption: "Germany's Deutsche Bahn serves food and drinks on intercity high-speed and regional trains",
+                sourceImageUrl: 'http://www.spiegel.de/#ref=gallery-last-image',
+                sourceUrl: 'http://www.spiegel.de/fotostrecke/bahn-millionen-investition-fuer-kaffeetrinker-fotostrecke-56176-3.html',
+                credit: 'Der Spiegel'
+            })
         })
     }),
 
@@ -93,6 +111,16 @@ var amtrakStandardModels = Map({
             'Not Fixed Guideway': Map({
                 anchorId: 'id.5dezdsk8y4kg'
             }),
+        }),
+        media: Map({
+            'Nantes Busway': Map({
+                caption: "Bus Rapid Transit Service in Nantes, France. Though the bus has its own dedicated right-of-way, the" +
+                "busway cannot be considered a fixed-guideway, since the bus is physically free to veer off of it",
+                sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Flickr_-_IngolfBLN_-_Nantes_-_Busway_-_Ligne_4_-_Duchesse_Anne_-_Ch%C3%A2teau_des_Ducs_de_Bretagne_%281%29.jpg/1920px-Flickr_-_IngolfBLN_-_Nantes_-_Busway_-_Ligne_4_-_Duchesse_Anne_-_Ch%C3%A2teau_des_Ducs_de_Bretagne_%281%29.jpg',
+                sourceUrl: 'https://en.wikipedia.org/wiki/Nantes_Busway',
+                credit: 'By IngolfBLN - Nantes - Busway - Ligne 4 - Duchesse Anne - Château des Ducs de Bretagne, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=22010918'
+            })
+
         })
     }),
 

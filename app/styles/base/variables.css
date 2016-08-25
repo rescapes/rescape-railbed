@@ -13,6 +13,8 @@ $showcase-height: calc(100% - ($footer-height / 2));
 $showcase-width: 800px;
 
 $media-height: 100px;
+$gallery-thumbnail-width: 100px;
+$gallery-thumbnail-height: 75px;
 
 /*
     The model extends to the top of the footer and overlaps a bit with the header
