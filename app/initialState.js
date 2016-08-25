@@ -28,7 +28,7 @@ var amtrakStandardModels = Map({
                 sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
                 credit: 'Ever In Transit'
             }),
-            'AMTRAK Superliner Café Lounge Car': Map({
+            'AMTRAK Superliner Cafe Lounge Car': Map({
                 caption: 'Casual food is available on most AMTRAK trains',
                 sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
                 sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
@@ -47,10 +47,10 @@ var amtrakStandardModels = Map({
         status: Statuses.INITIALIZED,
         id: '9b7bbfe8-2ad5-4074-ae81-7bc0645dfce9',
         scenes: Map({
-            'AMTRAK Café Seating': Map({
+            'AMTRAK Cafe Seating': Map({
                 anchorId: 'id.bc4p3rsjqez8'
             }),
-            'AMTRAK Café Offerings': Map({
+            'AMTRAK Cafe Offerings': Map({
                 anchorId: 'id.wcuwoy7h102u'
             }),
             'Group Seating': Map({
@@ -58,19 +58,19 @@ var amtrakStandardModels = Map({
             }),
         }),
         media: OrderedMap({
-            'Eastern Café Tables': Map({
+            'Eastern Cafe Tables': Map({
                 caption: 'Eastern AMTRAK Café Car tables with bike space',
                 sourceImageUrl: 'http://www.bikenyc.org/sites/default/files/Bikes%20On%20Board%20Between%20ALB%20%26%20SDY.JPG',
                 sourceUrl: 'http://www.bikenyc.org/blog/bikes-amtrak-trains-northeast-nyc-summer',
                 credit: 'Bike NYC'
             }),
-            'Western Café Tables': Map({
+            'Western Cafe Tables': Map({
                 caption: 'Western AMTRAK Café Car tables',
                 sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-CHSJLNj/0/M/sacramento-091445-M.jpg',
                 sourceUrll: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
                 credit: 'Ever In Transit'
             }),
-            'San Joaquin Café Car': Map({
+            'San Joaquin Cafe Car': Map({
                 caption: "Café Car of AMTRAK's Central California service",
                 sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-CHSJLNj/0/M/sacramento-091445-M.jpg',
                 sourceUrll: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
@@ -400,7 +400,7 @@ export default Map({
     settings: Map({
         // These are in here since they are used for arguments to the iframe URL, and hence can't be in css
         modelWidth: 800,
-        modelHeight: 800
+        modelHeight: 710
     }),
     documents: Map({
         keys: List(['amtrak_standard', 'the_new_rules_of_the_road']),
