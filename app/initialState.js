@@ -35,11 +35,17 @@ var amtrakStandardModels = Map({
                 credit: 'Ever In Transit'
             }),
             'AMTRAK Superliner Dining Car': Map({
-                caption: 'Hot breakfast full table service on the northbound Coast Starlight near the California-Oregon border',
+                caption: 'Hot breakfast in the dining car on the northbound Coast Starlight',
                 sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
                 sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
                 credit: 'Ever In Transit'
             }),
+            'AMTRAK Superliner Fraster Winter Park': Map({
+                caption: 'Hot breakfast in the dining car on the northbound Coast Starlight',
+                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
+                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
+                credit: 'Ever In Transit'
+            })
         })
 
     }),
@@ -455,7 +461,8 @@ export default Map({
          * @param height: The height to request. make sure it matches the iframe size
          * @param etp: 'im' for still images. Blank for 3d
          */
-        baseUrl: (id, width, height, etp) => (`https://3dwarehouse.sketchup.com/embed.html?mid=${id}&width=${width}&height=${height}&etp=${etp}`),
+        baseUrl: (id, width, height, etp) => (`https://my.sketchup.com/viewer/3dw?WarehouseModelId=${id}`),
+
         entries: amtrakStandardModels
     })
 })

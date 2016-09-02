@@ -5,24 +5,42 @@ $header-bottom: calc( $header-top + $header-height );
 
 $footer-height: 50px;
 
-$showcase-top: calc( $header-bottom + 10px );
+/*
+    The showcase overlaps with the header completely
+*/
+$showcase-top: 0px;
 /*
     Make the showcase extend half way into the footer
 */
 $showcase-height: calc(100% - ($footer-height / 2));
+$showcase-left: 10px;
 $showcase-width: 800px;
-
-$media-height: 100px;
-$gallery-thumbnail-width: 100px;
-$gallery-thumbnail-height: 75px;
 
 /*
     The model extends to the top of the footer and overlaps a bit with the header
 */
 $model-3d-top: calc($header-height - 10px);
 $model-3d-height: calc(100% - $model-3d-top - ($footer-height / 2));
-$model-3d-width: $showcase-width ;
+$model-3d-width: $showcase-width;
 $model-3d-document-overlap: 100px;
+
+$gallery-thumbnail-width: 100px;
+$gallery-thumbnail-height: 75px;
+/*
+    The gallery containing the lightbox doesn't quite extend to the document
+*/
+$gallery-width: calc( $model-3d-width - $model-3d-document-overlap - 5px);
+/*
+    The lightbox top overlaps the header. We want the lightbox header
+    to be in the header and the actual lightbox image to match the model-3d-top
+*/
+$lightbox-top: calc($header-height - 40px);
+/*
+    The lightbox footer overlaps the footer. We want the lightbox footer
+    to be in the footer and the actual lightbox image to match the footer top
+*/
+$lightbox-height: calc( 100% - calc($lightbox-top + $footer-height));
+$lightbox-left: $showcase-left;
 
 $document-top: calc( $header-bottom );
 $document-height: calc( 100% - $footer-height );
@@ -47,7 +65,7 @@ $fadesand: color(wheat saturation(30%));
 $sand: color(wheat lightness(80%));
 $gray: color($black lightness(80%));
 
-$font-stack: Arial, Helvetica, sans-serif;
+$font-stack: Railway, Arial, Helvetica, sans-serif;
 $page-background: $black;
 $page-padding: 2em;
 
