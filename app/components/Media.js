@@ -36,8 +36,63 @@ class Media extends Component {
         // Fade the media in the direction that the current model is scrolling, which is based
         // on which mode is closer, previous or next.
         const toward = fade=='fade-in' ? '' : (this.props.modelTops['next'] ? 'upward' : 'downward')
+        const theme = {
+
+            // arrows
+            arrow: {
+                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                fill: '#222',
+                opacity: 0.6,
+                transition: 'opacity 200ms',
+
+                ':hover': {
+                    opacity: 1,
+                },
+            },
+            arrow__size__medium: {
+                borderRadius: 40,
+                height: 40,
+                marginTop: -20,
+
+                '@media (min-width: 768px)': {
+                    height: 70,
+                    padding: 15,
+                },
+            },
+            arrow__direction__left: { marginLeft: 10 },
+            arrow__direction__right: { marginRight: 10 },
+
+            // header
+            close: {
+                fill: '#D40000',
+                opacity: 0.6,
+                transition: 'all 200ms',
+
+                ':hover': {
+                    opacity: 1,
+                },
+            },
+
+            // footer
+            footer: {
+                color: 'black',
+            },
+            footerCount: {
+                color: 'rgba(0, 0, 0, 0.6)',
+            },
+
+            // thumbnails
+            thumbnail: {
+            },
+            thumbnail__active: {
+                boxShadow: '0 0 0 2px #00D8FF',
+            },
+        }
         return <div className={`media ${fade} ${toward}`}>
-            <Gallery images={this.configureMedia()} />
+            <Gallery
+                images={this.configureMedia()}
+                theme={theme}
+            />
         </div>
     }
 
@@ -61,8 +116,9 @@ class Media extends Component {
                     `${dir}/${file}-500.${type} 500w`,
                     `${dir}/${file}-320.${type} 320w`,
                 ],
-                caption: file,
-                imageSourceUrl: medium.get('imageSourceUrl'),
+                // We had to add _s to the file names so webpack worked, sigh
+                caption: `${medium.get('caption') || file.replace(/_/g, ' ')} <br>Credit`,
+                sourceImageUrl: medium.get('imageSourceUrl'),
                 sourceUrl: medium.get('sourceUrl'),
                 credit: medium.get('credit'),
                 date: medium.get('date')

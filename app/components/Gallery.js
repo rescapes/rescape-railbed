@@ -76,9 +76,21 @@ class Gallery extends Component {
 			</div>
 		);
 	}
-	handleDownload () {
-		window.open(this.props.images[this.state.currentImage].src);
+	// from http://stackoverflow.com/questions/283956/
+	handleDownload() {
+		var link = document.createElement('a');
+        const src = this.props.images[this.state.currentImage].src
+		if (typeof link.download === 'string') {
+			document.body.appendChild(link); //Firefox requires the link to be in the body
+			link.download = ''
+			link.href = src
+			link.click();
+			document.body.removeChild(link); //remove the link when done
+		} else {
+			location.replace(src);
+		}
 	}
+
 	render () {
 		let customControls = [
 			<DownloadButton key="Download" handler={this.handleDownload.bind(this)} />,
@@ -89,6 +101,7 @@ class Gallery extends Component {
 				{this.props.subheading && <p>{this.props.subheading}</p>}
 				{this.renderGallery()}
 				<Lightbox
+					backdropClosesModal
 					currentImage={this.state.currentImage}
 					customControls={customControls}
 					images={this.props.images}

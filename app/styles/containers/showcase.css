@@ -1,9 +1,9 @@
 .showcase {
     /* allows z-indexing to work with iframes */
-    left: 10px;
+    left: $showcase-left;
     position: fixed;
-    top: 0px;
+    top: $showcase-top;
     height: $showcase-height;
-    right: $document-left;
+    width: $showcase-width;
     z-index: 2;
 }
