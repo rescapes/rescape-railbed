@@ -117,7 +117,7 @@ class Media extends Component {
                     `${dir}/${file}-320.${type} 320w`,
                 ],
                 // We had to add _s to the file names so webpack worked, sigh
-                caption: `${medium.get('caption') || file.replace(/_/g, ' ')} <br>Credit`,
+                caption: medium.get('caption') || file.replace(/_/g, ' '),
                 sourceImageUrl: medium.get('imageSourceUrl'),
                 sourceUrl: medium.get('sourceUrl'),
                 credit: medium.get('credit'),

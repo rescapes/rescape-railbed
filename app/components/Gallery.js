@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import Lightbox from 'react-images';
+import ExtendedLightbox from './ExtendedLightbox';
 import DownloadButton from './DownloadButton';
 
 
@@ -100,7 +100,7 @@ class Gallery extends Component {
 				{this.props.heading && <h2>{this.props.heading}</h2>}
 				{this.props.subheading && <p>{this.props.subheading}</p>}
 				{this.renderGallery()}
-				<Lightbox
+				<ExtendedLightbox
 					backdropClosesModal
 					currentImage={this.state.currentImage}
 					customControls={customControls}
