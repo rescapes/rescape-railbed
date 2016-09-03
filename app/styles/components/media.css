@@ -266,36 +266,51 @@ div:not(#app) > div[data-reactroot] > div > div {
         height: 100%;
 
         /* The header div */
-        >div {
+        >div[class*="header"] {
             justify-content: flex-end;
         }
 
-        /* The figure */
-        >figure {
-             height: calc(100% - 20px);
-             -webkit-margin-before: 0em;
-             -webkit-margin-after: 0em;
-            /* The image */
-            >img {
-                height: calc(100% - 20px);
-            }
-            /* The footer */
-            >div {
-                color: $white;
-                font-size: $h4-font-size;
-
-                /* The counter */
-                >div {
-                    color: $white;
-                    font-size: $normal-font-size;
-                }
-            }
-        }
     }
     /* The right button. Move it in since the whole container is the entire viewport width */
     >button[class*="arrow__direction__right"] {
         left: calc($gallery-width - 95px);
     }
+}
+
+/* We use ExtendedLightbox to wrap the Lightbox and add components to it */
+.footerWrapper {
+    width: 100%;
+    height: 100%;
+    /* The figure */
+    >figure {
+         height: calc(100% - 20px);
+         -webkit-margin-before: 0em;
+         -webkit-margin-after: 0em;
+        /* The image */
+        >img {
+             height: calc(100% - 20px);
+         }
+        /* The footer */
+        >div {
+             color: $white;
+             font-size: $h5-font-size;
+
+            /* The counter */
+            >div {
+                 color: $white;
+                 font-size: $h5-font-size;
+             }
+        }
+    }
+}
+.image-credit {
+    font-size: $h5-font-size;
+    color: $faded-gray;
+    position: absolute;
+    top: 45px;
+    right: 30px;
+    text-align: right;
+    width: 100%;
 }
 
 .download-button {

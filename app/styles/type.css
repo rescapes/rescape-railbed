@@ -42,7 +42,7 @@ a{
     color: $link-color;
 	text-decoration: none;
 	font-weight: lighter;
-        &:hover {
-        text-decoration: underline;
+    &:hover {
+         color: $white;
     }
 }

@@ -43,6 +43,7 @@ module.exports = {
             mainPath
         ],
         style: STYLE,
+        /*
         testEmbed: [
             // For hot style updates
             'webpack/hot/dev-server',
@@ -52,6 +53,7 @@ module.exports = {
 
             sketchupStartupPath
         ]
+        */
     },
     output: {
         path: BUILD,

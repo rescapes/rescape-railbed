@@ -36,9 +36,9 @@ var amtrakStandardModels = Map({
             }),
             'AMTRAK Superliner Dining Car': Map({
                 caption: 'Hot breakfast in the dining car on the northbound Coast Starlight',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
+                sourceUrl: 'http://rescapes.net/',
+                credit: 'Rescape',
+                date: 'December 2015'
             }),
             'AMTRAK Superliner Fraster Winter Park': Map({
                 caption: 'Hot breakfast in the dining car on the northbound Coast Starlight',
@@ -91,8 +91,8 @@ var amtrakStandardModels = Map({
             'Cafe Car Lounge Area': Map({
                 caption: "Café Car Lounge Area on AMTRAK's Central California San Joaquin",
                 sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/6/6f/Passengers_in_Amtrak_lounge_car_of_San_Joaquin_%28train%29_2014.jpg',
-                sourceUrl: 'https://en.wikipedia.org/wiki/California_Car_(railcar)',
-                credit: 'George Garrigues, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=42379331'
+                sourceUrl: 'https://commons.wikimedia.org/w/index.php?curid=42379331',
+                credit: 'George Garrigues, CC BY-SA 3.0',
             }),
             'Deutsche Bahn Bordbistro': Map({
                 caption: "Germany's Deutsche Bahn serves food and drinks on intercity high-speed and regional trains",

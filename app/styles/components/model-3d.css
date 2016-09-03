@@ -62,7 +62,7 @@ iframe {
     left:0;
     right: 0;
     width: $model-3d-width;
-    height: $model-3d-height;
+    height: $showcase-3d-height;
 
     &.left {
         background: linear-gradient(to left, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
