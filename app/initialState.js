@@ -30,21 +30,34 @@ var amtrakStandardModels = Map({
             }),
             'AMTRAK Superliner Cafe Lounge Car': Map({
                 caption: 'Casual food is available on most AMTRAK trains',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
+                sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0a/Amtrak_Superliner_Cafe_Lounge_car.jpg',
+                sourceUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0a/Amtrak_Superliner_Cafe_Lounge_car.jpg',
+                credit: 'Wikimedia'
             }),
             'AMTRAK Superliner Dining Car': Map({
                 caption: 'Hot breakfast in the dining car on the northbound Coast Starlight',
                 sourceUrl: 'http://rescapes.net/',
                 credit: 'Rescape',
-                date: 'December 2015'
+                date: 'October 2015'
             }),
-            'AMTRAK Superliner Fraster Winter Park': Map({
-                caption: 'Hot breakfast in the dining car on the northbound Coast Starlight',
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-ZdzL7CV/0/M/sacramento-0138-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
+            'AMTRAK Superliner Fraser Winter Park': Map({
+                caption: 'Chicago Zephyr Passengers take a brake at the Fraser/Winter Park AMTRAK Station',
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+                date: 'November 2015'
+            }),
+            'AMTRAK Superliner Colorado': Map({
+                caption: "AMTRAK's Chicago Zephyr offers stunning scenery in the Colorado Rockies",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+                date: 'November 2015'
+            }),
+            'AMTRAK Coast Starlight Parlour Car': Map({
+                caption: "AMTRAK's Coast Starlight first class parlour car offers the height of travel luxury on a publicly operated train",
+                sourceImageUrl: 'http://www.trainsandtravel.com/wp-content/uploads/2015/07/Parlour-Car-copy-1090x818.jpg',
+                sourceUrl: 'http://www.trainsandtravel.com/the-nickel-and-diming-continues/',
+                credit: 'Tranis & Travel with Jim Loomis',
+                date: 'July 2015'
             })
         })
 
@@ -78,9 +91,9 @@ var amtrakStandardModels = Map({
             }),
             'San Joaquin Cafe Car': Map({
                 caption: "Café Car of AMTRAK's Central California service",
-                sourceImageUrl: 'http://photos.everintransit.com/US-California/Sacramento/i-CHSJLNj/0/M/sacramento-091445-M.jpg',
-                sourceUrl: 'http://www.everintransit.com/capitol-corridor-amtrak-california/',
-                credit: 'Ever In Transit'
+                sourceImageUrl: 'https://www.flickr.com/photos/hercwad/3592097342/',
+                sourceUrl: 'http://www.flickriver.com/photos/hercwad/3592097342/',
+                credit: 'Chris (Flickr Handle LA Wad)'
             }),
             'Cafe Car Service': Map({
                 caption: "Café Car Service on AMTRAK's Northern California Capitol Corridor",
@@ -118,15 +131,73 @@ var amtrakStandardModels = Map({
                 anchorId: 'id.5dezdsk8y4kg'
             }),
         }),
-        media: Map({
+        media: OrderedMap({
+            'St Charles Streetcar': Map({
+                caption: "The Venerable New Orleans Saint Charles Streetcar saunters along tree and grass-lined tracks",
+                sourceImageUrl: 'http://i0.wp.com/gonola.com/images/Saint-Charles-streetcar.jpg?w=510',
+                sourceUrl: 'http://gonola.com/2012/12/11/make-a-day-of-riding-the-saint-charles-streetcar.html',
+                credit: 'Hotels.com'
+            }),
+            'Ghent Trams and Public Life': Map({
+                caption: "Trams in Ghent, Belgium predictably slide through public space on fixed guideways",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+                date: 'July 2016'
+            }),
+            'Bordeaux Tramway': Map({
+                caption: "Trams in Bordeaux, France are powered by a safe, inductive power source between the tracks, eliminating overhead wires downtown",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+                date: 'July, 2010'
+            }),
+            'Bordeaux Tramway Tracks': Map({
+                caption: "The inductive power source for trams in Bordeaux, France is likely the future wireless option for many trams and some buses, if not on-board batteries",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+                date: 'July, 2010'
+            }),
             'Nantes Busway': Map({
-                caption: "Bus Rapid Transit Service in Nantes, France. Though the bus has its own dedicated right-of-way, the" +
-                "busway cannot be considered a fixed-guideway, since the bus is physically free to veer off of it",
+                caption: "Bus Rapid Transit Service in Nantes, France with dedicated right-of-way, but not fixed guideway",
                 sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Flickr_-_IngolfBLN_-_Nantes_-_Busway_-_Ligne_4_-_Duchesse_Anne_-_Ch%C3%A2teau_des_Ducs_de_Bretagne_%281%29.jpg/1920px-Flickr_-_IngolfBLN_-_Nantes_-_Busway_-_Ligne_4_-_Duchesse_Anne_-_Ch%C3%A2teau_des_Ducs_de_Bretagne_%281%29.jpg',
                 sourceUrl: 'https://en.wikipedia.org/wiki/Nantes_Busway',
                 credit: 'By IngolfBLN - Nantes - Busway - Ligne 4 - Duchesse Anne - Château des Ducs de Bretagne, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=22010918'
+            }),
+            'Los Angeles Orange Line BRT': Map({
+                caption: "BRT busline built upon Southern Pacific Railroad's former Burbank Branch Line. This uncomfortable, overcrowded bus will now be upgraded to light rail",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+                date: 'December 2012'
+            }),
+            'Bus Rapid Transit': Map({
+                caption: "BRT in Cambridge, England that attempts to imitate the aesthetics of a modern tram. A tram track would be safer in this pedestrian environment",
+                sourceImageUrl: 'http://www.buszone.co.uk/Streetcar%5E061005_02.jpg',
+                sourceUrl: 'http://www.skyscrapercity.com/showthread.php?t=1155659&page=2',
+                credit: 'Thefancydanhimself, user of SkyscraperCity.com',
+            }),
+            'O Bahn Busway': Map({
+                caption: "A rare fixed-guideway bus in Adelaide, South Australia, which also functions off-track in the suburbs",
+                sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7a/Bus_track.jpg?download',
+                sourceUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/7a/Bus_track.jpg',
+                credit: 'Beneaththelandslide at English Wikipedia'
+            }),
+            'Montreal Metro': Map({
+                caption: "New cars for Montreal's Metro, which is among the few that runs on rubber tires, resulting in a quiet, smooth underground ride",
+                sourceImageUrl: 'https://shawglobalnews.files.wordpress.com/2014/04/metro-car-unveil-6.jpg?quality=70&strip=all&w=672&h=448&crop=1',
+                sourceUrl: 'http://globalnews.ca/news/1296093/new-metro-trains-unveiled/',
+                credit: 'Tim Sargeant/Global News'
+            }),
+            'Mi Teleferico': Map({
+                caption: "Gondolas like this on in La Paz, Bolivia are an excellent fixed-guideway option for hills, mountains, and bodies of water",
+                sourceImageUrl: 'http://i2.cdn.turner.com/cnnnext/dam/assets/150107162851-cable-cars-la-paz-gondola-exlarge-169.jpg',
+                sourceUrl: 'http://www.cnn.com/2015/02/09/travel/worlds-most-amazing-cable-cars/',
+                credit: 'CNN'
+            }),
+            'Funicular': Map({
+                caption: "Feniculars like this classic one in Budapest, Hungary are also a viable fixed-guideway option for hills and mountains",
+                sourceImageUrl: 'http://www.budapest.com/w/assignables/galleries/51/funicular_02.jpg',
+                sourceUrl: 'http://www.budapest.com/city_guide/sights/monuments_of_art/buda_castle_funicular.en.html',
+                credit: 'Budapest.com'
             })
-
         })
     }),
 
@@ -146,15 +217,22 @@ var amtrakStandardModels = Map({
             }),
         }),
         media: OrderedMap({
+            'Swedish Rail': Map({
+                caption: 'Active Class A tracks of the railway station Skinnskatteberg, Sweden',
+                sourceImageUrl: 'http://www.tribunetalk.com/wp-content/uploads/2014/12/Streetcar.jpg',
+                sourceUrl: 'http://www.tribunetalk.com/wp-content/uploads/2014/12/Streetcar.jpg',
+                credit: 'Zach Schaner - Seattle Transit Blog',
+                date: 'December 2015'
+            }),
             'St Charles Streetcar': Map({
-                caption: 'The iconic St Charles Streetcar of New Orleans travels part of its route on unimpeded class B right-of-way. Other parts of the route are unfortunately in mixed traffic',
+                caption: 'The iconic St Charles Streetcar of New Orleans travels part of its route on unimpeded Class B right-of-way. Other parts of the route are unfortunately in mixed traffic',
                 sourceImageUrl: 'http://www.tribunetalk.com/wp-content/uploads/2014/12/Streetcar.jpg',
                 sourceUrl: 'http://www.tribunetalk.com/wp-content/uploads/2014/12/Streetcar.jpg',
                 credit: 'Zach Schaner - Seattle Transit Blog',
                 date: 'December 2015'
             }),
             'Portland Streetcar in Traffic': Map({
-                caption: 'A streetcar investment needlessly discomforts and inconveniences its users by putting the streetcar in mixed traffic',
+                caption: 'A streetcar investment needlessly discomforts and inconveniences its users by putting the streetcar in mixed traffic (Class C ROW)',
                 sourceImageUrl: 'http://image.oregonlive.com/home/olive-media/width960/img/oregonian/photo/2015/12/03/portland-streetcar-dcae5f69472d7f5e.jpg',
                 sourceUrl: 'http://www.oregonlive.com/commuting/index.ssf/2015/12/portland_streetcar_to_try_limi.html',
                 credit: 'Zach Schaner - Seattle Transit Blog',
@@ -167,6 +245,13 @@ var amtrakStandardModels = Map({
                 sourceUrl: 'http://seattletransitblog.com/2015/11/11/madison-brt-creep/',
                 credit: 'Elliot Njus - The Orgonian/Oregon Live',
                 date: 'December 2015'
+            }),
+            'St Charles Streetcar versus CCar': Map({
+                caption: 'A Saint Charles streetcar runs in Class B right-of-way besides a car. Downtown the streetcar must compete with the car in class C right-of-way',
+                sourceImageUrl: 'http://s3.amazonaws.com/stb-wp/wp-content/uploads/2015/11/10113329/Madison-BRT-Profile-01.png',
+                sourceUrl: '',
+                credit: 'Unknown',
+                date: 'December 2007'
             }),
         })
     }),
@@ -194,7 +279,7 @@ var amtrakStandardModels = Map({
         })
     }),
 
-    'Seat Comfort (Metro)': Map({
+    'Seat Comfort Metro and Tram': Map({
         status: Statuses.INITIALIZED,
         id: 'f3ad4189-7150-4048-a4c9-c3e9652e9482',
         anchorId: 'id.em6st57x7wbe',
@@ -217,10 +302,19 @@ var amtrakStandardModels = Map({
             'Armrests and Recliners': Map({
                 anchorId: 'id.bbssm7d9ycql'
             })
+        }),
+        media: OrderedMap({
+            'St Charles Wooden Seats': Map({
+                caption: 'The wooden benches on the New Orleans Saint Charles streetcar are reversible to match the direction of travel',
+                sourceImageUrl: 'https://i.ytimg.com/vi/zOLp6u7Se3Q/maxresdefault.jpg',
+                sourceUrl: 'https://www.youtube.com/watch?v=zOLp6u7Se3Q',
+                credit: 'Go NOLA',
+                date: 'May 2013'
+            })
         })
     }),
 
-    'Seat Comfort (AMTRAK/Bus)': Map({
+    'Seat Comfort AMTRAK and Bus': Map({
         status: Statuses.INITIALIZED,
         id: '843cbe82-5a4a-4453-9766-488049133e9d',
         anchorId: 'id.53cvna734bl4',
@@ -234,7 +328,8 @@ var amtrakStandardModels = Map({
             'Low-floor buses have rear-facing seats': Map({
                 anchorId: 'id.s9a7cdqojj39'
             }),
-        })
+        }),
+
     }),
 
     'Personal Space and Privacy': Map({
