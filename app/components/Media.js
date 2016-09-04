@@ -104,7 +104,7 @@ class Media extends Component {
         const dir = '../images'
         const media = this.props.media || Map({})
         return media.map(function(medium, key) {
-            const type = medium.type || 'jpg'
+            const type = medium.get('type') || 'jpg'
             // We can't use spaces in our file names, it confuses babel or webpack or something
             const file = key.replace(/ /g, '_')
             return {
