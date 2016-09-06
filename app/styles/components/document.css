@@ -47,12 +47,19 @@ fades away where ever the document overlaps */
  }
 }
 
+#header {
+    color: $rescape-love;
+    font-size: $h3-font-size;
+}
+
 /* This class is injected with divs to separate the documents by the 3d Model that goes with it */
 .modelSection {
     background: linear-gradient(to right, rgba(255, 255, 255, .7), $white);
     border-radius: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     padding-left: 30px;
     padding-right: 20px;
 }

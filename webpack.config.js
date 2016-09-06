@@ -20,6 +20,7 @@ const STYLE = __dirname + '/app/style.css';
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 8080;
 const TEMPLATE = __dirname + '/app/templates/index_default.html'
+const FONTS = __dirname + `/app/fonts/[name].[ext]`;
 const postcssImport = require('postcss-easy-import');
 
 var path = require('path');
@@ -72,11 +73,13 @@ module.exports = {
                 test: /\.css$/,
                 loaders: ['style', 'css', 'postcss'],
                 include: APP
-            }, {
-                test: /\.(jpg|png)$/,
+            },
+            {
+                test: /\.(jpg|png|svg)$/,
                 loader: 'file-loader?name=/images/[name].[ext]',
                 include: APP
-            }]
+            },
+        ]
     },
     postcss: function processPostcss(webpack) {  // eslint-disable-line no-shadow
         return [
