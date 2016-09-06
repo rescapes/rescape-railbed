@@ -43,6 +43,6 @@ a{
 	text-decoration: none;
 	font-weight: lighter;
     &:hover {
-         color: $white;
+         color: $link-color-hover
     }
 }

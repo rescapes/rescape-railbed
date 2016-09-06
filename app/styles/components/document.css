@@ -1,18 +1,15 @@
 /***
     Note that the Document component's content uses styles that come from Google Docs. These are thus
-    intended to be additions and overrides
+    intended to be additions and overrides. More overrides are below in modelSection, a div
+    injected for each section of the document that represents a 3d Model (as demarcated in the original
+    doc with <hr> elements)
 ***/
 .document {
     top: $document-top;
     left: $document-left;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 30px;
-    padding-right: 20px;
     margin-right: 10px;
     z-index: 2;
     position: absolute;
-    background: linear-gradient(to right, rgba(255, 255, 255, .7), $white);
 }
 
 
@@ -48,4 +45,14 @@ fades away where ever the document overlaps */
      height: 10px;
      top: auto;
  }
+}
+
+/* This class is injected with divs to separate the documents by the 3d Model that goes with it */
+.modelSection {
+    background: linear-gradient(to right, rgba(255, 255, 255, .7), $white);
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 30px;
+    padding-right: 20px;
 }

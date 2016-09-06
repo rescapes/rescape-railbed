@@ -306,11 +306,18 @@ div:not(#app) > div[data-reactroot] > div > div {
 .image-credit {
     font-size: $h5-font-size;
     color: $faded-gray;
+    background-color: $faded-gray-background;
     position: absolute;
     top: 45px;
-    right: 30px;
+    right: 25px;
     text-align: right;
-    width: 100%;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+.image-date {
+    font-size: $h6-font-size;
+    font-style: italic;
 }
 
 .download-button {
