@@ -135,11 +135,62 @@ class Document extends Component {
      */
     render() {
         // Since the HTML comes from a Google doc or similar we can completely trust it
+        const body = this.props.document.getIn(['content', 'body'])
+        // The only processing we do to the Google doc HTML is the following:
+        // 1) Replace pairs of <hr> elements with <div className='modelSection'>...</div>
+        // This allows us to style each portion of the doc to match a corresponding 3D model
+        const modifiedBody = this.injectStyledDivWrappers(body)
+
         return <div className='document'>
-            <div dangerouslySetInnerHTML={{__html: this.props.document.getIn(['content', 'body'])}}>
+            <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
             </div>
             <div className='document-gradiant right' />
         </div>
+    }
+
+    /***
+     * Wraps each section of text in a <div class="modelSection">...</div> So the user can tell
+     * which part of the text corresponds to which 3d model
+     */
+    injectStyledDivWrappers(body) {
+        const regex = /<hr>/g,
+            hrLength = '<hr>'.length,
+            // The length of the spacer before and after each hr
+            hrSpacerLength = '<p class="c1"><span class="c2"></span></p>'.length,
+            contentsDiv = '<div id="contents">',
+            contentsDivLength = contentsDiv.length
+        var index = 0,
+            modifiedBody = null,
+            startLocation = null,
+            result
+        while ( (result = regex.exec(body)) ) {
+            let bodyContent = null
+            if (index == 0) {
+                // Grab everything starting with the "content" div and put the just header inside it
+                const contentDivIndex = body.indexOf(contentsDiv)
+                // <div id="content">
+                modifiedBody = body.slice(contentDivIndex, contentDivIndex + contentsDivLength)
+                // <div id="header>header</div>...spacer<hr> (not including spacer<hr>)
+                bodyContent = body.slice(0, contentDivIndex) +
+                    body.slice(contentDivIndex + contentsDivLength, result.index - hrSpacerLength)
+            }
+            else {
+                // Grab everything since last <hr>spacer and before this spacer<hr>
+                bodyContent = body.slice(startLocation, result.index - hrSpacerLength)
+            }
+            // Concat the <div class='modelSection'>
+            // ...content since last hr to this hr minus the spacer before hr ...
+            // </div>
+            modifiedBody = modifiedBody.concat(
+                `<div class='modelSection'>${bodyContent}</div>`,
+                // Now put that space in after the div ends
+                body.slice(result.index - hrSpacerLength, result.index))
+
+            // Store the index after the <hr> and the spacer after the hr
+            startLocation = result.index + hrLength + hrSpacerLength
+            index++
+        }
+        return modifiedBody
     }
 }
 

@@ -13,7 +13,7 @@ import {OrderedMap, Map, List} from 'immutable'
 import Statuses from './statuses'
 
 
-var amtrakStandardModels = Map({
+var amtrakStandardModels = OrderedMap({
     'AMTRAK Superliner': Map({
         status: Statuses.INITIALIZED,
         id: '2b495238-e77d-4edf-bb23-b186daf0640f',
@@ -133,7 +133,7 @@ var amtrakStandardModels = Map({
         }),
         media: OrderedMap({
             'St Charles Streetcar': Map({
-                caption: "The Venerable New Orleans Saint Charles Streetcar saunters along tree and grass-lined tracks",
+                caption: "The venerable New Orleans Saint Charles Streetcar saunters along tree and grass-lined tracks",
                 sourceImageUrl: 'http://i0.wp.com/gonola.com/images/Saint-Charles-streetcar.jpg?w=510',
                 sourceUrl: 'http://gonola.com/2012/12/11/make-a-day-of-riding-the-saint-charles-streetcar.html',
                 credit: 'Hotels.com'
@@ -160,7 +160,7 @@ var amtrakStandardModels = Map({
                 caption: "Bus Rapid Transit Service in Nantes, France with dedicated right-of-way, but not fixed guideway",
                 sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Flickr_-_IngolfBLN_-_Nantes_-_Busway_-_Ligne_4_-_Duchesse_Anne_-_Ch%C3%A2teau_des_Ducs_de_Bretagne_%281%29.jpg/1920px-Flickr_-_IngolfBLN_-_Nantes_-_Busway_-_Ligne_4_-_Duchesse_Anne_-_Ch%C3%A2teau_des_Ducs_de_Bretagne_%281%29.jpg',
                 sourceUrl: 'https://en.wikipedia.org/wiki/Nantes_Busway',
-                credit: 'By IngolfBLN - Nantes - Busway - Ligne 4 - Duchesse Anne - Château des Ducs de Bretagne, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=22010918'
+                credit: 'IngolfBLN'
             }),
             'Los Angeles Orange Line BRT': Map({
                 caption: "BRT busline built upon Southern Pacific Railroad's former Burbank Branch Line. This uncomfortable, overcrowded bus will now be upgraded to light rail",
@@ -217,19 +217,29 @@ var amtrakStandardModels = Map({
             }),
         }),
         media: OrderedMap({
+            'Cologne': Map({
+                caption: 'Practically all heavy-rail trains, like this high-speed train in Cologne, Germany, enjoy Class A ROW',
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+                date: 'August 2014'
+            }),
             'Swedish Rail': Map({
-                caption: 'Active Class A tracks of the railway station Skinnskatteberg, Sweden',
-                sourceImageUrl: 'http://www.tribunetalk.com/wp-content/uploads/2014/12/Streetcar.jpg',
+                caption: 'Active Class A tracks of the railway station in Skinnskatteberg, Sweden',
                 sourceUrl: 'http://www.tribunetalk.com/wp-content/uploads/2014/12/Streetcar.jpg',
-                credit: 'Zach Schaner - Seattle Transit Blog',
-                date: 'December 2015'
+                credit: 'Rescape',
+                date: 'July 2016'
+            }),
+            'Jack London Square AMTRAK': Map({
+                caption: 'Even though this AMTRAK train in Oakland, California, runs down the middle of the street, it has class A right-of-way with crossing gates at intersections',
+                sourceImageUrl: 'http://www.redoveryellow.com/railroad/21761_jack_london_oakland.jpg',
+                sourceUrl: 'http://www.redoveryellow.com/railroad/_page1.html',
+                credit: 'Eric Haas, red over yellow dot com'
             }),
             'St Charles Streetcar': Map({
                 caption: 'The iconic St Charles Streetcar of New Orleans travels part of its route on unimpeded Class B right-of-way. Other parts of the route are unfortunately in mixed traffic',
-                sourceImageUrl: 'http://www.tribunetalk.com/wp-content/uploads/2014/12/Streetcar.jpg',
-                sourceUrl: 'http://www.tribunetalk.com/wp-content/uploads/2014/12/Streetcar.jpg',
-                credit: 'Zach Schaner - Seattle Transit Blog',
-                date: 'December 2015'
+                sourceImageUrl: 'http://i0.wp.com/gonola.com/images/Saint-Charles-streetcar.jpg?w=510',
+                sourceUrl: 'http://gonola.com/2012/12/11/make-a-day-of-riding-the-saint-charles-streetcar.html',
+                credit: 'Hotels.com'
             }),
             'Portland Streetcar in Traffic': Map({
                 caption: 'A streetcar investment needlessly discomforts and inconveniences its users by putting the streetcar in mixed traffic (Class C ROW)',
@@ -246,7 +256,7 @@ var amtrakStandardModels = Map({
                 credit: 'Elliot Njus - The Orgonian/Oregon Live',
                 date: 'December 2015'
             }),
-            'St Charles Streetcar versus CCar': Map({
+            'St Charles Streetcar versus Car': Map({
                 caption: 'A Saint Charles streetcar runs in Class B right-of-way besides a car. Downtown the streetcar must compete with the car in class C right-of-way',
                 sourceImageUrl: 'http://s3.amazonaws.com/stb-wp/wp-content/uploads/2015/11/10113329/Madison-BRT-Profile-01.png',
                 sourceUrl: '',
@@ -276,6 +286,42 @@ var amtrakStandardModels = Map({
             'Consolidation Challenges': Map({
                 anchorId: 'id.ifjl8mnx6p4n'
             }),
+        }),
+        media: OrderedMap({
+            'AC Transit': Map({
+                type: 'png',
+                caption: 'This local bus in Oakland, California, is littered with some 50 stops and dozens of stop signs and traffic lights on a 9 mile (14.5 km) line, meaning a stop every .2 miles (.3 km)',
+                sourceUrl: 'https://sfbaytransit.org/actransit/route/11/map',
+                credit: 'SF Bay Transit',
+                date: 'As of September 2016'
+            }),
+            'Rapid Bus': Map({
+                caption: 'This Rapid Bus in the Oakland, Calfornia region, despite running in mix traffic and other discomforts, wisely stops only every .5 miles (.8 km) on average',
+                sourceImageUrl: 'http://i47.tinypic.com/flfzix.jpg',
+                sourceUrl: 'https://cptdb.ca/topic/294-ac-transit/?page=2',
+                credit: 'CPTDB Wiki Editor',
+                date: 'June, 2010'
+            }),
+            'Deutsche Bahn': Map({
+                caption: 'This 500 mile (800 km) high speed train trip in Germany from Munich to Hamburg has a reasonable eight intermediate stops in 5 1/2 hours',
+                sourceUrl: 'https://www.bahn.com/ and http://www.gamesareasocial.com/loja/222610/2/conteudo-adicional-dlc/DB-BR-Class-411-%C2%B4ICE-T%C2%B4-EMU-Add-On-detalhes',
+                credit: 'Deutsche Bahn (schdule) and Games Area (photo)',
+                date: 'As of September 2016'
+            }),
+            'Third Street Muni': Map({
+                caption: "Phase 1 of San Francisco's Third Street (T) Light Rail Line has 20 stops in 5 miles (8 km), all south of downtown. 10 stops would make nicer rides for all with .5 mile spacing instead of .2 to .3 miles",
+                sourceImageUrl: 'http://mission.wpengine.netdna-cdn.com/wp-content/uploads/2010/04/muni-620x393.jpg',
+                sourceUrl: 'http://missionlocal.org/2010/04/the-risks-of-riding-munis-third-street-line/',
+                credit: 'Mission Local (Route list from Wikipedia)',
+                date: 'April 2010'
+            }),
+            'A Train': Map({
+                caption: "New York City's MTA A Line expresses by the stations of local lines on center tracks, creating a satisfying travel speed for longer trips",
+                sourceImageUrl: 'http://cdn.newsday.com/polopoly_fs/1.12168711.1471269222!/httpImage/image.jpg_gen/derivatives/landscape_1280/image.jpg',
+                sourceUrl: 'http://www.amny.com/transit/a-train-facts-figures-and-history-of-the-eighth-avenue-fulton-and-rockaway-lines-1.12168565',
+                credit: 'AM New York',
+                date: 'August 2016'
+            }),
         })
     }),
 
@@ -304,13 +350,37 @@ var amtrakStandardModels = Map({
             })
         }),
         media: OrderedMap({
+            'Munich Ubahn': Map({
+                caption: "Munich's metro cars combine unpadded fabric row seats with wooden inward-facing seats",
+                sourceImageUrl: 'https://i.ytimg.com/vi/zOLp6u7Se3Q/maxresdefault.jpg',
+                sourceUrl: 'https://www.youtube.com/watch?v=zOLp6u7Se3Q',
+                credit: 'You Tube',
+            }),
+            'BART': Map({
+                caption: "The San Francisco Bay Area's BART and Washington DC's Metro's are among few metro systems that feature padded seats",
+                sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/Bart_C2_car_Interior.jpg',
+                sourceUrl: 'https://en.wikipedia.org/wiki/Bay_Area_Rapid_Transit',
+                credit: 'Wikipedia',
+            }),
+            'Edinburgh Tram': Map({
+                caption: "Edinburgh's trams feature padded seats with high seatbacks. There is no reason to deny passengers such niceties",
+                sourceImageUrl: 'http://upload.wikimedia.org/wikipedia/commons/2/2b/Interior_of_Edinburgh_Tram_-_geograph.org.uk_-_1175899.jpg',
+                sourceUrl: 'http://www.skyscrapercity.com/showthread.php?t=672554&page=153',
+                credit: 'OneMelbGuy, user of SkyscraperCity.com',
+            }),
+            'Montpelier Tram': Map({
+                caption: "Long trams like these in Montpelier France increase the chance of plenty of open seats, which is always a good thing",
+                sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Montpellier_-_Tram_3_-_Details_%287716485224%29.jpg/1600px-Montpellier_-_Tram_3_-_Details_%287716485224%29.jpg',
+                sourceUrl: 'https://commons.wikimedia.org/wiki/File:Montpellier_-_Tram_3_-_Details_(7716485224).jpg',
+                credit: 'Wikimedia Commons',
+            }),
             'St Charles Wooden Seats': Map({
                 caption: 'The wooden benches on the New Orleans Saint Charles streetcar are reversible to match the direction of travel',
                 sourceImageUrl: 'https://i.ytimg.com/vi/zOLp6u7Se3Q/maxresdefault.jpg',
                 sourceUrl: 'https://www.youtube.com/watch?v=zOLp6u7Se3Q',
                 credit: 'Go NOLA',
                 date: 'May 2013'
-            })
+            }),
         })
     }),
 

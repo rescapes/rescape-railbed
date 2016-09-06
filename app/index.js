@@ -13,7 +13,7 @@
 import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom';
-import {Router, Route, hashHistory} from 'react-router';
+import {Router, Route, useRouterHistory} from 'react-router';
 import App from './components/App'
 import Site from './components/Site'
 import makeStore from './store'
@@ -21,18 +21,9 @@ import {Provider} from 'react-redux';
 import {showDocument} from './actions/document'
 import {setState} from './actions/site'
 import initialState from './initialState'
-
-// Used to access modules in th console, sigh
-/*
-window['require'] = function(modules, callback) {
-    var modulesToRequire = modules.forEach(function(module) {
-        switch(module) {
-            case 'immutable': return require('immutable');
-        }
-    })
-    callback.apply(this, modulesToRequire);
-}
-*/
+import { createHistory } from 'history'
+// useRouterHistory creates a composable higher-order function
+const appHistory = useRouterHistory(createHistory)({ queryKey: false })
 
 const store = makeStore()
 window.store = store;
@@ -45,11 +36,10 @@ const routes = <Route component={App}>
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={hashHistory}>{routes}</Router>
+        <Router history={appHistory}>{routes}</Router>
     </Provider>,
     document.getElementById('app')
 );
-
 
 store.dispatch(setState(initialState))
 

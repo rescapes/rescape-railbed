@@ -65,7 +65,8 @@ $lightblue: color(deepskyblue lightness(80%));
 $fadesand: color(wheat saturation(30%));
 $sand: color(wheat lightness(80%));
 $gray: color($black lightness(80%));
-$faded-gray: color($gray a(80%));
+$faded-gray: color($white a(90%));
+$faded-gray-background: color($black a(70%));
 
 $font-stack: Railway, Arial, Helvetica, sans-serif;
 $page-background: $black;
@@ -76,6 +77,7 @@ $h2-font-size: calc( $h1-font-size * 80 / 100 );
 $h3-font-size: calc( $h1-font-size * 60 / 100 );
 $h4-font-size: calc( $h1-font-size * 40 / 100 );
 $h5-font-size: calc( $h1-font-size * 30 / 100 );
+$h6-font-size: calc( $h1-font-size * 20 / 100 );
 $normal-font-size: calc( $h1-font-size * 33.3 / 100 );
 
 $h1-line-height: 50px;
@@ -83,8 +85,10 @@ $h2-line-height: calc( $h1-line-height * 80 / 100 );
 $h3-line-height: calc( $h1-line-height * 60 / 100 );
 $h4-line-height: calc( $h1-line-height * 40 / 100 );
 $h5-line-height: calc( $h1-line-height * 30 / 100 );
+$h6-line-height: calc( $h1-line-height * 20 / 100 );
 $normal-line-height: calc( $h1-line-height * 33.3 / 100 );
 
 $heading-color: $black;
 $normal-font-color: $black;
-$link-color: $gray;
+$link-color: color($rescape-love lightness(40%));
+$link-color-hover: color($rescape-love lightness(50%));
