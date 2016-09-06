@@ -157,6 +157,8 @@ class Document extends Component {
             hrLength = '<hr>'.length,
             // The length of the spacer before and after each hr
             hrSpacerLength = '<p class="c1"><span class="c2"></span></p>'.length,
+            hrSpacerRegexStart = /^((?:<p class="c\d+?"><span class="c\d+?"><\/span><\/p>)+)/,
+            hrSpacerRegexEnd = /((?:<p class="c\d+?"><span class="c\d+?"><\/span><\/p>)+)$/,
             contentsDiv = '<div id="contents">',
             contentsDivLength = contentsDiv.length
         var index = 0,
@@ -172,22 +174,26 @@ class Document extends Component {
                 modifiedBody = body.slice(contentDivIndex, contentDivIndex + contentsDivLength)
                 // <div id="header>header</div>...spacer<hr> (not including spacer<hr>)
                 bodyContent = body.slice(0, contentDivIndex) +
-                    body.slice(contentDivIndex + contentsDivLength, result.index - hrSpacerLength)
+                    body.slice(contentDivIndex + contentsDivLength, result.index)
             }
             else {
                 // Grab everything since last <hr>spacer and before this spacer<hr>
-                bodyContent = body.slice(startLocation, result.index - hrSpacerLength)
+                bodyContent = body.slice(startLocation, result.index)
             }
             // Concat the <div class='modelSection'>
             // ...content since last hr to this hr minus the spacer before hr ...
             // </div>
-            modifiedBody = modifiedBody.concat(
-                `<div class='modelSection'>${bodyContent}</div>`,
-                // Now put that space in after the div ends
-                body.slice(result.index - hrSpacerLength, result.index))
+            // We remove the spacers in favor of padding/margin styling
+            const startSpacerMatch = hrSpacerRegexStart.exec(bodyContent)
+            const startSpacerIndex = startSpacerMatch ? startSpacerMatch[0].length : undefined
+            const endSpacerMatch = hrSpacerRegexEnd.exec(bodyContent)
+            const endSpacerIndex = endSpacerMatch ? endSpacerMatch.index : undefined
+            modifiedBody = modifiedBody.concat(`<div class='modelSection'>
+                ${bodyContent.slice(startSpacerIndex, endSpacerIndex)}
+            </div>`)
 
-            // Store the index after the <hr> and the spacer after the hr
-            startLocation = result.index + hrLength + hrSpacerLength
+            // Store the index after the <hr>
+            startLocation = result.index + hrLength
             index++
         }
         return modifiedBody
