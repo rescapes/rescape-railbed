@@ -17,7 +17,7 @@ import fetch from 'isomorphic-fetch'
 import ActionLoader from '../ActionLoader'
 
 /*
- * Settings Actions
+ * Settings Actions. See methods for explanations below
 */
 
 export const SET_3D = 'SET_3D'

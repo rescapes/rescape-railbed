@@ -131,7 +131,7 @@ class Model3d extends Component {
         const model = this.props.model
         const loadingOrReady = Statuses.LOADING | Statuses.READY
         const modelLoadingOrReady = model && (model.get('status') & loadingOrReady)
-        const tops = this.props.modelTops
+        const modelTops = this.props.modelTops
 
         // Maintain an iframe for each model. Only the iframe of the current model is ever visible.
         // We don't want to set the url of the iframe until it is desired to load a certain model
@@ -162,16 +162,16 @@ class Model3d extends Component {
             if (relevance == 'current') {
                 // Track whether the current is on its own or showing with previous or next
                 // We do this just to animate the transit of the 'top' property
-                divStateClass = tops['previous'] || tops['next'] ? 'duo' : 'solo'
+                divStateClass = modelTops['previous'] || modelTops['next'] ? 'duo' : 'solo'
             }
             else {
                 // Otherwise see if the previous or next is visible
                 // We do this just to animate the transit of the 'top' property
-                divStateClass = tops[relevance] ? 'active' : 'inactive'
+                divStateClass = modelTops[relevance] ? 'active' : 'inactive'
             }
 
-            const style = relevance && tops[relevance] ? {
-                top: `${Math.round(tops[relevance]*100)}%`,
+            const style = relevance && modelTops[relevance] ? {
+                top: `${Math.round(modelTops[relevance]*100)}%`,
             } : {}
 
             // Return the iframe wrapped in a div. The div must have a unique key for React

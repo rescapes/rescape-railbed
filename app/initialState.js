@@ -11,7 +11,7 @@
 
 import {OrderedMap, Map, List} from 'immutable'
 import Statuses from './statuses'
-
+import * as settingsActions from './actions/settings'
 
 var amtrakStandardModels = OrderedMap({
     'AMTRAK Superliner': Map({
@@ -249,11 +249,10 @@ var amtrakStandardModels = OrderedMap({
                 date: 'November 2015'
             }),
             'Madison BRT Profile': Map({
-                type: 'png',
                 caption: 'A planned BRT route in Madison, Wisconsin is compromised by Class C right-of-way',
-                sourceImageUrl: 'http://s3.amazonaws.com/stb-wp/wp-content/uploads/2015/11/10113329/Madison-BRT-Profile-01.png',
-                sourceUrl: 'http://seattletransitblog.com/2015/11/11/madison-brt-creep/',
-                credit: 'Elliot Njus - The Orgonian/Oregon Live',
+                sourceImageUrl: 'http://s3.amazonaws.com/stb-wp/wp-content/uploads/2015/11/10113329/Madison-BRT-Profile-01.png, http://bloximages.chicago2.vip.townnews.com/host.madison.com/content/tncms/assets/v3/editorial/7/c0/7c0fff53-3e68-5dd1-847f-4d7a8ea4953e/543306d6a2f32.image.jpg',
+                sourceUrl: 'http://seattletransitblog.com/2015/11/11/madison-brt-creep/, http://host.madison.com/wsj/news/local/govt-and-politics/madison-poised-for-next-steps-to-bus-rapid-transit-system/article_2c526b02-0100-51fd-92e7-39bb330b943a.html',
+                credit: 'Mike Chechvala - Wisconsin State Journal',
                 date: 'December 2015'
             }),
             'St Charles Streetcar versus Car': Map({
@@ -304,8 +303,8 @@ var amtrakStandardModels = OrderedMap({
             }),
             'Deutsche Bahn': Map({
                 caption: 'This 500 mile (800 km) high speed train trip in Germany from Munich to Hamburg has a reasonable eight intermediate stops in 5 1/2 hours',
-                sourceUrl: 'https://www.bahn.com/ and http://www.gamesareasocial.com/loja/222610/2/conteudo-adicional-dlc/DB-BR-Class-411-%C2%B4ICE-T%C2%B4-EMU-Add-On-detalhes',
-                credit: 'Deutsche Bahn (schdule) and Games Area (photo)',
+                sourceUrl: 'https://www.bahn.com/, http://www.gamesareasocial.com/loja/222610/2/conteudo-adicional-dlc/DB-BR-Class-411-%C2%B4ICE-T%C2%B4-EMU-Add-On-detalhes',
+                credit: 'Deutsche Bahn (schdule), Games Area (photo)',
                 date: 'As of September 2016'
             }),
             'Third Street Muni': Map({
@@ -401,7 +400,20 @@ var amtrakStandardModels = OrderedMap({
                 anchorId: 'id.s9a7cdqojj39'
             }),
         }),
-
+        media: OrderedMap({
+            'Brightline Interior': Map({
+                caption: 'Brightline, a company building now rail service in Florida (All Aboard Florida) has designed train cars with "intuitive interiors"',
+                sourceImageUrl: 'http://m.allaboardflorida.com/images/bl/Press-Release-Images/brightline_interiors_press-release.jpg?sfvrsn=4',
+                sourceUrl: 'http://m.allaboardflorida.com/press/press-releases/2016/06/10/brightline-reveals-innovative-trains-under-construction',
+                credit: 'Brightline',
+            }),
+            'Switzerland Bus Comfort': Map({
+                caption: "This Swiss bus in the Alps in the nicest bus I have ever been in, the only local bus I've experienced that focuses on comfort and shows off the scenery",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+                date: 'July 2016'
+            })
+        })
     }),
 
     'Personal Space and Privacy': Map({
@@ -598,11 +610,10 @@ var amtrakStandardModels = OrderedMap({
  * @type {*|Map<K, V>|Map<string, V>}
  */
 export default Map({
+    // See settings.js action. All action keys can be set here
     settings: Map({
-        // These are in here since they are used for arguments to the iframe URL, and hence can't be in css
-        modelWidth: 800,
-        modelHeight: 710,
-
+        [settingsActions.SET_3D]: true,
+        [settingsActions.SET_RELATED_IMAGES]: true
     }),
     documents: Map({
         keys: List(['amtrak_standard', 'the_new_rules_of_the_road']),

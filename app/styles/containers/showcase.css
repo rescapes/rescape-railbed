@@ -7,3 +7,19 @@
     width: $showcase-width;
     z-index: 2;
 }
+
+.share-icons {
+    display: flex;
+    position: absolute;
+    top: $header-height;
+    height: 20px;
+    right: $model-3d-document-overlap;
+    padding:5px;
+    margin-right: 10px;
+
+
+    div {
+       float: right;
+        margin:2px;
+    }
+}

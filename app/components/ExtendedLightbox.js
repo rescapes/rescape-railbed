@@ -39,10 +39,12 @@ class ExtendedLightbox extends Lightbox {
             <div>{image.date}</div> :
             <span/>
 
-        const sourceUrls = image.sourceUrl.split(' and ')
-        const credits = image.credit.split(' and ')
+        const sourceUrls = image.sourceUrl.split(',')
+        const credits = image.credit.split(',')
         const links = sourceUrls.map((sourceUrl, i) =>
             <a key={credits[i]} target="rescape_source" href={image.sourceUrl}>{credits[i]}</a>)
+        console.log(sourceUrls)
+        console.log(credits)
         return <div className='footerWrapper'>
             {ret}
             <span className='image-credit'>
