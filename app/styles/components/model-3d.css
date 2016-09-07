@@ -106,3 +106,56 @@ iframe {
         display: none;
     }
 }
+
+/***
+    Both the media and model-3d title need to fade in and out with the model scroll
+***/
+.media, .model-3d-title, .share-icons {
+
+    &.fade-out {
+        /*
+            The model is scrolling down, fade the components downward
+        */
+        &.downward {
+
+            &.media, .model-3d-title {
+                 bottom: -100px;
+                 transition: visibility 600ms ease, opacity 600ms ease, bottom 300m ease;
+            }
+
+            &.share-icons {
+                 top: 100px;
+                 transition: visibility 600ms ease, opacity 600ms ease, top 300m ease;
+            }
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /*
+            The model is scrolling up, fade the components upward
+        */
+        &.upward {
+            &.media, .model-3d-title {
+                bottom: 100px;
+                transition: visibility 600ms ease, opacity 600ms ease, bottom 300ms ease
+            }
+            &.share-icons {
+                top: -100px;
+                transition: visibility 600ms ease, opacity 600ms ease, top 300ms ease
+            }
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    &.fade-in {
+        visibility: visible;
+        opacity: 1;
+        &.media, .model-3d-title {
+            transition: visibility 300ms linear, opacity 300ms linear, bottom 600ms ease;
+        }
+        &.share-icons {
+            transition: visibility 300ms linear, opacity 300ms linear, top 600ms ease;
+        }
+    }
+}

@@ -29,14 +29,7 @@ class Media extends Component {
     }
 
     render() {
-        // If we previous or next models are present we want to fade out since the current model
-        // is no longer centered
-        const fade = ['previous', 'next'].some(relevance => this.props.modelTops[relevance]) ? 'fade-out' : 'fade-in'
-        // Fade the media in the direction that the current model is scrolling, which is based
-        // on which mode is closer, previous or next.
-        const toward = fade=='fade-in' ? '' : (this.props.modelTops['next'] ? 'upward' : 'downward')
 
-        // Using theme here is bad, since we mostly control styling in .css. It's possible
         // to match all these items using css regexes, but Lighbox.js generates random class
         // suffixes
         const theme = {
@@ -91,7 +84,7 @@ class Media extends Component {
                 boxShadow: '0 0 0 2px #00D8FF',
             },
         }
-        return <div className={`media ${fade} ${toward}`}>
+        return <div className={`media ${this.props.fade} ${this.props.toward}`}>
             <Gallery
                 images={this.configureMedia()}
                 theme={theme}

@@ -7,34 +7,8 @@
     bottom: calc($footer-height / 2);
     width: 100%;
 
-    &.fade-out {
-
-        /*
-            The model is scrolling down
-        */
-        &.downward {
-            bottom: -15px;
-            opacity: 0;
-            visibility: hidden;
-            transition: visibility 300ms ease, opacity 300ms ease, bottom 300ms ease;
-        }
-
-        /*
-            The model is scrolling down
-        */
-        &.upward {
-            bottom: 15px;
-            opacity: .5;
-            visibility: hidden;
-            transition: visibility 300ms ease, opacity 300ms ease, bottom 300ms ease;
-        }
-    }
-    &.fade-in {
-        visibility: visible;
-        opacity: 1;
-        transition: visibility 1s linear, opacity 1s linear, bottom 100ms ease;
-    }
 }
+
 
 /*** The following is all specific to the Gallery and Lightbox ***/
 

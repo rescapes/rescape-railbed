@@ -20,10 +20,23 @@ import {connect} from 'react-redux';
 import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import * as siteActions from '../actions/site'
+import { ShareButtons, ShareCounts, generateShareIcon } from 'react-share';
 
 // Fraction of space between current model and previous/next when scrolling
+// TODO move to settings
 const MODEL_PADDING = .1
 const MODEL_THRESHOLD = .25
+const {
+    FacebookShareButton,
+    GooglePlusShareButton,
+    LinkedinShareButton,
+    TwitterShareButton,
+    PinterestShareButton,
+    VKShareButton
+} = ShareButtons;
+const SHARE_ICONS = ['facebook', 'twitter', 'google', 'linkedin', 'pinterest', 'vk'].map(
+   key => generateShareIcon(key)
+)
 
 class Showcase extends Component {
 
@@ -46,11 +59,18 @@ class Showcase extends Component {
         // Both model and media need to know the calculated model tops.
         // If the next or previous model is at all visible, we don't want to show the media
         const modelTops = this.modelTops()
+        const [fade, toward] = this.calculateModelFadeAndToward(modelTops)
         return <div className='showcase'>
-            <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops}/>
-            <Media media={media} modelKey={this.props.modelKey} modelTops={modelTops}/>
+            <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops} />
+            <Media media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
+            // Share icons!
+            <div className={`share-icons ${fade} ${toward}`}>
+                {SHARE_ICONS.map(shareIcon =>
+                    React.createElement(shareIcon, {size:16, round:true})
+                )}
+            </div>
             // Use the specially defined title to show the model, or lacking one the model key
-            <div className='model-3d-title'>
+            <div className={`model-3d-title ${fade} ${toward}`}>
                 {model && model.get('title') || modelKey}
             </div>
         </div>;
@@ -112,6 +132,27 @@ class Showcase extends Component {
             }
         }
 
+    }
+
+    /***
+     * If we previous or next models are present we want to fade out since the current model
+     * is no longer centered
+     *
+     * @param modelTops
+     * @returns {[fade, toward]}
+     */
+    calculateModelFadeAndToward(modelTops) {
+        const fade = ['previous', 'next'].some(relevance => modelTops[relevance]) ?
+            'fade-out' :
+            'fade-in'
+        // Fade the media in the direction that the current model is scrolling, which is based
+        // on which mode is closer, previous or next.
+        const toward = fade == 'fade-in' ?
+            '' :
+            (modelTops['next'] ?
+                'upward' :
+                'downward')
+        return [fade, toward]
     }
 }
 

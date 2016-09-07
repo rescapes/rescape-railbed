@@ -22,6 +22,9 @@ $showcase-width: 800px;
 $model-3d-top: calc($header-height - 10px);
 $model-3d-height: calc(100% - $model-3d-top - ($footer-height / 2));
 $model-3d-width: $showcase-width;
+/*
+    The model overlaps the document
+*/
 $model-3d-document-overlap: 100px;
 
 $gallery-thumbnail-width: 100px;
@@ -90,5 +93,5 @@ $normal-line-height: calc( $h1-line-height * 33.3 / 100 );
 
 $heading-color: $black;
 $normal-font-color: $black;
-$link-color: color($rescape-love lightness(40%));
-$link-color-hover: color($rescape-love lightness(50%));
+$link-color: color($rescape-love lightness(70%));
+$link-color-hover: color($rescape-love lightness(80%));
