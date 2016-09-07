@@ -230,7 +230,7 @@ var amtrakStandardModels = OrderedMap({
                 date: 'July 2016'
             }),
             'Jack London Square AMTRAK': Map({
-                caption: 'Even though this AMTRAK train in Oakland, California, runs down the middle of the street, it has class A right-of-way with crossing gates at intersections',
+                caption: 'Even though this AMTRAK train in Oakland, California runs down the middle of the street, it has class A right-of-way with crossing gates at intersections',
                 sourceImageUrl: 'http://www.redoveryellow.com/railroad/21761_jack_london_oakland.jpg',
                 sourceUrl: 'http://www.redoveryellow.com/railroad/_page1.html',
                 credit: 'Eric Haas, red over yellow dot com'
@@ -242,7 +242,7 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'Hotels.com'
             }),
             'Portland Streetcar in Traffic': Map({
-                caption: 'A streetcar investment needlessly discomforts and inconveniences its users by putting the streetcar in mixed traffic (Class C ROW)',
+                caption: 'A streetcar investment in Portland, Oregon needlessly discomforts and inconveniences its users by putting the streetcar in mixed traffic (Class C ROW)',
                 sourceImageUrl: 'http://image.oregonlive.com/home/olive-media/width960/img/oregonian/photo/2015/12/03/portland-streetcar-dcae5f69472d7f5e.jpg',
                 sourceUrl: 'http://www.oregonlive.com/commuting/index.ssf/2015/12/portland_streetcar_to_try_limi.html',
                 credit: 'Zach Schaner - Seattle Transit Blog',
@@ -326,6 +326,7 @@ var amtrakStandardModels = OrderedMap({
     }),
 
     'Seat Comfort Metro and Tram': Map({
+        title: 'Space and Seat Comfort',
         status: Statuses.INITIALIZED,
         id: 'f3ad4189-7150-4048-a4c9-c3e9652e9482',
         anchorId: 'id.em6st57x7wbe',
@@ -357,7 +358,7 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'You Tube',
             }),
             'BART': Map({
-                caption: "The San Francisco Bay Area's BART and Washington DC's Metro's are among few metro systems that feature padded seats",
+                caption: "The San Francisco Bay Area's BART and Washington DC's Metro cars are among few metro systems that feature padded seats",
                 sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/Bart_C2_car_Interior.jpg',
                 sourceUrl: 'https://en.wikipedia.org/wiki/Bay_Area_Rapid_Transit',
                 credit: 'Wikipedia',
@@ -369,7 +370,7 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'OneMelbGuy, user of SkyscraperCity.com',
             }),
             'Montpelier Tram': Map({
-                caption: "Long trams like these in Montpelier France increase the chance of plenty of open seats, which is always a good thing",
+                caption: "Long trams like these in Montpelier, France increase the chance of plenty of open seats, which is always a good thing",
                 sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Montpellier_-_Tram_3_-_Details_%287716485224%29.jpg/1600px-Montpellier_-_Tram_3_-_Details_%287716485224%29.jpg',
                 sourceUrl: 'https://commons.wikimedia.org/wiki/File:Montpellier_-_Tram_3_-_Details_(7716485224).jpg',
                 credit: 'Wikimedia Commons',
@@ -385,6 +386,7 @@ var amtrakStandardModels = OrderedMap({
     }),
 
     'Seat Comfort AMTRAK and Bus': Map({
+        title: 'Space and Seat Comfort',
         status: Statuses.INITIALIZED,
         id: '843cbe82-5a4a-4453-9766-488049133e9d',
         anchorId: 'id.53cvna734bl4',
@@ -599,7 +601,8 @@ export default Map({
     settings: Map({
         // These are in here since they are used for arguments to the iframe URL, and hence can't be in css
         modelWidth: 800,
-        modelHeight: 710
+        modelHeight: 710,
+
     }),
     documents: Map({
         keys: List(['amtrak_standard', 'the_new_rules_of_the_road']),
@@ -622,11 +625,9 @@ export default Map({
         /**
          * These parameters distinguish and size the 3d model. etp is used to get a 2d version
          * @param id: The unique id of the Sketchup model
-         * @param width: The width to request. Make sure it matches the iframe size
-         * @param height: The height to request. make sure it matches the iframe size
          * @param etp: 'im' for still images. Blank for 3d
          */
-        baseUrl: (id, width, height, etp) => (`https://my.sketchup.com/viewer/3dw?WarehouseModelId=${id}`),
+        baseUrl: (id, etp) => (`https://my.sketchup.com/viewer/3dw?WarehouseModelId=${id}`),
 
         entries: amtrakStandardModels
     })

@@ -66,7 +66,7 @@ class ModelLoader extends ActionLoader {
      */
     makeLoadUrl(settings, state, entry) {
         // The last parameter here is blank to indicate a 3D image, as opposed to 2D
-        return state.get('baseUrl')(entry.get('id'), settings.get('modelWidth'), settings.get('modelHeight'), '')
+        return state.get('baseUrl')(entry.get('id'), '')
     }
 
     /***
@@ -80,7 +80,7 @@ class ModelLoader extends ActionLoader {
             type: LOAD_MODEL,
             key,
             url,
-            url2d: state.getIn(['models', 'baseUrl'])(entry.get('id'), state.getIn(['settings', 'modelWidth']), state.getIn(['settings', 'modelHeight']), 'im')
+            url2d: state.getIn(['models', 'baseUrl'])(entry.get('id'), 'im')
         }
     }
 

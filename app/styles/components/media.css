@@ -303,6 +303,7 @@ div:not(#app) > div[data-reactroot] > div > div {
         }
     }
 }
+/* The elements added to ExtendedLightbox.js. I control the class names of these */
 .image-credit {
     font-size: $h5-font-size;
     color: $faded-gray;
@@ -340,6 +341,9 @@ div:not(#app) > div[data-reactroot] > div > div {
     color: #666;
 }
 
+/***
+    kbd is defined by react_images (Lightbox.js). I just copied the default settings
+**/
 kbd {
     background-color: $kbd-bg-color;
     border-radius: 3px;
@@ -369,6 +373,9 @@ pre {
     padding: 10px 20px;
 }
 
+/***
+    This is all from the react-images (Lightbox.js) example code. I haven't modified it
+*/
 // Responsive
 // ------------------------------
 

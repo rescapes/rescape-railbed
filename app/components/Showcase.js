@@ -13,12 +13,13 @@
  * Showcase contains the current 3D model and the media associated with the 3D model
  */
 
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import Model from './Model3d'
 import Media from './Media'
 import {connect} from 'react-redux';
 import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import * as siteActions from '../actions/site'
 
 // Fraction of space between current model and previous/next when scrolling
 const MODEL_PADDING = .1
@@ -40,6 +41,7 @@ class Showcase extends Component {
 
     render() {
         const model = this.props.model
+        const modelKey = this.props.modelKey
         const media = this.props.model && this.props.model.get('media')
         // Both model and media need to know the calculated model tops.
         // If the next or previous model is at all visible, we don't want to show the media
@@ -47,6 +49,10 @@ class Showcase extends Component {
         return <div className='showcase'>
             <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops}/>
             <Media media={media} modelKey={this.props.modelKey} modelTops={modelTops}/>
+            // Use the specially defined title to show the model, or lacking one the model key
+            <div className='model-3d-title'>
+                {model && model.get('title') || modelKey}
+            </div>
         </div>;
     }
 
@@ -110,10 +116,13 @@ class Showcase extends Component {
 }
 
 Showcase.propTypes = {
-    model: ImmutablePropTypes.map
+    model: ImmutablePropTypes.map,
+    models: ImmutablePropTypes.map,
+    modelKey: PropTypes.string,
+    closetAnchorDistances: ImmutablePropTypes.list,
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, props) {
     const documentKey = state.getIn(['documents', 'current'])
     // We use this to find out if its time to transition the current model to the next or previous
     // By transition we mean vertical move the current model up or down in the div and start showing
@@ -141,4 +150,11 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Showcase)
+/***
+ * Connect the mapStateToProps to provide the props to the component.
+ * Connect the site actions so that the child components can send the actions based on events.
+ */
+export default connect(
+    mapStateToProps,
+    Object.assign(siteActions)
+)(Showcase)

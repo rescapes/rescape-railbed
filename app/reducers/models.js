@@ -12,7 +12,7 @@
 import {List, Map} from 'immutable';
 import {SET_STATE} from '../actions/site'
 import * as actions from '../actions/model'
-import {DOCUMENT_TELL_MODEL_ANCHOR_CHANGED} from '../actions/site'
+import {DOCUMENT_TELL_MODEL_ANCHOR_CHANGED, LIGHTBOX_VISIBILITY_CHANGED} from '../actions/site'
 import Statuses from '../statuses'
 
 /***
@@ -134,6 +134,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                 else
                     return modelSetState
             }, state)
+
 
         // Sets the current scene of the model
         case actions.SHOW_SCENE:

@@ -10,7 +10,7 @@
  */
 
 import {Map} from 'immutable';
-import {SET_STATE} from '../actions/site'
+import {SET_STATE, LIGHTBOX_VISIBILITY_CHANGED} from '../actions/site'
 import * as actions from '../actions/settings'
 
 /***
@@ -32,5 +32,10 @@ export default function(state = Map({}), action) {
             return state.set(action.type, action.value);
         default:
             return state
+
+        // Tells the model that the lightbox turned off or on
+        case LIGHTBOX_VISIBILITY_CHANGED:
+            return state.set('lightboxVisibility', action.lightboxIsVisible)
     }
+
 }

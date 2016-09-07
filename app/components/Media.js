@@ -13,7 +13,6 @@ import React, { Component, PropTypes } from 'react'
 import {Map} from 'immutable'
 import {connect} from 'react-redux'
 import Gallery from './Gallery'
-import ImmutablePropTypes from 'react-immutable-proptypes'
 
 var req = require.context('../images_dist/', true, /\.(jpg|png|gif)$/)
 req.keys().forEach(function(key){
@@ -36,6 +35,10 @@ class Media extends Component {
         // Fade the media in the direction that the current model is scrolling, which is based
         // on which mode is closer, previous or next.
         const toward = fade=='fade-in' ? '' : (this.props.modelTops['next'] ? 'upward' : 'downward')
+
+        // Using theme here is bad, since we mostly control styling in .css. It's possible
+        // to match all these items using css regexes, but Lighbox.js generates random class
+        // suffixes
         const theme = {
 
             // arrows
@@ -128,7 +131,6 @@ class Media extends Component {
 }
 
 Media.propTypes = {
-    media: ImmutablePropTypes.list,
 }
 
 function mapStateToProps(state) {
