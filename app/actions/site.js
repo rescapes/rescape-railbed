@@ -16,7 +16,13 @@
 import fetch from 'isomorphic-fetch'
 
 // Cross-component communication actions
+
+// This action lets the document tell the model that the closest anchor in the text changed,
+// impacted the current/next/pervious model
 export const DOCUMENT_TELL_MODEL_ANCHOR_CHANGED = 'DOCUMENT_TELL_MODEL_ANCHOR_CHANGED'
+
+// This action lets the gallery tell the model when the lightbox toggled on or off
+export const LIGHTBOX_VISIBILITY_CHANGED = 'LIGHTBOX_VISIBILITY_CHANGED'
 
 /*
  * Action types. See action definition for explanation
@@ -37,4 +43,15 @@ export function setState(state=null) {
  */
 export function documentTellModelAnchorsChanged(anchors) {
     return { type: DOCUMENT_TELL_MODEL_ANCHOR_CHANGED, anchors }
+}
+
+/***
+ * Lets the gallery report to he 3d model when the lightbox is turned on and off so that the
+ * model can hide its own title and make other stylistic changes
+ *
+ * @param lightboxIsVisible: true if the lightbox is visible, default false
+ * @returns {{type: string, key: *}}
+ */
+export function lightboxVisibilityChanged(lightboxIsVisible) {
+    return { type: LIGHTBOX_VISIBILITY_CHANGED, lightboxIsVisible }
 }

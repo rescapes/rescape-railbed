@@ -201,7 +201,7 @@ Model3d.propTypes = {
     settings: ImmutablePropTypes.map,
     model: ImmutablePropTypes.map,
     modelKey: PropTypes.string,
-    models: ImmutablePropTypes.list,
+    models: ImmutablePropTypes.map,
     closestAnchorDistances: ImmutablePropTypes.map
 }
 

@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import {connect} from 'react-redux'
 import ExtendedLightbox from './ExtendedLightbox';
 import DownloadButton from './DownloadButton';
-
+import * as siteActions from '../actions/site'
 
 class Gallery extends Component {
 	constructor () {
@@ -24,12 +25,14 @@ class Gallery extends Component {
 			currentImage: index,
 			lightboxIsOpen: true,
 		});
+		this.props.lightboxVisibilityChanged(true)
 	}
 	closeLightbox () {
 		this.setState({
 			currentImage: 0,
 			lightboxIsOpen: false,
 		});
+		this.props.lightboxVisibilityChanged(false)
 	}
 	gotoPrevious () {
 		this.setState({
@@ -119,10 +122,18 @@ class Gallery extends Component {
 
 Gallery.displayName = 'Gallery';
 Gallery.propTypes = {
-	heading: PropTypes.string,
-	images: PropTypes.array,
-	sepia: PropTypes.bool,
-	subheading: PropTypes.string,
 };
 
-export default Gallery;
+function mapStateToProps(state) {
+	return {
+	}
+}
+
+/***
+ * Connect the mapStateToProps to provide the props to the component.
+ * Connect the site actions so that the child components can send the actions based on events.
+ */
+export default connect(
+	mapStateToProps,
+	Object.assign(siteActions)
+)(Gallery)

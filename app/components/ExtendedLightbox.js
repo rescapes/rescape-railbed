@@ -20,6 +20,10 @@ class ExtendedLighboxFooter extends Component {
  */
 class ExtendedLightbox extends Lightbox {
 
+    /***
+     * Override the super class method to wrap the images in a div so we can add image credits
+     * @returns {*}
+     */
     renderImages () {
         const ret = super.renderImages()
         const {
@@ -37,7 +41,8 @@ class ExtendedLightbox extends Lightbox {
 
         const sourceUrls = image.sourceUrl.split(' and ')
         const credits = image.credit.split(' and ')
-        const links = sourceUrls.map((sourceUrl, i) => <a target="rescape_source" href={image.sourceUrl}>{credits[i]}</a>)
+        const links = sourceUrls.map((sourceUrl, i) =>
+            <a key={credits[i]} target="rescape_source" href={image.sourceUrl}>{credits[i]}</a>)
         return <div className='footerWrapper'>
             {ret}
             <span className='image-credit'>
