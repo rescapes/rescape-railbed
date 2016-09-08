@@ -613,19 +613,25 @@ export default Map({
     // See settings.js action. All action keys can be set here
     settings: Map({
         [settingsActions.SET_3D]: true,
-        [settingsActions.SET_RELATED_IMAGES]: true
+        [settingsActions.SET_RELATED_IMAGES]: true,
+        [settingsActions.SET_LIGHTBOX_VISIBILITY]: false
     }),
     documents: Map({
-        keys: List(['amtrak_standard', 'the_new_rules_of_the_road']),
+        keys: List(['ths_amtrak_standard', 'the_new_rules_of_the_road']),
+        // The URL of the source document
         baseUrl: id => (`https://docs.google.com/document/d/${id}/pub`),
+        // The URL of the site
+        siteUrl: key => (`http://rescapes.net/${key}`),
         entries: Map({
-            'amtrak_standard': Map({
+            'the_amtrak_standard': Map({
+                date: new Date('October 2016'),
                 status: Statuses.INITIALIZED,
                 title: 'The AMTRAK Standard',
                 id: '1GbrsFkL4hlMP9o-J1JLw4Qu08j6hEPde_ElJdanJX5U',
                 modelKeys: List(amtrakStandardModels.keys())
             }),
             'the_new_rules_of_the_road': Map({
+                date: new Date('January 2017'),
                 status: Statuses.INITIALIZED,
                 title: 'The New Rules of the Road',
             })

@@ -10,8 +10,8 @@
  */
 
 import {Map} from 'immutable';
-import {SET_STATE, LIGHTBOX_VISIBILITY_CHANGED} from '../actions/site'
-import * as actions from '../actions/settings'
+import {SET_STATE} from '../actions/site'
+import * as settingsActions from '../actions/settings'
 
 /***
  * Reduces the state of the settings
@@ -23,19 +23,12 @@ import * as actions from '../actions/settings'
  */
 export default function(state = Map({}), action) {
     // If setting state
-    switch (action.type) {
-        case SET_STATE:
-            return state.merge(action.state.get('settings'));
-        case actions.SET_3D:
-            return state.set(action.type, action.value);
-        case actions.SET_RELATED_IMAGES:
-            return state.set(action.type, action.value);
-        default:
-            return state
-
-        // Tells the model that the lightbox turned off or on
-        case LIGHTBOX_VISIBILITY_CHANGED:
-            return state.set('lightboxVisibility', action.lightboxIsVisible)
-    }
+    if (action.type==SET_STATE)
+        return state.merge(action.state.get('settings'));
+    // Handle any other setting
+    else if (action.type && action.type in settingsActions)
+        return state.set(action.type, action.value);
+    else
+        return state
 
 }

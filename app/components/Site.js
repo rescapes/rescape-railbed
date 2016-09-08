@@ -65,7 +65,6 @@ export class Site extends Component {
                     return o
                 }, {});
         }
-        console.log(meta)
 
         // TODO I feel like I should pass props to Showcase and Document, but they have access
         // to the state and use mapStateToProps, so why bother?

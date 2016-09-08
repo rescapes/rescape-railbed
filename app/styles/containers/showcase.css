@@ -12,14 +12,33 @@
     display: flex;
     position: absolute;
     top: $header-height;
-    height: 20px;
+    height: 32px;
     right: $model-3d-document-overlap;
     padding:5px;
     margin-right: 10px;
+    &:hover {
+         cursor: pointer;
+    }
 
 
     div {
-       float: right;
+        float: right;
         margin:2px;
+        width: 16px;
+        height: 16px;
+
+        &:hover {
+            div {
+                height: auto;
+                width: 32px;
+                svg: {
+                    height: 32px;
+                    width: 32px;
+                }
+            }
+            transition: width 300ms ease, height 300ms ease;
+            margin: 0px;
+        }
+
     }
 }

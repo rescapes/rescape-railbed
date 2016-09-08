@@ -20,7 +20,8 @@ import {connect} from 'react-redux';
 import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import * as siteActions from '../actions/site'
-import { ShareButtons, ShareCounts, generateShareIcon } from 'react-share';
+import * as settingsActions from '../actions/settings'
+import { ShareButtons, generateShareIcon } from 'react-share';
 
 // Fraction of space between current model and previous/next when scrolling
 // TODO move to settings
@@ -28,15 +29,17 @@ const MODEL_PADDING = .1
 const MODEL_THRESHOLD = .25
 const {
     FacebookShareButton,
+    TwitterShareButton,
     GooglePlusShareButton,
     LinkedinShareButton,
-    TwitterShareButton,
     PinterestShareButton,
     VKShareButton
 } = ShareButtons;
+
 const SHARE_ICONS = ['facebook', 'twitter', 'google', 'linkedin', 'pinterest', 'vk'].map(
    key => generateShareIcon(key)
 )
+const SHARE_BUTTONS = [FacebookShareButton, TwitterShareButton, GooglePlusShareButton, LinkedinShareButton, PinterestShareButton, VKShareButton]
 
 class Showcase extends Component {
 
@@ -55,22 +58,33 @@ class Showcase extends Component {
     render() {
         const model = this.props.model
         const modelKey = this.props.modelKey
+        const documentTitle = this.props.documentTitle
         const media = this.props.model && this.props.model.get('media')
         // Both model and media need to know the calculated model tops.
         // If the next or previous model is at all visible, we don't want to show the media
         const modelTops = this.modelTops()
         const [fade, toward] = this.calculateModelFadeAndToward(modelTops)
+        const shareTitle = `${documentTitle} (${modelKey})`
+        if (!this.props.postUrl) {
+            return  <div className='showcase'/>
+        }
         return <div className='showcase'>
             <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops} />
             <Media media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
             // Share icons!
             <div className={`share-icons ${fade} ${toward}`}>
-                {SHARE_ICONS.map(shareIcon =>
-                    React.createElement(shareIcon, {size:16, round:true})
+                {SHARE_BUTTONS.map((shareButton, i) =>
+                    // TODO need a media URL for pinterest. Need scene-specific urls
+                    React.createElement(shareButton, {key:i, title: shareTitle, url: this.props.postUrl },
+                        // size: null keeps the icons from setting there style width/height
+                        // so that we can do it with css
+                        React.createElement(SHARE_ICONS[i], {key:i, size:null, round:true })
+                    )
                 )}
             </div>
             // Use the specially defined title to show the model, or lacking one the model key
-            <div className={`model-3d-title ${fade} ${toward}`}>
+            // Apply fade aways for the title, including if the lightbox is open
+            <div className={`model-3d-title ${this.props.lightboxVisibility ? 'fade-out' : fade} ${toward}`}>
                 {model && model.get('title') || modelKey}
             </div>
         </div>;
@@ -182,12 +196,19 @@ function mapStateToProps(state, props) {
     )
     const modelKey = models && models.get('current')
     const model = modelKey && models.getIn(['entries', modelKey])
+    const document = state.getIn(['documents', 'entries', documentKey])
+    const postUrl = document && document.get('postUrl')
+    const documentTitle = document && document.get('title')
+    const lightboxVisibility = state.getIn(['settings', settingsActions.SET_LIGHTBOX_VISIBILITY])
 
     return {
         models,
         model,
         modelKey,
-        closestAnchorDistances
+        documentTitle,
+        closestAnchorDistances,
+        lightboxVisibility,
+        postUrl
     }
 }
 

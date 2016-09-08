@@ -45,13 +45,3 @@ export function documentTellModelAnchorsChanged(anchors) {
     return { type: DOCUMENT_TELL_MODEL_ANCHOR_CHANGED, anchors }
 }
 
-/***
- * Lets the gallery report to he 3d model when the lightbox is turned on and off so that the
- * model can hide its own title and make other stylistic changes
- *
- * @param lightboxIsVisible: true if the lightbox is visible, default false
- * @returns {{type: string, key: *}}
- */
-export function lightboxVisibilityChanged(lightboxIsVisible) {
-    return { type: LIGHTBOX_VISIBILITY_CHANGED, lightboxIsVisible }
-}
