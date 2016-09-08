@@ -21,18 +21,21 @@ import Statuses from '../statuses'
  *      keys: [],
  *      current: null,
  *      baseUrl: null,
+ *      postUrl: null,
  *      entries: {
  *      }
  *  } (default): The documents is not loaded 
  *  {
  *   keys: [known documents keys],
  *   current: documents key of the current model,
- *   baseUrl: base url of the documents, the url of then entry completes the url
+ *   baseUrl: base url of the documents, the url of the entry completes the url
+ *   siteUrl: base url of the blog site, the postUrl of the entry completes the url
  *   entries: {
  *      [documents key]: {
  *         status: one of Statuses
  *         name: name of the document
  *         url: Url of a publicly available document (e.g. from Google Drive)
+ *         postUrl: Url of the blog post (e.g. http://rescapes.net/the_amtrak_standard)
  *         title: The title of the document
  *         content: The loaded content of the document
  *         models: [the model keys of the document]
@@ -47,8 +50,11 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         case SET_STATE:
             return state.merge(action.state.get('documents'));
         // Sets the document to be the current one
+        // Also sets up the siteUrl of the document for use in social media links, etc
         case actions.SHOW_DOCUMENT:
-            return state.set('current', action.key);
+            return state
+                .set('current', action.key)
+                .setIn(['entries', action.key, 'postUrl'], state.get('siteUrl')(action.key))
         case actions.REGISTER_DOCUMENT:
             return (!state.get('keys').has(action.key)) ?
                 state
@@ -66,7 +72,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         case actions.LOAD_DOCUMENT:
             return state.mergeDeep({entries: { [action.key] : {
                 status: Statuses.LOADING,
-                url: action.url
+                url: action.url,
             }}})
         // Upon loading indicates the model is ready for interaction
         case actions.RECEIVE_DOCUMENT:

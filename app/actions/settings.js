@@ -22,6 +22,7 @@ import ActionLoader from '../ActionLoader'
 
 export const SET_3D = 'SET_3D'
 export const SET_RELATED_IMAGES = 'SET_RELATED_IMAGES'
+export const SET_LIGHTBOX_VISIBILITY =  'SET_LIGHTBOX_VISIBILITY'
 
 /***
  * Sets the DOM to show interactive 3D models when supported.
@@ -45,4 +46,15 @@ export function set3d(value=true) {
  */
 export function setRelatedImages(value=true) {
     return { type: SET_RELATED_IMAGES, value }
+}
+
+/***
+ * Lets the gallery report to he 3d model when the lightbox is turned on and off so that the
+ * model can hide its own title and make other stylistic changes
+ *
+ * @param value: true if the lightbox is visible, default false
+ * @returns {{type: string, key: *}}
+ */
+export function setLightboxVisibility(value) {
+    return { type: SET_LIGHTBOX_VISIBILITY, value }
 }

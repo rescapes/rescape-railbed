@@ -113,12 +113,18 @@ iframe {
 .media, .model-3d-title, .share-icons {
 
     &.fade-out {
+
+        /** These are only used by the model title when the lightbox appears--no upward or downward **/
+         opacity: 0;
+         visibility: hidden;
+         transition: visibility 600ms ease, opacity 600ms ease;
+
         /*
             The model is scrolling down, fade the components downward
         */
         &.downward {
 
-            &.media, .model-3d-title {
+            &.media, &.model-3d-title {
                  bottom: -100px;
                  transition: visibility 600ms ease, opacity 600ms ease, bottom 300m ease;
             }
@@ -135,13 +141,13 @@ iframe {
             The model is scrolling up, fade the components upward
         */
         &.upward {
-            &.media, .model-3d-title {
+            &.media, &.model-3d-title {
                 bottom: 100px;
-                transition: visibility 600ms ease, opacity 600ms ease, bottom 300ms ease
+                transition: visibility 600ms ease, opacity 600ms ease, bottom 300ms ease;
             }
             &.share-icons {
                 top: -100px;
-                transition: visibility 600ms ease, opacity 600ms ease, top 300ms ease
+                transition: visibility 600ms ease, opacity 600ms ease, top 300ms ease;
             }
             opacity: 0;
             visibility: hidden;
@@ -151,7 +157,7 @@ iframe {
     &.fade-in {
         visibility: visible;
         opacity: 1;
-        &.media, .model-3d-title {
+        &.media, &.model-3d-title {
             transition: visibility 300ms linear, opacity 300ms linear, bottom 600ms ease;
         }
         &.share-icons {
