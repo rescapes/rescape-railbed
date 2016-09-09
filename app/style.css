@@ -2,6 +2,7 @@
 @import 'styles/base/variables';
 @import 'styles/base';
 @import 'styles/type';
+@import 'styles/containers/ender';
 @import 'styles/containers/header';
 @import 'styles/containers/showcase';
 @import 'styles/components/document';

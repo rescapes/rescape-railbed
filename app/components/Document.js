@@ -21,6 +21,10 @@ import {Map, List} from 'immutable'
 import * as actions from '../actions/document'
 import * as siteActions from '../actions/site'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import Scroll from 'react-scroll';
+
+var scroll = Scroll.animateScroll;
+var scrollSpy = Scroll.scrollSpy;
 
 class Document extends Component {
 
@@ -30,6 +34,8 @@ class Document extends Component {
     componentDidMount(){
         window.addEventListener('scroll', this.handleScroll.bind(this));
         this.indexAnchors()
+
+        scrollSpy.update();
     }
 
     componentWillUnmount(){
@@ -113,6 +119,10 @@ class Document extends Component {
         }
     }
 
+    scrollTo(scrollPosition) {
+        scroll.scrollTo(scrollPosition)
+    }
+
     /***
      * Check for a prop change to anchors, and inform the Document if any values changed
      * @param nextProps
@@ -126,6 +136,10 @@ class Document extends Component {
         const previousClosestAnchors = this.props.document.get('closestsAnchors')
         if ((!previousClosestAnchors && closestAnchors) || (previousClosestAnchors && !previousClosestAnchors.equals(closestAnchors))) {
             this.props.documentTellModelAnchorsChanged(closestAnchors)
+        }
+        if (nextProps.document.get('scrollPosition') != this.props.document.get('scrollPosition')
+            && nextProps.document.get('scrollPosition') != window.document.body.scrollTop) {
+            this.scrollTo(nextProps.document.get('scrollPosition'))
         }
     }
 
@@ -201,7 +215,10 @@ class Document extends Component {
 }
 
 Document.propTypes = {
-    document: ImmutablePropTypes.map
+    settins: ImmutablePropTypes.map,
+    document: ImmutablePropTypes.map,
+    models: ImmutablePropTypes.map,
+    scrollPosition: PropTypes.number
 }
 
 /***
@@ -215,13 +232,14 @@ function mapStateToProps(state) {
     const settings = state.get('settings')
     const currentDocumentKey = state.getIn(['documents', 'current'])
     const document = state.getIn(['documents', 'entries', currentDocumentKey])
+    const scrollPosition = document && document.get('scrollPosition')
     const modelKeysInDocument = document && document.get('modelKeys')
     return {
         settings,
         document: currentDocumentKey ? state.getIn(['documents', 'entries', currentDocumentKey]) : Map({}),
-
         models: modelKeysInDocument &&
-            state.getIn(['models', 'entries']).filter((value,key) => modelKeysInDocument.includes(key))
+            state.getIn(['models', 'entries']).filter((value,key) => modelKeysInDocument.includes(key)),
+        scrollPosition
     }
 }
 

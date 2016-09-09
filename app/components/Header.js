@@ -11,6 +11,8 @@
 
 import React, { Component, PropTypes } from 'react'
 import rescape_png from '../images_dist/rescape-320.png'
+import * as documentActions from '../actions/document'
+import {connect} from 'react-redux';
 
 class Header extends Component {
 
@@ -18,7 +20,32 @@ class Header extends Component {
         return <div className='header'>
             <img className='header-icon' src={rescape_png}/>
             <div className='header-gradiant left' />
+            <div className='page-up' onClick={ e=>this.props.scrollToPreviousModel() } >
+                <svg className='page-up-icon' version="1.1" viewBox="153 252 125 94" xmlnsDc="http://purl.org/dc/elements/1.1/">
+                    <metadata> Produced by OmniGraffle 6.5.2
+                        <dcDate>2016-09-08 17:26:11 +0000</dcDate>
+                    </metadata>
+                    <defs/>
+                    <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+                        <g>
+                            <path d="M 263.62205 331.65354 L 215.43307 266.45669 L 167.24409 331.65354 Z" stroke="#6e2236" strokeLinecap="round" strokeLinejoin="round" strokeWidth="8"/>
+                        </g>
+                    </g>
+                </svg>
+            </div>
         </div>
     }
 }
-export default Header
+
+function mapStateToProps(state) {
+    return {}
+}
+
+/***
+ * Connect the mapStateToProps to provide the props to the component.
+ * Connect the actions so that the component can send the actions based on events.
+ */
+export default connect(
+    mapStateToProps,
+    Object.assign(documentActions)
+)(Header)

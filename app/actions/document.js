@@ -28,6 +28,9 @@ export const SHOW_DOCUMENT = 'SHOW_DOCUMENT'
 
 export const REGISTER_ANCHORS = 'REGISTER_ANCHORS'
 export const REGISTER_SCROLL_POSITION = 'REGISTER_SCROLL_POSITION'
+export const SCROLL_TO_NEXT_MODEL = 'SCROLL_TO_NEXT_MODEL'
+export const SCROLL_TO_PREVIOUS_MODEL = 'SCROLL_TO_PREVIOUS_MODEL'
+
 /*
  * Action creators. 
  * List in the same order as the action types.
@@ -135,6 +138,19 @@ export function registerAnchors(anchors) {
  */
 export function registerScrollPosition(position) {
     return { type: REGISTER_SCROLL_POSITION, position }
+}
+/***
+ * Sets the scroll position to the next model away from the current scroll position
+ */
+export function scrollToNextModel() {
+    return { type: SCROLL_TO_NEXT_MODEL }
+}
+
+/***
+ * Sets the scroll position to the next model away from the current scroll position
+ */
+export function scrollToPreviousModel() {
+    return { type: SCROLL_TO_PREVIOUS_MODEL }
 }
 
 // Use an ActionLoader to remotely load models

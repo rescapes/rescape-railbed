@@ -14,9 +14,17 @@ import ReactDOM from 'react-dom'
 import {connect} from 'react-redux'
 import Iframe from './Iframe'
 import * as actions from '../actions/model'
+import * as settingsActions from '../actions/settings'
 import Statuses from '../statuses'
 import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import ModelVideo from './ModelVideo'
+
+// This garbage has to be done to force webpack to know about all the media files
+var req = require.context('../videos/', true, /\.(mp4)$/)
+req.keys().forEach(function(key){
+    req(key);
+})
 
 class Model3d extends Component {
     /***
@@ -96,17 +104,42 @@ class Model3d extends Component {
         return this.props.model && this.props.model.getIn(['scenes', 'current'])
     }
 
+    /**
+     * Gets the current Scene key of the given Model3d used when iterating through all models
+     * @param model
+     * @returns {*}
+     */
+    currentSceneKeyOfModel(model) {
+        return model && model.getIn(['scenes', 'current'])
+    }
+
+    /**
+     * The current Scene of the given Model3d
+     * @param model
+     * @returns {*}
+     */
+    currentSceneOfModel(model) {
+        return model && model.getIn(['scenes', 'entries', this.currentSceneKeyOfModel(model)])
+    }
+
     /***
      * Changes the scene of the 3D model in the iframe to the scene with the given key
      * @param sceneKey
      */
     changeScene(sceneKey) {
-        const dom = ReactDOM.findDOMNode(this).children['iframe']
-        if (!dom)
-            return
-        const sceneDiv = dom.querySelectorAll(`div.viewer-scene-option[title="${sceneKey}"]`)[0]
-        if (sceneDiv) {
-            sceneDiv.click()
+
+        if (this.props.is3dSet) {
+            // TODO not working do to cross domain security
+            const dom = ReactDOM.findDOMNode(this).children['iframe']
+            if (!dom)
+                return
+            const sceneDiv = dom.querySelectorAll(`div.viewer-scene-option[title="${sceneKey}"]`)[0]
+            if (sceneDiv) {
+                sceneDiv.click()
+            }
+        }
+        else {
+
         }
     }
 
@@ -150,10 +183,6 @@ class Model3d extends Component {
             // Node the relevance if any
             const relevance = modelRelevance.findKey((value, key)=>value) || null
 
-            // If it's already loaded, current, or in the loading queue (previous or next model), set the URL
-            // Setting the url of the iframe forces it to load if not yet loaded
-            // TODO. We should add more intelligence to not load next/previous until current is fully loaded
-            const iframeUrl = (isAlreadyLoaded || relevance) ? url : null
 
             // When the previous/next model anchor is closer than the current, we want to show the closer
             // model above/below the current model to create a scroll-controlled transition effect
@@ -170,17 +199,37 @@ class Model3d extends Component {
                 divStateClass = modelTops[relevance] ? 'active' : 'inactive'
             }
 
+            // If this iframe has relevance then set the top style to the percent of relevance
             const style = relevance && modelTops[relevance] ? {
                 top: `${Math.round(modelTops[relevance]*100)}%`,
             } : {}
 
-            // Return the iframe wrapped in a div. The div must have a unique key for React
-            return <div key={modelKey} className={`${divClass} ${divStateClass}`} style={style}>
-                <Iframe key={modelKey}
-                  src={iframeUrl}
-                  name={`iframe_${modelKey}`}
-                  onLoad={this.frameDidLoad.bind(this)}
+
+            // Determine whether to show the 3d model or video
+            let model3dPresentation = null
+            if (this.props.is3dSet) {
+                // If it's already loaded, current, or in the loading queue (previous or next model), set the URL
+                // Setting the url of the iframe forces it to load if not yet loaded
+                // TODO. We should add more intelligence to not load next/previous until current is fully loaded
+                const iframeUrl = (isAlreadyLoaded || relevance) ? url : null
+                model3dPresentation = <Iframe key={modelKey}
+                        src={iframeUrl}
+                        name={`iframe_${modelKey}`}
+                        onLoad={this.frameDidLoad.bind(this)}
                 />
+            }
+            else {
+                // The videoUrl is that of the current model
+                const videoUrl = iterModel.get('videoUrl')
+                const sceneKey =  this.currentSceneKeyOfModel(iterModel)
+                const scene =  this.currentSceneOfModel(iterModel)
+
+                model3dPresentation = <ModelVideo videoUrl={videoUrl} start={scene && scene.get('start')} end={scene && scene.get('end')} />
+            }
+
+            // Return the iframe or video wrapped in a div. The div must have a unique key for React
+            return <div key={modelKey} className={`${divClass} ${divStateClass}`} style={style}>
+                { model3dPresentation }
                 <div className='model-3d-gradiant left'/>
                 <div className='model-3d-gradiant right'/>
                 <div className='model-3d-gradiant top'/>
@@ -199,23 +248,25 @@ class Model3d extends Component {
 
 Model3d.propTypes = {
     settings: ImmutablePropTypes.map,
-    model: ImmutablePropTypes.map,
-    modelKey: PropTypes.string,
     models: ImmutablePropTypes.map,
-    closestAnchorDistances: ImmutablePropTypes.map
+    is3dSet: PropTypes.boolean
 }
 
 function mapStateToProps(state) {
     const settings = state.get('settings')
     const documentKey = state.getIn(['documents', 'current'])
     const models = documentKey && state.get('models')
+    const is3dSet = state.getIn(['settings', settingsActions.SET_3D])
     return {
         settings,
         models,
+        is3dSet
     }
 }
 
-export default connect(mapStateToProps, actions)(
-    Model3d
-)
+
+export default connect(
+    mapStateToProps,
+    Object.assign(actions, settingsActions)
+)(Model3d)
 
