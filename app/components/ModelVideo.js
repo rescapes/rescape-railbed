@@ -11,6 +11,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import {default as Video, Controls, Overlay} from 'react-html5video'
+import ReactDOM from 'react-dom'
 
 class ModelVideo extends Component {
 
@@ -42,8 +43,20 @@ class ModelVideo extends Component {
         this.refs.video.load();
     }
 
-    play(start, end) {
+    play() {
+        this.seek(this.props.start)
         this.refs.video.play();
+    }
+
+    seek(time) {
+        this.refs.video.seek(time);
+    }
+
+    onProgress() {
+        const el = ReactDOM.findDOMNode(this.refs.video).getElementsByTagName('video')[0];
+        const end = this.props.end
+        if (el.buffered.length && el.currentTime >= end)
+            this.pause()
     }
 
     pause() {
@@ -55,12 +68,24 @@ class ModelVideo extends Component {
             <Video
                 className="video"
                 muted
+                autoPlay
+                onProgress={this.onProgress.bind(this)}
                 ref="video">
                 <source src={this.url()} type="video/mp4" />
                 <Overlay />
                 <Controls />
             </Video>
         </div>
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps['start'] != this.props['start']  ||
+            nextProps['end'] != this.props['end']) {
+
+            if (nextProps['start'] != nextProps['end']) {
+                this.play(nextProps['start'], nextProps['end'])
+            }
+        }
     }
 }
 

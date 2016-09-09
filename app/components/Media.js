@@ -13,6 +13,7 @@ import React, { Component, PropTypes } from 'react'
 import {Map} from 'immutable'
 import {connect} from 'react-redux'
 import Gallery from './Gallery'
+import {normalizeKeyToFilename} from '../utils/fileHelpers'
 
 // This garbage has to be done to force webpack to know about all the media files
 var req = require.context('../images_dist/', true, /\.(jpg|png|gif)$/)
@@ -103,7 +104,7 @@ class Media extends Component {
         return media.map(function(medium, key) {
             const type = medium.get('type') || 'jpg'
             // We can't use spaces in our file names, it confuses babel or webpack or something
-            const file = key.replace(/ /g, '_')
+            const file = normalizeKeyToFilename(key)
             return {
                 src: `${dir}/${file}-800.${type}`,
                 thumbnail: `${dir}/${file}-320.${type}`,
@@ -114,7 +115,7 @@ class Media extends Component {
                     `${dir}/${file}-320.${type} 320w`,
                 ],
                 // We had to add _s to the file names so webpack worked, sigh
-                caption: medium.get('caption') || file.replace(/_/g, ' '),
+                caption: medium.get('caption') || key,
                 sourceImageUrl: medium.get('imageSourceUrl'),
                 sourceUrl: medium.get('sourceUrl'),
                 credit: medium.get('credit'),

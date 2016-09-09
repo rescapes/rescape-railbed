@@ -17,7 +17,6 @@ var amtrakStandardModels = OrderedMap({
     'AMTRAK Superliner': Map({
         status: Statuses.INITIALIZED,
         id: '2b495238-e77d-4edf-bb23-b186daf0640f',
-        anchorId: 'id.5ktmpvprnx88',
         scenes: Map({
             'Outside': Map({
                 anchorId: 'id.5ktmpvprnx88',
@@ -126,7 +125,6 @@ var amtrakStandardModels = OrderedMap({
     'Fixed-Guideways': Map({
         status: Statuses.INITIALIZED,
         id: '419df1d2-949f-4e60-adbc-59da24a5c6ce',
-        anchorId: 'id.2y8fqiblaq2h',
         scenes: Map({
             'All Transit': Map({
                 anchorId: 'id.2y8fqiblaq2h'
@@ -211,7 +209,6 @@ var amtrakStandardModels = OrderedMap({
     'Types of Right-Of-Way': Map({
         status: Statuses.INITIALIZED,
         id: '510744fa-42ef-452d-87af-2096ae064d40',
-        anchorId: 'id.18woithqdgdg',
         scenes: Map({
             'Class A ROW': Map({
                 anchorId: 'id.18woithqdgd'
@@ -256,7 +253,7 @@ var amtrakStandardModels = OrderedMap({
                 date: 'November 2015'
             }),
             'Madison BRT Profile': Map({
-                caption: 'A planned BRT route in Madison, Wisconsin is compromised by Class C right-of-way',
+                caption: 'A planned BRT route in Madison, Wisconsin is already to be compromised by Class C right-of-way',
                 sourceImageUrl: 'http://s3.amazonaws.com/stb-wp/wp-content/uploads/2015/11/10113329/Madison-BRT-Profile-01.png, http://bloximages.chicago2.vip.townnews.com/host.madison.com/content/tncms/assets/v3/editorial/7/c0/7c0fff53-3e68-5dd1-847f-4d7a8ea4953e/543306d6a2f32.image.jpg',
                 sourceUrl: 'http://seattletransitblog.com/2015/11/11/madison-brt-creep/, http://host.madison.com/wsj/news/local/govt-and-politics/madison-poised-for-next-steps-to-bus-rapid-transit-system/article_2c526b02-0100-51fd-92e7-39bb330b943a.html',
                 credit: 'Mike Chechvala - Wisconsin State Journal',
@@ -275,7 +272,6 @@ var amtrakStandardModels = OrderedMap({
     'Frequency of Transit Stops': Map({
         status: Statuses.INITIALIZED,
         id: '9173b60e-b557-44bf-a736-2e352e4f7a86',
-        anchorId: 'id.mxfqg4xj55jc',
         scenes: Map({
             'Current Conditions': Map({
                 anchorId: 'id.mxfqg4xj55jc'
@@ -334,7 +330,6 @@ var amtrakStandardModels = OrderedMap({
     'Seat Comfort Metro and Tram': Map({
         title: 'Space and Seat Comfort',
         status: Statuses.INITIALIZED,
-        id: 'f3ad4189-7150-4048-a4c9-c3e9652e9482',
         anchorId: 'id.em6st57x7wbe',
         scenes: Map({
             'Empty Rows': Map({
@@ -395,7 +390,6 @@ var amtrakStandardModels = OrderedMap({
         title: 'Space and Seat Comfort',
         status: Statuses.INITIALIZED,
         id: '843cbe82-5a4a-4453-9766-488049133e9d',
-        anchorId: 'id.53cvna734bl4',
         scenes: Map({
             'Forward-facing Seats on AMTRAK': Map({
                 anchorId: 'id.53cvna734bl4'
@@ -426,7 +420,6 @@ var amtrakStandardModels = OrderedMap({
     'Personal Space and Privacy': Map({
         status: Statuses.INITIALIZED,
         id: '268c95fd-8a33-4636-bf72-ceaff2c1e997',
-        anchorId: 'id.n0mwt01mtot1',
         scenes: Map({
             'Train Compartment': Map({
                 anchorId: 'id.n0mwt01mtot1'
@@ -446,7 +439,6 @@ var amtrakStandardModels = OrderedMap({
     'Transit Access to Amenities': Map({
         status: Statuses.INITIALIZED,
         id: '6d32b9a2-8ef9-4b3f-8065-00d08ee87c05',
-        anchorId: 'id.c784pbnlt1sa',
         scenes: Map({
             'AMTRAK Toilet': Map({
                 anchorId: 'id.c784pbnlt1sa'
@@ -469,7 +461,6 @@ var amtrakStandardModels = OrderedMap({
     'Metro Station with Faregates': Map({
         status: Statuses.INITIALIZED,
         id: '605a8f98-af02-4b26-8145-cfe247f91dba',
-        anchorId: 'id.97xvu0r03y0e',
         scenes: Map({
             'Metro Entrance with Faregates': Map({
                 anchorId: 'id.97xvu0r03y0e'
@@ -489,7 +480,6 @@ var amtrakStandardModels = OrderedMap({
     'Metro Station with Faregates Removed': Map({
         status: Statuses.INITIALIZED,
         id: '1ed98a7a-99ec-4bb7-9fb1-41df8361c2ce',
-        anchorId: 'id.hk1vjyv7ea7a',
         scenes: Map({
             'Validators Replace Faregates and Barriers': Map({
                 anchorId: 'id.hk1vjyv7ea7a'
@@ -512,7 +502,6 @@ var amtrakStandardModels = OrderedMap({
     'Personal Transportation and Freight (AMTRAK)': Map({
         status: Statuses.INITIALIZED,
         id: '659a315f-97b4-4a9c-8a29-4ca5f6e8cbac',
-        anchorId: 'id.phqdf6isq3v4',
         scenes: Map({
             'Initial': Map({
                 anchorId: 'id.phqdf6isq3v4'
@@ -526,7 +515,6 @@ var amtrakStandardModels = OrderedMap({
     'Personal Transportation and Freight (Metro)': Map({
         status: Statuses.INITIALIZED,
         id: '04163027-d8a3-4912-9997-0f30573fd0fc',
-        anchorId: 'id.3o0isfthvzsv',
         scenes: Map({
             'A hundred bikes fit on a long metro': Map({
                 anchorId: 'id.3o0isfthvzsv'
@@ -537,7 +525,6 @@ var amtrakStandardModels = OrderedMap({
     'Personal Transportation and Freight (Tram)': Map({
         status: Statuses.INITIALIZED,
         id: 'f04baa96-4c29-43ab-9f51-c8520c907d25',
-        anchorId: 'id.ksrni4wfi211',
         scenes: Map({
             'Long trams have plentiful bike storage': Map({
                 anchorId: 'id.ksrni4wfi211'
@@ -551,7 +538,6 @@ var amtrakStandardModels = OrderedMap({
     'Personal Transportation and Freight (Bus)': Map({
         status: Statuses.INITIALIZED,
         id: 'eaaae7b6-5a68-4f3e-a9f0-21ba35ec73b7',
-        anchorId: 'id.b7ievcnhbpl7',
         scenes: Map({
             'External bike storage is limited and risky': Map({
                 anchorId: 'id.b7ievcnhbpl7'
@@ -565,7 +551,6 @@ var amtrakStandardModels = OrderedMap({
     'Station and Stop Amenities (Inside)': Map({
         status: Statuses.INITIALIZED,
         id: '731899d7-02b7-4f47-9a3b-7ae84454e0c7',
-        anchorId: 'id.hcrfkm926ytq',
         scenes: Map({
             'New Station Amenities': Map({
                 anchorId: 'id.hcrfkm926ytq',
@@ -589,7 +574,6 @@ var amtrakStandardModels = OrderedMap({
     'Station and Stop Amenities (Outside, Poor)': Map({
         status: Statuses.INITIALIZED,
         id: '87320bcf-05d7-4df9-8e51-f5c1e8ed82d1',
-        anchorId: 'id.360zh96s35x0',
         scenes: Map({
             'Amenity-Poor Transit Center': Map({
                 anchorId: 'id.360zh96s35x0'
@@ -600,7 +584,6 @@ var amtrakStandardModels = OrderedMap({
     'Station and Stop Amenities (Outside, Improved)': Map({
         status: Statuses.INITIALIZED,
         id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
-        anchorId: 'id.wmbnbioo95zf',
         scenes: Map({
             'Improved Transit Center': Map({
                 anchorId: 'id.f60tsmh8mcrv'

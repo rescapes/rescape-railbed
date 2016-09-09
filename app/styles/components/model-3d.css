@@ -165,3 +165,10 @@ iframe {
         }
     }
 }
+
+/***
+    The video alternative to the 3d models
+**/
+video {
+    width: 100%
+}

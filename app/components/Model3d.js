@@ -104,23 +104,6 @@ class Model3d extends Component {
         return this.props.model && this.props.model.getIn(['scenes', 'current'])
     }
 
-    /**
-     * Gets the current Scene key of the given Model3d used when iterating through all models
-     * @param model
-     * @returns {*}
-     */
-    currentSceneKeyOfModel(model) {
-        return model && model.getIn(['scenes', 'current'])
-    }
-
-    /**
-     * The current Scene of the given Model3d
-     * @param model
-     * @returns {*}
-     */
-    currentSceneOfModel(model) {
-        return model && model.getIn(['scenes', 'entries', this.currentSceneKeyOfModel(model)])
-    }
 
     /***
      * Changes the scene of the 3D model in the iframe to the scene with the given key
@@ -172,7 +155,6 @@ class Model3d extends Component {
         // Once the model is loaded, we never want to unload it by clearing its URL
         const iframes = (modelLoadingOrReady && modelEntries) ? modelEntries.map(function (iterModel, modelKey) {
             const status = iterModel.get('status')
-            const url = iterModel.get('url')
             const isAlreadyLoaded = !!(status & loadingOrReady)
             const isCurrentModel = model == iterModel
             const modelRelevance = Map({
@@ -211,6 +193,7 @@ class Model3d extends Component {
                 // If it's already loaded, current, or in the loading queue (previous or next model), set the URL
                 // Setting the url of the iframe forces it to load if not yet loaded
                 // TODO. We should add more intelligence to not load next/previous until current is fully loaded
+                const url = iterModel.get('url')
                 const iframeUrl = (isAlreadyLoaded || relevance) ? url : null
                 model3dPresentation = <Iframe key={modelKey}
                         src={iframeUrl}
@@ -221,9 +204,7 @@ class Model3d extends Component {
             else {
                 // The videoUrl is that of the current model
                 const videoUrl = iterModel.get('videoUrl')
-                const sceneKey =  this.currentSceneKeyOfModel(iterModel)
-                const scene =  this.currentSceneOfModel(iterModel)
-
+                const scene =  currentSceneOfModel(iterModel)
                 model3dPresentation = <ModelVideo videoUrl={videoUrl} start={scene && scene.get('start')} end={scene && scene.get('end')} />
             }
 
@@ -249,7 +230,7 @@ class Model3d extends Component {
 Model3d.propTypes = {
     settings: ImmutablePropTypes.map,
     models: ImmutablePropTypes.map,
-    is3dSet: PropTypes.boolean
+    is3dSet: PropTypes.bool
 }
 
 function mapStateToProps(state) {
@@ -257,13 +238,38 @@ function mapStateToProps(state) {
     const documentKey = state.getIn(['documents', 'current'])
     const models = documentKey && state.get('models')
     const is3dSet = state.getIn(['settings', settingsActions.SET_3D])
+    // Pass modelKey and sceneKey so that React recalculates the current
+    // scene when it changes
+    const modelKey = models.get('current')
+    const sceneKey = currentSceneKeyOfModel(models.getIn(['entries', modelKey]))
+
     return {
         settings,
         models,
-        is3dSet
+        is3dSet,
+        modelKey,
+        sceneKey
     }
 }
 
+
+/**
+ * Gets the current Scene key of the given Model3d used when iterating through all models
+ * @param model
+ * @returns {*}
+ */
+function currentSceneKeyOfModel(model) {
+    return model && model.getIn(['scenes', 'current'])
+}
+
+/**
+ * The current Scene of the given Model3d
+ * @param model
+ * @returns {*}
+ */
+function currentSceneOfModel(model) {
+    return model && model.getIn(['scenes', currentSceneKeyOfModel(model)])
+}
 
 export default connect(
     mapStateToProps,
