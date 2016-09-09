@@ -14,6 +14,7 @@ import {SET_STATE} from '../actions/site'
 import * as actions from '../actions/model'
 import {DOCUMENT_TELL_MODEL_ANCHOR_CHANGED} from '../actions/site'
 import Statuses from '../statuses'
+import {normalizeKeyToFilename} from '../utils/fileHelpers'
 
 /***
  * Reduces the state of the models and their media
@@ -95,7 +96,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         // Triggers loading of a model
         case actions.LOAD_MODEL:
             // We can't use spaces in our file names, it confuses babel or webpack or something
-            const file = action.key.replace(/ /g, '_')
+            const file = normalizeKeyToFilename(action.key)
             return state.mergeDeep({entries: { [action.key] : {
                 status: Statuses.LOADING,
                 url: action.url,
@@ -123,6 +124,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                 // Get the name of the anchor and look for an _, which divides the modelKey from sceneKey if
                 // a scene is associated with the anchor. Otherwise the anchor represents the entire model
                 const [modelKey, sceneKey] = anchor && anchor.name ? anchor.name.split('_') : null
+                console.log(`Model: ${modelKey} Scene: ${sceneKey || anchor.id}`)
                 // If there is no anchor don't change state
                 if (!modelKey || modelKey == 'undefined')
                     return state;
