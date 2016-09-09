@@ -7,7 +7,7 @@
 .document {
     top: $document-top;
     left: $document-left;
-    margin-right: 10px;
+    margin-right: $document-margin-left;
     z-index: 2;
     position: absolute;
 }

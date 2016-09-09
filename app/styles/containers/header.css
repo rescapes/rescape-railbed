@@ -51,3 +51,10 @@ fades away where ever the document overlaps */
      top: auto;
  }
 }
+
+/***
+    The page up button. Most styling is handled in ender.css
+***/
+.page-up {
+    bottom: 0px;
+}

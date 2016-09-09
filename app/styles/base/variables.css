@@ -53,8 +53,9 @@ $document-height: calc( 100% - $footer-height );
 */
 $document-left: calc( $model-3d-width - $model-3d-document-overlap);
 $document-width: calc( 100% );
-
-
+$document-margin-left: 10px;
+/* Discounts the margin for use positioning the page up/down arrows */
+$document-absolute-left: calc( $document-left - $document-margin-left);
 
 $white: floralwhite;
 $blue: color(deepskyblue lightness(30%));

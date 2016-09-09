@@ -1,0 +1,22 @@
+/***
+Generic header/footer stuff
+***/
+
+/**
+    Page up or down buttons
+**/
+div[class^="page"] {
+    position: absolute;
+    right: calc(calc(100% - $document-absolute-left) / 2);
+    width: 32px;
+    height: 24px;
+    padding: 5px;
+    transition: right 300ms ease, width 300ms ease, height 300ms ease;
+    &:hover {
+        cursor: pointer;
+        right: calc(calc(calc(100% - $document-absolute-left) / 2) - 8px);
+        width: 48px;
+        height: 34.5px;
+        transition: right 300ms ease, width 300ms ease, height 300ms ease;
+    }
+}

@@ -24,6 +24,7 @@ import Statuses from '../statuses'
  *      previous: null,
  *      next: null,
  *      baseUrl: null,
+ *      baseVideoUrl: null,
  *      entries: {
  *      }
  *  } (default): No model is loaded and no model has stored state
@@ -34,10 +35,13 @@ import Statuses from '../statuses'
  *      represents a different model (not just a different scene)
  *   next: model key of the next model if the next anchor element relative to the document scroll position
  *      represents a different model (not just a different scene)
- *   baseUrl: base url of the models, the key completes the url
+ *   baseUrl: base url of the models, the model id completes the url
+ *   baseVideoUrl: base video url of the models, the model key completes the url
  *   entries: {
  *      model key: {
  *         status: on of actions.Statuses
+ *         url: the complete url of the 3d model
+ *         videoUrl: the complete video url of the 3d model
  *         scenes: {
  *            keys: [known scene keys of the model] 
  *            current: the current scene of this model
@@ -73,6 +77,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         // Registers a 3D model when discovered by model key in the DOM.
         // If a model is already registered nothing changes
         case actions.REGISTER_MODEL:
+            // TODO this never happens since we don't find models in the DOM, the are in initialState
             return (!state.get('keys').has(action.key)) ?
                 state
                     // add the model key to the result array
@@ -82,8 +87,6 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                         [action.key] : {
                             // status is initialized, nothing is loaded yet
                             status: Statuses.INITIALIZED,
-                            // Full url combines the baseUrl with the key
-                            url: state.get('baseUrl') + state.get('key'),
                         }}}):
                         state;
         // Shows the given model by making it the current model
@@ -91,10 +94,15 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             return state.set('current', action.key);
         // Triggers loading of a model
         case actions.LOAD_MODEL:
+            // We can't use spaces in our file names, it confuses babel or webpack or something
+            const file = action.key.replace(/ /g, '_')
             return state.mergeDeep({entries: { [action.key] : {
                 status: Statuses.LOADING,
                 url: action.url,
-                url2d: action.url2d
+                url2d: action.url2d,
+                // Full url combines the baseUrl with the key
+                // TODO this belongs in some sort of initialize model
+                videoUrl: state.get('baseVideoUrl')(file),
             }}})
         // Upon loading indicates the model is ready for interaction
         case actions.RECEIVE_MODEL:

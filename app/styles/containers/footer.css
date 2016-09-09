@@ -9,3 +9,10 @@
     margin-right: 10px;
     background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1) 50%);
 }
+
+/***
+    The page down button. Most styling is handled in ender.css
+***/
+.page-down {
+    top: 0px;
+}

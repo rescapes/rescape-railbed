@@ -19,7 +19,14 @@ var amtrakStandardModels = OrderedMap({
         id: '2b495238-e77d-4edf-bb23-b186daf0640f',
         anchorId: 'id.5ktmpvprnx88',
         scenes: Map({
-
+            'Outside': Map({
+                anchorId: 'id.5ktmpvprnx88',
+            }),
+            'AMTRAK Coach Car': Map({
+                anchorId: 'id.hp54zzbbjneh',
+                start: 0,
+                end: 3,
+            }),
         }),
         media: OrderedMap({
             'Capitol Corridor Interior': Map({
@@ -612,7 +619,7 @@ var amtrakStandardModels = OrderedMap({
 export default Map({
     // See settings.js action. All action keys can be set here
     settings: Map({
-        [settingsActions.SET_3D]: true,
+        [settingsActions.SET_3D]: false,
         [settingsActions.SET_RELATED_IMAGES]: true,
         [settingsActions.SET_LIGHTBOX_VISIBILITY]: false
     }),
@@ -645,6 +652,7 @@ export default Map({
          * @param etp: 'im' for still images. Blank for 3d
          */
         baseUrl: (id, etp) => (`https://my.sketchup.com/viewer/3dw?WarehouseModelId=${id}`),
+        baseVideoUrl: modelKey => `/videos/${modelKey}.mp4`,
 
         entries: amtrakStandardModels
     })

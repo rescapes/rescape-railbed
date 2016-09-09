@@ -14,6 +14,7 @@ import {Map} from 'immutable'
 import {connect} from 'react-redux'
 import Gallery from './Gallery'
 
+// This garbage has to be done to force webpack to know about all the media files
 var req = require.context('../images_dist/', true, /\.(jpg|png|gif)$/)
 req.keys().forEach(function(key){
     req(key);

@@ -39,6 +39,7 @@
             transition: width 300ms ease, height 300ms ease;
             margin: 0px;
         }
+        transition: width 300ms ease, height 300ms ease;
 
     }
 }

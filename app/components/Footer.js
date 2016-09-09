@@ -10,12 +10,37 @@
  */
 
 import React, { Component, PropTypes } from 'react'
+import * as documentActions from '../actions/document'
+import {connect} from 'react-redux';
 
 class Footer extends Component {
 
     render() {
-        return <div className='footer'></div>
+        return <div className='footer'>
+            <div className='page-down' onClick={ e=>this.props.scrollToNextModel() } >
+                <svg className='page-down-icon' version="1.1" viewBox="153 252 125 94"  xmlnsDc="http://purl.org/dc/elements/1.1/">
+                    <metadata> Produced by OmniGraffle 6.5.2 <dcDate>2016-09-08 17:26:11 +0000</dcDate></metadata>
+                    <defs/>
+                    <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="none" fillOpacity="1">
+                        <g>
+                            <path d="M 167.24409 266.45669 L 215.43307 331.65354 L 263.62205 266.45669 Z" stroke="#6e2236" strokeLinecap="round" strokeLinejoin="round" strokeWidth="8"/>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
     }
 }
 
-export default Footer
+function mapStateToProps(state) {
+    return {}
+}
+
+/***
+ * Connect the mapStateToProps to provide the props to the component.
+ * Connect the actions so that the component can send the actions based on events.
+ */
+export default connect(
+    mapStateToProps,
+    Object.assign(documentActions)
+)(Footer)
