@@ -22,9 +22,7 @@ var amtrakStandardModels = OrderedMap({
                 anchorId: 'id.5ktmpvprnx88',
             }),
             'AMTRAK Coach Car': Map({
-                anchorId: 'id.hp54zzbbjneh',
-                start: 0,
-                end: 3,
+                anchorId: 'id.5wakjfozuf8l',
             }),
         }),
         media: OrderedMap({
@@ -79,7 +77,7 @@ var amtrakStandardModels = OrderedMap({
                 anchorId: 'id.wcuwoy7h102u'
             }),
             'Group Seating': Map({
-                anchorId: 'id.wcuwoy7h102u'
+                anchorId: 'id.5ev15ggtfpz4'
             }),
         }),
         media: OrderedMap({
@@ -206,12 +204,12 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Types of Right-Of-Way': Map({
+    'Types of Right-of-Way': Map({
         status: Statuses.INITIALIZED,
         id: '510744fa-42ef-452d-87af-2096ae064d40',
         scenes: Map({
             'Class A ROW': Map({
-                anchorId: 'id.18woithqdgd'
+                anchorId: 'id.18woithqdgdg'
             }),
             'Class B ROW': Map({
                 anchorId: 'id.h4oentdtic5m'

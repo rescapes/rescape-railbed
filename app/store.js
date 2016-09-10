@@ -33,7 +33,7 @@ export default function makeStore(initialState=Map()) {
         compose(
             applyMiddleware(
                 thunkMiddleware, // lets us dispatch() functions
-                loggerMiddleware // neat middleware that logs actions
+                //loggerMiddleware // neat middleware that logs actions
             ),
             // Use the Chrom devToolsExtension
             window.devToolsExtension ? window.devToolsExtension() : f => f

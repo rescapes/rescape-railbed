@@ -15,16 +15,6 @@ import ReactDOM from 'react-dom'
 
 class ModelVideo extends Component {
 
-    /***
-     * The URL with start/end timecodes
-     * If no time codes are present we set the start and end time to 0 so nothing plays,
-     * since it probably means we are at the initial scene
-     * @returns {string}
-     */
-    url() {
-        return `${this.props.videoUrl}#t=${this.props.start || 0},${this.props.end || 0}`
-    }
-
     reloadVideo() {
         // When changing a HTML5 video, you have to reload it.
         this.refs.video.load();
@@ -43,9 +33,13 @@ class ModelVideo extends Component {
         this.refs.video.load();
     }
 
-    play() {
-        this.seek(this.props.start)
-        this.refs.video.play();
+    /***
+     * Plays from the current start to end or seeks the start if no start and end are set
+     */
+    playOrReset() {
+        this.seek(this.state.start)
+        if (this.state.end)
+            this.refs.video.play();
     }
 
     seek(time) {
@@ -53,45 +47,68 @@ class ModelVideo extends Component {
     }
 
     onProgress() {
-        const el = ReactDOM.findDOMNode(this.refs.video).getElementsByTagName('video')[0];
-        const end = this.props.end
-        if (el.buffered.length && el.currentTime >= end)
-            this.pause()
+        if (this.refs.video.videoEl.currentTime  >= this.state.end)
+            this.pause();
     }
 
     pause() {
         this.refs.video.pause();
     }
 
+    constructor(props) {
+        super()
+        this.state = {start: props.start || 0, end: props.end || 0}
+        this._onProgress = (event)=>this.onProgress(event)
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.state.start != nextProps.start || this.state.end != nextProps.end)
+            this.setState({start: nextProps.start || 0, end: nextProps.end || 0})
+    }
+
+    /***
+     * Only update
+     * @param nextProps and thus play the video if start or end changed
+     * @param nextState
+     * @returns {boolean}
+     */
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.state.start != nextState.start || this.state.end != nextState.end
+    }
+
+    componentDidMount() {
+        if (this.refs.video)
+            this.playOrReset()
+    }
+
+    componentDidUpdate() {
+        if (this.refs.video)
+            this.playOrReset()
+    }
+
     render() {
+        if (!this.props.videoUrl) {
+            return <div className="model-video"/>
+        }
+
         return <div className="model-video">
             <Video
                 className="video"
                 muted
-                autoPlay
-                onProgress={this.onProgress.bind(this)}
+                onTimeUpdate={this._onProgress}
                 ref="video">
-                <source src={this.url()} type="video/mp4" />
+                <source src={this.props.videoUrl} type="video/mp4" />
                 <Overlay />
                 <Controls />
             </Video>
         </div>
     }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps['start'] != this.props['start']  ||
-            nextProps['end'] != this.props['end']) {
-
-            if (nextProps['start'] != nextProps['end']) {
-                this.play(nextProps['start'], nextProps['end'])
-            }
-        }
-    }
 }
 
 ModelVideo.propTypes = {
     videoUrl: PropTypes.string,
-    start: PropTypes.string,
-    end: PropTypes.string,
+    start: PropTypes.number,
+    end: PropTypes.number
 }
+
 export default ModelVideo

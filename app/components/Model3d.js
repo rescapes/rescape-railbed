@@ -20,6 +20,9 @@ import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import ModelVideo from './ModelVideo'
 
+// Video scenes are 3 seconds long
+const SCENE_DURATION = 3
+
 // This garbage has to be done to force webpack to know about all the media files
 var req = require.context('../videos/', true, /\.(mp4)$/)
 req.keys().forEach(function(key){
@@ -205,7 +208,10 @@ class Model3d extends Component {
                 // The videoUrl is that of the current model
                 const videoUrl = iterModel.get('videoUrl')
                 const scene =  currentSceneOfModel(iterModel)
-                model3dPresentation = <ModelVideo videoUrl={videoUrl} start={scene && scene.get('start')} end={scene && scene.get('end')} />
+                const sceneIndex = (iterModel.get('scenes') || Map()).toArray().indexOf(scene)
+                const start = (sceneIndex ? (sceneIndex - 1) : 0) * SCENE_DURATION,
+                      end = (sceneIndex || 0) * SCENE_DURATION
+                model3dPresentation = <ModelVideo videoUrl={videoUrl} start={start} end={end} />
             }
 
             // Return the iframe or video wrapped in a div. The div must have a unique key for React
