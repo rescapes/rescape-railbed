@@ -14,5 +14,5 @@
  * normalizes keys to match our dumbed-downed file names
  */
 export function normalizeKeyToFilename(key) {
-    return key.replace(/ /g, '_').replace(/é/g, 'e')
+    return key.replace(/( |-)/g, '_').replace(/é/g, 'e')
 }

@@ -195,9 +195,12 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             anchors.slice(0, previous ? previousAnchorIndex+1 : 0).reverse(),
             current
         )
+        console.log(scrollPosition)
+        /*
         console.log(previousForDistinctModel && previousForDistinctModel.name)
         console.log(current && current.name)
         console.log(nextForDistinctModel && nextForDistinctModel.name)
+        */
         return {current, previous, next, nextForDistinctModel, previousForDistinctModel}
     }
 
