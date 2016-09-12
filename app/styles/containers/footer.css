@@ -7,7 +7,7 @@
     right: 0px;
     margin-left: 10px;
     margin-right: 10px;
-    background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1) 50%);
+    background: linear-gradient(to right, rgba(77, 78, 83, 0) 50%, rgba(77, 78, 83, 1) 50%);
 }
 
 /***

@@ -13,32 +13,65 @@ import React, { Component, PropTypes } from 'react'
 import rescape_png from '../images_dist/rescape-320.png'
 import * as documentActions from '../actions/document'
 import {connect} from 'react-redux';
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 class Header extends Component {
 
+
     render() {
-        return <div className='header'>
-            <img className='header-icon' src={rescape_png}/>
-            <div className='header-gradiant left' />
+
+        // Show the page up button if we're not at the top already
+        const pageUpButton = !(this.props.modelKey && this.props.sceneKey) || (
+            this.props.models.get('entries').keySeq().first() == this.props.modelKey &&
+            this.props.models.getIn(['entries', this.props.modelKey, 'scenes', 'entries']).keySeq().first() == this.props.sceneKey) ?
+            <div/> :
             <div className='page-up' onClick={ e=>this.props.scrollToPreviousModel() } >
                 <svg className='page-up-icon' version="1.1" viewBox="153 252 125 94" xmlnsDc="http://purl.org/dc/elements/1.1/">
-                    <metadata> Produced by OmniGraffle 6.5.2
-                        <dcDate>2016-09-08 17:26:11 +0000</dcDate>
-                    </metadata>
-                    <defs/>
-                    <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+                    <defs>
+                        <linearGradient id="PageUpGradient">
+                            <stop offset="5%"  stopColor="white"/>
+                            <stop offset="95%" stopColor="rgba(77, 78, 83, .8)"/>
+                        </linearGradient>
+                    </defs>
+                    <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="url(#PageUpGradient)" fillOpacity="1">
                         <g>
-                            <path d="M 263.62205 331.65354 L 215.43307 266.45669 L 167.24409 331.65354 Z" stroke="#6e2236" strokeLinecap="round" strokeLinejoin="round" strokeWidth="8"/>
+                            <path d="M 263.62205 331.65354 L 215.43307 266.45669 L 167.24409 331.65354 Z" stroke="#6e2236" strokeLinecap="round" strokeWidth="8"/>
                         </g>
                     </g>
                 </svg>
             </div>
+
+        return <div className='header'>
+            <img className='header-icon' src={rescape_png}/>
+            <div className='header-gradient left' />
+            {pageUpButton}
         </div>
     }
 }
 
+Header.propTypes = {
+    models: ImmutablePropTypes.map,
+    modelKey: PropTypes.string,
+    sceneKey: PropTypes.string
+}
+
+/***
+ * Pass models, modelKey, and sceneKey so the Header knows if were are already at the start of the
+ * document and doesn't need to show the page up button
+ * @param state
+ * @returns {{models: *, modelKey: *, sceneKey: *}}
+ */
 function mapStateToProps(state) {
-    return {}
+    const documentKey = state.getIn(['documents', 'current'])
+    const models = documentKey && state.get('models')
+    const modelKey = models && models.get('current')
+    const sceneKey = models && models.getIn(['entries', modelKey, 'scenes', 'current'])
+
+    return {
+        models,
+        modelKey,
+        sceneKey
+    }
 }
 
 /***

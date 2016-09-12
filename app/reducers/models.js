@@ -173,9 +173,9 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         // Upon load error makes the model unavailable for interaction with reload option
         case actions.MEDIUM_ERRED:
             return state.setIn(['entries', action.key, 'status'], Statuses.ERROR);
-        // Shows the given model by making it the current model
+        // This does nothing right now
         case actions.SHOW_MEDIUM:
-            return state.set('current', action.key)
+            return state
         default:
             return state
     }
