@@ -43,3 +43,110 @@
 
     }
 }
+
+
+.model-3d-title {
+    position: absolute;
+    bottom: 5px;
+    height: 20px;
+    width: inherit;
+    color: $rescape-love;
+    font-weight: bold;
+    font-size: $h4-font-size;
+    left: 5px;
+    right: -100px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 0px;
+    background: linear-gradient(to right, $white, rgba(77, 78, 83, 1) 99%);
+
+    .gallery-open {
+        display: none;
+    }
+}
+
+/***
+    Both the media and model-3d title need to fade in and out with the model scroll
+***/
+.media, .model-3d-title, .share-icons {
+
+    &.fade-out {
+
+         /** These are only used by the model title when the lightbox appears--no upward or downward **/
+         opacity: 0;
+         visibility: hidden;
+         transition: visibility 600ms ease, opacity 600ms ease;
+
+        /*
+            The model is scrolling down, fade the components downward
+        */
+        &.downward {
+
+            &.media, &.model-3d-title {
+                  bottom: -100px;
+                  transition: visibility 600ms ease, opacity 600ms ease, bottom 300m ease;
+            }
+
+            &.share-icons {
+                 top: 100px;
+                 transition: visibility 600ms ease, opacity 600ms ease, top 300m ease;
+            }
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /*
+            The model is scrolling up, fade the components upward
+        */
+        &.upward {
+            &.media, &.model-3d-title {
+                bottom: 100px;
+                transition: visibility 600ms ease, opacity 600ms ease, bottom 300ms ease;
+            }
+            &.share-icons {
+                 top: -100px;
+                 transition: visibility 600ms ease, opacity 600ms ease, top 300ms ease;
+             }
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+
+    &.fade-in {
+         visibility: visible;
+         opacity: 1;
+
+        &.media, &.model-3d-title {
+            transition: visibility 300ms linear, opacity 300ms linear, bottom 600ms ease;
+        }
+
+        &.share-icons {
+            transition: visibility 300ms linear, opacity 300ms linear, top 600ms ease;
+        }
+    }
+}
+
+.scene-title {
+    span {
+        position: absolute;
+        width: 100%;
+    }
+}
+.scene-title-enter {
+    opacity: 0.01;
+
+    &.scene-title-enter-active {
+        opacity: 1;
+        transition: opacity 1500ms ease-in;
+        transition-delay: 1800ms;
+    }
+}
+
+.scene-title-leave {
+    opacity: 1;
+
+    &.scene-title-leave-active {
+        opacity: 0;
+        transition: opacity 300ms ease-in;
+    }
+}

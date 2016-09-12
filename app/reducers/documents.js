@@ -147,9 +147,24 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     else if (action.type==actions.SCROLL_TO_PREVIOUS_MODEL) {
         // Get the current scroll position
         const scrollPosition = state.getIn(['entries', currentDocumentKey, 'scrollPosition'])
-        const {previousForDistinctModel} = getRelevantAnchors(scrollPosition)
-        if (previousForDistinctModel)
-            return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], previousForDistinctModel.offsetTop)
+        console.warn(scrollPosition)
+
+        // The scroll up button goes first scene of the previous model (or current model if
+        // there is no previous)
+        const {previousForDistinctModel, previous} = getRelevantAnchors(scrollPosition)
+        const whichPrevious = previousForDistinctModel || previous
+        const modelKey = resolveModelKeyFromAnchor(whichPrevious)
+        const anchors = getAnchors()
+        // Start at 0 and search up until whichPrevious. Take the first model match
+        const firstSceneOfPrevious = anchors.slice(0, anchors.indexOf(whichPrevious)+1).find(function(anchor) {
+            const seek = resolveModelKeyFromAnchor(anchor)
+            return seek==modelKey
+        })
+        if (firstSceneOfPrevious) {
+            console.warn(firstSceneOfPrevious.name)
+            console.warn(firstSceneOfPrevious.offsetTop)
+            return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], firstSceneOfPrevious.offsetTop)
+        }
     }
     else
         return state
@@ -195,12 +210,12 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             anchors.slice(0, previous ? previousAnchorIndex+1 : 0).reverse(),
             current
         )
-        console.log(scrollPosition)
-        /*
-        console.log(previousForDistinctModel && previousForDistinctModel.name)
-        console.log(current && current.name)
-        console.log(nextForDistinctModel && nextForDistinctModel.name)
-        */
+
+        console.log(`Previous Distinct: ${previousForDistinctModel && previousForDistinctModel.name}`)
+        console.log(`Previous: ${previous && previous.name}`)
+        console.log(`Current: ${current && current.name}`)
+        console.log(`Next: ${next && next.name}`)
+        console.log(`Next Distinct: ${nextForDistinctModel && nextForDistinctModel.name}`)
         return {current, previous, next, nextForDistinctModel, previousForDistinctModel}
     }
 

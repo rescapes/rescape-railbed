@@ -19,6 +19,7 @@ import Statuses from '../statuses'
 import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import ModelVideo from './ModelVideo'
+import {currentSceneKeyOfModel, currentSceneOfModel} from '../utils/modelHelpers'
 
 // Video scenes are 3 seconds long
 const SCENE_DURATION = 3
@@ -98,6 +99,16 @@ class Model3d extends Component {
             (modelChanged || sceneKey != nextSceneKey)) {
             this.changeScene(nextSceneKey)
         }
+
+        // Figure out if we are scrolling forward or backward based on model state
+        if (nextProps.modelTops.next || 0 > this.props.modelTops.next || 0) {
+           this.setState({scrollDirection: 'forward'})
+        }
+        else if (nextProps.modelTops.previous || 0 > this.props.modelTops.previous || 0) {
+            this.setState({scrollDirection: 'backward'})
+        }
+        else
+            this.setState({scrollDirection: null})
     }
 
     /***
@@ -208,19 +219,19 @@ class Model3d extends Component {
                 // The videoUrl is that of the current model
                 const videoUrl = iterModel.get('videoUrl')
                 const scene =  currentSceneOfModel(iterModel)
-                const sceneIndex = (iterModel.get('scenes') || Map()).toArray().indexOf(scene)
+                const sceneIndex = (iterModel.getIn(['scenes', 'entries']) || Map()).toArray().indexOf(scene)
                 const start = (sceneIndex ? (sceneIndex - 1) : 0) * SCENE_DURATION,
                       end = (sceneIndex || 0) * SCENE_DURATION
-                model3dPresentation = <ModelVideo videoUrl={videoUrl} start={start} end={end} />
+                model3dPresentation = <ModelVideo videoUrl={videoUrl} start={start} end={end} scrollDirection={this.state.scrollDirection} />
             }
 
             // Return the iframe or video wrapped in a div. The div must have a unique key for React
             return <div key={modelKey} className={`${divClass} ${divStateClass}`} style={style}>
                 { model3dPresentation }
-                <div className='model-3d-gradiant left'/>
-                <div className='model-3d-gradiant right'/>
-                <div className='model-3d-gradiant top'/>
-                <div className='model-3d-gradiant bottom'/>
+                <div className='model-3d-gradient left'/>
+                <div className='model-3d-gradient right'/>
+                <div className='model-3d-gradient top'/>
+                <div className='model-3d-gradient bottom'/>
             </div>
         }, this).toArray() : [];
 
@@ -236,7 +247,11 @@ class Model3d extends Component {
 Model3d.propTypes = {
     settings: ImmutablePropTypes.map,
     models: ImmutablePropTypes.map,
-    is3dSet: PropTypes.bool
+    is3dSet: PropTypes.bool,
+    modelKey: PropTypes.string,
+    sceneKey: PropTypes.string,
+    // This is from the parent, not the state
+    modelTops: PropTypes.object
 }
 
 function mapStateToProps(state) {
@@ -256,25 +271,6 @@ function mapStateToProps(state) {
         modelKey,
         sceneKey
     }
-}
-
-
-/**
- * Gets the current Scene key of the given Model3d used when iterating through all models
- * @param model
- * @returns {*}
- */
-function currentSceneKeyOfModel(model) {
-    return model && model.getIn(['scenes', 'current'])
-}
-
-/**
- * The current Scene of the given Model3d
- * @param model
- * @returns {*}
- */
-function currentSceneOfModel(model) {
-    return model && model.getIn(['scenes', currentSceneKeyOfModel(model)])
 }
 
 export default connect(

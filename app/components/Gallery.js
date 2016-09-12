@@ -63,6 +63,7 @@ class Gallery extends Component {
                     className='gallery-thumbnail'
 					href={obj.src}
 					key={i}
+					title='Click to View Gallery'
 					onClick={(e) => this.openLightbox(i, e)}
 					>
 					<img

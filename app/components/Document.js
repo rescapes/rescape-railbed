@@ -81,7 +81,7 @@ class Document extends Component {
                     sceneKey: null} :
                     // Otherwise iterate through the models and return a model and scene where the scene matches the anchor
                     models.mapEntries(function ([modelKey, model]) {
-                        const sceneKey = model.get('scenes').findKey(
+                        const sceneKey = model.getIn(['scenes', 'entries']).findKey(
                             (scene, sceneKey) => scene.get('anchorId') == anchor.id)
                         return sceneKey ? ['FOUND', {
                             modelKey: modelKey,
@@ -158,7 +158,7 @@ class Document extends Component {
         return <div className='document'>
             <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
             </div>
-            <div className='document-gradiant right' />
+            <div className='document-gradient right' />
         </div>
     }
 
@@ -215,7 +215,7 @@ class Document extends Component {
 }
 
 Document.propTypes = {
-    settins: ImmutablePropTypes.map,
+    settings: ImmutablePropTypes.map,
     document: ImmutablePropTypes.map,
     models: ImmutablePropTypes.map,
     scrollPosition: PropTypes.number

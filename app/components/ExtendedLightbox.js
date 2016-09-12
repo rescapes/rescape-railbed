@@ -11,10 +11,6 @@
 import Lightbox from 'react-images';
 import React, { Component, PropTypes } from 'react';
 
-class ExtendedLighboxFooter extends Component {
-
-}
-
 /***
  * Extends Lightbox from react-images to add a credit link an other niceties
  */

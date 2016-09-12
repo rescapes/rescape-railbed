@@ -32,13 +32,15 @@ class Media extends Component {
 
     render() {
 
+        // Other styling is in media.css
+        // TODO would all be better off in media.css
         // to match all these items using css regexes, but Lighbox.js generates random class
         // suffixes
         const theme = {
 
             // arrows
             arrow: {
-                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
                 fill: '#222',
                 opacity: 0.6,
                 transition: 'opacity 200ms',
@@ -57,8 +59,8 @@ class Media extends Component {
                     padding: 15,
                 },
             },
-            arrow__direction__left: { marginLeft: 10 },
-            arrow__direction__right: { marginRight: 10 },
+            arrow__direction__left: { marginLeft: 0 },
+            arrow__direction__right: { marginRight: 0 },
 
             // header
             close: {

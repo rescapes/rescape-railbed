@@ -11,29 +11,61 @@
 
 import React, { Component, PropTypes } from 'react'
 import * as documentActions from '../actions/document'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import {connect} from 'react-redux';
 
 class Footer extends Component {
 
     render() {
-        return <div className='footer'>
+        const pageDownButton = !(this.props.modelKey && this.props.sceneKey) || (
+            this.props.models.get('entries').keySeq().last() == this.props.modelKey &&
+            this.props.models.getIn(['entries', this.props.modelKey, 'scenes', 'entries']).keySeq().last() == this.props.sceneKey) ?
+            <div/> :
             <div className='page-down' onClick={ e=>this.props.scrollToNextModel() } >
-                <svg className='page-down-icon' version="1.1" viewBox="153 252 125 94"  xmlnsDc="http://purl.org/dc/elements/1.1/">
-                    <metadata> Produced by OmniGraffle 6.5.2 <dcDate>2016-09-08 17:26:11 +0000</dcDate></metadata>
-                    <defs/>
-                    <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="none" fillOpacity="1">
+                <svg className='page-down-icon' version="1.1" viewBox="153 252 125 94">
+                    <defs>
+                        <linearGradient id="PageDownGradient">
+                            <stop offset="5%"  stopColor="white"/>
+                            <stop offset="95%" stopColor="rgba(77, 78, 83, .8)"/>
+                        </linearGradient>
+                    </defs>
+                    <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="url(#PageDownGradient)" fillOpacity="1">
                         <g>
-                            <path d="M 167.24409 266.45669 L 215.43307 331.65354 L 263.62205 266.45669 Z" stroke="#6e2236" strokeLinecap="round" strokeLinejoin="round" strokeWidth="8"/>
+                            <path d="M 167.24409 266.45669 L 215.43307 331.65354 L 263.62205 266.45669 Z" stroke="#6e2236" strokeLinecap="round" strokeWidth="8"/>
                         </g>
                     </g>
                 </svg>
             </div>
+        return <div className='footer'>
+            {pageDownButton}
         </div>
     }
 }
 
+
+Footer.propTypes = {
+    models: ImmutablePropTypes.map,
+    modelKey: PropTypes.string,
+    sceneKey: PropTypes.string
+}
+
+/***
+ * Pass models, modelKey, and sceneKey so the Footer knows if were are already at the end of the
+ * document and doesn't need to show the page down button
+ * @param state
+ * @returns {{models: *, modelKey: *, sceneKey: *}}
+ */
 function mapStateToProps(state) {
-    return {}
+    const documentKey = state.getIn(['documents', 'current'])
+    const models = documentKey && state.get('models')
+    const modelKey = models && models.get('current')
+    const sceneKey = models && models.getIn(['entries', modelKey, 'scenes', 'current'])
+
+    return {
+        models,
+        modelKey,
+        sceneKey
+    }
 }
 
 /***

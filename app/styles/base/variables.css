@@ -3,29 +3,33 @@ $header-top: 0px;
 $header-height: 100px;
 $header-bottom: calc( $header-top + $header-height );
 
+
 $footer-height: 50px;
+$showcase-footer-overlap: 25px;
 
 /*
-    The showcase overlaps with the header completely
+    The showcase overlaps with the header completely and extends half way into the footer
 */
 $showcase-top: 0px;
 /*
     Make the showcase extend half way into the footer
 */
-$showcase-height: calc(100% - ($footer-height / 2));
+$showcase-height: calc(100% - $showcase-footer-overlap);
 $showcase-left: 10px;
-$showcase-width: 850px;
+$showcase-width: 68%;
 
 /*
-    The model extends to the top of the footer and overlaps a bit with the header
+    Make the model ratio should be 2 height to 3 width since that is what the Sketchup videos are.
+    The Sketchup models don't care what the ratio is but look best at that ration
+    since the scenes are created based on that
 */
-$model-3d-top: calc($header-height - 10px);
-$model-3d-height: calc(100% - $model-3d-top - ($footer-height / 2));
-$model-3d-width: $showcase-width;
+$model-3d-top: calc($header-height);
+$model-3d-width: 100%;
+$model-3d-height: calc(calc(100% - $header-height - $showcase-footer-overlap));
 /*
     The model overlaps the document
 */
-$model-3d-document-overlap: 100px;
+$model-3d-document-overlap: 20px;
 
 $gallery-thumbnail-width: 100px;
 $gallery-thumbnail-height: 75px;
@@ -51,7 +55,7 @@ $document-height: calc( 100% - $footer-height );
     The left side of the document bleeds over the 3d model
     The 3d model's right gradient fades the 3d model away so we can see the document
 */
-$document-left: calc( $model-3d-width - $model-3d-document-overlap);
+$document-left: calc( $showcase-width - $model-3d-document-overlap);
 $document-width: calc( 100% );
 $document-margin-left: 10px;
 /* Discounts the margin for use positioning the page up/down arrows */

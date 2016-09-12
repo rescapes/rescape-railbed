@@ -22,6 +22,9 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import * as siteActions from '../actions/site'
 import * as settingsActions from '../actions/settings'
 import { ShareButtons, generateShareIcon } from 'react-share';
+import {currentSceneKeyOfModel} from '../utils/modelHelpers'
+import ReactCSSTransitionGroup  from 'react-addons-css-transition-group';
+
 
 // Fraction of space between current model and previous/next when scrolling
 // TODO move to settings
@@ -68,8 +71,9 @@ class Showcase extends Component {
         if (!this.props.postUrl) {
             return  <div className='showcase'/>
         }
+
         return <div className='showcase'>
-            <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops} />
+            <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops} toward={toward} />
             <Media media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
             // Share icons!
             <div className={`share-icons ${fade} ${toward}`}>
@@ -83,10 +87,23 @@ class Showcase extends Component {
                 )}
             </div>
             // Use the specially defined title to show the model, or lacking one the model key
+            // Also show the current scene
             // Apply fade aways for the title, including if the lightbox is open
-            <div className={`model-3d-title ${this.props.lightboxVisibility ? 'fade-out' : fade} ${toward}`}>
+            // Transitions between scene titles by applying in an element with class 'scene-title'
+            // by creating a child element with the following classes
+            // .scene-title-enter and .scene-title-enter-active to the entering element
+            // .scene-title-leave and .scene-title-leave-active to the exiting element
+            <span className={`model-3d-title ${this.props.lightboxVisibility ? 'fade-out' : fade} ${toward}`}>
                 {model && model.get('title') || modelKey}
-            </div>
+                <ReactCSSTransitionGroup
+                    className="scene-title"
+                    transitionName="scene-title"
+                    transitionEnterTimeout={1800}
+                    transitionLeaveTimeout={300}
+                >
+                    <span key={this.props.sceneKey}>: {this.props.sceneKey}</span>
+                </ReactCSSTransitionGroup>
+            </span>
         </div>;
     }
 
@@ -95,7 +112,7 @@ class Showcase extends Component {
      *
      * Calculate the modelTops of the current, previous, and next models as a percent of how close an anchor element
      * representing them is to document scroll position. This means that
-     *  1) the current model display below/above the closer of the previous/netxt model
+     *  1) the current model display below/above the closer of the previous/next model
      *  2) the previous model if any and closer than the next model displays above the current
      *  3) the next model if any and closer than the previous model displays below the current
      *  We also use the constant MODEL_PADDING to separate the bottom and top of two adjacent models.
@@ -120,7 +137,8 @@ class Showcase extends Component {
             previousFraction = currentDistance / (previousDistance + currentDistance),
             // Increases as next becomes more relevant
             nextFraction = currentDistance / (nextDistance + currentDistance)
-        if (previousFraction > MODEL_THRESHOLD && this.props.models.get('previousForDistinctModel') != current) {
+        // If we're closer to the previous than the next and within the threshold for transition
+        if (previousFraction > nextFraction && previousFraction > MODEL_THRESHOLD && this.props.models.get('previousForDistinctModel') != current) {
             return {
                 // Start at 0 and scroll down as previous gets more relevant
                 current: currentDistance / (previousDistance + currentDistance),
@@ -129,7 +147,8 @@ class Showcase extends Component {
                 next: null
             }
         }
-        else if (nextFraction > MODEL_THRESHOLD && this.props.models.get('nextForDistinctModel') != current) {
+        // If we're closer to the next than the previous and within the threshold for transition
+        else if (nextFraction > previousFraction && nextFraction > MODEL_THRESHOLD && this.props.models.get('nextForDistinctModel') != current) {
             return {
                 // Start at 0 and scroll up as next gets more relevant
                 current: 0 - (currentDistance / (nextDistance + currentDistance)),
@@ -149,7 +168,10 @@ class Showcase extends Component {
     }
 
     /***
-     * If we previous or next models are present we want to fade out since the current model
+     * For the Media Gallery:
+     * Given the current modelTops returns the 'fade-out' or 'fade-in' class and if
+     * fade-out the direction of the fadeout, 'upward' or 'downward'
+     * If previous or next models are present we want to fade out since the current model
      * is no longer centered
      *
      * @param modelTops
@@ -200,11 +222,16 @@ function mapStateToProps(state, props) {
     const postUrl = document && document.get('postUrl')
     const documentTitle = document && document.get('title')
     const lightboxVisibility = state.getIn(['settings', settingsActions.SET_LIGHTBOX_VISIBILITY])
+    const sceneKey = currentSceneKeyOfModel(model)
+    // Used to set a css class so we can smoothly transition scene titles
+    const sceneIndex = model && model.getIn(['scenes', 'entries']).keySeq().indexOf(sceneKey)
 
     return {
         models,
         model,
         modelKey,
+        sceneKey,
+        sceneIndex,
         documentTitle,
         closestAnchorDistances,
         lightboxVisibility,

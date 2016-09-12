@@ -17,14 +17,14 @@ var amtrakStandardModels = OrderedMap({
     'AMTRAK Superliner': Map({
         status: Statuses.INITIALIZED,
         id: '2b495238-e77d-4edf-bb23-b186daf0640f',
-        scenes: Map({
+        scenes: OrderedMap({ entries: Map({
             'Outside': Map({
                 anchorId: 'id.5ktmpvprnx88',
             }),
-            'AMTRAK Coach Car': Map({
+            'Coach Car': Map({
                 anchorId: 'id.5wakjfozuf8l',
             }),
-        }),
+        })}),
         media: OrderedMap({
             'Capitol Corridor Interior': Map({
                 caption: "Northern California's Capitol Corridor",
@@ -69,17 +69,17 @@ var amtrakStandardModels = OrderedMap({
     'AMTRAK Café Car': Map({
         status: Statuses.INITIALIZED,
         id: '9b7bbfe8-2ad5-4074-ae81-7bc0645dfce9',
-        scenes: Map({
-            'AMTRAK Cafe Seating': Map({
+        scenes: OrderedMap({ entries: Map({
+            'Seating': Map({
                 anchorId: 'id.bc4p3rsjqez8'
             }),
-            'AMTRAK Cafe Offerings': Map({
+            'Offerings': Map({
                 anchorId: 'id.wcuwoy7h102u'
             }),
             'Group Seating': Map({
                 anchorId: 'id.5ev15ggtfpz4'
             }),
-        }),
+        })}),
         media: OrderedMap({
             'Eastern Cafe Tables': Map({
                 caption: 'Eastern AMTRAK Café Car tables with bike space',
@@ -123,7 +123,7 @@ var amtrakStandardModels = OrderedMap({
     'Fixed-Guideways': Map({
         status: Statuses.INITIALIZED,
         id: '419df1d2-949f-4e60-adbc-59da24a5c6ce',
-        scenes: Map({
+        scenes: OrderedMap({ entries: Map({
             'All Transit': Map({
                 anchorId: 'id.2y8fqiblaq2h'
             }),
@@ -133,7 +133,7 @@ var amtrakStandardModels = OrderedMap({
             'Not Fixed Guideway': Map({
                 anchorId: 'id.5dezdsk8y4kg'
             }),
-        }),
+        })}),
         media: OrderedMap({
             'St Charles Streetcar': Map({
                 caption: "The venerable New Orleans Saint Charles Streetcar saunters along tree and grass-lined tracks",
@@ -207,7 +207,7 @@ var amtrakStandardModels = OrderedMap({
     'Types of Right-of-Way': Map({
         status: Statuses.INITIALIZED,
         id: '510744fa-42ef-452d-87af-2096ae064d40',
-        scenes: Map({
+        scenes: OrderedMap({ entries: Map({
             'Class A ROW': Map({
                 anchorId: 'id.18woithqdgdg'
             }),
@@ -217,7 +217,7 @@ var amtrakStandardModels = OrderedMap({
             'Class C ROW': Map({
                 anchorId: 'id.d35p1mlt87up'
             }),
-        }),
+        })}),
         media: OrderedMap({
             'Cologne': Map({
                 caption: 'Practically all heavy-rail trains, like this high-speed train in Cologne, Germany, enjoy Class A ROW',
@@ -270,7 +270,7 @@ var amtrakStandardModels = OrderedMap({
     'Frequency of Transit Stops': Map({
         status: Statuses.INITIALIZED,
         id: '9173b60e-b557-44bf-a736-2e352e4f7a86',
-        scenes: Map({
+        scenes: OrderedMap({ entries: Map({
             'Current Conditions': Map({
                 anchorId: 'id.mxfqg4xj55jc'
             }),
@@ -281,12 +281,12 @@ var amtrakStandardModels = OrderedMap({
                 anchorId: 'id.jkjm80gwudui'
             }),
             'Tram Upgrade': Map({
-                anchorId: 'id.vwedkoe7xxns'
+                anchorId: 'id.alne56ljtjfy'
             }),
             'Consolidation Challenges': Map({
-                anchorId: 'id.ifjl8mnx6p4n'
+                anchorId: 'id.829nmr5f03nd'
             }),
-        }),
+        })}),
         media: OrderedMap({
             'AC Transit': Map({
                 type: 'png',
@@ -328,8 +328,7 @@ var amtrakStandardModels = OrderedMap({
     'Seat Comfort Metro and Tram': Map({
         title: 'Space and Seat Comfort',
         status: Statuses.INITIALIZED,
-        anchorId: 'id.em6st57x7wbe',
-        scenes: Map({
+        scenes: OrderedMap({ entries: Map({
             'Empty Rows': Map({
                 anchorId: 'id.em6st57x7wbe'
             }),
@@ -348,7 +347,7 @@ var amtrakStandardModels = OrderedMap({
             'Armrests and Recliners': Map({
                 anchorId: 'id.bbssm7d9ycql'
             })
-        }),
+        })}),
         media: OrderedMap({
             'Munich Ubahn': Map({
                 caption: "Munich's metro cars combine unpadded fabric row seats with wooden inward-facing seats",
@@ -388,7 +387,7 @@ var amtrakStandardModels = OrderedMap({
         title: 'Space and Seat Comfort',
         status: Statuses.INITIALIZED,
         id: '843cbe82-5a4a-4453-9766-488049133e9d',
-        scenes: Map({
+        scenes: OrderedMap({ entries: Map({
             'Forward-facing Seats on AMTRAK': Map({
                 anchorId: 'id.53cvna734bl4'
             }),
@@ -398,7 +397,7 @@ var amtrakStandardModels = OrderedMap({
             'Low-floor buses have rear-facing seats': Map({
                 anchorId: 'id.s9a7cdqojj39'
             }),
-        }),
+        })}),
         media: OrderedMap({
             'Brightline Interior': Map({
                 caption: 'Brightline, a company building now rail service in Florida (All Aboard Florida) has designed train cars with "intuitive interiors"',
@@ -418,7 +417,7 @@ var amtrakStandardModels = OrderedMap({
     'Personal Space and Privacy': Map({
         status: Statuses.INITIALIZED,
         id: '268c95fd-8a33-4636-bf72-ceaff2c1e997',
-        scenes: Map({
+        scenes: OrderedMap({ entries: Map({
             'Train Compartment': Map({
                 anchorId: 'id.n0mwt01mtot1'
             }),
@@ -431,13 +430,13 @@ var amtrakStandardModels = OrderedMap({
             'Private Metro Compartments': Map({
                 anchorId: 'id.cf2ldt4sfy35'
             }),
-        })
+        })})
     }),
 
-    'Transit Access to Amenities': Map({
+    'Access to Amenities': Map({
         status: Statuses.INITIALIZED,
         id: '6d32b9a2-8ef9-4b3f-8065-00d08ee87c05',
-        scenes: Map({
+        scenes: OrderedMap({ entries: Map({
             'AMTRAK Toilet': Map({
                 anchorId: 'id.c784pbnlt1sa'
             }),
@@ -453,13 +452,13 @@ var amtrakStandardModels = OrderedMap({
             'Tram Café': Map({
                 anchorId: 'id.5pgtgqe6khzj'
             })
-        })
+        })})
     }),
 
     'Metro Station with Faregates': Map({
         status: Statuses.INITIALIZED,
         id: '605a8f98-af02-4b26-8145-cfe247f91dba',
-        scenes: Map({
+        scenes: OrderedMap({entries: Map({
             'Metro Entrance with Faregates': Map({
                 anchorId: 'id.97xvu0r03y0e'
             }),
@@ -472,13 +471,13 @@ var amtrakStandardModels = OrderedMap({
             'Accessing Transit is Cumbersome': Map({
                 anchorId: 'id.p4m8oqotbbz'
             }),
-        })
+        })})
     }),
 
     'Metro Station with Faregates Removed': Map({
         status: Statuses.INITIALIZED,
         id: '1ed98a7a-99ec-4bb7-9fb1-41df8361c2ce',
-        scenes: Map({
+        scenes: OrderedMap({entries: Map({
             'Validators Replace Faregates and Barriers': Map({
                 anchorId: 'id.hk1vjyv7ea7a'
             }),
@@ -494,66 +493,66 @@ var amtrakStandardModels = OrderedMap({
             'Luggage & Bike Conveyor': Map({
                 anchorId: 'id.bnqw4memdz2g'
             }),
-        })
+        })})
     }),
 
     'Personal Transportation and Freight (AMTRAK)': Map({
         status: Statuses.INITIALIZED,
         id: '659a315f-97b4-4a9c-8a29-4ca5f6e8cbac',
-        scenes: Map({
+        scenes: OrderedMap({entries: Map({
             'Initial': Map({
                 anchorId: 'id.phqdf6isq3v4'
             }),
             'Personal Bike Storage on Regional Trains': Map({
                 anchorId: 'id.9itw958nhuqz'
             }),
-        })
+        })})
     }),
 
     'Personal Transportation and Freight (Metro)': Map({
         status: Statuses.INITIALIZED,
         id: '04163027-d8a3-4912-9997-0f30573fd0fc',
-        scenes: Map({
+        scenes: OrderedMap({entries: Map({
             'A hundred bikes fit on a long metro': Map({
                 anchorId: 'id.3o0isfthvzsv'
             }),
-        })
+        })})
     }),
 
     'Personal Transportation and Freight (Tram)': Map({
         status: Statuses.INITIALIZED,
         id: 'f04baa96-4c29-43ab-9f51-c8520c907d25',
-        scenes: Map({
+        scenes: OrderedMap({entries: Map({
             'Long trams have plentiful bike storage': Map({
                 anchorId: 'id.ksrni4wfi211'
             }),
             'Trams have flush, level boarding': Map({
                 anchorId: 'id.xluw7fz8woop'
             }),
-        })
+        })})
     }),
 
     'Personal Transportation and Freight (Bus)': Map({
         status: Statuses.INITIALIZED,
         id: 'eaaae7b6-5a68-4f3e-a9f0-21ba35ec73b7',
-        scenes: Map({
+        scenes: OrderedMap({entries: Map({
             'External bike storage is limited and risky': Map({
                 anchorId: 'id.b7ievcnhbpl7'
             }),
             'Wheelchairs on buses': Map({
                 anchorId: 'id.xluw7fz8woop'
             }),
-        })
+        })})
     }),
 
     'Station and Stop Amenities (Inside)': Map({
         status: Statuses.INITIALIZED,
         id: '731899d7-02b7-4f47-9a3b-7ae84454e0c7',
-        scenes: Map({
+        scenes: OrderedMap({entries: Map({
             'New Station Amenities': Map({
                 anchorId: 'id.hcrfkm926ytq',
             }),
-        }),
+        })}),
         media: OrderedMap({
             'Denver Union Station': Map({
                 caption: 'Eastern AMTRAK Café Car tables with bike space',
@@ -572,24 +571,24 @@ var amtrakStandardModels = OrderedMap({
     'Station and Stop Amenities (Outside, Poor)': Map({
         status: Statuses.INITIALIZED,
         id: '87320bcf-05d7-4df9-8e51-f5c1e8ed82d1',
-        scenes: Map({
+        scenes: OrderedMap({entries: Map({
             'Amenity-Poor Transit Center': Map({
                 anchorId: 'id.360zh96s35x0'
             }),
-        })
+        })})
     }),
 
     'Station and Stop Amenities (Outside, Improved)': Map({
         status: Statuses.INITIALIZED,
         id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
-        scenes: Map({
+        scenes: OrderedMap({entries: Map({
             'Improved Transit Center': Map({
                 anchorId: 'id.f60tsmh8mcrv'
             }),
             'Transit Center Amenities': Map({
                 anchorId: 'id.wmbnbioo95zf'
             }),
-        })
+        })})
     }),
 });
 

@@ -37,13 +37,29 @@ class ModelVideo extends Component {
      * Plays from the current start to end or seeks the start if no start and end are set
      */
     playOrReset() {
-        this.seek(this.state.start)
-        if (this.state.end)
-            this.refs.video.play();
+        if (this.state.start == 0 && this.state.end == 0) {
+            // Seeking the start amazingly doesn't work. We have to reload
+            this.refs.video.load()
+        }
+        else {
+            // If scrolling backward go straight to the target scene
+            if  (this.props.scrollDirection == 'backward') {
+                this.seek(this.state.end, true)
+            }
+            // If we are scrolling upward, meaning forward-progress in the document,
+            // then play the animation transition
+            else {
+                this.seek(this.state.start, true)
+                // If end > 0 play to that point
+                if (this.state.end)
+                    this.refs.video.play();
+            }
+        }
+
     }
 
-    seek(time) {
-        this.refs.video.seek(time);
+    seek(time, force) {
+        this.refs.video.seek(time, force);
     }
 
     onProgress() {
@@ -108,7 +124,9 @@ class ModelVideo extends Component {
 ModelVideo.propTypes = {
     videoUrl: PropTypes.string,
     start: PropTypes.number,
-    end: PropTypes.number
+    end: PropTypes.number,
+    toward: PropTypes.string,
+    scrollDirection: PropTypes.string
 }
 
 export default ModelVideo
