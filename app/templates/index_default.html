@@ -15,14 +15,34 @@
     <script>window.html5 || document.write('<script src="js/html5s\
 hiv.js"><\/script>')</script>
     <![endif]-->
+    <!-- START: Livefyre Embed -->
+    <script type="text/javascript" src="http://zor.livefyre.com/wjs/v3.0/javascripts/livefyre.js"></script>
+    <script type="text/javascript">
+        (function () {
+            var articleId = fyre.conv.load.makeArticleId(null);
+            fyre.conv.load({}, [{
+                el: 'livefyre-comments',
+                network: "livefyre.com",
+                siteId: "383969",
+                articleId: articleId,
+                signed: false,
+                collectionMeta: {
+                    articleId: articleId,
+                    url: fyre.conv.load.makeCollectionUrl(),
+                }
+            }], function() {});
+        }());
+    </script>
+    <!-- END: Livefyre Embed -->
 </head>
 <body>
 <!--[if lt IE 8]>
-<p class="browserupgrade">You are using an <strong>outdated</s\
-    trong> browser. Please <a href="http://browsehappy.com/">upgrade your \
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your \
         browser</a> to improve your experience.</p>
 <![endif]-->
 <div id="app"></div>
+<!-- START: Livefyre Embed -->
+<div id="livefyre-comments"></div>
 <script src="https://apis.google.com/js/client.js?onload=init"></script>
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
 </body>

@@ -69,3 +69,7 @@ fades away where ever the document overlaps */
     padding-left: 20px;
     padding-right: 20px;
 }
+
+.author {
+    color: $rescape-love;
+}

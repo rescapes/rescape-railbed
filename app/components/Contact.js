@@ -10,13 +10,14 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import rescape_png from '../images_dist/rescape-320.png'
-import * as documentActions from '../actions/document'
 import {connect} from 'react-redux';
-import ImmutablePropTypes from 'react-immutable-proptypes'
 
 export default class Contact extends Component {
     render() {
-        return <span className="header-link">Contact</span>
+        return <span className={`header-link ${this.props.inline ? 'inline' : ''}`}>{this.props.children || 'Contact'}</span>
     }
+
+}
+Contact.propKeys = {
+    inline: PropTypes.bool
 }

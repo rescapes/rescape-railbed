@@ -25,21 +25,17 @@ export default class Model3dTitle extends Component {
         // by creating a child element with the following classes
         // .scene-title-enter and .scene-title-enter-active to the entering element
         // .scene-title-leave and .scene-title-leave-active to the exiting element
-        return <div className={`model-3d-title ${this.props.lightboxVisibility ? 'fade-out' : this.props.fade} ${this.props.toward}`}>
-                <ReactCSSTransitionGroup
-                    component='div'
-                    className="model-scene-title"
-                    transitionName="model-scene-title"
-                    transitionEnterTimeout={1000}
-                    transitionLeaveTimeout={300}
-                >
-                    <div key={this.props.sceneKey}>
-                        <span key={this.props.sceneKey}>
-                        {this.props.model && this.props.model.get('title') || this.props.modelKey}: {this.props.sceneKey}
-                        </span>
-                    </div>
-                </ReactCSSTransitionGroup>
-        </div>
+        return <span className={`model-3d-title ${this.props.lightboxVisibility ? 'fade-out' : this.props.fade} ${this.props.toward}`}>
+                    {this.props.model && this.props.model.get('title') || this.props.modelKey}
+            <ReactCSSTransitionGroup
+                className="scene-title"
+                transitionName="scene-title"
+                transitionEnterTimeout={1800}
+                transitionLeaveTimeout={300}
+            >
+                        <span key={this.props.sceneKey}>: {this.props.sceneKey}</span>
+                    </ReactCSSTransitionGroup>
+                </span>
 
     }
 }

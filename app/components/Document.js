@@ -16,6 +16,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
+import { renderToStaticMarkup } from 'react-dom/server'
 import moment from 'moment';
 import {connect} from 'react-redux';
 import {Map, List} from 'immutable'
@@ -23,6 +24,7 @@ import * as actions from '../actions/document'
 import * as siteActions from '../actions/site'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Scroll from 'react-scroll';
+import Contact from './Contact'
 
 var scroll = Scroll.animateScroll;
 var scrollSpy = Scroll.scrollSpy;
@@ -155,11 +157,11 @@ class Document extends Component {
         const date = document.get('date')
 
         // Add in the document credit and date
-        const extraHeaderHtml = `
-            <div class="document-header">
-                <div class="document-credit">By ${document.get('author')}</div>
-                <div class="document-date">Published ${moment(document.get('date')).format('MMMM Do, YYYY')}</div>
-            </div>`
+        const extraHeaderHtml =
+            renderToStaticMarkup(<div className="document-header">
+                <div className="document-credit">by <Contact className="author" inline>{document.get('author')}</Contact></div>
+                <div className="document-date"><span className="date">{moment(document.get('date')).format('MMMM Do, YYYY')}</span></div>
+            </div>)
         // The only processing we do to the Google doc HTML is the following:
         // 1) Replace pairs of <hr> elements with <div className='modelSection'>...</div>
         // This allows us to style each portion of the doc to match a corresponding 3D model
