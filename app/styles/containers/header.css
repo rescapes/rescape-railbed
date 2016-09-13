@@ -53,6 +53,30 @@ fades away where ever the document overlaps */
  }
 }
 
+.header-links {
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: $document-margin-left;
+    color: $rescape-love;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end;
+    align-content: center;
+    background: linear-gradient(to right, rgba(77, 78, 83, .8), rgba(255,255,255, .8) 20%, $white 50%, rgba(255,255,255, .8) 80%, rgba(77, 78, 83, .8) 100%);
+}
+.header-link {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
 /***
     The page up button. Most styling is handled in ender.css
 ***/

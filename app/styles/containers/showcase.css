@@ -47,7 +47,7 @@
 
 .model-3d-title {
     position: absolute;
-    bottom: 5px;
+    bottom: calc($showcase-footer-overlap - 35px);
     height: 20px;
     width: inherit;
     color: $rescape-love;

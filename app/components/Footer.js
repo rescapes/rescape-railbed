@@ -32,6 +32,7 @@ class Footer extends Component {
                     <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="url(#PageDownGradient)" fillOpacity="1">
                         <g>
                             <path d="M 167.24409 266.45669 L 215.43307 331.65354 L 263.62205 266.45669 Z" stroke="#6e2236" strokeLinecap="round" strokeWidth="8"/>
+                            <title>Scroll to the next section</title>
                         </g>
                     </g>
                 </svg>

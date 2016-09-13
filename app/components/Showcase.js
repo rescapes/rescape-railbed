@@ -23,8 +23,7 @@ import * as siteActions from '../actions/site'
 import * as settingsActions from '../actions/settings'
 import { ShareButtons, generateShareIcon } from 'react-share';
 import {currentSceneKeyOfModel} from '../utils/modelHelpers'
-import ReactCSSTransitionGroup  from 'react-addons-css-transition-group';
-
+import Model3dTitle from './Model3dTitle'
 
 // Fraction of space between current model and previous/next when scrolling
 // TODO move to settings
@@ -86,25 +85,15 @@ class Showcase extends Component {
                     )
                 )}
             </div>
-            // Use the specially defined title to show the model, or lacking one the model key
-            // Also show the current scene
-            // Apply fade aways for the title, including if the lightbox is open
-            // Transitions between scene titles by applying in an element with class 'scene-title'
-            // by creating a child element with the following classes
-            // .scene-title-enter and .scene-title-enter-active to the entering element
-            // .scene-title-leave and .scene-title-leave-active to the exiting element
-            <span className={`model-3d-title ${this.props.lightboxVisibility ? 'fade-out' : fade} ${toward}`}>
-                {model && model.get('title') || modelKey}
-                <ReactCSSTransitionGroup
-                    className="scene-title"
-                    transitionName="scene-title"
-                    transitionEnterTimeout={1800}
-                    transitionLeaveTimeout={300}
-                >
-                    <span key={this.props.sceneKey}>: {this.props.sceneKey}</span>
-                </ReactCSSTransitionGroup>
-            </span>
-        </div>;
+            <Model3dTitle
+                model={model}
+                modelKey={modelKey}
+                lightboxVisibility={this.props.lightboxVisibility}
+                sceneKey={this.props.sceneKey}
+                fade={fade}
+                toward={toward}
+            />
+        </div>
     }
 
 
