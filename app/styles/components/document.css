@@ -12,6 +12,12 @@
     position: absolute;
 }
 
+/***
+    Author credit, date, etc.
+***/
+.document-header {
+    font-size: $h5-font-size;
+}
 
 .document-gradient {
     position: absolute;

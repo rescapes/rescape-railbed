@@ -16,6 +16,7 @@
 
 import React, { Component, PropTypes } from 'react'
 import ReactDOM from 'react-dom'
+import moment from 'moment';
 import {connect} from 'react-redux';
 import {Map, List} from 'immutable'
 import * as actions from '../actions/document'
@@ -149,11 +150,20 @@ class Document extends Component {
      */
     render() {
         // Since the HTML comes from a Google doc or similar we can completely trust it
-        const body = this.props.document.getIn(['content', 'body'])
+        const document = this.props.document
+        const body = document.getIn(['content', 'body'])
+        const date = document.get('date')
+
+        // Add in the document credit and date
+        const extraHeaderHtml = `
+            <div class="document-header">
+                <div class="document-credit">By ${document.get('author')}</div>
+                <div class="document-date">Published ${moment(document.get('date')).format('MMMM Do, YYYY')}</div>
+            </div>`
         // The only processing we do to the Google doc HTML is the following:
         // 1) Replace pairs of <hr> elements with <div className='modelSection'>...</div>
         // This allows us to style each portion of the doc to match a corresponding 3D model
-        const modifiedBody = this.injectStyledDivWrappers(body)
+        const modifiedBody = this.injectStyledDivWrappers(body, extraHeaderHtml)
 
         return <div className='document'>
             <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
@@ -166,11 +176,10 @@ class Document extends Component {
      * Wraps each section of text in a <div class="modelSection">...</div> So the user can tell
      * which part of the text corresponds to which 3d model
      */
-    injectStyledDivWrappers(body) {
+    injectStyledDivWrappers(body, extraHeaderHtml) {
         const regex = /<hr>/g,
             hrLength = '<hr>'.length,
             // The length of the spacer before and after each hr
-            hrSpacerLength = '<p class="c1"><span class="c2"></span></p>'.length,
             hrSpacerRegexStart = /^((?:<p class="c\d+?"><span class="c\d+?"><\/span><\/p>)+)/,
             hrSpacerRegexEnd = /((?:<p class="c\d+?"><span class="c\d+?"><\/span><\/p>)+)$/,
             contentsDiv = '<div id="contents">',
@@ -179,15 +188,18 @@ class Document extends Component {
             modifiedBody = null,
             startLocation = null,
             result
+        // For each <hr>
         while ( (result = regex.exec(body)) ) {
             let bodyContent = null
             if (index == 0) {
+                // For the top of the document
                 // Grab everything starting with the "content" div and put the just header inside it
                 const contentDivIndex = body.indexOf(contentsDiv)
                 // <div id="content">
                 modifiedBody = body.slice(contentDivIndex, contentDivIndex + contentsDivLength)
                 // <div id="header>header</div>...spacer<hr> (not including spacer<hr>)
                 bodyContent = body.slice(0, contentDivIndex) +
+                    extraHeaderHtml +
                     body.slice(contentDivIndex + contentsDivLength, result.index)
             }
             else {

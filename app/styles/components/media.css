@@ -277,10 +277,9 @@ div:not(#app) > div[data-reactroot] > div > div {
 .image-credit {
     font-size: $h5-font-size;
     color: $faded-gray;
-    background-color: $faded-gray-background;
     position: absolute;
-    top: 45px;
-    right: 25px;
+    top: 6px;
+    right: 78px;
     text-align: right;
     padding: 3px;
     border-radius: 3px;
@@ -297,6 +296,7 @@ div:not(#app) > div[data-reactroot] > div > div {
     border: none;
     cursor: pointer;
     float: right;
+    right: 0px;
     height: 40px;
     outline: none;
     padding: 10px;

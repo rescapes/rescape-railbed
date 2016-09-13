@@ -20,7 +20,6 @@
          cursor: pointer;
     }
 
-
     div {
         float: right;
         margin:2px;
@@ -41,27 +40,6 @@
         }
         transition: width 300ms ease, height 300ms ease;
 
-    }
-}
-
-
-.model-3d-title {
-    position: absolute;
-    bottom: calc($showcase-footer-overlap - 35px);
-    height: 20px;
-    width: inherit;
-    color: $rescape-love;
-    font-weight: bold;
-    font-size: $h4-font-size;
-    left: 5px;
-    right: -100px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 0px;
-    background: linear-gradient(to right, $white, rgba(77, 78, 83, 1) 99%);
-
-    .gallery-open {
-        display: none;
     }
 }
 
@@ -123,30 +101,5 @@
         &.share-icons {
             transition: visibility 300ms linear, opacity 300ms linear, top 600ms ease;
         }
-    }
-}
-
-.scene-title {
-    span {
-        position: absolute;
-        width: 100%;
-    }
-}
-.scene-title-enter {
-    opacity: 0.01;
-
-    &.scene-title-enter-active {
-        opacity: 1;
-        transition: opacity 1500ms ease-in;
-        transition-delay: 1800ms;
-    }
-}
-
-.scene-title-leave {
-    opacity: 1;
-
-    &.scene-title-leave-active {
-        opacity: 0;
-        transition: opacity 300ms ease-in;
     }
 }

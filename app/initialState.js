@@ -601,7 +601,11 @@ export default Map({
     settings: Map({
         [settingsActions.SET_3D]: false,
         [settingsActions.SET_RELATED_IMAGES]: true,
-        [settingsActions.SET_LIGHTBOX_VISIBILITY]: false
+        [settingsActions.SET_LIGHTBOX_VISIBILITY]: false,
+        // Threshold for switching between 3d models in the showcase
+        MODEL_THRESHOLD: .25,
+        // Padding between models when switching
+        MODEL_PADDING: .1,
     }),
     documents: Map({
         keys: List(['ths_amtrak_standard', 'the_new_rules_of_the_road']),
@@ -612,6 +616,7 @@ export default Map({
         entries: Map({
             'the_amtrak_standard': Map({
                 date: new Date('October 2016'),
+                author: 'Andy Likuski',
                 status: Statuses.INITIALIZED,
                 title: 'The AMTRAK Standard',
                 id: '1GbrsFkL4hlMP9o-J1JLw4Qu08j6hEPde_ElJdanJX5U',
@@ -619,6 +624,7 @@ export default Map({
             }),
             'the_new_rules_of_the_road': Map({
                 date: new Date('January 2017'),
+                author: 'Andy Likuski',
                 status: Statuses.INITIALIZED,
                 title: 'The New Rules of the Road',
             })
