@@ -57,7 +57,7 @@ var amtrakStandardModels = OrderedMap({
                 date: 'November 2015'
             }),
             'AMTRAK Coast Starlight Parlour Car': Map({
-                caption: "AMTRAK's Coast Starlight first class parlour car offers the height of travel luxury on a publicly operated train",
+                caption: "AMTRAK's Coast Starlight first class parlour car offers the height of travel luxury on a quasi-publicly-operated train",
                 sourceImageUrl: 'http://www.trainsandtravel.com/wp-content/uploads/2015/07/Parlour-Car-copy-1090x818.jpg',
                 sourceUrl: 'http://www.trainsandtravel.com/the-nickel-and-diming-continues/',
                 credit: 'Tranis & Travel with Jim Loomis',

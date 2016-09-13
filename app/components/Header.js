@@ -14,13 +14,15 @@ import rescape_png from '../images_dist/rescape-320.png'
 import * as documentActions from '../actions/document'
 import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import About from './About'
+import Contact from './Contact'
 
 class Header extends Component {
 
 
     render() {
 
-        // Show the page up button if we're not at the top already
+        // Show the page up button if we're notm at the top already
         const pageUpButton = !(this.props.modelKey && this.props.sceneKey) || (
             this.props.models.get('entries').keySeq().first() == this.props.modelKey &&
             this.props.models.getIn(['entries', this.props.modelKey, 'scenes', 'entries']).keySeq().first() == this.props.sceneKey) ?
@@ -36,6 +38,7 @@ class Header extends Component {
                     <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="url(#PageUpGradient)" fillOpacity="1">
                         <g>
                             <path d="M 263.62205 331.65354 L 215.43307 266.45669 L 167.24409 331.65354 Z" stroke="#6e2236" strokeLinecap="round" strokeWidth="8"/>
+                            <title>Scroll to the previous section</title>
                         </g>
                     </g>
                 </svg>
@@ -45,6 +48,10 @@ class Header extends Component {
             <img className='header-icon' src={rescape_png}/>
             <div className='header-gradient left' />
             {pageUpButton}
+            <div className='header-links'>
+                <About/>
+                <Contact/>
+            </div>
         </div>
     }
 }

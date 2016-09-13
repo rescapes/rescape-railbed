@@ -4,8 +4,8 @@ $header-height: 100px;
 $header-bottom: calc( $header-top + $header-height );
 
 
-$footer-height: 50px;
-$showcase-footer-overlap: 25px;
+$footer-height: 75px;
+$showcase-footer-overlap: 50px;
 
 /*
     The showcase overlaps with the header completely and extends half way into the footer
@@ -14,14 +14,16 @@ $showcase-top: 0px;
 /*
     Make the showcase extend half way into the footer
 */
-$showcase-height: calc(100% - $showcase-footer-overlap);
+$showcase-height: calc(100% - $footer-height + $showcase-footer-overlap);
 $showcase-left: 10px;
-$showcase-width: 68%;
+$showcase-width: 66%;
 
 /*
     Make the model ratio should be 2 height to 3 width since that is what the Sketchup videos are.
     The Sketchup models don't care what the ratio is but look best at that ration
-    since the scenes are created based on that
+    since the scenes are created based on that. I can't figure out a good way to automate
+    the 2 / 3 ration at this point, so it's a matter of adjusting the footer or header height
+    along with the showcase-width percent
 */
 $model-3d-top: calc($header-height);
 $model-3d-width: 100%;
@@ -46,7 +48,7 @@ $lightbox-top: calc($header-height - 40px);
     The lightbox footer overlaps the footer. We want the lightbox footer
     to be in the footer and the actual lightbox image to match the footer top
 */
-$lightbox-height: calc( 100% - calc($lightbox-top + $footer-height));
+$lightbox-height: calc( 100% - calc($lightbox-top + $footer-height) + $showcase-footer-overlap * .7);
 $lightbox-left: $showcase-left;
 
 $document-top: calc( $header-bottom );
