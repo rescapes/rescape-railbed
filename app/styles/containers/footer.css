@@ -7,7 +7,7 @@
     right: 0px;
     margin-left: 10px;
     margin-right: 10px;
-    background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, .6) 40%, rgba(77, 78, 83, 1) 50%);
+    background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, .4) 50%, rgba(77, 78, 83, 1) 60%);
 }
 
 /***
@@ -15,4 +15,54 @@
 ***/
 .page-down {
     top: 0px;
+}
+
+
+.model-3d-title {
+    position: absolute;
+    bottom: calc($showcase-footer-overlap - 10px);
+    height: 20px;
+    color: $rescape-love;
+    font-weight: bold;
+    font-size: $h4-font-size;
+    left: 5px;
+    right: -100px;
+
+    .gallery-open {
+        display: none;
+    }
+
+    >div {
+        >div {
+            position: absolute;
+            >span {
+                 background: linear-gradient(to right, $white 90%, rgba(77, 78, 83, 1) 95%);
+                 padding-left: 5px;
+                 padding-right: 50px;
+                 padding-top: 0px;
+             }
+        }
+    }
+}
+
+
+.model-scene-title-enter {
+    opacity: 0.01;
+
+    &.model-scene-title-enter-active {
+         opacity: 1;
+         transition: opacity 1000ms ease-in;
+         transition-delay: 1000ms;
+    }
+}
+
+.model-scene-title-leave {
+    opacity: 1;
+    left: -30px;
+    margin-right:-30px;
+
+    &.model-scene-title-leave-active {
+         opacity: 0;
+         transition: opacity 300ms ease-in;
+    }
 }

@@ -74,6 +74,9 @@ fades away where ever the document overlaps */
     padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 

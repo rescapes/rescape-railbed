@@ -16,19 +16,14 @@
 import React, { Component, PropTypes } from 'react'
 import Model from './Model3d'
 import Media from './Media'
-import {connect} from 'react-redux';
-import {Map} from 'immutable'
+import {connect} from 'react-redux'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import * as siteActions from '../actions/site'
-import * as settingsActions from '../actions/settings'
-import { ShareButtons, generateShareIcon } from 'react-share';
+import { ShareButtons, generateShareIcon } from 'react-share'
 import {currentSceneKeyOfModel} from '../utils/modelHelpers'
-import Model3dTitle from './Model3dTitle'
+import {getModelTops, calculateModelFadeAndToward} from '../utils/modelHelpers'
+import {Map} from 'immutable'
 
-// Fraction of space between current model and previous/next when scrolling
-// TODO move to settings
-const MODEL_PADDING = .1
-const MODEL_THRESHOLD = .25
 const {
     FacebookShareButton,
     TwitterShareButton,
@@ -58,14 +53,17 @@ class Showcase extends Component {
     }
 
     render() {
+        if (!this.props.models || !this.props.document)
+            return <div/>
+
         const model = this.props.model
         const modelKey = this.props.modelKey
         const documentTitle = this.props.documentTitle
         const media = this.props.model && this.props.model.get('media')
         // Both model and media need to know the calculated model tops.
         // If the next or previous model is at all visible, we don't want to show the media
-        const modelTops = this.modelTops()
-        const [fade, toward] = this.calculateModelFadeAndToward(modelTops)
+        const modelTops = getModelTops(this.props.document, this.props.models, this.props.settings)
+        const [fade, toward] = calculateModelFadeAndToward(modelTops)
         const shareTitle = `${documentTitle} (${modelKey})`
         if (!this.props.postUrl) {
             return  <div className='showcase'/>
@@ -85,145 +83,50 @@ class Showcase extends Component {
                     )
                 )}
             </div>
-            <Model3dTitle
-                model={model}
-                modelKey={modelKey}
-                lightboxVisibility={this.props.lightboxVisibility}
-                sceneKey={this.props.sceneKey}
-                fade={fade}
-                toward={toward}
-            />
         </div>
     }
 
 
-    /***
-     *
-     * Calculate the modelTops of the current, previous, and next models as a percent of how close an anchor element
-     * representing them is to document scroll position. This means that
-     *  1) the current model display below/above the closer of the previous/next model
-     *  2) the previous model if any and closer than the next model displays above the current
-     *  3) the next model if any and closer than the previous model displays below the current
-     *  We also use the constant MODEL_PADDING to separate the bottom and top of two adjacent models.
-     *  We also have a threshold MODEL_THRESHOLD before we give the previous or next model a non-null value. We don't want the scroll
-     *  to begin immediately because models without scenes or with little text will never be centered otherwise.
-     * Previous or next models only show on the top or bottom if they are different models than the current
-     * Returns a Map of modelTops for the 'current', 'previous', and 'next' keys.
-     * e.g. {current: .25, previous: -.75-MODEL_PADDING, null} or {current: 0, previous: null, next: null} or
-     * {current: -.25, previous: null, next: .75+MODEL_PADDING}
-     */
-    modelTops() {
-        const distances = this.props.closestAnchorDistances
-        // If we don't have a current model, none of the modelTops matter
-        if (distances.get('current') == null) {
-            return {current: null, previous: null, next: null}
-        }
-        const current = this.props.models.get('current'),
-            currentDistance = distances.get('current'),
-            previousDistance = distances.get('previousForDistinctModel'),
-            nextDistance = distances.get('nextForDistinctModel'),
-            // Increases as previous becomes more relevant
-            previousFraction = currentDistance / (previousDistance + currentDistance),
-            // Increases as next becomes more relevant
-            nextFraction = currentDistance / (nextDistance + currentDistance)
-        // If we're closer to the previous than the next and within the threshold for transition
-        if (previousFraction > nextFraction && previousFraction > MODEL_THRESHOLD && this.props.models.get('previousForDistinctModel') != current) {
-            return {
-                // Start at 0 and scroll down as previous gets more relevant
-                current: currentDistance / (previousDistance + currentDistance),
-                // Start at above showcase at -(MODEL_PADDING + 1) and scroll down as previous gets more relevant
-                previous: previousFraction - (MODEL_PADDING + 1),
-                next: null
-            }
-        }
-        // If we're closer to the next than the previous and within the threshold for transition
-        else if (nextFraction > previousFraction && nextFraction > MODEL_THRESHOLD && this.props.models.get('nextForDistinctModel') != current) {
-            return {
-                // Start at 0 and scroll up as next gets more relevant
-                current: 0 - (currentDistance / (nextDistance + currentDistance)),
-                previous: null,
-                // Start at 1 + MODEL_PADDING below screen and scroll up as next gets more relevant
-                next: (1 + MODEL_PADDING) - nextFraction
-            }
-        }
-        else {
-            return {
-                current: 0,
-                previous: null,
-                next: null
-            }
-        }
 
-    }
-
-    /***
-     * For the Media Gallery:
-     * Given the current modelTops returns the 'fade-out' or 'fade-in' class and if
-     * fade-out the direction of the fadeout, 'upward' or 'downward'
-     * If previous or next models are present we want to fade out since the current model
-     * is no longer centered
-     *
-     * @param modelTops
-     * @returns {[fade, toward]}
-     */
-    calculateModelFadeAndToward(modelTops) {
-        const fade = ['previous', 'next'].some(relevance => modelTops[relevance]) ?
-            'fade-out' :
-            'fade-in'
-        // Fade the media in the direction that the current model is scrolling, which is based
-        // on which mode is closer, previous or next.
-        const toward = fade == 'fade-in' ?
-            '' :
-            (modelTops['next'] ?
-                'upward' :
-                'downward')
-        return [fade, toward]
-    }
 }
 
 Showcase.propTypes = {
     model: ImmutablePropTypes.map,
     models: ImmutablePropTypes.map,
     modelKey: PropTypes.string,
-    closetAnchorDistances: ImmutablePropTypes.list,
+    sceneKey: PropTypes.string,
+    sceneIndex: PropTypes.number,
+    documentTitle: PropTypes.string,
+    postUrl: PropTypes.string,
 }
 
 function mapStateToProps(state, props) {
+    const settings = state.get('settings')
     const documentKey = state.getIn(['documents', 'current'])
     // We use this to find out if its time to transition the current model to the next or previous
     // By transition we mean vertical move the current model up or down in the div and start showing
     // the next or previous
     const scrollPosition = state.getIn(['documents', 'entries', documentKey, 'scrollPosition'])
-    // Used in conjunction with the scrollPosition to see if it's time to transition
-    const closestAnchors = state.getIn(['documents', 'entries', documentKey, 'closestAnchors'])
-    const models = documentKey && state.get('models')
-    // Calculate the absolute distance from the current, previous, and next anchor to the scroll position
-    // The previous/next distance is only valid if the model of the previous/next anchor is different than the current
-    // model. If invalid we won't use it, but we still want to record it in case it's closer than the other one
-    // (e.g. next might be the same model but closer than previous, which is a different model)
-    const closestAnchorDistances = (closestAnchors || Map({})).map(
-        (value, key) => value && models.get(key) ?
-            Math.abs(scrollPosition - value.offsetTop) : null
-    )
+    const models = documentKey ? state.get('models') : Map()
+
     const modelKey = models && models.get('current')
     const model = modelKey && models.getIn(['entries', modelKey])
     const document = state.getIn(['documents', 'entries', documentKey])
     const postUrl = document && document.get('postUrl')
     const documentTitle = document && document.get('title')
-    const lightboxVisibility = state.getIn(['settings', settingsActions.SET_LIGHTBOX_VISIBILITY])
     const sceneKey = currentSceneKeyOfModel(model)
     // Used to set a css class so we can smoothly transition scene titles
     const sceneIndex = model && model.getIn(['scenes', 'entries']).keySeq().indexOf(sceneKey)
 
     return {
+        settings,
+        document,
         models,
         model,
         modelKey,
         sceneKey,
         sceneIndex,
         documentTitle,
-        closestAnchorDistances,
-        lightboxVisibility,
         postUrl
     }
 }

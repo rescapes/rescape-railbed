@@ -13,10 +13,17 @@ import React, { Component, PropTypes } from 'react'
 import * as documentActions from '../actions/document'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import {connect} from 'react-redux';
+import Model3dTitle from './Model3dTitle'
+import {getModelTops, calculateModelFadeAndToward} from '../utils/modelHelpers'
+import {Map} from 'immutable'
+import * as settingsActions from '../actions/settings'
 
 class Footer extends Component {
 
     render() {
+        if (!this.props.models || !this.props.document)
+            return <div/>
+
         const pageDownButton = !(this.props.modelKey && this.props.sceneKey) || (
             this.props.models.get('entries').keySeq().last() == this.props.modelKey &&
             this.props.models.getIn(['entries', this.props.modelKey, 'scenes', 'entries']).keySeq().last() == this.props.sceneKey) ?
@@ -37,7 +44,17 @@ class Footer extends Component {
                     </g>
                 </svg>
             </div>
+        const modelTops = getModelTops(this.props.document, this.props.models, this.props.settings)
+        const [fade, toward] = calculateModelFadeAndToward(modelTops)
         return <div className='footer'>
+            <Model3dTitle
+                model={this.props.model}
+                modelKey={this.props.modelKey}
+                lightboxVisibility={this.props.lightboxVisibility}
+                sceneKey={this.props.sceneKey}
+                fade={fade}
+                toward={toward}
+            />
             {pageDownButton}
         </div>
     }
@@ -45,9 +62,13 @@ class Footer extends Component {
 
 
 Footer.propTypes = {
+    document: ImmutablePropTypes.map,
     models: ImmutablePropTypes.map,
+    model: ImmutablePropTypes.map,
     modelKey: PropTypes.string,
-    sceneKey: PropTypes.string
+    sceneKey: PropTypes.string,
+    modelTops: PropTypes.object,
+    lightboxVisibility: PropTypes.bool,
 }
 
 /***
@@ -57,15 +78,23 @@ Footer.propTypes = {
  * @returns {{models: *, modelKey: *, sceneKey: *}}
  */
 function mapStateToProps(state) {
+    const settings = state.get('settings')
     const documentKey = state.getIn(['documents', 'current'])
+    const document = state.getIn(['documents', 'entries', documentKey])
     const models = documentKey && state.get('models')
     const modelKey = models && models.get('current')
+    const model = modelKey ? models.getIn(['entries', modelKey]) : Map()
     const sceneKey = models && models.getIn(['entries', modelKey, 'scenes', 'current'])
+    const lightboxVisibility = state.getIn(['settings', settingsActions.SET_LIGHTBOX_VISIBILITY])
 
     return {
+        settings,
+        document,
         models,
+        model,
         modelKey,
-        sceneKey
+        sceneKey,
+        lightboxVisibility,
     }
 }
 

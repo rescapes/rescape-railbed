@@ -100,5 +100,5 @@ $normal-line-height: calc( $h1-line-height * 33.3 / 100 );
 
 $heading-color: $black;
 $normal-font-color: $black;
-$link-color: color($rescape-love lightness(70%));
-$link-color-hover: color($rescape-love lightness(80%));
+$link-color: color($rescape-love lightness(50%));
+$link-color-hover: color($rescape-love lightness(60%));
