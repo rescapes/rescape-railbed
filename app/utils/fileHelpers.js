@@ -16,3 +16,4 @@
 export function normalizeKeyToFilename(key) {
     return key.replace(/( |-)/g, '_').replace(/é/g, 'e')
 }
+

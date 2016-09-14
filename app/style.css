@@ -4,8 +4,9 @@
 @import 'styles/type';
 @import 'styles/containers/ender';
 @import 'styles/containers/header';
+@import 'styles/containers/footer';
 @import 'styles/containers/showcase';
 @import 'styles/components/document';
 @import 'styles/components/model-3d';
 @import 'styles/components/media';
-@import 'styles/containers/footer';
+@import 'styles/components/comments';
