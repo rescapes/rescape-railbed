@@ -21,7 +21,7 @@ import * as settingsActions from '../actions/settings'
 class Footer extends Component {
 
     render() {
-        if (!this.props.models || !this.props.document)
+        if (!this.props.models || !this.props.modelKey || !this.props.document)
             return <div/>
 
         const pageDownButton = !(this.props.modelKey && this.props.sceneKey) || (
@@ -56,13 +56,14 @@ class Footer extends Component {
                 toward={toward}
             />
             {pageDownButton}
-        </div>
+        </div>;
     }
 }
 
 
 Footer.propTypes = {
     document: ImmutablePropTypes.map,
+    documentKey: PropTypes.string,
     models: ImmutablePropTypes.map,
     model: ImmutablePropTypes.map,
     modelKey: PropTypes.string,
@@ -90,6 +91,7 @@ function mapStateToProps(state) {
     return {
         settings,
         document,
+        documentKey,
         models,
         model,
         modelKey,

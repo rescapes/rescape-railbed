@@ -1,0 +1,13 @@
+
+
+.comments {
+    top: calc($model-3d-top - 20px);
+    right: 0px;
+    position: absolute;
+}
+
+.disqus-comments-count {
+    height: 20px;
+}
+.disqus-comments-thread {
+}

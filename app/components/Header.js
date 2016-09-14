@@ -21,6 +21,8 @@ class Header extends Component {
 
 
     render() {
+        if (!this.props.models || !this.props.modelKey || !this.props.document)
+            return <div/>
 
         // Show the page up button if we're notm at the top already
         const pageUpButton = !(this.props.modelKey && this.props.sceneKey) || (
@@ -28,7 +30,7 @@ class Header extends Component {
             this.props.models.getIn(['entries', this.props.modelKey, 'scenes', 'entries']).keySeq().first() == this.props.sceneKey) ?
             <div/> :
             <div className='page-up' onClick={ e=>this.props.scrollToPreviousModel() } >
-                <svg className='page-up-icon' version="1.1" viewBox="153 252 125 94" xmlnsDc="http://purl.org/dc/elements/1.1/">
+                <svg className='page-up-icon' version="1.1" viewBox="153 252 125 94" >
                     <defs>
                         <linearGradient id="PageUpGradient">
                             <stop offset="5%"  stopColor="white"/>
@@ -57,6 +59,8 @@ class Header extends Component {
 }
 
 Header.propTypes = {
+    document: ImmutablePropTypes.map,
+    documentTitle: PropTypes.string,
     models: ImmutablePropTypes.map,
     modelKey: PropTypes.string,
     sceneKey: PropTypes.string
@@ -70,11 +74,14 @@ Header.propTypes = {
  */
 function mapStateToProps(state) {
     const documentKey = state.getIn(['documents', 'current'])
+    const document = state.getIn(['documents', 'entries', documentKey])
     const models = documentKey && state.get('models')
     const modelKey = models && models.get('current')
     const sceneKey = models && models.getIn(['entries', modelKey, 'scenes', 'current'])
 
     return {
+        documentKey,
+        document,
         models,
         modelKey,
         sceneKey
