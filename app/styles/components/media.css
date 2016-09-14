@@ -3,7 +3,7 @@
 .media {
     position: absolute;
     z-index: 4;
-    height: 100px;
+    height: $media-height;
     bottom: calc($footer-height / 2);
     width: 100%;
 }
