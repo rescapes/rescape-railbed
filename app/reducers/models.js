@@ -78,7 +78,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         // Registers a 3D model when discovered by model key in the DOM.
         // If a model is already registered nothing changes
         case actions.REGISTER_MODEL:
-            // TODO this never happens since we don't find models in the DOM, the are in initialState
+            // TODO this never happens since we don't find models in the DOM, they are in initialState
             return (!state.get('keys').has(action.key)) ?
                 state
                     // add the model key to the result array
@@ -145,37 +145,6 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                 else
                     return modelSetState
             }, state)
-
-
-        // Sets the current scene of the model
-        case actions.SHOW_SCENE:
-            return state.setIn(['entries', action.modelKey, 'scenes', 'current'], action.key);
-        // If action.value is true, marks the scenes of the model freed from automatic changing when the user moves the text
-        case actions.FREE_SCENE:
-            return state.setIn(['entries', action.modelKey, 'scenes', 'freed'], action.value);
-        // Registers a medium when discovered by model key in the DOM.
-        // If a model is already registered nothing changes
-        case actions.REGISTER_MEDIUM:
-            return (!state.get('keys').has(action.key)) ?
-                // add the medium key to the result array if not present
-                state
-                    .updateIn(['keys'], list =>list.push(action.key))
-                    .mergeDeep({entries: { [action.key] : {
-                        status: Statuses.INITIALIZED
-                    }}}) :
-                state;
-        // Triggers loading of a model
-        case actions.LOAD_MEDIUM:
-            return state.setIn(['entries', action.key, 'status'], Statuses.LOADING);
-        // Upon loading indicates the model is ready for interaction
-        case actions.RECIEVE_MEDIUM:
-            return state.setIn(['entries', action.key, 'status'], Statuses.READY);
-        // Upon load error makes the model unavailable for interaction with reload option
-        case actions.MEDIUM_ERRED:
-            return state.setIn(['entries', action.key, 'status'], Statuses.ERROR);
-        // This does nothing right now
-        case actions.SHOW_MEDIUM:
-            return state
         default:
             return state
     }

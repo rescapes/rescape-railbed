@@ -30,16 +30,20 @@ export default class Comments extends Component {
     }
 
     mirrorProps(props) {
-        if (this.ref.counter)
-            this.ref.counter.setAttribute('data-disqus-identifier', this.formArticleKey(props));
+        if (this.refs.counter)
+            this.refs.counter.setAttribute('data-disqus-identifier', this.formArticleKey(props));
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return this.formArticleKey(nextProps) != this.formArticleKey()
     }
 
     render() {
         const articleKey = this.formArticleKey()
-        const comments = !this.props.commentsShowing ?
+        const comments = this.props.commentsShowing ?
             <div ref='counter' className="disqus-comment-count">First article</div> :
             <ReactDisqusThread
-                className="disqus-comments-thread"
+                className="disqus-comment-thread"
                 shortname="rescapes"
                 identifier={`/${articleKey}`}
                 title={`${this.props.documentTitle}: ${this.props.modelKey}`}
@@ -57,7 +61,7 @@ export default class Comments extends Component {
      * @returns {string}
      */
     formArticleKey(props) {
-        const documentUrlKey = normalizeKeyToFilename((props || this.props).documentKey)
+        const documentUrlKey = normalizeKeyToFilename((props || this.props).documentTitle)
         const modelUrlKey = normalizeKeyToFilename((props ||this.props).modelKey)
         return `/${documentUrlKey}/${modelUrlKey}`
     }

@@ -54,11 +54,11 @@ class Showcase extends Component {
     }
 
     render() {
-        if (!this.props.models || !this.props.modelKey || !this.props.document)
-            return <div/>
+        if (!this.props.models || !this.props.modelKey || !this.props.document || !this.props.postUrl)
+            return <div className='showcase'/>
 
-        const model = this.props.model
         const modelKey = this.props.modelKey
+        const model = this.props.model
         const documentTitle = this.props.documentTitle
         const media = this.props.model && this.props.model.get('media')
         // Both model and media need to know the calculated model tops.
@@ -66,9 +66,6 @@ class Showcase extends Component {
         const modelTops = getModelTops(this.props.document, this.props.models, this.props.settings)
         const [fade, toward] = calculateModelFadeAndToward(modelTops)
         const shareTitle = `${documentTitle} (${modelKey})`
-        if (!this.props.postUrl) {
-            return  <div className='showcase'/>
-        }
 
         return <div className='showcase'>
             <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops} toward={toward} />

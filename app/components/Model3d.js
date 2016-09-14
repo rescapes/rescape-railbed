@@ -47,6 +47,19 @@ class Model3d extends Component {
         const {dispatch, url} = this.props
         if (this.refs.iframe)
             this.refs.iframe.getDOMNode().addEventListener('load', this.frameDidLoad);
+
+        // Load the current, previous, and next models
+        // These might all be present depending on the position at which we loaded the document
+        const models = this.props.models
+        if (!models)
+            return
+        ['current', 'previousForDistinctModel', 'nextForDistinctModel'].forEach(function(key) {
+            const modelKeyToLoad = models.get(key)
+            if (modelKeyToLoad)
+                this.props.fetchModelIfNeeded(modelKeyToLoad)
+        }, this)
+
+        this.updateState(this.props)
     }
 
     componentDidUpdate() {
@@ -66,18 +79,14 @@ class Model3d extends Component {
             this.changeScene(sceneKey)
     }
 
-    /***
-     * Check for a prop change to model, if so fetch the model if needed. render will set the ifram to the model's url
-     * @param nextProps
-     */
     componentWillReceiveProps(nextProps) {
-
         // If the current, previous, or next model changes, fetch them if needed
         // which currently just sets the url of the model's state so the iframe can load it
         const nextModels = nextProps.models,
-              models = this.props.models;
+            models = this.props.models;
         if (!models)
             return
+
         ['current', 'previousForDistinctModel', 'nextForDistinctModel'].forEach(function(key) {
             if (!nextModels || (nextModels.get(key) != models.get(key))) {
                 const modelKeyToLoad = (nextModels || models).get(key)
@@ -86,25 +95,33 @@ class Model3d extends Component {
             }
         }, this)
 
+        this.updateState(nextProps, nextModels)
+    }
+    /***
+     * Check for a prop change to model, if so fetch the model if needed. render will set the ifram to the model's url
+     * @param props
+     */
+    updateState(props, nextModels) {
+
         // Set the current model and scene
-        const nextModelKey = nextProps.modelKey
+        const nextModelKey = props.modelKey
         const modelChanged = this.props.modelKey != nextModelKey
         const sceneKey = this.currentSceneKey()
-        const nextSceneKey = nextProps.model && nextProps.model.getIn(['scenes', 'current'])
+        const nextSceneKey = props.model && props.model.getIn(['scenes', 'current'])
         // If the model changed or the scene changed
         // and the next model has a READY status, we can also set the scene to the current scene calling
         // an action on the scene panel within the iframe. Otherwise we set the scene in frameDidLoad
         if (nextModelKey && nextSceneKey &&
-            nextProps.model.get('status') == Statuses.READY &&
+            props.model.get('status') == Statuses.READY &&
             (modelChanged || sceneKey != nextSceneKey)) {
             this.changeScene(nextSceneKey)
         }
 
         // Figure out if we are scrolling forward or backward based on model state
-        if (nextProps.modelTops.next || 0 > this.props.modelTops.next || 0) {
+        if (props.modelTops.next || 0 > this.props.modelTops.next || 0) {
            this.setState({scrollDirection: 'forward'})
         }
-        else if (nextProps.modelTops.previous || 0 > this.props.modelTops.previous || 0) {
+        else if (props.modelTops.previous || 0 > this.props.modelTops.previous || 0) {
             this.setState({scrollDirection: 'backward'})
         }
         else
@@ -268,7 +285,6 @@ function mapStateToProps(state) {
         settings,
         models,
         is3dSet,
-        modelKey,
         sceneKey
     }
 }

@@ -13,7 +13,7 @@
     position: absolute;
     top: $header-height;
     height: 32px;
-    right: $model-3d-document-overlap;
+    right: calc($model-3d-document-overlap + $comment-button-width);
     padding:5px;
     margin-right: 10px;
     &:hover {
