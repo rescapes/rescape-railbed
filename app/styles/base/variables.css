@@ -6,7 +6,8 @@ $header-bottom: calc( $header-top + $header-height );
 /**
     The width at of the comment button expander that shows for each model
 **/
-$comment-button-width: 100px;
+$comment-button-width: 70px;
+$comment-button-height: calc($comment-button-width * 2 / 3);
 
 $footer-height: 75px;
 $showcase-footer-overlap: 50px;

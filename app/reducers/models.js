@@ -26,6 +26,9 @@ import {normalizeKeyToFilename} from '../utils/fileHelpers'
  *      next: null,
  *      baseUrl: null,
  *      baseVideoUrl: null,
+ *      commentsAreShowing: null,
+ *      commentsHaveShown: null,
+ *      sceneTransitionTime: null,
  *      entries: {
  *      }
  *  } (default): No model is loaded and no model has stored state
@@ -38,6 +41,9 @@ import {normalizeKeyToFilename} from '../utils/fileHelpers'
  *      represents a different model (not just a different scene)
  *   baseUrl: base url of the models, the model id completes the url
  *   baseVideoUrl: base video url of the models, the model key completes the url
+ *   commentsAreShowing: true if the comments are open for this model, otherwise null or false
+ *   commentsHaveShown: true if commentsAreShowing has been true for this model. This helps us cache the comments,
+ *   sceneTransitionTime: Override the default scene transition time for models with long transitions
  *   entries: {
  *      model key: {
  *         status: on of actions.Statuses
@@ -145,6 +151,14 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                 else
                     return modelSetState
             }, state)
+        // Responds to toggling the comments of a model. This also sets commentsHaveShown to true, assuming
+        // that the first call to this reducer is true. commentsHaveShown keeps the component from needing
+        // to reload comments for a certain model every time the user shows the comments
+        case actions.TOGGLE_MODEL_COMMENTS:
+            return state.setIn(
+                ['entries', action.key, 'commentsAreShowing'],
+                action.force != null ? action.force : state.getIn(['entries', action.key, 'commentsAreShowing'])
+            ).setIn(['entries', action.key, 'commentsHaveShown'], true)
         default:
             return state
     }

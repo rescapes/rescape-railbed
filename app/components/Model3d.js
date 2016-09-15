@@ -21,8 +21,6 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import ModelVideo from './ModelVideo'
 import {currentSceneKeyOfModel, currentSceneOfModel} from '../utils/modelHelpers'
 
-// Video scenes are 3 seconds long
-const SCENE_DURATION = 3
 
 // This garbage has to be done to force webpack to know about all the media files
 var req = require.context('../videos/', true, /\.(mp4)$/)
@@ -37,6 +35,10 @@ class Model3d extends Component {
      */
     constructor(props) {
         super(props)
+    }
+
+    componentWillMount() {
+        this.setState({scrollDirection: null})
     }
 
     /***
@@ -79,9 +81,14 @@ class Model3d extends Component {
             this.changeScene(sceneKey)
     }
 
+    /***
+     * If the current, previous, or next model changes, fetch them if needed
+     * which just sets the url so the 3d model or video can load.
+     * This also closes the comments window if the current model changes by telling the current/previous/next models
+     * to toggle off showing comments
+     * @param nextProps
+     */
     componentWillReceiveProps(nextProps) {
-        // If the current, previous, or next model changes, fetch them if needed
-        // which currently just sets the url of the model's state so the iframe can load it
         const nextModels = nextProps.models,
             models = this.props.models;
         if (!models)
@@ -92,6 +99,8 @@ class Model3d extends Component {
                 const modelKeyToLoad = (nextModels || models).get(key)
                 if (modelKeyToLoad)
                     this.props.fetchModelIfNeeded(modelKeyToLoad)
+                // Make sure comments are off if we are switching models
+                this.props.toggleModelComments(models.get(key), false)
             }
         }, this)
 
@@ -236,9 +245,12 @@ class Model3d extends Component {
                 // The videoUrl is that of the current model
                 const videoUrl = iterModel.get('videoUrl')
                 const scene =  currentSceneOfModel(iterModel)
+                // Get the time to play the video to transition from one scene to the next
+                const sceneTransitionTime = iterModel.get('sceneTransitionTime') || this.props.settings.get('SCENE_TRANSITION_TIME')
                 const sceneIndex = (iterModel.getIn(['scenes', 'entries']) || Map()).toArray().indexOf(scene)
-                const start = (sceneIndex ? (sceneIndex - 1) : 0) * SCENE_DURATION,
-                      end = (sceneIndex || 0) * SCENE_DURATION
+                // We need to transition from the last scene (or position) to the current scene
+                const start = (sceneIndex-1 >= 0 ? sceneIndex-1 : 0) * sceneTransitionTime,
+                      end = (sceneIndex >=0 ? sceneIndex : 0) * sceneTransitionTime
                 model3dPresentation = <ModelVideo videoUrl={videoUrl} start={start} end={end} scrollDirection={this.state.scrollDirection} />
             }
 

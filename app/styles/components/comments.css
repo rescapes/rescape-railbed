@@ -2,23 +2,79 @@
 
 .comments {
     z-index: 5;
-    top: calc($model-3d-top + 0px);
+    top: calc($model-3d-top);
     right: calc($model-3d-document-overlap + 10px);
-    left: 0px;
     position: absolute;
-    bottom: 0px;
-}
-
-.disqus-comment-count {
-    position: absolute;
-    right: 0px;
-    height: 20px;
-    top: 10px;
     width: $comment-button-width;
-    &:hover {
-        cursor: pointer;
+    height: $comment-button-height;
+
+    &.showing {
+        width: auto;
+        height: auto;
+        bottom: 0px;
+        left: 0px;
     }
 }
+
+.disqus-close-icon {
+    position: absolute;
+    top: 0px;
+    height: 30px;
+    width: 30px;
+    right: 0px;
+    padding: 2px;
+    &:hover {
+         cursor: pointer;
+         width: 35px;
+         height: 35px;
+         transition: width 300ms ease, height 300ms ease
+    }
+
+}
+
+.comment-counter {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    color: $rescape-love;
+    transition: right 300ms ease, width 300ms ease, height 300ms ease;
+    font-size: .6vw;
+    &:hover {
+        cursor: pointer;
+        right: -5px;
+        width: calc($comment-button-width + 10px);
+        height: calc(47px + 10px);
+        font-size: .7vw;
+        transition: right 300ms ease, width 300ms ease, height 300ms ease, font-size 300ms ease;
+    }
+}
+.comment-icon {
+    z-index: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.comment-count {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 35%;
+    text-align: center;
+    line-height: 10px;
+    vertical-align: middle;
+}
+.disqus-comment-count {
+
+}
+
+.comment-description {
+
+}
+
 
 .disqus-comment-thread-container {
     position: absolute;
@@ -35,6 +91,7 @@
 
 .disqus-comment-thread {
     position: absolute;
+    padding: 5px;
     top: 30px;
     bottom: calc($footer-height - $showcase-footer-overlap);
     left: 0px;
