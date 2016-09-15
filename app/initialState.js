@@ -71,13 +71,13 @@ var amtrakStandardModels = OrderedMap({
         id: '9b7bbfe8-2ad5-4074-ae81-7bc0645dfce9',
         scenes: OrderedMap({ entries: Map({
             'Seating': Map({
-                anchorId: 'id.y00bef1yegak'
+                anchorId: 'id.bc4p3rsjqez8'
             }),
             'Offerings': Map({
-                anchorId: 'id.wcuwoy7h102u'
+                anchorId: 'id.i0ay0sxcpgdu'
             }),
             'Group Seating': Map({
-                anchorId: 'id.5ev15ggtfpz4'
+                anchorId: 'id.7lkcut8es4b0'
             }),
         })}),
         media: OrderedMap({
@@ -328,6 +328,8 @@ var amtrakStandardModels = OrderedMap({
     'Seat Comfort Metro and Tram': Map({
         title: 'Space and Seat Comfort',
         status: Statuses.INITIALIZED,
+        // Scenes aren't able to transition fast enough for this model, so everide the usual time
+        sceneTransitionTime: 6,
         scenes: OrderedMap({ entries: Map({
             'Empty Rows': Map({
                 anchorId: 'id.em6st57x7wbe'
@@ -606,6 +608,9 @@ export default Map({
         MODEL_THRESHOLD: .25,
         // Padding between models when switching
         MODEL_PADDING: .1,
+        // Video scenes are 4 seconds long, so 3 seconds takes us from a still scene to the next
+        // This can be overridden in each model if needed
+        SCENE_TRANSITION_TIME: 3,
         DISQUS_PUBLIC_KEY: "TU5gJqORTRMUd1w9YOLUvlcc17YlldegfOPg0xuZp00FRX5o3UopHjXdz0SBeAwb",
         DISQUS_SHORT_NAME: "rescape"
     }),

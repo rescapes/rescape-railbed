@@ -70,7 +70,13 @@ class Showcase extends Component {
         return <div className='showcase'>
             <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops} toward={toward} />
             <Media media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
-            <Comments className='comments' documentKey={this.props.documentKey} documentTitle={this.props.document.get('title')} modelKey={this.props.modelKey} /> :
+            <Comments className='comments'
+                      documentKey={this.props.documentKey}
+                      documentTitle={this.props.document.get('title')}
+                      model={this.props.model}
+                      modelKey={this.props.modelKey}
+                      commentsAreShowing={this.props.commentsAreShowing}
+            /> :
             // Share icons!
             <div className={`share-icons ${fade} ${toward}`}>
                 {SHARE_BUTTONS.map((shareButton, i) =>
@@ -84,9 +90,6 @@ class Showcase extends Component {
             </div>
         </div>
     }
-
-
-
 }
 
 Showcase.propTypes = {
@@ -116,6 +119,7 @@ function mapStateToProps(state, props) {
     const sceneKey = currentSceneKeyOfModel(model)
     // Used to set a css class so we can smoothly transition scene titles
     const sceneIndex = model && model.getIn(['scenes', 'entries']).keySeq().indexOf(sceneKey)
+    const commentsAreShowing = model && model.get('commentsAreShowing')
 
     return {
         settings,
@@ -127,7 +131,8 @@ function mapStateToProps(state, props) {
         sceneKey,
         sceneIndex,
         documentTitle,
-        postUrl
+        postUrl,
+        commentsAreShowing
     }
 }
 

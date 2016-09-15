@@ -83,13 +83,13 @@ class ModelVideo extends Component {
     }
 
     /***
-     * Only update
+     * Only update when the scene has changed, or if we don't have a video yet
      * @param nextProps and thus play the video if start or end changed
      * @param nextState
      * @returns {boolean}
      */
     shouldComponentUpdate(nextProps, nextState) {
-        return this.state.start != nextState.start || this.state.end != nextState.end
+        return !this.refs.video || this.state.start != nextState.start || this.state.end != nextState.end
     }
 
     componentDidMount() {

@@ -15,8 +15,10 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import ReactDisqusThread from 'react-disqus-thread';
 import {normalizeKeyToFilename} from "../utils/fileHelpers";
 import close_svg from '../images/close.svg'
+import comment_svg from '../images/comment.svg'
+import * as modelActions from '../actions/model'
 
-export default class Comments extends Component {
+class Comments extends Component {
     handleNewComment(comment) {
         console.log(comment.text);
     }
@@ -26,21 +28,43 @@ export default class Comments extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.formArticleKey(nextProps) != this.formArticleKey())
+        if (this.formArticleKey(nextProps) != this.formArticleKey() ||
+                nextProps.commentsAreShowing != this.props.commentsAreShowing)
             this.mirrorProps(nextProps);
     }
 
     mirrorProps(props) {
         if (this.refs.counter) {
-            DISQUSWIDGETS.getCount({reset: true});
             this.refs.counter.setAttribute('data-disqus-identifier', this.formArticleKey(props));
+            DISQUSWIDGETS.getCount({reset: true});
         }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        return this.formArticleKey(nextProps) != this.formArticleKey()
+        return this.formArticleKey(nextProps) != this.formArticleKey() ||
+                nextProps.commentsAreShowing != this.props.commentsAreShowing
+
     }
 
+    /***
+     * Show the comments when the user clicks the comment count button
+     */
+    onClickCommentButton() {
+        this.props.toggleModelComments(this.props.modelKey, true)
+    }
+
+    /***
+     * Hide the comments when the user clicks the close button
+     */
+    onClickCloseButton() {
+        this.props.toggleModelComments(this.props.modelKey, false)
+        this.enableMainBodyScroll()
+    }
+
+    /***
+     * Don't let the main body scroll when we are over the iframe. This seems to be a bug in at least
+     * Chrome that when we run out of scroll on the iframe it bubbles the event to the main window
+     */
     disableMainBodyScroll()
     {
         document.body.style.overflow="hidden";
@@ -51,27 +75,54 @@ export default class Comments extends Component {
         document.body.style.overflow="auto";
     }
 
+    /***
+     * Render the comment counter button for the current model or render the comments if the button is
+     * clicked
+     * @returns {XML}
+     */
     render() {
         const articleKey = this.formArticleKey()
-        const comments = !this.props.commentsShowing ?
-            <div ref='counter' className="disqus-comment-count">First article</div> :
+        // Once we load the comments once keep the Disqus iframe around but undisplayed when not in use
+        const commentsHaveShown = this.props.model.get('commentsHaveShown')
+        // TODO this isn't actually preventing the comments from reloading
+        const commentsAreShowing = this.props.model.get('commentsAreShowing')
+
+        const disqus = commentsHaveShown || commentsAreShowing ?
             <div className="disqus-comment-thread-container"
+                 style={{display: commentsAreShowing ? 'block' : 'none'}}
                  onMouseEnter={this.disableMainBodyScroll}
                  onMouseLeave={this.enableMainBodyScroll}
-            >
-                <img className='disqus-close-icon' src={close_svg}/>
-                <div className="disqus-comment-thread-header"/>
-                <ReactDisqusThread
-                    className="disqus-comment-thread"
-                    shortname="rescapes"
-                    identifier={`/${articleKey}`}
-                    title={`${this.props.documentTitle}: ${this.props.modelKey}`}
-                    url={`http://rescapes.net/${articleKey}`}
-                    onNewComment={this.handleNewComment}
-                />
+        >
+            <img className='disqus-close-icon' src={close_svg} onClick={this.onClickCloseButton.bind(this)} />
+            <div className="disqus-comment-thread-header" />
+            <ReactDisqusThread
+                className="disqus-comment-thread"
+                shortname="rescapes"
+                identifier={articleKey}
+                title={`${this.props.documentTitle}: ${this.props.modelKey}`}
+                url={`http://rescapes.net/${articleKey.replace('__','#')}`}
+                onNewComment={this.handleNewComment}
+            />
+        </div> : <span/>
+
+        /***
+         * The comment button shows then number of comments for this model. Disqus injects the number into
+         * div when we call mirrorProps
+         * @type {XML}
+         */
+        const commentCountButton = <div
+            className="comment-counter"
+            style={{display: commentsAreShowing ? 'none' : 'block'}}
+            onClick={this.onClickCommentButton.bind(this)} >
+                <img className='comment-icon' src={comment_svg} />
+                <div className="comment-count">
+                    <div ref='counter' className="disqus-comment-count" />
+                </div>
             </div>
-        return <div className="comments">
-            {comments}
+
+        return <div className={`comments ${commentsAreShowing ? 'showing' : ''}`}>
+            {commentCountButton}
+            {disqus}
         </div>
     }
 
@@ -83,7 +134,7 @@ export default class Comments extends Component {
     formArticleKey(props) {
         const documentUrlKey = normalizeKeyToFilename((props || this.props).documentTitle)
         const modelUrlKey = normalizeKeyToFilename((props ||this.props).modelKey)
-        return `/${documentUrlKey}/${modelUrlKey}`
+        return `${documentUrlKey}__${modelUrlKey}`
     }
 }
 
@@ -91,5 +142,19 @@ Comments.propKeys = {
     documentTitle: PropTypes.string,
     documentKey: PropTypes.string,
     modelKey: PropTypes.string,
-    commentsShowing: PropTypes.bool,
+    model: ImmutablePropTypes.map,
+    commentsAreShowing: PropTypes.bool,
 }
+
+function mapStateToProps(state, props) {
+    return state.toObject()
+}
+
+/***
+ * Connect the mapStateToProps to provide the props to the component.
+ * Connect the site actions so that the child components can send the actions based on events.
+ */
+export default connect(
+    mapStateToProps,
+    Object.assign(modelActions)
+)(Comments)

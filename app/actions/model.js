@@ -28,6 +28,7 @@ export const MODEL_ERRED = 'MODEL_ERRED'
 export const SHOW_MODEL = 'SHOW_MODEL'
 export const CURRENT_MODEL = 'CURRENT_MODEL'
 
+export const TOGGLE_MODEL_COMMENTS = 'TOGGLE_MODEL_COMMENTS'
 
 // scene actions
 export const SHOW_SCENE = 'SHOW_SCENE'
@@ -135,7 +136,14 @@ class ModelLoader extends ActionLoader {
     }
 }
 
-
+/***
+ * Toggles the Model3d's comments on and off
+ * @param key: The Model3d key
+ * @param force: Force a certain value, true or false
+ */
+export function toggleModelComments(key, force) {
+    return { type: TOGGLE_MODEL_COMMENTS, key, force }
+}
 
 // scene actions
 

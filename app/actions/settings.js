@@ -24,6 +24,7 @@ export const SET_3D = 'SET_3D'
 export const SET_RELATED_IMAGES = 'SET_RELATED_IMAGES'
 export const SET_LIGHTBOX_VISIBILITY =  'SET_LIGHTBOX_VISIBILITY'
 
+
 /***
  * Sets the DOM to show interactive 3D models when supported.
  * 
