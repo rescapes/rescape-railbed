@@ -43,12 +43,17 @@ ReactDOM.render(
 
 store.dispatch(setState(initialState))
 
+const state = store.getState()
 // Load and show the newest post that isn't marked in the future
 // TODO this will need to be used by a post listing
-const sortedDocuments = store.getState().getIn(['documents', 'entries']).sort(
+const sortedDocuments = state.getIn(['documents', 'entries']).sort(
     (a, b) => a.get('date') > b.get('date'))
 // Pretend it's the distant future
 const now = new Date('November 2016');
 const currentDocument = sortedDocuments.reverse().find(document => document.get('date') <= now)
 store.dispatch(showDocument(sortedDocuments.keyOf(currentDocument)))
 
+/*
+const shortName = state.getIn(['settings', ])
+store.dispatch(showComments(sortedDocuments.keyOf(currentDocument)), shortName, publicKey)
+*/

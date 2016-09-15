@@ -75,7 +75,7 @@ module.exports = {
                 include: APP
             },
             {
-                test: /\.(jpg|png|svg|mp4)$/,
+                test: /\.(jpg|png|svg)$/,
                 loader: 'file-loader?name=/images/[name].[ext]',
                 include: APP
             },

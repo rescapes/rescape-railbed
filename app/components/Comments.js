@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import ReactDisqusThread from 'react-disqus-thread';
 import {normalizeKeyToFilename} from "../utils/fileHelpers";
+import close_svg from '../images/close.svg'
 
 export default class Comments extends Component {
     handleNewComment(comment) {
@@ -30,26 +31,45 @@ export default class Comments extends Component {
     }
 
     mirrorProps(props) {
-        if (this.refs.counter)
+        if (this.refs.counter) {
+            DISQUSWIDGETS.getCount({reset: true});
             this.refs.counter.setAttribute('data-disqus-identifier', this.formArticleKey(props));
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         return this.formArticleKey(nextProps) != this.formArticleKey()
     }
 
+    disableMainBodyScroll()
+    {
+        document.body.style.overflow="hidden";
+    }
+
+    enableMainBodyScroll()
+    {
+        document.body.style.overflow="auto";
+    }
+
     render() {
         const articleKey = this.formArticleKey()
-        const comments = this.props.commentsShowing ?
+        const comments = !this.props.commentsShowing ?
             <div ref='counter' className="disqus-comment-count">First article</div> :
-            <ReactDisqusThread
-                className="disqus-comment-thread"
-                shortname="rescapes"
-                identifier={`/${articleKey}`}
-                title={`${this.props.documentTitle}: ${this.props.modelKey}`}
-                url={`http://rescapes.net/${articleKey}`}
-                onNewComment={this.handleNewComment}
-            />
+            <div className="disqus-comment-thread-container"
+                 onMouseEnter={this.disableMainBodyScroll}
+                 onMouseLeave={this.enableMainBodyScroll}
+            >
+                <img className='disqus-close-icon' src={close_svg}/>
+                <div className="disqus-comment-thread-header"/>
+                <ReactDisqusThread
+                    className="disqus-comment-thread"
+                    shortname="rescapes"
+                    identifier={`/${articleKey}`}
+                    title={`${this.props.documentTitle}: ${this.props.modelKey}`}
+                    url={`http://rescapes.net/${articleKey}`}
+                    onNewComment={this.handleNewComment}
+                />
+            </div>
         return <div className="comments">
             {comments}
         </div>

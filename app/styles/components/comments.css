@@ -1,27 +1,44 @@
 
 
 .comments {
+    z-index: 5;
     top: calc($model-3d-top + 0px);
-    right: calc($model-3d-document-overlap + 20px);
-    left: 200px;
-    margin-right: 15px;
-    margin-bottom: 5px;
+    right: calc($model-3d-document-overlap + 10px);
+    left: 0px;
     position: absolute;
     bottom: 0px;
 }
 
 .disqus-comment-count {
     position: absolute;
+    right: 0px;
     height: 20px;
+    top: 10px;
     width: $comment-button-width;
+    &:hover {
+        cursor: pointer;
+    }
 }
+
+.disqus-comment-thread-container {
+    position: absolute;
+    top: 0px;
+    bottom: calc($footer-height - $showcase-footer-overlap);
+    left: 0px;
+    right: 0px;
+    background-color: color($black alpha(90%));
+}
+
+.disqus-comment-thread-header {
+    height: 30px;
+}
+
 .disqus-comment-thread {
     position: absolute;
-    overflow: scroll;
-    width: 100%;
-    top: 35px;
-    bottom: calc($media-height + 20px);
-    background-color: color($black alpha(90%));
-    padding: 5px;
+    top: 30px;
+    bottom: calc($footer-height - $showcase-footer-overlap);
+    left: 0px;
+    right: 0px;
+    overflow-y: scroll;
     border-radius: 5px;
 }
