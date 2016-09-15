@@ -14,6 +14,7 @@ import {Map} from 'immutable'
 import {connect} from 'react-redux'
 import Gallery from './Gallery'
 import {normalizeKeyToFilename} from '../utils/fileHelpers'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 // This garbage has to be done to force webpack to know about all the media files
 var req = require.context('../images_dist/', true, /\.(jpg|png|gif)$/)
@@ -21,7 +22,7 @@ req.keys().forEach(function(key){
     req(key);
 })
 
-class Media extends Component {
+export default class Media extends Component {
     /***
      * This seems like the place to bind methods (?)
      * @param props
@@ -128,11 +129,9 @@ class Media extends Component {
 }
 
 Media.propTypes = {
+    fade: PropTypes.string,
+    toward: PropTypes.string,
+    media: ImmutablePropTypes.orderedMap,
+    modelKey: PropTypes.string
 }
 
-function mapStateToProps(state) {
-    return {
-    }
-}
-
-export default connect(mapStateToProps)(Media)

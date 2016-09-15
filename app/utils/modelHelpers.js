@@ -71,7 +71,7 @@ export function calculateModelFadeAndToward(modelTops) {
  * {current: -.25, previous: null, next: .75+MODEL_PADDING}
  */
 export function getModelTops(document, models, settings) {
-    const {current, previousForDistinctModel, nextForDistinctModel} = models
+    const {current, previousForDistinctModel, nextForDistinctModel} = models.toObject()
     const distances = closestAnchorDistances(document, models)
 
     // If we don't have a current model, none of the getModelTops matter
@@ -91,7 +91,7 @@ export function getModelTops(document, models, settings) {
             // Start at 0 and scroll down as previous gets more relevant
             current: currentDistance / (previousDistance + currentDistance),
             // Start at above showcase at -(MODEL_PADDING + 1) and scroll down as previous gets more relevant
-            previous: previousFraction - (setting.get('MODEL_PADDING') + 1),
+            previous: previousFraction - (settings.get('MODEL_PADDING') + 1),
             next: null
         }
     }
