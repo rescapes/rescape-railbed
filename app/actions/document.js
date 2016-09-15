@@ -31,6 +31,11 @@ export const REGISTER_SCROLL_POSITION = 'REGISTER_SCROLL_POSITION'
 export const SCROLL_TO_NEXT_MODEL = 'SCROLL_TO_NEXT_MODEL'
 export const SCROLL_TO_PREVIOUS_MODEL = 'SCROLL_TO_PREVIOUS_MODEL'
 
+export const LOAD_COMMENT = 'LOAD_COMMENT'
+export const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
+export const COMMENT_ERRED = 'COMMENT_ERRED'
+export const SHOW_COMMENT = 'SHOW_COMMENT'
+
 /*
  * Action creators. 
  * List in the same order as the action types.
@@ -153,8 +158,106 @@ export function scrollToPreviousModel() {
     return { type: SCROLL_TO_PREVIOUS_MODEL }
 }
 
+
+class CommentsLoader extends ActionLoader {
+
+    constructor(disqusPublicKey, disqusShortname) {
+        super()
+        this.disqusPublicKey = disqusPublicKey
+        this.disqusShortname = disqusShortname
+        this.url = 'https://disqus.com/api/3.0/threads/set.jsonp',
+        this.threadUrl = 'link:' + $('.show-comments').attr('data-disqus-url');
+        this.data = {api_key: this.disqusPublicKey, forum: this.disqusShortname, thread: threadUrl},
+        this.key = 'comment'
+    }
+
+    /***
+     * The baseUrl for the documents state has a parameter to accept the documents's id
+     * @param settings: The global settings
+     * @param state: The substate for documents
+     * @param entry: The documents to be loaded
+     * @returns {*}
+     */
+    makeLoadUrl(settings, state, entry) {
+        // This will normally need overriding
+        return state.get('baseUrl')(entry.get('id'))
+    }
+
+    /***
+     * Indicates that the documents is loading
+     * @param url: The url of the documents (e.g. a Google Docs url)
+     * @returns {{type: string, url: *}}
+     */
+    loadIt(key, url) {
+        return {
+            type: LOAD_COMMENT,
+            key,
+            url
+        }
+    }
+
+    /***
+     * Indicates that the documents is being received. Since we get back a full HTML document,
+     * we split it into the head and html portion so we can inject the HTML into the proper
+     * components
+     * @param key: The key of the document
+     * @param html: The json of the documents
+     * @returns {{type: string, url: *, content: *, receivedAt: number}}
+     */
+    receive(key, html) {
+        const parser = new DOMParser();
+        const htmlDoc = parser.parseFromString(html, "text/html")
+        const head = htmlDoc.head.innerHTML
+        const body = htmlDoc.body.innerHTML
+        return {
+            type: RECEIVE_COMMENT,
+            key,
+            content: Map({head, body}),
+            receivedAt: Date.now()
+        }
+    }
+
+    /***
+     * Indicates that the loading of the documents erred
+     *
+     * @param url: The invariable url of the documents
+     * @returns {{type: string, key: *}}
+     */
+    erred(url) {
+        return { type: COMMENT_ERRED, url }
+    }
+
+    /***
+     * Shows the given medium of the model
+     *
+     * @param key: The key of the 3D model (e.g. 'denver_train_station')
+     * @returns {{type: string, key: *}}
+     */
+    showIt(key) {
+        return { type: SHOW_COMMENT, key }
+    }
+
+
+    /**
+    $.ajax({
+    cache: false,
+    dataType: 'jsonp',
+    success: function (result) {
+    if (result.response.length === 1) {
+    btnText = 'Show Comments (' + result.response[0].posts + ')';
+    $('.show-comments').html(btnText);
+    **/
+}
+
+
 // Use an ActionLoader to remotely load models
 export const documentLoader = new DocumentLoader();
 // Export the public methods of the action loader
 export const fetchDocumentIfNeeded = documentLoader.fetchIfNeeded.bind(documentLoader)
 export const showDocument = documentLoader.show.bind(documentLoader)
+
+export const commentsLoader = function(disqusPublicKey, disqusShortname) {
+    new CommentsLoader(disqusPublicKey, disqusShortname);
+}
+export const fetchCommentsfNeeded = documentLoader.fetchIfNeeded.bind(commentsLoader)
+export const showComments = documentLoader.show.bind(commentsLoader)

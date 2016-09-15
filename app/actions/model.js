@@ -108,7 +108,7 @@ class ModelLoader extends ActionLoader {
      * @returns {{type: string, key: *}}
      */
     erred(url) {
-        return { type: DOCUMENT_MODEL, url }
+        return { type: MODEL_ERRED, url }
     }
 
     /***

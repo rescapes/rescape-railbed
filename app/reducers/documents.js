@@ -148,7 +148,6 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     else if (action.type==actions.SCROLL_TO_PREVIOUS_MODEL) {
         // Get the current scroll position
         const scrollPosition = state.getIn(['entries', currentDocumentKey, 'scrollPosition'])
-        console.warn(scrollPosition)
 
         // The scroll up button goes first scene of the previous model (or current model if
         // there is no previous)
@@ -211,11 +210,15 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             current
         )
 
-        console.log(`Previous Distinct: ${previousForDistinctModel && previousForDistinctModel.name}`)
-        console.log(`Previous: ${previous && previous.name}`)
-        console.log(`Current: ${current && current.name}`)
-        console.log(`Next: ${next && next.name}`)
-        console.log(`Next Distinct: ${nextForDistinctModel && nextForDistinctModel.name}`)
+        console.log(`Scroll Position: ${scrollPosition}`)
+        function nameAndPosition(anchor) {
+            return `${anchor.name} ${anchor.offsetTop}`
+        }
+        console.log(`Previous Distinct: ${previousForDistinctModel && nameAndPosition(previousForDistinctModel)}`)
+        console.log(`Previous: ${previous && nameAndPosition(previous)}`)
+        console.log(`Current: ${current && nameAndPosition(current)}`)
+        console.log(`Next: ${next && nameAndPosition(next)}`)
+        console.log(`Next Distinct: ${nextForDistinctModel && nameAndPosition(nextForDistinctModel)}`)
         return {current, previous, next, nextForDistinctModel, previousForDistinctModel}
     }
 

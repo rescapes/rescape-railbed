@@ -71,7 +71,7 @@ var amtrakStandardModels = OrderedMap({
         id: '9b7bbfe8-2ad5-4074-ae81-7bc0645dfce9',
         scenes: OrderedMap({ entries: Map({
             'Seating': Map({
-                anchorId: 'id.bc4p3rsjqez8'
+                anchorId: 'id.y00bef1yegak'
             }),
             'Offerings': Map({
                 anchorId: 'id.wcuwoy7h102u'
@@ -602,10 +602,12 @@ export default Map({
         [settingsActions.SET_3D]: false,
         [settingsActions.SET_RELATED_IMAGES]: true,
         [settingsActions.SET_LIGHTBOX_VISIBILITY]: false,
-        // Threshold for switching between 3d models in the showcase
+        // Threshold for visually switching between 3d models in the showcase
         MODEL_THRESHOLD: .25,
         // Padding between models when switching
         MODEL_PADDING: .1,
+        DISQUS_PUBLIC_KEY: "TU5gJqORTRMUd1w9YOLUvlcc17YlldegfOPg0xuZp00FRX5o3UopHjXdz0SBeAwb",
+        DISQUS_SHORT_NAME: "rescape"
     }),
     documents: Map({
         keys: List(['ths_amtrak_standard', 'the_new_rules_of_the_road']),
