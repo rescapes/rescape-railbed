@@ -157,8 +157,12 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         case actions.TOGGLE_MODEL_COMMENTS:
             return state.setIn(
                 ['entries', action.key, 'commentsAreShowing'],
-                action.force != null ? action.force : state.getIn(['entries', action.key, 'commentsAreShowing'])
+                action.force != null ? action.force : !state.getIn(['entries', action.key, 'commentsAreShowing'])
             ).setIn(['entries', action.key, 'commentsHaveShown'], true)
+        case actions.TOGGLE_MODEL_3D:
+            return state.setIn(
+                ['entries', action.key, 'is3dSet'],
+                action.force != null ? action.force : !state.getIn(['entries', action.key, 'is3dSet']))
         default:
             return state
     }
