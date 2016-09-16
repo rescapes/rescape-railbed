@@ -23,7 +23,6 @@ import { ShareButtons, generateShareIcon } from 'react-share'
 import {currentSceneKeyOfModel} from '../utils/modelHelpers'
 import {getModelTops, calculateModelFadeAndToward} from '../utils/modelHelpers'
 import {Map} from 'immutable'
-import Comments from './Comments'
 
 const {
     FacebookShareButton,
@@ -69,14 +68,7 @@ class Showcase extends Component {
 
         return <div className='showcase'>
             <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops} toward={toward} />
-            <Media media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
-            <Comments className='comments'
-                      documentKey={this.props.documentKey}
-                      documentTitle={this.props.document.get('title')}
-                      model={this.props.model}
-                      modelKey={this.props.modelKey}
-                      commentsAreShowing={this.props.commentsAreShowing}
-            /> :
+            <Media media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/> :
             // Share icons!
             <div className={`share-icons ${fade} ${toward}`}>
                 {SHARE_BUTTONS.map((shareButton, i) =>

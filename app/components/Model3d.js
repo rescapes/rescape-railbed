@@ -21,7 +21,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import ModelVideo from './ModelVideo'
 import {currentSceneKeyOfModel, currentSceneOfModel} from '../utils/modelHelpers'
 import load_3d_png from '../images_dist/load3d-320.png'
-
+import close_svg from '../images/close.svg'
 
 // This garbage has to be done to force webpack to know about all the media files
 var req = require.context('../videos/', true, /\.(mp4)$/)
@@ -79,7 +79,7 @@ class Model3d extends Component {
         const sceneKey = this.currentSceneKey()
         // Once loaded change the scene if one is specified
         if (sceneKey)
-            this.changeScene(sceneKey)
+            this.changeScene(this.props.model, sceneKey)
     }
 
     /***
@@ -257,7 +257,7 @@ class Model3d extends Component {
                 // TODO. We should add more intelligence to not load next/previous until current is fully loaded
                 const url = iterModel.get('url')
                 const iframeUrl = (isAlreadyLoaded || relevance) ? url : null
-                model3dPresentation = <Iframe key={modelKey}
+                model3dPresentation = <Iframe className="model-3d-iframe" key={modelKey}
                         src={iframeUrl}
                         name={`iframe_${modelKey}`}
                         onLoad={this.frameDidLoad.bind(this)}
@@ -273,14 +273,27 @@ class Model3d extends Component {
                 // We need to transition from the last scene (or position) to the current scene
                 const start = (sceneIndex-1 >= 0 ? sceneIndex-1 : 0) * sceneTransitionTime,
                       end = (sceneIndex >=0 ? sceneIndex : 0) * sceneTransitionTime
-                model3dPresentation = <ModelVideo videoUrl={videoUrl} start={start} end={end} scrollDirection={this.state.scrollDirection}
+                model3dPresentation = <ModelVideo className="model-3d-video" videoUrl={videoUrl} start={start} end={end} scrollDirection={this.state.scrollDirection}
                 >
                 </ModelVideo>
             }
 
+            const toggle3d = !is3dSet ?
+                <div className='toggle-3d-is-off'>
+                    <img className='toggle-3d-is-off-icon' src={load_3d_png} onClick={this.bindToggle3d(!is3dSet)} />
+                </div> :
+                <div className='toggle-3d-is-on'>
+                    <img className='toggle-3d-is-on-icon' src={close_svg} onClick={this.bindToggle3d(!is3dSet)} />
+                    <span className='toggle-3d-is-on-text'>
+                        <p>Scroll to zoom (z)</p>
+                        <p>Drag to orbit (o)</p>
+                        <p>Shift-Drag to pan (h)</p>
+                        <p>Right-side button for scenes</p>
+                    </span>
+                </div>
             // Return the iframe or video wrapped in a div. The div must have a unique key for React
             return <div key={modelKey} className={`${divClass} ${divStateClass}`} style={style}>
-                <img className='toggle-3d' src={load_3d_png} onClick={this.bindToggle3d(!is3dSet)} />
+                { toggle3d }
                 { model3dPresentation }
                 <div className='model-3d-gradient left'/>
                 <div className='model-3d-gradient right'/>
