@@ -26,6 +26,7 @@ import DocumentMeta from 'react-document-meta';
 import ImmutablePropTypes from 'react-immutable-proptypes'
 var himalaya = require('himalaya');
 import Comments from './Comments'
+import TableOfContents from './TableOfContents'
 
 export class Site extends Component {
 
@@ -69,14 +70,23 @@ export class Site extends Component {
         if (!this.props.documentKey)
             return <div className="site"/>
 
-        const comments =  this.props.modelKey ?
+        const comments = this.props.modelKey ?
             <Comments className='comments'
                 documentKey={this.props.documentKey}
                 documentTitle={this.props.documentTitle}
                 model={this.props.model}
                 modelKey={this.props.modelKey}
                 commentsAreShowing={this.props.commentsAreShowing}
-            /> : <div/>
+        /> : <div/>
+        const tableOfContents = this.props.modelKey ?
+            <TableOfContents className='table-of-contents'
+                documentKey={this.props.documentKey}
+                documentTitle={this.props.documentTitle}
+                document={this.props.document}
+                model={this.props.model}
+                modelKey={this.props.modelKey}
+                tableOfContentsAreShowing={this.props.commentsAreShowing}
+        /> : <div/>
         // TODO I feel like I should pass props to Showcase and Document, but they have access
         // to the state and use mapStateToProps, so why bother?
         // DocumentMeta merges the head tag data in from the document's head tag data
@@ -87,6 +97,7 @@ export class Site extends Component {
         return <div className='site'>
             <DocumentMeta {...meta} extend />
             {comments}
+            {tableOfContents}
             <Header />
             <Showcase />
             <Document />

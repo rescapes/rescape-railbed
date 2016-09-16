@@ -165,6 +165,11 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], firstSceneOfPrevious.offsetTop - 30)
         }
     }
+    else if (action.type == actions.TOGGLE_DOCUMENT_TABLE_OF_CONTENTS) {
+        return state.setIn(
+            ['entries', action.key, 'tableOfContentsAreShowing'],
+            action.force != null ? action.force : !state.getIn(['entries', action.key, 'tableOfContentsAreShowing']))
+    }
     else
         return state
 

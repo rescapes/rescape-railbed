@@ -31,11 +31,7 @@ export const REGISTER_SCROLL_POSITION = 'REGISTER_SCROLL_POSITION'
 export const SCROLL_TO_NEXT_MODEL = 'SCROLL_TO_NEXT_MODEL'
 export const SCROLL_TO_PREVIOUS_MODEL = 'SCROLL_TO_PREVIOUS_MODEL'
 
-export const LOAD_COMMENT = 'LOAD_COMMENT'
-export const RECEIVE_COMMENT = 'RECEIVE_COMMENT'
-export const COMMENT_ERRED = 'COMMENT_ERRED'
-export const SHOW_COMMENT = 'SHOW_COMMENT'
-
+export const TOGGLE_DOCUMENT_TABLE_OF_CONTENTS = 'TOGGLE_DOCUMENT_TABLE_OF_CONTENTS'
 /*
  * Action creators. 
  * List in the same order as the action types.
@@ -249,15 +245,17 @@ class CommentsLoader extends ActionLoader {
     **/
 }
 
+/***
+ * Toggles the Table of Contents on and off
+ * @param key: The Document key
+ * @param force: Force a certain value, true or false
+ */
+export function toggleTableOfContents(key, force) {
+    return { type: TOGGLE_DOCUMENT_TABLE_OF_CONTENTS, key, force }
+}
 
 // Use an ActionLoader to remotely load models
 export const documentLoader = new DocumentLoader();
 // Export the public methods of the action loader
 export const fetchDocumentIfNeeded = documentLoader.fetchIfNeeded.bind(documentLoader)
 export const showDocument = documentLoader.show.bind(documentLoader)
-
-export const commentsLoader = function(disqusPublicKey, disqusShortname) {
-    new CommentsLoader(disqusPublicKey, disqusShortname);
-}
-export const fetchCommentsfNeeded = documentLoader.fetchIfNeeded.bind(commentsLoader)
-export const showComments = documentLoader.show.bind(commentsLoader)

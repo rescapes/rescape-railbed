@@ -9,10 +9,11 @@
     height: $comment-button-height;
 
     &.showing {
-        width: auto;
-        height: auto;
-        bottom: 0px;
+        margin-left: 10px;
         left: 0px;
+        width: calc($showcase-width - $model-3d-document-overlap);
+        top: calc($model-3d-top);
+        height: $model-3d-height;
     }
 }
 

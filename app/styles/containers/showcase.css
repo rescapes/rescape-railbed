@@ -62,12 +62,12 @@
 
             &.media, &.model-3d-title {
                   bottom: -100px;
-                  transition: visibility 600ms ease, opacity 600ms ease, bottom 300m ease;
+                  transition: visibility 600ms ease, opacity 600ms ease, bottom 300ms ease;
             }
 
             &.share-icons {
                  top: 100px;
-                 transition: visibility 600ms ease, opacity 600ms ease, top 300m ease;
+                 transition: visibility 600ms ease, opacity 600ms ease, top 300ms ease;
             }
             opacity: 0;
             visibility: hidden;
