@@ -7,7 +7,7 @@ Generic header/footer stuff
 **/
 div[class^="page"] {
     position: absolute;
-    right: calc(calc(100% - $document-absolute-left) / 2);
+    right: calc(calc(100% - $document-absolute-left - $model-3d-document-overlap) / 2);
     width: 32px;
     height: 24px;
     padding: 5px;

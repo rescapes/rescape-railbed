@@ -15,16 +15,12 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import ReactDisqusThread from 'react-disqus-thread';
 import {normalizeKeyToFilename} from "../utils/fileHelpers";
 import close_svg from '../images/close.svg'
-import comment_svg from '../images/comment.svg'
-import * as modelActions from '../actions/model'
+import table_of_contents_svg from '../images/toc.svg'
+import * as documentActions from '../actions/document'
 
-class Comments extends Component {
-    handleNewComment(comment) {
-        console.log(comment.text);
-    }
+class TableOfContents extends Component {
 
     componentDidMount() {
-        this.mirrorProps(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -45,45 +41,20 @@ class Comments extends Component {
     shouldComponentUpdate(nextProps, nextState) {
         return this.formArticleKey(nextProps) != this.formArticleKey() ||
                 nextProps.commentsAreShowing != this.props.commentsAreShowing
-
     }
 
     /***
      * Show the comments when the user clicks the comment count button
      */
-    onClickCommentButton() {
-        this.props.toggleModelComments(this.props.modelKey, true)
+    onClickTableOfContentsButton() {
+        this.props.toggleTableOfContents(this.props.modelKey, true)
     }
 
     /***
      * Hide the comments when the user clicks the close button
      */
     onClickCloseButton() {
-        this.props.toggleModelComments(this.props.modelKey, false)
-        this.enableMainBodyScroll()
-    }
-
-    /***
-     * Don't let the main body scroll when we are over the iframe. This seems to be a bug in at least
-     * Chrome that when we run out of scroll on the iframe it bubbles the event to the main window
-     */
-    disableMainBodyScroll()
-    {
-        const document = window.document
-        const html = document.documentElement
-        const body = document.body
-        var scrollTop = body.scrollTop
-        html.classList.add('noscroll')
-        html.style.top = -scrollTop;
-    }
-
-    enableMainBodyScroll()
-    {
-        const html = document.documentElement
-        const body = document.body
-        var scrollTop = parseInt(html.style.top)
-        html.classList.remove('noscroll');
-        body.scrollTop = -scrollTop;
+        this.props.toggleTableOfContents(this.props.modelKey, false)
     }
 
     /***
@@ -95,48 +66,17 @@ class Comments extends Component {
         if (!this.props.documentTitle || !this.props.modelKey) {
             return <div/>
         }
-        const articleKey = this.formArticleKey()
-        // Once we load the comments once keep the Disqus iframe around but undisplayed when not in use
-        const commentsHaveShown = this.props.model.get('commentsHaveShown')
-        // TODO this isn't actually preventing the comments from reloading
-        const commentsAreShowing = this.props.model.get('commentsAreShowing')
+        const tableOfContentsAreShowing = this.props.document.get('tableOfContentsAreShowing')
+        const tableOfContents = tableOfContentsAreShowing ?
+            <div className="table-of-contents"
+                 style={{display: tableOfContentsAreShowing ? 'block' : 'none'}}
+            >
+            <img className='table-of-contents-close-icon' src={close_svg} onClick={this.onClickCloseButton.bind(this)} />
+            </div> :
+            <img className='table-of-contents-icon' src={table_of_contents_svg} onClick={this.onClickTableOfContentsButton.bind(this)} />
 
-        const disqus = commentsHaveShown || commentsAreShowing ?
-            <div className="disqus-comment-thread-container"
-                 style={{display: commentsAreShowing ? 'block' : 'none'}}
-                 onMouseEnter={this.disableMainBodyScroll}
-                 onMouseLeave={this.enableMainBodyScroll}
-        >
-            <img className='disqus-close-icon' src={close_svg} onClick={this.onClickCloseButton.bind(this)} />
-            <div className="disqus-comment-thread-header" />
-            <ReactDisqusThread
-                className="disqus-comment-thread"
-                shortname="rescapes"
-                identifier={articleKey}
-                title={`${this.props.documentTitle}: ${this.props.modelKey}`}
-                url={`http://rescapes.net/${articleKey.replace('__','#')}`}
-                onNewComment={this.handleNewComment}
-            />
-        </div> : <span/>
-
-        /***
-         * The comment button shows then number of comments for this model. Disqus injects the number into
-         * div when we call mirrorProps
-         * @type {XML}
-         */
-        const commentCountButton = <div
-            className="comment-counter"
-            style={{display: commentsAreShowing ? 'none' : 'block'}}
-            onClick={this.onClickCommentButton.bind(this)} >
-                <img className='comment-icon' src={comment_svg} />
-                <div className="comment-count">
-                    <div ref='counter' className="disqus-comment-count" />
-                </div>
-            </div>
-
-        return <div className={`comments ${commentsAreShowing ? 'showing' : ''}`}>
-            {commentCountButton}
-            {disqus}
+        return <div className={`table-of-contents ${tableOfContentsAreShowing ? 'showing' : ''}`}>
+            {tableOfContents}
         </div>
     }
 
@@ -152,12 +92,12 @@ class Comments extends Component {
     }
 }
 
-Comments.propKeys = {
+TableOfContents.propKeys = {
     documentTitle: PropTypes.string,
     documentKey: PropTypes.string,
     modelKey: PropTypes.string,
     model: ImmutablePropTypes.map,
-    commentsAreShowing: PropTypes.bool,
+    tableOfContentsAreShowing: PropTypes.bool,
 }
 
 function mapStateToProps(state, props) {
@@ -170,5 +110,5 @@ function mapStateToProps(state, props) {
  */
 export default connect(
     mapStateToProps,
-    Object.assign(modelActions)
-)(Comments)
+    Object.assign(documentActions)
+)(TableOfContents)

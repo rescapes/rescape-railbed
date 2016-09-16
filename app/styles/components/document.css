@@ -4,6 +4,12 @@
     injected for each section of the document that represents a 3d Model (as demarcated in the original
     doc with <hr> elements)
 ***/
+html.noscroll {
+    position: fixed;
+    overflow-y: scroll;
+    width: 100%;
+}
+
 .document {
     top: $document-top;
     left: $document-left;
