@@ -29,6 +29,7 @@ export const SHOW_MODEL = 'SHOW_MODEL'
 export const CURRENT_MODEL = 'CURRENT_MODEL'
 
 export const TOGGLE_MODEL_COMMENTS = 'TOGGLE_MODEL_COMMENTS'
+export const TOGGLE_MODEL_3D = 'TOGGLE_MODEL_3D'
 
 // scene actions
 export const SHOW_SCENE = 'SHOW_SCENE'
@@ -134,6 +135,15 @@ class ModelLoader extends ActionLoader {
     showIt(key) {
         return { type: SHOW_MODEL, key }
     }
+}
+
+/***
+ * Toggles the Model3d's is3dSet value
+ * @param key: The Model3d key
+ * @param force: Force a certain value, true or false
+ */
+export function toggleModel3d(key, force) {
+    return { type: TOGGLE_MODEL_3D, key, force }
 }
 
 /***

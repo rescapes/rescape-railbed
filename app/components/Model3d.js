@@ -20,6 +20,7 @@ import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import ModelVideo from './ModelVideo'
 import {currentSceneKeyOfModel, currentSceneOfModel} from '../utils/modelHelpers'
+import load_3d_png from '../images_dist/load3d-320.png'
 
 
 // This garbage has to be done to force webpack to know about all the media files
@@ -123,7 +124,7 @@ class Model3d extends Component {
         if (nextModelKey && nextSceneKey &&
             props.model.get('status') == Statuses.READY &&
             (modelChanged || sceneKey != nextSceneKey)) {
-            this.changeScene(nextSceneKey)
+            this.changeScene(props.model, nextSceneKey)
         }
 
         // Figure out if we are scrolling forward or backward based on model state
@@ -147,11 +148,12 @@ class Model3d extends Component {
 
     /***
      * Changes the scene of the 3D model in the iframe to the scene with the given key
+     * @param model
      * @param sceneKey
      */
-    changeScene(sceneKey) {
+    changeScene(model, sceneKey) {
 
-        if (this.props.is3dSet) {
+        if (this.is3dSet(model)) {
             // TODO not working do to cross domain security
             const dom = ReactDOM.findDOMNode(this).children['iframe']
             if (!dom)
@@ -167,11 +169,30 @@ class Model3d extends Component {
     }
 
     /***
+     *
+     * If defined on the model, use its 3d setting, otherwise default to the settings
+     * @param model
+     */
+    is3dSet(model) {
+        return model.get('is3dSet')===true || model.get('is3dSet')===false ? model.get('is3dSet') : this.props.defaultIs3dSet
+    }
+
+    /***
      * When no current scene is active or when the model first loads in the iframe, go to the first scene
      * TODO. Not sure if this is needed since a loaded model has a default camera view
      */
     firstScene() {
         document.querySelectorAll('div.viewer-scene-option')[0].click()
+    }
+
+    /***
+     * Enable or disable 3d for the current model. Enabled means that Sketchup loads. Disabled means a video loads
+     * Returns a bound function with forced closed
+     */
+    bindToggle3d(force) {
+        return function() {
+            this.props.toggleModel3d(this.props.modelKey, force)
+        }.bind(this)
     }
 
     /***
@@ -229,7 +250,8 @@ class Model3d extends Component {
 
             // Determine whether to show the 3d model or video
             let model3dPresentation = null
-            if (this.props.is3dSet) {
+            const is3dSet = this.is3dSet(iterModel)
+            if (is3dSet) {
                 // If it's already loaded, current, or in the loading queue (previous or next model), set the URL
                 // Setting the url of the iframe forces it to load if not yet loaded
                 // TODO. We should add more intelligence to not load next/previous until current is fully loaded
@@ -251,11 +273,14 @@ class Model3d extends Component {
                 // We need to transition from the last scene (or position) to the current scene
                 const start = (sceneIndex-1 >= 0 ? sceneIndex-1 : 0) * sceneTransitionTime,
                       end = (sceneIndex >=0 ? sceneIndex : 0) * sceneTransitionTime
-                model3dPresentation = <ModelVideo videoUrl={videoUrl} start={start} end={end} scrollDirection={this.state.scrollDirection} />
+                model3dPresentation = <ModelVideo videoUrl={videoUrl} start={start} end={end} scrollDirection={this.state.scrollDirection}
+                >
+                </ModelVideo>
             }
 
             // Return the iframe or video wrapped in a div. The div must have a unique key for React
             return <div key={modelKey} className={`${divClass} ${divStateClass}`} style={style}>
+                <img className='toggle-3d' src={load_3d_png} onClick={this.bindToggle3d(!is3dSet)} />
                 { model3dPresentation }
                 <div className='model-3d-gradient left'/>
                 <div className='model-3d-gradient right'/>
@@ -276,8 +301,9 @@ class Model3d extends Component {
 Model3d.propTypes = {
     settings: ImmutablePropTypes.map,
     models: ImmutablePropTypes.map,
-    is3dSet: PropTypes.bool,
+    defaultIs3dSet: PropTypes.bool,
     modelKey: PropTypes.string,
+    is3dSet: PropTypes.bool,
     sceneKey: PropTypes.string,
     // This is from the parent, not the state
     modelTops: PropTypes.object
@@ -287,17 +313,20 @@ function mapStateToProps(state) {
     const settings = state.get('settings')
     const documentKey = state.getIn(['documents', 'current'])
     const models = documentKey && state.get('models')
-    const is3dSet = state.getIn(['settings', settingsActions.SET_3D])
+    const defaultIs3dSet = state.getIn(['settings', settingsActions.SET_3D])
     // Pass modelKey and sceneKey so that React recalculates the current
     // scene when it changes
     const modelKey = models.get('current')
+    // Note if 3d is set for the current model
+    const is3dSet = models.getIn(['entries', modelKey, 'is3dSet'])
     const sceneKey = currentSceneKeyOfModel(models.getIn(['entries', modelKey]))
 
     return {
         settings,
         models,
-        is3dSet,
-        sceneKey
+        defaultIs3dSet,
+        sceneKey,
+        is3dSet
     }
 }
 

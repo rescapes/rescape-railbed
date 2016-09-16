@@ -107,3 +107,18 @@ video {
     width: 100%;
     height: 100%;
 }
+
+.toggle-3d {
+    z-index: 5;
+    width: 100px;
+    height: 86px;
+    position: absolute;
+    left: 0px;
+    margin: 5px;
+    &:hover {
+        cursor: pointer;
+        width: 110px;
+        height: 96px;
+        transition: width 300ms ease, height 300ms ease;
+    }
+}
