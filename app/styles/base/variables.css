@@ -94,6 +94,7 @@ $h3-font-size: calc( $h1-font-size * 60 / 100 );
 $h4-font-size: calc( $h1-font-size * 40 / 100 );
 $h5-font-size: calc( $h1-font-size * 30 / 100 );
 $h6-font-size: calc( $h1-font-size * 20 / 100 );
+$h7-font-size: calc( $h1-font-size * 10 / 100 );
 $normal-font-size: calc( $h1-font-size * 33.3 / 100 );
 
 $h1-line-height: 50px;

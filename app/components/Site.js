@@ -21,10 +21,11 @@ import Footer from './Footer'
 import Showcase from './Showcase'
 import Document from './Document'
 import {connect} from 'react-redux';
-import React, { Component } from 'react'
+import React, {Component, PropTypes} from 'react'
 import DocumentMeta from 'react-document-meta';
 import ImmutablePropTypes from 'react-immutable-proptypes'
 var himalaya = require('himalaya');
+import Comments from './Comments'
 
 export class Site extends Component {
 
@@ -65,7 +66,17 @@ export class Site extends Component {
                     return o
                 }, {});
         }
+        if (!this.props.documentKey)
+            return <div className="site"/>
 
+        const comments =  this.props.modelKey ?
+            <Comments className='comments'
+                documentKey={this.props.documentKey}
+                documentTitle={this.props.documentTitle}
+                model={this.props.model}
+                modelKey={this.props.modelKey}
+                commentsAreShowing={this.props.commentsAreShowing}
+            /> : <div/>
         // TODO I feel like I should pass props to Showcase and Document, but they have access
         // to the state and use mapStateToProps, so why bother?
         // DocumentMeta merges the head tag data in from the document's head tag data
@@ -75,6 +86,7 @@ export class Site extends Component {
         // Footer of the overall web page
         return <div className='site'>
             <DocumentMeta {...meta} extend />
+            {comments}
             <Header />
             <Showcase />
             <Document />
@@ -84,9 +96,14 @@ export class Site extends Component {
 };
 
 Site.propTypes = {
-    settings: ImmutablePropTypes.map,
     documents: ImmutablePropTypes.map,
-    models: ImmutablePropTypes.map
+    documentKey: PropTypes.string,
+    document: ImmutablePropTypes.map,
+    models: ImmutablePropTypes.map,
+    modelKey: PropTypes.string,
+    model: ImmutablePropTypes.map,
+    docuemntTitle: PropTypes.string,
+    commentsAreShowing: PropTypes.bool
 }
 
 /***
@@ -95,10 +112,27 @@ Site.propTypes = {
  * @returns {Map<K, V>|*|Map<string, V>}
  */
 function mapStateToProps(state) {
+
+    const documents = state.get('documents')
+    const documentKey = documents.get('current')
+    const document = documents.getIn(['entries', documentKey])
+
+    const models = documentKey ? state.get('models') :new Map()
+    const modelKey = models && models.get('current')
+    const model = modelKey && models.getIn(['entries', modelKey])
+
+
+    const documentTitle = document && document.get('title')
+    const commentsAreShowing = model && model.get('commentsAreShowing')
+
     return {
-        settings: state.get('settings'),
-        documents: state.get('documents'),
-        models: state.get('models')
+        document,
+        documents,
+        documentKey,
+        model,
+        modelKey,
+        documentTitle,
+        commentsAreShowing
     }
 }
 

@@ -28,6 +28,8 @@ class Comments extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        if (!this.props.documentKey || !this.props.modelKey)
+            return;
         if (this.formArticleKey(nextProps) != this.formArticleKey() ||
                 nextProps.commentsAreShowing != this.props.commentsAreShowing)
             this.mirrorProps(nextProps);
@@ -81,6 +83,9 @@ class Comments extends Component {
      * @returns {XML}
      */
     render() {
+        if (!this.props.documentTitle || !this.props.modelKey) {
+            return <div/>
+        }
         const articleKey = this.formArticleKey()
         // Once we load the comments once keep the Disqus iframe around but undisplayed when not in use
         const commentsHaveShown = this.props.model.get('commentsHaveShown')

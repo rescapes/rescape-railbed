@@ -1,10 +1,10 @@
 
 
 .comments {
-    z-index: 5;
-    top: calc($model-3d-top);
-    right: calc($model-3d-document-overlap + 10px);
-    position: absolute;
+    position: fixed;
+    z-index: 7;
+    top: calc($model-3d-top - 35px);
+    left: calc($showcase-width - $model-3d-document-overlap - 50px);
     width: $comment-button-width;
     height: $comment-button-height;
 
