@@ -78,15 +78,8 @@ export class Site extends Component {
                 modelKey={this.props.modelKey}
                 commentsAreShowing={this.props.commentsAreShowing}
         /> : <div/>
-        const tableOfContents = this.props.modelKey ?
-            <TableOfContents className='table-of-contents'
-                documentKey={this.props.documentKey}
-                documentTitle={this.props.documentTitle}
-                document={this.props.document}
-                model={this.props.model}
-                modelKey={this.props.modelKey}
-                tableOfContentsAreShowing={this.props.commentsAreShowing}
-        /> : <div/>
+        const tableOfContentsTop = this.makeTableOfContents('top')
+        const tableOfContentsBottom = this.makeTableOfContents('bottom')
         // TODO I feel like I should pass props to Showcase and Document, but they have access
         // to the state and use mapStateToProps, so why bother?
         // DocumentMeta merges the head tag data in from the document's head tag data
@@ -97,12 +90,32 @@ export class Site extends Component {
         return <div className='site'>
             <DocumentMeta {...meta} extend />
             {comments}
-            {tableOfContents}
+            {tableOfContentsTop}
             <Header />
             <Showcase />
             <Document />
+            {tableOfContentsBottom}
             <Footer />
         </div>;
+    }
+
+    /***
+     * Creates the table of contents for above or below the document
+     * The table of contents above the document shows Model3ds that are behind the current scroll position
+     * The table of contents below the document shows Model3ds that are ahead the current scroll position
+     * @param position
+     * @returns {XML}
+     */
+    makeTableOfContents(position) {
+        return this.props.modelKey ?
+            <TableOfContents position={position}
+                             documentKey={this.props.documentKey}
+                             documentTitle={this.props.documentTitle}
+                             document={this.props.document}
+                             model={this.props.model}
+                             modelKey={this.props.modelKey}
+                             tableOfContentsAreShowing={this.props.commentsAreShowing}
+            /> : <div/>;
     }
 };
 

@@ -3,10 +3,21 @@
 .table-of-contents {
     position: fixed;
     z-index: 7;
-    top: calc($model-3d-top - 110px);
-    right: calc(calc(calc(100% - $document-absolute-left - $model-3d-document-overlap) / 2) + 60px);
-    width: $table-of-contents-button-width;
-    height: $table-of-contents-button-height;
+
+
+    &.top {
+         top: 10px;
+         height: calc($header-height - 10px);
+         right: calc(calc(calc(100% - $document-absolute-left - $model-3d-document-overlap) / 2));
+         width: $table-of-contents-button-width;
+    }
+
+    &.bottom {
+        bottom: 10px;
+        height: calc($footer-height - 10px);
+        right: calc(calc(calc(100% - $document-absolute-left - $model-3d-document-overlap) / 2) - $table-of-contents-button-width + 50px);
+        width: $table-of-contents-button-width;
+    }
 
     &.showing {
         margin-left: 10px;

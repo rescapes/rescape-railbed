@@ -2,7 +2,7 @@
 
 .comments {
     position: fixed;
-    z-index: 7;
+    z-index: 10;
     top: calc($model-3d-top - 35px);
     left: calc($showcase-width - $model-3d-document-overlap - 50px);
     width: $comment-button-width;
@@ -19,15 +19,15 @@
 
 .disqus-close-icon {
     position: absolute;
-    top: 0px;
-    height: 30px;
-    width: 30px;
+    top: 2px;
+    height: 24px;
+    width: 24px;
     right: 0px;
     padding: 2px;
     &:hover {
          cursor: pointer;
-         width: 35px;
-         height: 35px;
+         width: 30px;
+         height: 30px;
          transition: width 300ms ease, height 300ms ease
     }
 
