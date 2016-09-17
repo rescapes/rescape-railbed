@@ -33,9 +33,9 @@ export default class Model3dTitle extends Component {
                 transitionEnterTimeout={1800}
                 transitionLeaveTimeout={300}
             >
-                        <span key={this.props.sceneKey}>: {this.props.sceneKey}</span>
-                    </ReactCSSTransitionGroup>
-                </span>
+                <span key={this.props.sceneKey}>: {this.props.sceneKey}</span>
+            </ReactCSSTransitionGroup>
+        </span>
 
     }
 }

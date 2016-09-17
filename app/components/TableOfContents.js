@@ -15,32 +15,13 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import ReactDisqusThread from 'react-disqus-thread';
 import {normalizeKeyToFilename} from "../utils/fileHelpers";
 import close_svg from '../images/close.svg'
-import table_of_contents_svg from '../images/toc.svg'
+import table_of_contents_svg_top from '../images/table_of_contents_top.svg'
+import table_of_contents_svg_bottom from '../images/table_of_contents_bottom.svg'
 import * as documentActions from '../actions/document'
 
 class TableOfContents extends Component {
 
     componentDidMount() {
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (!this.props.documentKey || !this.props.modelKey)
-            return;
-        if (this.formArticleKey(nextProps) != this.formArticleKey() ||
-                nextProps.commentsAreShowing != this.props.commentsAreShowing)
-            this.mirrorProps(nextProps);
-    }
-
-    mirrorProps(props) {
-        if (this.refs.counter) {
-            this.refs.counter.setAttribute('data-disqus-identifier', this.formArticleKey(props));
-            DISQUSWIDGETS.getCount({reset: true});
-        }
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return this.formArticleKey(nextProps) != this.formArticleKey() ||
-                nextProps.commentsAreShowing != this.props.commentsAreShowing
     }
 
     /***
@@ -68,27 +49,16 @@ class TableOfContents extends Component {
         }
         const tableOfContentsAreShowing = this.props.document.get('tableOfContentsAreShowing')
         const tableOfContents = tableOfContentsAreShowing ?
-            <div className="table-of-contents"
+            <div className={`table-of-contents-open`}
                  style={{display: tableOfContentsAreShowing ? 'block' : 'none'}}
             >
             <img className='table-of-contents-close-icon' src={close_svg} onClick={this.onClickCloseButton.bind(this)} />
             </div> :
-            <img className='table-of-contents-icon' src={table_of_contents_svg} onClick={this.onClickTableOfContentsButton.bind(this)} />
+            <img className='table-of-contents-icon' src={this.props.position=='top' ? table_of_contents_svg_top : table_of_contents_svg_bottom} onClick={this.onClickTableOfContentsButton.bind(this)} />
 
-        return <div className={`table-of-contents ${tableOfContentsAreShowing ? 'showing' : ''}`}>
+        return <div className={`table-of-contents ${this.props.position} ${tableOfContentsAreShowing ? 'showing' : ''}`}>
             {tableOfContents}
         </div>
-    }
-
-    /***
-     * Uses the docuemnt key and model key to form the article key
-     * @param props: Optional props so we can use nextProps. Defaults to this.props
-     * @returns {string}
-     */
-    formArticleKey(props) {
-        const documentUrlKey = normalizeKeyToFilename((props || this.props).documentTitle)
-        const modelUrlKey = normalizeKeyToFilename((props ||this.props).modelKey)
-        return `${documentUrlKey}__${modelUrlKey}`
     }
 }
 
@@ -98,6 +68,7 @@ TableOfContents.propKeys = {
     modelKey: PropTypes.string,
     model: ImmutablePropTypes.map,
     tableOfContentsAreShowing: PropTypes.bool,
+    position: PropTypes.string
 }
 
 function mapStateToProps(state, props) {
