@@ -78,8 +78,8 @@ export class Site extends Component {
                 modelKey={this.props.modelKey}
                 commentsAreShowing={this.props.commentsAreShowing}
         /> : <div/>
-        const tableOfContentsTop = this.makeTableOfContents('top')
-        const tableOfContentsBottom = this.makeTableOfContents('bottom')
+        const tableOfContentsTop = this.makeTableOfContents(true)
+        const tableOfContentsBottom = this.makeTableOfContents(false)
         // TODO I feel like I should pass props to Showcase and Document, but they have access
         // to the state and use mapStateToProps, so why bother?
         // DocumentMeta merges the head tag data in from the document's head tag data
@@ -87,6 +87,7 @@ export class Site extends Component {
         // Displays the current 3D model and accompanying media
         // Displays the document, which is loaded from Google Docs or similar
         // Footer of the overall web page
+        //{tableOfContentsBottom}
         return <div className='site'>
             <DocumentMeta {...meta} extend />
             {comments}
@@ -94,7 +95,6 @@ export class Site extends Component {
             <Header />
             <Showcase />
             <Document />
-            {tableOfContentsBottom}
             <Footer />
         </div>;
     }
@@ -103,18 +103,18 @@ export class Site extends Component {
      * Creates the table of contents for above or below the document
      * The table of contents above the document shows Model3ds that are behind the current scroll position
      * The table of contents below the document shows Model3ds that are ahead the current scroll position
-     * @param position
+     * @param isTop. True if this is the top table of contents, false for the bottom table of contents
      * @returns {XML}
      */
-    makeTableOfContents(position) {
+    makeTableOfContents(isTop) {
         return this.props.modelKey ?
-            <TableOfContents position={position}
+            <TableOfContents isTop={isTop}
+                             isExpanded={this.props.isExpanded}
                              documentKey={this.props.documentKey}
                              documentTitle={this.props.documentTitle}
                              document={this.props.document}
                              model={this.props.model}
                              modelKey={this.props.modelKey}
-                             tableOfContentsAreShowing={this.props.commentsAreShowing}
             /> : <div/>;
     }
 };
@@ -126,8 +126,8 @@ Site.propTypes = {
     models: ImmutablePropTypes.map,
     modelKey: PropTypes.string,
     model: ImmutablePropTypes.map,
-    docuemntTitle: PropTypes.string,
-    commentsAreShowing: PropTypes.bool
+    documentTitle: PropTypes.string,
+    isTableOfContentsExpanded: PropTypes.bool,
 }
 
 /***

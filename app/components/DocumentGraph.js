@@ -1,5 +1,5 @@
 /**
- * Created by Andy Likuski on 2016.09.14
+ * Created by Andy Likuski on 2016.09.19
  * Copyright (c) 2016 Andy Likuski
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -12,56 +12,25 @@
 import React, { Component, PropTypes } from 'react'
 import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import close_svg from '../images/close.svg'
-import table_of_contents_svg_top from '../images/table_of_contents_top.svg'
-import table_of_contents_svg_bottom from '../images/table_of_contents_bottom.svg'
-import * as documentActions from '../actions/document'
-import DocumentGraph from './DocumentGraph'
+import DocumentGraphLine from './DocumentGraphLine';
+import DocumentGraphNodes from './DocumentGraphNodes';
 
-class TableOfContents extends Component {
+/***
+ * Shows the Model3ds of the current Document and will in the future show other documents
+ */
+class DocumentGraph extends React.Component {
 
-    componentDidMount() {
-    }
-
-    /***
-     * Show the comments when the user clicks the comment count button
-     */
-    onClickTableOfContentsButton() {
-        this.props.toggleTableOfContents(this.props.modelKey, true)
-    }
-
-    /***
-     * Hide the comments when the user clicks the close button
-     */
-    onClickCloseButton() {
-        this.props.toggleTableOfContents(this.props.modelKey, false)
-    }
-
-    /***
-     * Render the comment counter button for the current model or render the comments if the button is
-     * clicked
-     * @returns {XML}
-     */
     render() {
-        if (!this.props.documentTitle || !this.props.modelKey) {
-            return <div/>
-        }
-        //{tableOfContents}
-        return <div className={`table-of-contents ${this.props.isTop ? 'top': 'bottom'} ${this.props.isExpanded ? 'expanded' : ''}`}>
-            <DocumentGraph
-                   isExpanded={this.props.isExpanded}
-                   isTop={this.props.isTop}
-                   x={400}
-                   y={100}
-                   widthExpanded={800}
-                   width={400}
-                   height={100}
-           />
-        </div>
+        return (
+            <svg width={this.props.width} height={this.props.height}>
+                <DocumentGraphLine {...this.props} />
+                <DocumentGraphNodes {...this.props} />
+            </svg>
+        )
     }
 }
 
-TableOfContents.propKeys = {
+DocumentGraph.propKeys = {
     documents: ImmutablePropTypes.map,
     documentTitle: PropTypes.string,
     documentKey: PropTypes.string,
@@ -69,7 +38,16 @@ TableOfContents.propKeys = {
     models: ImmutablePropTypes.map,
     model: ImmutablePropTypes.map,
     isExpanded: PropTypes.bool,
-    isTop: PropTypes.bool
+    isTop: PropTypes.bool,
+    // The start x, y position of the line segments.
+    x: PropTypes.number,
+    y: PropTypes.number,
+    // The height of the overall DocumentGraph
+    height: PropTypes.number,
+    // The normal width of the DocumentGraph
+    width: PropTypes.number,
+    // The expanded width of the DocumentGraph
+    widthExpanded: PropTypes.number,
 }
 
 function mapStateToProps(state, props) {
@@ -88,15 +66,13 @@ function mapStateToProps(state, props) {
         documentKey,
         models,
         modelKey,
-        documentTitle,
+        documentTitle
     }
 }
 
 /***
  * Connect the mapStateToProps to provide the props to the component.
- * Connect the site actions so that the child components can send the actions based on events.
  */
 export default connect(
     mapStateToProps,
-    Object.assign(documentActions)
-)(TableOfContents)
+)(DocumentGraph)

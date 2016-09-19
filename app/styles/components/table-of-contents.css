@@ -4,19 +4,19 @@
     position: fixed;
     z-index: 7;
 
-
     &.top {
          top: 10px;
          height: calc($header-height - 10px);
-         right: calc(calc(calc(100% - $document-absolute-left - $model-3d-document-overlap) / 2));
-         width: $table-of-contents-button-width;
+         right: calc(calc(100% - $document-absolute-left) / 2);
+         &.expanded {
+         }
     }
 
     &.bottom {
         bottom: 10px;
         height: calc($footer-height - 10px);
-        right: calc(calc(calc(100% - $document-absolute-left - $model-3d-document-overlap) / 2) - $table-of-contents-button-width + 50px);
-        width: $table-of-contents-button-width;
+        right: calc(calc(calc(100% - $document-absolute-left) / 2) - calc(2 * $table-of-contents-button-bottom-width / 3));
+        width: $table-of-contents-button-bottom-width;
     }
 
     &.showing {
@@ -31,7 +31,7 @@
 .table-of-contents-icon {
     z-index: 0;
     position: absolute;
-    width: 100%;
+    right: 0;
     height: 100%;
 }
 

@@ -46,6 +46,7 @@ class Footer extends Component {
             </div>
         const modelTops = getModelTops(this.props.document, this.props.models, this.props.settings)
         const [fade, toward] = calculateModelFadeAndToward(modelTops)
+        /* {pageDownButton} */
         return <div className='footer'>
             <Model3dTitle
                 model={this.props.model}
@@ -55,7 +56,6 @@ class Footer extends Component {
                 fade={fade}
                 toward={toward}
             />
-            {pageDownButton}
         </div>;
     }
 }

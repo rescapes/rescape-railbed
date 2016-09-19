@@ -12,8 +12,8 @@ $comment-button-height: calc($comment-button-width * 2 / 3);
 /**
     The width and height of the toc button expander
 **/
-$table-of-contents-button-width: 300px;
-$table-of-contents-button-height: calc($table-of-contents-button-width / 2);
+$table-of-contents-button-top-width: 400px;
+$table-of-contents-button-bottom-width: 200px;
 
 $footer-height: 75px;
 $showcase-footer-overlap: 50px;
