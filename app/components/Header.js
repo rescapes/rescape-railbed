@@ -46,10 +46,10 @@ class Header extends Component {
                 </svg>
             </div>
 
+        /* {pageUpButton} */
         return <div className='header'>
             <img className='header-icon' src={rescape_png}/>
             <div className='header-gradient left' />
-            {pageUpButton}
             <div className='header-links'>
                 <About/>
                 <Contact/>
