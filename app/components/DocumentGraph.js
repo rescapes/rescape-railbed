@@ -13,62 +13,116 @@ import React, { Component, PropTypes } from 'react'
 import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import DocumentGraphLine from './DocumentGraphLine';
-import DocumentGraphNodes from './DocumentGraphNodes';
+import DocumentGraphCircle from './DocumentGraphCircle';
+import {OrderedMap, Map, List} from 'immutable'
+
 
 /***
  * Shows the Model3ds of the current Document and will in the future show other documents
  */
 class DocumentGraph extends React.Component {
 
-    render() {
-        return (
-            <svg viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-                 preserveAspectRatio="xMinYMin meet"
-            >
-                <defs>
-                    <font-face fontFamily="Hannotate SC" fontSize="73" panose-1="3 0 7 0 0 0 0 0 0 0" unitsPerEm="1000"
-                               underlinePosition="-100" underlineThickness="50" slope="0" x-height="600" capHeight="860"
-                               ascent="1060.00215" descent="-340.00069" fontWeight="bold">
-                        <font-face-src>
-                            <font-face-name name="HannotateSC-W7"/>
-                        </font-face-src>
-                    </font-face>
-                    <font-face fontFamily="Raleway" fontSize="36" panose-1="2 11 5 3 3 1 1 6 0 3" unitsPerEm="1000"
-                               underlinePosition="-75" underlineThickness="50" slope="0" x-height="530" capHeight="715"
-                               ascent="940.00244" descent="-233.99353" fontWeight="500">
-                        <font-face-src>
-                            <font-face-name name="Raleway-Regular"/>
-                        </font-face-src>
-                    </font-face>
-                    <font-face fontFamily="Raleway" fontSize="67" panose-1="2 11 5 3 3 1 1 6 0 3" unitsPerEm="1000"
-                               underlinePosition="-75" underlineThickness="50" slope="0" x-height="530" capHeight="715"
-                               ascent="940.00244" descent="-233.99353" fontWeight="500">
-                        <font-face-src>
-                            <font-face-name name="Raleway-Regular"/>
-                        </font-face-src>
-                    </font-face>
-                    <radialGradient id="NodeGradient" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
-                        gradientTransform="translate(1082.83464 411.02362) scale(50.15)"
-                    >
-                        <stop offset="0" stopColor="#fefdf9"/>
-                        <stop offset=".6091919" stopColor="#e76465"/>
-                        <stop offset="1" stopColor="#dc1734" />
-                    </radialGradient>
-                    <font-face fontFamily="Raleway" fontSize="25" panose-1="2 11 5 3 3 1 1 6 0 3" unitsPerEm="1000"
-                               underlinePosition="-75" underlineThickness="50" slope="0" x-height="530" capHeight="715"
-                               ascent="940.00244" descent="-233.99353" fontWeight="500">
-                        <font-face-src>
-                            <font-face-name name="Raleway-Regular"/>
-                        </font-face-src>
-                    </font-face>
-                </defs>
-                <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="solid" fillOpacity="1">
-                    <title>Canvas 1</title>
-                    <DocumentGraphLine {...this.props} />
-                </g>
-                <DocumentGraphNodes {...this.props} />
-            </svg>
+    componentDidMount() {
+        this.setUnknownAttributes()
+    }
+
+    componentWillReceiveProps() {
+        this.setUnknownAttributes()
+    }
+
+    /***
+     * Set svg attributes that React can't handle
+     * @returns {XML}
+     */
+    setUnknownAttributes() {
+        if (this.refs.radialGradient)
+            this.refs.radialGradient.setAttribute('xl:href', "#Gradient")
+    }
+
+    getTotalObjectCount() {
+        const allModels = this.props.models.get('entries')
+        const modelsForPosition = this.props.isTop ?
+            allModels.slice(0, allModels.keySeq().indexOf(this.props.modelKey) + 1).reverse() :
+            allModels.slice(allModels.keySeq().indexOf(this.props.modelKey) + 1)
+        // Nodes are the document (top only) plus the models.
+        return new OrderedMap(
+            this.props.isTop ? {[this.props.documentTitle]: this.props.document} : {}
+        ).concat(modelsForPosition).count()
+    }
+
+    /***
+     * All of the models before and including the current or all of the models after the current
+     * If this is the top graph reverse the items so we go from the current toward the beginning
+     **/
+    getObjects() {
+        const allModels = this.props.models.get('entries')
+        const modelsForPosition = this.props.isTop ?
+            allModels.slice(0, allModels.keySeq().indexOf(this.props.modelKey) + 1).reverse() :
+            allModels.slice(allModels.keySeq().indexOf(this.props.modelKey) + 1)
+        // Reduce the models to our table of contents settings length unless we are expanded
+        const models = this.props.isExpanded ? modelsForPosition : modelsForPosition.slice(
+            0,
+            this.props.settings.get('TABLE_OF_CONTENTS_MODEL_NODE_COUNT')
         )
+        // Nodes are the document (top only) plus the models.
+        return this.props.isTop ? models.set(this.props.documentTitle, this.props.document): models
+    }
+
+    /***
+     * Map the objects to nodes with x and y positions
+     * @param objects
+     * @returns {*}
+     */
+    getNodes(objects) {
+        // We will use percentages for SVG since the viewBox takes care of the scaling
+        const x = 100, y = 100, width=100, height=100
+
+        // Move to the starting position
+        // The width of the graph is longer when expanded
+        // Reduce the width and height somewhat so the nodes at the end fit with the viewBox
+        const totalLength = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2))
+
+        // The segment length for the line
+        // If the document is connected, allocate extra length for it
+        const segmentLength = (totalLength / (objects.count()-1)) * (this.props.isTop ? .8 : 1)
+
+        // The top graph goes up (-y) the bottom graph goes down (+y). They both go left
+        const yDirection = this.props.isTop ? -1 : 1
+        const theta = Math.atan(height / width);
+        return objects.entrySeq().map(([key, obj], i) => {
+            // If this is the document connector, make it longer (i.e. the total length)
+            const length = this.props.isTop && i==(objects.count()-1) ?
+                totalLength :
+                i * segmentLength
+            const xi = x - length * Math.cos(theta)
+            const yi = y + yDirection * length * Math.sin(theta)
+            return { x:xi, y:yi, key: key, obj: obj}
+        }, List()).toArray()
+    }
+
+    render() {
+        const objs = this.getObjects()
+        const nodes = this.getNodes(objs)
+        // Set the width based on whether or not the graph is expanded
+        const modifiedProps =  Object.assign({},
+            this.props,
+            {nodes: nodes, totalNodeCount: this.getTotalObjectCount(), width: 100,  height: 100, x: 0, y: 0}
+        )
+
+        const documentGraphCircles = nodes.map(function(node, index) {
+            return <DocumentGraphCircle key={node.key} node={node} index={index} isLast={index==nodes.length-1} {...modifiedProps} />
+        })
+
+        return <div className='document-graph'>
+            <DocumentGraphLine
+                {...Object.assign({},
+                    modifiedProps,
+                    {viewboxWidth: this.props.isExpanded ? this.props.widthExpanded : this.props.width })
+                } />
+            <div className="document-graph-circles">
+                {documentGraphCircles}
+            </div>
+        </div>
     }
 }
 
@@ -81,17 +135,12 @@ DocumentGraph.propKeys = {
     model: ImmutablePropTypes.map,
     isExpanded: PropTypes.bool,
     isTop: PropTypes.bool,
-    // The start x, y position of the line segments.
-    x: PropTypes.number,
-    y: PropTypes.number,
     // The height of the overall DocumentGraph
     height: PropTypes.number,
     // The normal width of the DocumentGraph
     width: PropTypes.number,
     // The expanded width of the DocumentGraph
     widthExpanded: PropTypes.number,
-    // The radius of the node circles
-    circleRadius: PropTypes.number
 }
 
 function mapStateToProps(state, props) {

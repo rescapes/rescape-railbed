@@ -612,7 +612,9 @@ export default Map({
         // This can be overridden in each model if needed
         SCENE_TRANSITION_TIME: 3,
         DISQUS_PUBLIC_KEY: "TU5gJqORTRMUd1w9YOLUvlcc17YlldegfOPg0xuZp00FRX5o3UopHjXdz0SBeAwb",
-        DISQUS_SHORT_NAME: "rescape"
+        DISQUS_SHORT_NAME: "rescape",
+        // The normal number of model nodes to show for both the top and bottom table of contents
+        TABLE_OF_CONTENTS_MODEL_NODE_COUNT: 2
     }),
     documents: Map({
         keys: List(['ths_amtrak_standard', 'the_new_rules_of_the_road']),

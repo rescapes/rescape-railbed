@@ -1,18 +1,18 @@
 
 
+/**
+    The top, height, right, width of these are used to draw the lines connecting the nodes
+    The nodes themselves spill outside of this div
+*/
 .table-of-contents {
     position: fixed;
     z-index: 7;
 
-    svg {
-        height: 100%;
-        width: 100%;
-    }
-
     &.top {
-         top: 10px;
-         height: calc($header-height - 10px);
+         top: 25px;
+         height: calc($header-height - 40px);
          right: calc(calc(100% - $document-absolute-left) / 2);
+         width: $table-of-contents-button-top-width;
          &.expanded {
          }
     }
@@ -56,4 +56,101 @@
 
 }
 
+.document-graph {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.document-graph-svg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.document-graph-circles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.table-of-contents-node {
+    position: absolute;
+    /* Set right as far as possible so we don't worry about wrapping. This is how far the model node extends */
+    right: calc(-1 * $table-of-contents-model-current-width);
+
+    /***
+        All text outlines have these properties
+     ***/
+    .outline {
+        background: $half-white;
+        border-color: $rescape-love;
+        border-width: 2px;
+        border-style: solid;
+        position: relative;
+        display: inline;
+        font-family: $font-stack;
+        color: black;
+        text-align: center;
+        vertical-align: middle;
+    }
+    /***
+        All circles have these properties
+    ***/
+    .circle {
+        vertical-align: middle;
+    }
+
+    &.document {
+        right: calc(-1 * $table-of-contents-model-current-width);
+        height: $table-of-contents-documnet-current-height;
+        margin-left: -120px;
+        margin-top: -20px;
+
+        .circle {
+            width: $table-of-contents-document-current-height;
+            height: $table-of-contents-document-current-height;
+        }
+        .outline {
+            height: 40px;
+            font-size: $h4-font-size;
+            border-radius: 10px;
+            padding: 5px;
+        }
+    }
+
+    &.model-current {
+        height: $table-of-contents-model-current-height;
+        margin-left: -15px;
+        margin-top: -15px;
+
+        .circle {
+            width: $table-of-contents-model-current-height;
+            height: $table-of-contents-model-current-height;
+        }
+        .outline {
+            height: $table-of-contents-model-current-height;
+            font-size: $h5-font-size;
+            border-radius: 10px;
+            padding: 4px;
+        }
+    }
+
+    &.model {
+        height: 20px;
+        margin-left: -10px;
+        margin-top: -10px;
+        .circle {
+            width: 20px;
+            height: 20px;
+        }
+        .outline {
+            height: 20px;
+            font-size: $h6-font-size;
+            margin-left: 2px;
+            border-radius: 5px;
+            padding: 2px;
+        }
+    }
+}
 

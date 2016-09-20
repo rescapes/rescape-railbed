@@ -10,10 +10,16 @@ $comment-button-width: 70px;
 $comment-button-height: calc($comment-button-width * 2 / 3);
 
 /**
-    The width and height of the toc button expander
+    The width and height of the table of contents. This number is very important
+    and must also be reflected in code in TableOfContents.js
 **/
-$table-of-contents-button-top-width: 400px;
+$table-of-contents-button-top-width: 200px;
+$table-of-contents-button-top-width-expanded: 800px;
 $table-of-contents-button-bottom-width: 200px;
+$table-of-contents-document-current-height: 40px;
+/* This width is used to calculate how far over the table of contents right side we go */
+$table-of-contents-model-current-width: 240px;
+$table-of-contents-model-current-height: 30px;
 
 $footer-height: 75px;
 $showcase-footer-overlap: 50px;
@@ -89,6 +95,7 @@ $sand: color(wheat lightness(80%));
 $gray: color($black lightness(80%));
 $faded-gray: color($white a(90%));
 $faded-gray-background: color($black a(70%));
+$half-white: rgb(148,148,152);
 
 $font-stack: Railway, Arial, Helvetica, sans-serif;
 $page-background: $black;
