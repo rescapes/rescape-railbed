@@ -152,5 +152,20 @@
             padding: 2px;
         }
     }
+
+    &.hidden-model-count {
+        /*** Push the text away from the line **/
+        height: 10px;
+        margin-left: -5px;
+        margin-top: -5px;
+        font-size: $h6-font-size;
+        .outline {
+             height: 10px;
+             font-size: $h6-font-size;
+             margin-left: 2px;
+             border-radius: 5px;
+             padding: 2px;
+        }
+    }
 }
 

@@ -41,7 +41,8 @@ class DocumentGraphLine extends React.Component {
             // Get the last point of the last segment, or if at the start use x and y
             const previous = reduction.count() ? reduction.slice(-1).get(0) : {x2:`${nodes[0].x}%`, y2:`${nodes[0].y}%`}
             // Dash the line if the line segment represents nodes that we aren't showing
-            const strokeDashArray = !this.props.isExpanded && nodes.length < this.props.totalNodeCount && i==nodes.length-2 ? "5,10,1,10" : "none"
+            const strokeDashArray = !this.props.isExpanded && nodes.length < this.props.totalNodeCount && i==nodes.length-2 ?
+                "5,5,1,5" : "none"
             return reduction.push({
                 x1:`${previous.x2}`,
                  y1:`${previous.y2}`,
@@ -52,27 +53,23 @@ class DocumentGraphLine extends React.Component {
         }, List()).toArray()
     }
 
+
     render() {
         const nodes = this.props.nodes
         const lineSegments = this.getLineSegments(nodes).map((lineSegment, index) =>
             <line key={nodes[index].key} {...lineSegment} stroke="black" strokeLinecap="round" strokeLinejoin="round" strokeWidth={`${this.props.lineRadius}%`} />
         )
-        // Get the number of models not showing because they don't fit
-        const hiddenModelsCount = this.props.totalNodeCount - nodes.length;
-        const hiddenModelDom = hiddenModelsCount ?
-            <div className="hiddenModelCount">{hiddenModelsCount} More</div>: <div/>
 
         return <div className="document-graph">
             <svg className='document-graph-svg'
                  ref='svg'
-                 viewBox={`0 0 ${this.props.viewboxWidth} ${this.props.height}`}
+                 viewBox={`0 0 ${this.props.viewboxWidth} ${this.props.viewboxHeight}`}
                  preserveAspectRatio="xMinYMin meet"
             >
                 <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="solid" fillOpacity="1">
                     {lineSegments}
                 </g>
             </svg>
-            {hiddenModelDom}
         </div>
     }
 }
@@ -89,8 +86,9 @@ DocumentGraphLine.propKeys = {
     height: PropTypes.number,
     // The normalized width of the DocumentGraph
     width: PropTypes.number,
-    // The width to give the viewbox so the normalized width works. The height is the same either way
+    // The width and height to give the viewbox so the normalized values work
     viewboxWidth: PropTypes.number,
+    viewboxHeight: PropTypes.number,
     // Whether or not the graph is expanded
     isExpanded: PropTypes.bool,
     // Is this the top graph (true) or bottom graph (false)
