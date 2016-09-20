@@ -4,6 +4,11 @@
     position: fixed;
     z-index: 7;
 
+    svg {
+        height: 100%;
+        width: 100%;
+    }
+
     &.top {
          top: 10px;
          height: calc($header-height - 10px);

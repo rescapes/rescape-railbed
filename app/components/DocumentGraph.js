@@ -22,8 +22,50 @@ class DocumentGraph extends React.Component {
 
     render() {
         return (
-            <svg width={this.props.width} height={this.props.height}>
-                <DocumentGraphLine {...this.props} />
+            <svg viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+                 preserveAspectRatio="xMinYMin meet"
+            >
+                <defs>
+                    <font-face fontFamily="Hannotate SC" fontSize="73" panose-1="3 0 7 0 0 0 0 0 0 0" unitsPerEm="1000"
+                               underlinePosition="-100" underlineThickness="50" slope="0" x-height="600" capHeight="860"
+                               ascent="1060.00215" descent="-340.00069" fontWeight="bold">
+                        <font-face-src>
+                            <font-face-name name="HannotateSC-W7"/>
+                        </font-face-src>
+                    </font-face>
+                    <font-face fontFamily="Raleway" fontSize="36" panose-1="2 11 5 3 3 1 1 6 0 3" unitsPerEm="1000"
+                               underlinePosition="-75" underlineThickness="50" slope="0" x-height="530" capHeight="715"
+                               ascent="940.00244" descent="-233.99353" fontWeight="500">
+                        <font-face-src>
+                            <font-face-name name="Raleway-Regular"/>
+                        </font-face-src>
+                    </font-face>
+                    <font-face fontFamily="Raleway" fontSize="67" panose-1="2 11 5 3 3 1 1 6 0 3" unitsPerEm="1000"
+                               underlinePosition="-75" underlineThickness="50" slope="0" x-height="530" capHeight="715"
+                               ascent="940.00244" descent="-233.99353" fontWeight="500">
+                        <font-face-src>
+                            <font-face-name name="Raleway-Regular"/>
+                        </font-face-src>
+                    </font-face>
+                    <radialGradient id="NodeGradient" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+                        gradientTransform="translate(1082.83464 411.02362) scale(50.15)"
+                    >
+                        <stop offset="0" stopColor="#fefdf9"/>
+                        <stop offset=".6091919" stopColor="#e76465"/>
+                        <stop offset="1" stopColor="#dc1734" />
+                    </radialGradient>
+                    <font-face fontFamily="Raleway" fontSize="25" panose-1="2 11 5 3 3 1 1 6 0 3" unitsPerEm="1000"
+                               underlinePosition="-75" underlineThickness="50" slope="0" x-height="530" capHeight="715"
+                               ascent="940.00244" descent="-233.99353" fontWeight="500">
+                        <font-face-src>
+                            <font-face-name name="Raleway-Regular"/>
+                        </font-face-src>
+                    </font-face>
+                </defs>
+                <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="solid" fillOpacity="1">
+                    <title>Canvas 1</title>
+                    <DocumentGraphLine {...this.props} />
+                </g>
                 <DocumentGraphNodes {...this.props} />
             </svg>
         )
@@ -48,6 +90,8 @@ DocumentGraph.propKeys = {
     width: PropTypes.number,
     // The expanded width of the DocumentGraph
     widthExpanded: PropTypes.number,
+    // The radius of the node circles
+    circleRadius: PropTypes.number
 }
 
 function mapStateToProps(state, props) {
