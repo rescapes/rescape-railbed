@@ -100,27 +100,53 @@ class DocumentGraph extends React.Component {
         }, List()).toArray()
     }
 
+    /**
+     * Finds the "middle" of the last segment for positioning the hiddenModelDom div
+     * @param node1
+     * @param node2
+     * @returns {{x: number, y: number}}
+     */
+    calculateHiddenModelDomPosition(node1, node2) {
+        return {
+            left: `${Math.abs(node2.x - node1.x) * .65}%`,
+            top: `${Math.abs(node2.y - node1.y) * .65}%`
+        }
+    }
+
     render() {
         const objs = this.getObjects()
         const nodes = this.getNodes(objs)
+        const totalNodeCount = this.getTotalObjectCount()
         // Set the width based on whether or not the graph is expanded
         const modifiedProps =  Object.assign({},
             this.props,
-            {nodes: nodes, totalNodeCount: this.getTotalObjectCount(), width: 100,  height: 100, x: 0, y: 0}
+            {nodes: nodes, totalNodeCount: totalNodeCount, width: 100,  height: 100, x: 0, y: 0}
         )
-
         const documentGraphCircles = nodes.map(function(node, index) {
             return <DocumentGraphCircle key={node.key} node={node} index={index} isLast={index==nodes.length-1} {...modifiedProps} />
         })
+
+        // Get the number of models not showing because they don't fit
+        const hiddenModelsCount = totalNodeCount - nodes.length;
+        const hiddenModelDom = hiddenModelsCount ?
+            <div style={this.calculateHiddenModelDomPosition(...nodes.slice(-2))}
+                 className="table-of-contents-node hidden-model-count">
+                <div className='outline'>
+                    {hiddenModelsCount} More...
+                </div>
+            </div> :
+            <div/>
 
         return <div className='document-graph'>
             <DocumentGraphLine
                 {...Object.assign({},
                     modifiedProps,
-                    {viewboxWidth: this.props.isExpanded ? this.props.widthExpanded : this.props.width })
+                    {viewboxWidth: this.props.isExpanded ? this.props.widthExpanded : this.props.width,
+                    viewboxHeight: this.props.height})
                 } />
             <div className="document-graph-circles">
                 {documentGraphCircles}
+                {hiddenModelDom}
             </div>
         </div>
     }
