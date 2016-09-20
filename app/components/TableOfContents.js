@@ -14,6 +14,7 @@ import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import close_svg from '../images/close.svg'
 import table_of_contents_svg_top from '../images/table_of_contents_top.svg'
+import test_svg from '../images/test.svg'
 import table_of_contents_svg_bottom from '../images/table_of_contents_bottom.svg'
 import * as documentActions from '../actions/document'
 import DocumentGraph from './DocumentGraph'
@@ -46,16 +47,19 @@ class TableOfContents extends Component {
         if (!this.props.documentTitle || !this.props.modelKey) {
             return <div/>
         }
-        //{tableOfContents}
+
+        //<img className='table-of-contents-icon' src={this.props.isTop ? test_svg : table_of_contents_svg_bottom} onClick={this.onClickTableOfContentsButton.bind(this)} />
         return <div className={`table-of-contents ${this.props.isTop ? 'top': 'bottom'} ${this.props.isExpanded ? 'expanded' : ''}`}>
             <DocumentGraph
                    isExpanded={this.props.isExpanded}
                    isTop={this.props.isTop}
-                   x={400}
-                   y={100}
-                   widthExpanded={800}
-                   width={400}
-                   height={100}
+                   x={100}
+                   y={100* 90/300}
+                   widthExpanded={100}
+                   width={100}
+                   height={100 * 90/300}
+                   circleRadius={2}
+                   lineRadius={2}
            />
         </div>
     }
