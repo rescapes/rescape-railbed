@@ -165,6 +165,20 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], firstSceneOfPrevious.offsetTop - 30)
         }
     }
+    else if (action.type==actions.SCROLL_TO_MODEL) {
+        // Get the current scroll position
+        const scrollPosition = state.getIn(['entries', currentDocumentKey, 'scrollPosition'])
+        const {previousForDistinctModel, previous} = getRelevantAnchors(scrollPosition)
+        const soughtModelAnchor = findForDistinctModel(
+            getAnchors(),
+            null,
+            action.key
+        )
+        // Update it to that of the anchor of the next distinct model
+        // Scroll up a tad to make it look better
+        if (soughtModelAnchor)
+            return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], soughtModelAnchor.offsetTop - 30)
+    }
     else if (action.type == actions.TOGGLE_DOCUMENT_TABLE_OF_CONTENTS) {
         return state.setIn(
             ['entries', action.key, 'tableOfContentsIsExpanded'],
@@ -230,15 +244,16 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     /***
      * Finds the first anchor in the list with a model distinct from that of defaultAnchor.
      * If no anchor is found that has a different anchor than defaultAnchor, defaultAnchor is returned
-     * @param anchors: The anchors to search sequentioall
-     * @param defaultAnchors
+     * @param anchors: The anchors to search sequentially
+     * @param defaultAnchor: If specified the anchor of the current model. Returned if no distinc model is found
+     * @param seekModelKey: If specified find the anchor of the model matching this key
      * @returns {*}
      */
-    function findForDistinctModel(anchors, defaultAnchor) {
-        const defaultModelKey = resolveModelKeyFromAnchor(defaultAnchor)
+    function findForDistinctModel(anchors, defaultAnchor, seekModelKey) {
+        const defaultModelKey = defaultAnchor ? resolveModelKeyFromAnchor(defaultAnchor) : null
         const forDistinctModel = anchors.find(function (anchor) {
             const seek = resolveModelKeyFromAnchor(anchor)
-            if (seek != 'undefined' && seek != defaultModelKey)
+            if (seek != 'undefined' && seek != defaultModelKey && (!seekModelKey || seek == seekModelKey))
                 return true
         })
         return forDistinctModel || defaultAnchor

@@ -112,21 +112,22 @@ class DocumentGraph extends React.Component {
 
         // The segment length for the line
         // If the document is connected, allocate extra length for it
-        const extraLengthForDocument = this.props.isTop ? 2 : 0
+        const extraLengthForDocument = this.props.isTop ? 4 : 0
         const segmentLength = (totalLength-extraLengthForDocument) / (objects.count()-1)
 
         //const theta = Math.atan(isExpanded ? Infinity : height / width);
         // Lets make the line always vertical. The code above can be used to slope it
         const theta = Math.atan(Infinity)
+        // Apply the extra length if going downward and the document was the previous node
+        // or apply if going upward and the document is the current node
+        const documentTitleIndex = objects.keySeq().indexOf(this.props.documentTitle)
+        const applyExtraLengthAtIndex = !this.props.isTop ?
+            null :
+            (yDirection == 1 ? documentTitleIndex + 1 : documentTitleIndex)
+
         return objects.entrySeq().map(([key, obj], i) => {
-            // Apply the extra length if going downward and the document was the previous node
-            // or apply if going upward and the document is the current node
-            const applyExtraLength = this.props.isTop &&
-                (yDirection == 1 && i > 0 && objects.keySeq().get(yDirection == 1 ? i-1 : i) == this.props.documentTitle)
-            // If this is the document connector, make it longer (i.e. the total length)
-            const length = applyExtraLength ?
-                i * segmentLength + extraLengthForDocument :
-                i * segmentLength
+            // Apply extra space for the document once we get to the node before or after it
+            const length = i * segmentLength + (i >= applyExtraLengthAtIndex ? extraLengthForDocument : 0)
             const xi = x - length * Math.cos(theta)
             const yi = y + yDirection * length * Math.sin(theta)
             return { x:xi, y:yi, key: key, obj: obj}
@@ -167,7 +168,7 @@ class DocumentGraph extends React.Component {
 
         // Get the number of models not showing because they don't fit
         const hiddenModelsCount = totalNodeCount - nodes.length;
-        const hiddenModelDom = hiddenModelsCount ?
+        const hiddenModelDom = !this.props.isExpanded && hiddenModelsCount ?
             <div style={this.calculateHiddenModelDomPosition(...nodes.slice(-2))}
                  className="table-of-contents-node hidden-model-count">
                 <div className='outline'>
@@ -176,7 +177,9 @@ class DocumentGraph extends React.Component {
             </div> :
             <div/>
 
-        return <div className={`table-of-contents ${this.props.isTop ? 'top': 'bottom'} ${this.props.isExpanded ? 'expanded' : ''}`}>
+        return <div className={`table-of-contents ${this.props.isTop ? 'top': 'bottom'} ${this.props.isExpanded ? 'expanded' : ''}`}
+                    onMouseLeave={()=>this.props.toggleTableOfContents(this.props.documentKey, false)}
+        >
             <DocumentGraphLine {...Object.assign({},
                     modifiedProps,
                     {viewboxWidth: this.props.containerWidth,
