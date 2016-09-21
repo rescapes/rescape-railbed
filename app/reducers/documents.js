@@ -167,8 +167,8 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     }
     else if (action.type == actions.TOGGLE_DOCUMENT_TABLE_OF_CONTENTS) {
         return state.setIn(
-            ['entries', action.key, 'tableOfContentsAreShowing'],
-            action.force != null ? action.force : !state.getIn(['entries', action.key, 'tableOfContentsAreShowing']))
+            ['entries', action.key, 'tableOfContentsIsExpanded'],
+            action.force != null ? action.force : !state.getIn(['entries', action.key, 'tableOfContentsIsExpanded']))
     }
     else
         return state

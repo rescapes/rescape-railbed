@@ -15,6 +15,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import DocumentGraphLine from './DocumentGraphLine';
 import DocumentGraphCircle from './DocumentGraphCircle';
 import {OrderedMap, Map, List} from 'immutable'
+import * as documentActions from '../actions/document'
 
 
 /***
@@ -28,6 +29,20 @@ class DocumentGraph extends React.Component {
 
     componentWillReceiveProps() {
         this.setUnknownAttributes()
+    }
+
+    /***
+     * Show the comments when the user clicks the comment count button
+     */
+    onClickExpandButton() {
+        this.props.toggleTableOfContents(this.props.documentKey, true)
+    }
+
+    /***
+     * Hide the comments when the user clicks the close button
+     */
+    onClickCollapseButton() {
+        this.props.toggleTableOfContents(this.props.documentKey, false)
     }
 
     /***
@@ -120,10 +135,17 @@ class DocumentGraph extends React.Component {
         // Set the width based on whether or not the graph is expanded
         const modifiedProps =  Object.assign({},
             this.props,
-            {nodes: nodes, totalNodeCount: totalNodeCount, width: 100,  height: 100, x: 0, y: 0}
+            {nodes: nodes, totalNodeCount: totalNodeCount, width: 100,  height: 100, x: 0, y: 0,
+             toggleTableOfContents: this.props.toggleTableOfContents
+            }
         )
         const documentGraphCircles = nodes.map(function(node, index) {
-            return <DocumentGraphCircle key={node.key} node={node} index={index} isLast={index==nodes.length-1} {...modifiedProps} />
+            return <DocumentGraphCircle
+                key={node.key}
+                node={node}
+                index={index}
+                isLast={index==nodes.length-1}
+                {...modifiedProps} />
         })
 
         // Get the number of models not showing because they don't fit
@@ -144,7 +166,7 @@ class DocumentGraph extends React.Component {
                     {viewboxWidth: this.props.isExpanded ? this.props.widthExpanded : this.props.width,
                     viewboxHeight: this.props.height})
                 } />
-            <div className="document-graph-circles">
+            <div onClick={this.onClickExpandButton.bind(this)} className="document-graph-circles">
                 {documentGraphCircles}
                 {hiddenModelDom}
             </div>
@@ -177,6 +199,7 @@ function mapStateToProps(state, props) {
     const modelKey = models && models.get('current')
     const document = state.getIn(['documents', 'entries', documentKey])
     const documentTitle = document && document.get('title')
+    const isExpanded = document.get('tableOfContentsIsExpanded')
 
     return {
         settings,
@@ -185,7 +208,8 @@ function mapStateToProps(state, props) {
         documentKey,
         models,
         modelKey,
-        documentTitle
+        documentTitle,
+        isExpanded
     }
 }
 
@@ -194,4 +218,5 @@ function mapStateToProps(state, props) {
  */
 export default connect(
     mapStateToProps,
+    documentActions
 )(DocumentGraph)

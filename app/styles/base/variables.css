@@ -14,7 +14,10 @@ $comment-button-height: calc($comment-button-width * 2 / 3);
     and must also be reflected in code in TableOfContents.js
 **/
 $table-of-contents-button-top-width: 200px;
-$table-of-contents-button-top-width-expanded: 800px;
+$table-of-contents-button-top-height: calc($header-height - 40px);
+$table-of-contents-button-top-width-expanded: 100px;
+$table-of-contents-button-top-height-expanded: $showcase-height;
+
 $table-of-contents-button-bottom-width: 200px;
 $table-of-contents-document-current-height: 40px;
 /* This width is used to calculate how far over the table of contents right side we go */
