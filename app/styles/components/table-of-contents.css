@@ -10,11 +10,11 @@
 
     &.top {
          top: 25px;
-         height: $table-of-contents-button-top-width;
-         right: calc(calc(100% - $document-absolute-left) / 2);
+         height: $table-of-contents-button-top-height;
+         left: $document-left;
          width: $table-of-contents-button-top-width;
          &.expanded {
-            height: $table-of-contents-button-top-width-expanded;
+            height: $table-of-contents-button-top-height-expanded;
             width: $table-of-contents-button-top-width-expanded;
          }
     }
@@ -53,12 +53,6 @@
 
 }
 
-.document-graph {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
 .document-graph-svg {
     position: absolute;
     width: 100%;
@@ -67,6 +61,8 @@
 
 .document-graph-circles {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
 }
@@ -122,8 +118,8 @@
 
     &.model-current {
         height: $table-of-contents-model-current-height;
-        margin-left: -15px;
-        margin-top: -15px;
+        margin-left: calc(-1 * $table-of-contents-model-current-height / 2);
+        margin-top: calc(-1 * $table-of-contents-model-current-height / 2);
 
         .circle {
             width: $table-of-contents-model-current-height;
@@ -138,12 +134,12 @@
     }
 
     &.model {
-        height: 20px;
-        margin-left: -10px;
-        margin-top: -10px;
+        height: $table-of-contents-model-height;
+         margin-left: calc(-1 * $table-of-contents-model-height / 2);
+         margin-top: calc(-1 * $table-of-contents-model-height / 2);
         .circle {
-            width: 20px;
-            height: 20px;
+            width: $table-of-contents-model-height;
+            height: $table-of-contents-model-height;
         }
         .outline {
             height: 20px;

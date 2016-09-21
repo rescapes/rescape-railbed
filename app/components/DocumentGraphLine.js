@@ -12,6 +12,7 @@ import React, { Component, PropTypes } from 'react'
 import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import {OrderedMap, Map, List} from 'immutable'
+import Dimensions from 'react-dimensions'
 
 /***
  * Displays the line for the models of the Document.
@@ -54,23 +55,26 @@ class DocumentGraphLine extends React.Component {
     }
 
 
+    /***
+     * Renders line segments from one node to another. The segments are even length except for that connecting
+     * the Document node, which is longer
+     * @returns {XML}
+     */
     render() {
         const nodes = this.props.nodes
         const lineSegments = this.getLineSegments(nodes).map((lineSegment, index) =>
             <line key={nodes[index].key} {...lineSegment} stroke="black" strokeLinecap="round" strokeLinejoin="round" strokeWidth={`${this.props.lineRadius}%`} />
         )
 
-        return <div className="document-graph">
-            <svg className='document-graph-svg'
-                 ref='svg'
-                 viewBox={`0 0 ${this.props.viewboxWidth} ${this.props.viewboxHeight}`}
-                 preserveAspectRatio="xMinYMin meet"
-            >
-                <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="solid" fillOpacity="1">
-                    {lineSegments}
-                </g>
-            </svg>
-        </div>
+        return <svg className='document-graph-svg'
+             ref='svg'
+             viewBox={`0 0 ${this.props.containerWidth} ${this.props.containerHeight}`}
+             preserveAspectRatio="xMinYMin meet"
+        >
+            <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="solid" fillOpacity="1">
+                {lineSegments}
+            </g>
+        </svg>
     }
 }
 
@@ -87,8 +91,8 @@ DocumentGraphLine.propKeys = {
     // The normalized width of the DocumentGraph
     width: PropTypes.number,
     // The width and height to give the viewbox so the normalized values work
-    viewboxWidth: PropTypes.number,
-    viewboxHeight: PropTypes.number,
+    containerWidth: PropTypes.number,
+    containerHeight: PropTypes.number,
     // Whether or not the graph is expanded
     isExpanded: PropTypes.bool,
     // Is this the top graph (true) or bottom graph (false)
@@ -128,4 +132,4 @@ function mapStateToProps(state, props) {
  */
 export default connect(
     mapStateToProps,
-)(DocumentGraphLine)
+)(Dimensions({elementResize: true})(DocumentGraphLine))
