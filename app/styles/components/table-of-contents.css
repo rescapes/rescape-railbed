@@ -104,6 +104,12 @@
              transition: width 300ms ease, height 300ms ease;
              height: calc($table-of-contents-document-current-height + 10px);
         }
+        /***
+            Hover makes it bigger, stay bigger while in expanded mode
+        ***/
+        &.expanded {
+             height: calc($table-of-contents-document-current-height + 10px);
+        }
 
         .circle {
             height: 100%;
@@ -120,10 +126,9 @@
         height: $table-of-contents-model-current-height;
         margin-left: calc(-1 * $table-of-contents-model-current-height / 2);
         margin-top: calc(-1 * $table-of-contents-model-current-height / 2);
-
         .circle {
             width: $table-of-contents-model-current-height;
-            height: $table-of-contents-model-current-height;
+            height: 100%;
         }
         .outline {
             height: $table-of-contents-model-current-height;
@@ -135,15 +140,23 @@
 
     &.model {
         height: $table-of-contents-model-height;
-         margin-left: calc(-1 * $table-of-contents-model-height / 2);
-         margin-top: calc(-1 * $table-of-contents-model-height / 2);
+        margin-left: calc(-1 * $table-of-contents-model-height / 2);
+        margin-top: calc(-1 * $table-of-contents-model-height / 2);
+        font-size: $h6-font-size;
+        &:hover {
+            font-size: $h5-font-size;
+            cursor: pointer;
+            transition: width 300ms ease, height 300ms ease, margin-left 300ms ease, margin-top 300ms ease;
+            height: calc($table-of-contents-model-height + 10px);
+            margin-left: calc(-1 * ($table-of-contents-model-height + 10px) / 2);
+            margin-top: calc(-1 * ($table-of-contents-model-height + 10px) / 2);
+        }
+
         .circle {
-            width: $table-of-contents-model-height;
-            height: $table-of-contents-model-height;
+            height: 100%;
         }
         .outline {
-            height: 20px;
-            font-size: $h6-font-size;
+            height: 100%;
             margin-left: 2px;
             border-radius: 5px;
             padding: 2px;

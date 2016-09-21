@@ -30,6 +30,7 @@ export const REGISTER_ANCHORS = 'REGISTER_ANCHORS'
 export const REGISTER_SCROLL_POSITION = 'REGISTER_SCROLL_POSITION'
 export const SCROLL_TO_NEXT_MODEL = 'SCROLL_TO_NEXT_MODEL'
 export const SCROLL_TO_PREVIOUS_MODEL = 'SCROLL_TO_PREVIOUS_MODEL'
+export const SCROLL_TO_MODEL = 'SCROLL_TO_MODEL'
 
 export const TOGGLE_DOCUMENT_TABLE_OF_CONTENTS = 'TOGGLE_DOCUMENT_TABLE_OF_CONTENTS'
 /*
@@ -152,6 +153,14 @@ export function scrollToNextModel() {
  */
 export function scrollToPreviousModel() {
     return { type: SCROLL_TO_PREVIOUS_MODEL }
+}
+
+/***
+ * Sets the scroll position to the model given by the key
+ * @param modelKey
+ */
+export function scrollToModel(modelKey) {
+    return { type: SCROLL_TO_MODEL, key: modelKey }
 }
 
 

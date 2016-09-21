@@ -24,9 +24,8 @@ export default class DocumentGraphCircle extends React.Component {
         let file = null, className = null
         if (this.props.isTop && node.key==this.props.documentTitle) {
             // The document
-            return <div className='table-of-contents-node document'
+            return <div className={`table-of-contents-node document ${this.props.isExpanded ? 'expanded' : ''}`}
                         onMouseEnter={()=>this.props.toggleTableOfContents(this.props.documentKey, true)}
-                        onMouseLeave={()=>this.props.toggleTableOfContents(this.props.documentKey, false)}
                         key={node.key}
                         style={{left: `${node.x}%`, top: `${node.y}%`}}>
                 <img className='circle' style={style} src={document_circle_svg} />
@@ -46,7 +45,9 @@ export default class DocumentGraphCircle extends React.Component {
         }
         else {
             // All other model nodes
-            return <div className="table-of-contents-node model" key={node.key} style={{left: `${node.x}%`, top: `${node.y}%`}}>
+            return <div className="table-of-contents-node model" key={node.key} style={{left: `${node.x}%`, top: `${node.y}%`}}
+                        onClick={()=>this.props.scrollToModel(node.key)}
+            >
                 <img className='circle' src={model_circle_svg} />
                 <div className='outline'>
                     {node.key}
