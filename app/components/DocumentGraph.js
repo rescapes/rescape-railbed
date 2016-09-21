@@ -32,20 +32,6 @@ class DocumentGraph extends React.Component {
     }
 
     /***
-     * Show the comments when the user clicks the comment count button
-     */
-    onClickExpandButton() {
-        this.props.toggleTableOfContents(this.props.documentKey, true)
-    }
-
-    /***
-     * Hide the comments when the user clicks the close button
-     */
-    onClickCollapseButton() {
-        this.props.toggleTableOfContents(this.props.documentKey, false)
-    }
-
-    /***
      * Set svg attributes that React can't handle
      * @returns {XML}
      */
@@ -75,9 +61,10 @@ class DocumentGraph extends React.Component {
             allModels.slice(0, allModels.keySeq().indexOf(this.props.modelKey) + 1).reverse() :
             allModels.slice(allModels.keySeq().indexOf(this.props.modelKey) + 1)
         // Reduce the models to our table of contents settings length unless we are expanded
+        const maxNodeCount = this.props.settings.get('TABLE_OF_CONTENTS_MODEL_NODE_COUNT')
         const models = this.props.isExpanded ? allModels : modelsForPosition.slice(
             0,
-            this.props.settings.get('TABLE_OF_CONTENTS_MODEL_NODE_COUNT')
+            maxNodeCount
         )
         // Nodes are the document (top only) plus the models.
         return this.props.isTop ?
@@ -86,7 +73,7 @@ class DocumentGraph extends React.Component {
                 new OrderedMap({[this.props.documentTitle]: this.props.document}).merge(models) :
                 // document last
                 models.set(this.props.documentTitle, this.props.document)):
-            models
+            (modelsForPosition.count() > maxNodeCount ? models.set('end', null) : models)
     }
 
     /***
@@ -112,12 +99,12 @@ class DocumentGraph extends React.Component {
 
         // The segment length for the line
         // If the document is connected, allocate extra length for it
-        const extraLengthForDocument = this.props.isTop ? 4 : 0
+        const extraLengthForDocument = this.props.isTop ? 6 : 0
         const segmentLength = (totalLength-extraLengthForDocument) / (objects.count()-1)
 
         //const theta = Math.atan(isExpanded ? Infinity : height / width);
         // Lets make the line always vertical. The code above can be used to slope it
-        const theta = Math.atan(Infinity)
+        //const theta = Math.atan(Infinity)
         // Apply the extra length if going downward and the document was the previous node
         // or apply if going upward and the document is the current node
         const documentTitleIndex = objects.keySeq().indexOf(this.props.documentTitle)
@@ -128,8 +115,8 @@ class DocumentGraph extends React.Component {
         return objects.entrySeq().map(([key, obj], i) => {
             // Apply extra space for the document once we get to the node before or after it
             const length = i * segmentLength + (i >= applyExtraLengthAtIndex ? extraLengthForDocument : 0)
-            const xi = x - length * Math.cos(theta)
-            const yi = y + yDirection * length * Math.sin(theta)
+            const xi = 0 //x - length * Math.cos(theta)
+            const yi = y + yDirection * length //Math.sin(theta)
             return { x:xi, y:yi, key: key, obj: obj}
         }, List()).toArray()
     }
@@ -142,8 +129,8 @@ class DocumentGraph extends React.Component {
      */
     calculateHiddenModelDomPosition(node1, node2) {
         return {
-            left: `${Math.abs(node2.x - node1.x) * .65}%`,
-            top: `${Math.abs(node2.y - node1.y) * .65}%`
+            left: `${Math.abs(node2.x + node1.x) * .65}%`,
+            top: `${Math.abs(node2.y + node1.y) * .65}%`
         }
     }
 
@@ -163,8 +150,9 @@ class DocumentGraph extends React.Component {
                 key={node.key}
                 node={node}
                 index={index}
+                isExpandedByHover={this.props.isExpandedByHover}
                 {...modifiedProps} />
-        })
+        }, this)
 
         // Get the number of models not showing because they don't fit
         const hiddenModelsCount = totalNodeCount - nodes.length;
@@ -178,14 +166,14 @@ class DocumentGraph extends React.Component {
             <div/>
 
         return <div className={`table-of-contents ${this.props.isTop ? 'top': 'bottom'} ${this.props.isExpanded ? 'expanded' : ''}`}
-                    onMouseLeave={()=>this.props.toggleTableOfContents(this.props.documentKey, false)}
+                    onMouseLeave={()=>this.props.toggleTableOfContents(this.props.documentKey, false, true)}
         >
             <DocumentGraphLine {...Object.assign({},
                     modifiedProps,
                     {viewboxWidth: this.props.containerWidth,
                     viewboxHeight: this.props.containerHeight,
-                    lineRadius: 2 }) } />
-            <div onClick={this.onClickExpandButton.bind(this)} className="document-graph-circles">
+                    lineRadius: 5 }) } />
+            <div className="document-graph-circles">
                 {documentGraphCircles}
                 {hiddenModelDom}
             </div>
@@ -201,6 +189,7 @@ DocumentGraph.propKeys = {
     models: ImmutablePropTypes.map,
     model: ImmutablePropTypes.map,
     isExpanded: PropTypes.bool,
+    isExpandedByHover: PropTypes.bool,
     isTop: PropTypes.bool,
     // The height of the container
     containerHeight: PropTypes.number,
@@ -217,7 +206,7 @@ function mapStateToProps(state, props) {
     const document = state.getIn(['documents', 'entries', documentKey])
     const documentTitle = document && document.get('title')
     const isExpanded = document.get('tableOfContentsIsExpanded')
-
+    const isExpandedByHover = document.get('tableOfContentIsExpandedByHover')
     return {
         settings,
         documents,
@@ -226,7 +215,8 @@ function mapStateToProps(state, props) {
         models,
         modelKey,
         documentTitle,
-        isExpanded
+        isExpanded,
+        isExpandedByHover
     }
 }
 
