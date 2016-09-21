@@ -12,27 +12,15 @@
 import React, { Component, PropTypes } from 'react'
 import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import * as documentActions from '../actions/document'
 import DocumentGraph from './DocumentGraph'
+import * as documentActions from '../actions/document'
 
 class TableOfContents extends Component {
 
     componentDidMount() {
     }
 
-    /***
-     * Show the comments when the user clicks the comment count button
-     */
-    onClickTableOfContentsButton() {
-        this.props.toggleTableOfContents(this.props.modelKey, true)
-    }
 
-    /***
-     * Hide the comments when the user clicks the close button
-     */
-    onClickCloseButton() {
-        this.props.toggleTableOfContents(this.props.modelKey, false)
-    }
 
     /***
      * Render the comment counter button for the current model or render the comments if the button is
@@ -48,7 +36,6 @@ class TableOfContents extends Component {
         // Width and height here must match the table-of-contents width and height
         return <div className={`table-of-contents ${this.props.isTop ? 'top': 'bottom'} ${this.props.isExpanded ? 'expanded' : ''}`}>
             <DocumentGraph
-                   isExpanded={this.props.isExpanded}
                    isTop={this.props.isTop}
                    widthExpanded={800}
                    width={200}
@@ -78,6 +65,7 @@ function mapStateToProps(state, props) {
     const modelKey = models && models.get('current')
     const document = state.getIn(['documents', 'entries', documentKey])
     const documentTitle = document && document.get('title')
+    const isExpanded = document.get('tableOfContentsIsExpanded')
 
     return {
         settings,
@@ -87,6 +75,7 @@ function mapStateToProps(state, props) {
         models,
         modelKey,
         documentTitle,
+        isExpanded
     }
 }
 

@@ -10,10 +10,12 @@
 
     &.top {
          top: 25px;
-         height: calc($header-height - 40px);
+         height: $table-of-contents-button-top-width;
          right: calc(calc(100% - $document-absolute-left) / 2);
          width: $table-of-contents-button-top-width;
          &.expanded {
+            height: $table-of-contents-button-top-width-expanded;
+            width: $table-of-contents-button-top-width-expanded;
          }
     }
 
@@ -22,14 +24,9 @@
         height: calc($footer-height - 10px);
         right: calc(calc(calc(100% - $document-absolute-left) / 2) - calc(2 * $table-of-contents-button-bottom-width / 3));
         width: $table-of-contents-button-bottom-width;
-    }
-
-    &.showing {
-        margin-left: 10px;
-        left: 0px;
-        width: calc($showcase-width - $model-3d-document-overlap);
-        top: calc($model-3d-top);
-        height: $model-3d-height;
+        &.expanded {
+            display: none;
+        }
     }
 }
 
@@ -103,16 +100,20 @@
 
     &.document {
         right: calc(-1 * $table-of-contents-model-current-width);
-        height: $table-of-contents-documnet-current-height;
+        height: $table-of-contents-document-current-height;
         margin-left: -120px;
         margin-top: -20px;
+        &:hover {
+             cursor: pointer;
+             transition: width 300ms ease, height 300ms ease;
+             height: calc($table-of-contents-document-current-height + 10px);
+        }
 
         .circle {
-            width: $table-of-contents-document-current-height;
-            height: $table-of-contents-document-current-height;
+            height: 100%;
         }
         .outline {
-            height: 40px;
+            height: 100%;
             font-size: $h4-font-size;
             border-radius: 10px;
             padding: 5px;
