@@ -26,7 +26,7 @@ import DocumentMeta from 'react-document-meta';
 import ImmutablePropTypes from 'react-immutable-proptypes'
 var himalaya = require('himalaya');
 import Comments from './Comments'
-import TableOfContents from './TableOfContents'
+import DocumentGraph from './DocumentGraph'
 
 export class Site extends Component {
 
@@ -108,7 +108,7 @@ export class Site extends Component {
      */
     makeTableOfContents(isTop) {
         return this.props.modelKey ?
-            <TableOfContents isTop={isTop}
+            <DocumentGraph   isTop={isTop}
                              isExpanded={this.props.isExpanded}
                              documentKey={this.props.documentKey}
                              documentTitle={this.props.documentTitle}

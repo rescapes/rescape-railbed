@@ -22,7 +22,7 @@ export default class DocumentGraphCircle extends React.Component {
         const node = this.props.node
         let style = null
         let file = null, className = null
-        if (this.props.isTop && this.props.isLast) {
+        if (this.props.isTop && node.key==this.props.documentTitle) {
             // The document
             return <div className='table-of-contents-node document'
                         onMouseEnter={()=>this.props.toggleTableOfContents(this.props.documentKey, true)}
@@ -35,7 +35,7 @@ export default class DocumentGraphCircle extends React.Component {
                 </div>
             </div>
         }
-        else if (this.props.isTop && this.props.index == 0) {
+        else if (this.props.isTop && this.props.node.key == this.props.modelKey) {
             // The current model
             return <div className='table-of-contents-node model-current' key={node.key} style={{left: `${node.x}%`, top: `${node.y}%`}}>
                 <img className='circle' src={model_circle_current_svg} />
@@ -66,8 +66,6 @@ DocumentGraphCircle.propKeys = {
     tableOfContentsAreShowing: PropTypes.bool,
     position: PropTypes.string,
     node: PropTypes.object,
-    // Is this the last node
-    isLast: PropTypes.bool,
     // The node index
     index: PropTypes.number,
     width: PropTypes.number,

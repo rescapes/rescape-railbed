@@ -4,7 +4,7 @@
     position: fixed;
     z-index: 10;
     top: calc($model-3d-top - 35px);
-    left: calc($showcase-width - $model-3d-document-overlap - 50px);
+    left: calc($showcase-width - $model-3d-document-overlap - 80px);
     width: $comment-button-width;
     height: $comment-button-height;
 

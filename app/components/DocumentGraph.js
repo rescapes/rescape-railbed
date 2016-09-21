@@ -75,12 +75,18 @@ class DocumentGraph extends React.Component {
             allModels.slice(0, allModels.keySeq().indexOf(this.props.modelKey) + 1).reverse() :
             allModels.slice(allModels.keySeq().indexOf(this.props.modelKey) + 1)
         // Reduce the models to our table of contents settings length unless we are expanded
-        const models = this.props.isExpanded ? modelsForPosition : modelsForPosition.slice(
+        const models = this.props.isExpanded ? allModels : modelsForPosition.slice(
             0,
             this.props.settings.get('TABLE_OF_CONTENTS_MODEL_NODE_COUNT')
         )
         // Nodes are the document (top only) plus the models.
-        return this.props.isTop ? models.set(this.props.documentTitle, this.props.document): models
+        return this.props.isTop ?
+            (this.props.isExpanded ?
+                // document first
+                new OrderedMap({[this.props.documentTitle]: this.props.document}).merge(models) :
+                // document last
+                models.set(this.props.documentTitle, this.props.document)):
+            models
     }
 
     /***
@@ -90,24 +96,36 @@ class DocumentGraph extends React.Component {
      */
     getNodes(objects) {
         // We will use percentages for SVG since the viewBox takes care of the scaling
-        const x = 100, y = 100, width=100, height=100
+        //
+        const x = 0,
+            // If we are the top contents and not expanded. Start y at 100 and go to 0. Otherwise go from 0 to 100
+            y = this.props.isTop && !this.props.isExpanded ? 100 : 0,
+            width=100, height=100,
+            // The top graph goes up when not expanded (-y) the bottom graph goes down (+y).
+            yDirection = this.props.isTop && !this.props.isExpanded ? -1 : 1
 
         // Move to the starting position
         // The width of the graph is longer when expanded
         // Reduce the width and height somewhat so the nodes at the end fit with the viewBox
-        const totalLength = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2))
+        // Assume no slope so x is 0
+        const totalLength = Math.sqrt(Math.pow(0, 2) + Math.pow(height, 2))
 
         // The segment length for the line
         // If the document is connected, allocate extra length for it
-        const segmentLength = (totalLength / (objects.count()-1)) * (this.props.isTop ? .8 : 1)
+        const extraLengthForDocument = this.props.isTop ? 2 : 0
+        const segmentLength = (totalLength-extraLengthForDocument) / (objects.count()-1)
 
-        // The top graph goes up (-y) the bottom graph goes down (+y). They both go left
-        const yDirection = this.props.isTop ? -1 : 1
-        const theta = Math.atan(height / width);
+        //const theta = Math.atan(isExpanded ? Infinity : height / width);
+        // Lets make the line always vertical. The code above can be used to slope it
+        const theta = Math.atan(Infinity)
         return objects.entrySeq().map(([key, obj], i) => {
+            // Apply the extra length if going downward and the document was the previous node
+            // or apply if going upward and the document is the current node
+            const applyExtraLength = this.props.isTop &&
+                (yDirection == 1 && i > 0 && objects.keySeq().get(yDirection == 1 ? i-1 : i) == this.props.documentTitle)
             // If this is the document connector, make it longer (i.e. the total length)
-            const length = this.props.isTop && i==(objects.count()-1) ?
-                totalLength :
+            const length = applyExtraLength ?
+                i * segmentLength + extraLengthForDocument :
                 i * segmentLength
             const xi = x - length * Math.cos(theta)
             const yi = y + yDirection * length * Math.sin(theta)
@@ -144,7 +162,6 @@ class DocumentGraph extends React.Component {
                 key={node.key}
                 node={node}
                 index={index}
-                isLast={index==nodes.length-1}
                 {...modifiedProps} />
         })
 
@@ -159,13 +176,12 @@ class DocumentGraph extends React.Component {
             </div> :
             <div/>
 
-        return <div className='document-graph'>
-            <DocumentGraphLine
-                {...Object.assign({},
+        return <div className={`table-of-contents ${this.props.isTop ? 'top': 'bottom'} ${this.props.isExpanded ? 'expanded' : ''}`}>
+            <DocumentGraphLine {...Object.assign({},
                     modifiedProps,
-                    {viewboxWidth: this.props.isExpanded ? this.props.widthExpanded : this.props.width,
-                    viewboxHeight: this.props.height})
-                } />
+                    {viewboxWidth: this.props.containerWidth,
+                    viewboxHeight: this.props.containerHeight,
+                    lineRadius: 2 }) } />
             <div onClick={this.onClickExpandButton.bind(this)} className="document-graph-circles">
                 {documentGraphCircles}
                 {hiddenModelDom}
@@ -183,12 +199,10 @@ DocumentGraph.propKeys = {
     model: ImmutablePropTypes.map,
     isExpanded: PropTypes.bool,
     isTop: PropTypes.bool,
-    // The height of the overall DocumentGraph
-    height: PropTypes.number,
-    // The normal width of the DocumentGraph
-    width: PropTypes.number,
-    // The expanded width of the DocumentGraph
-    widthExpanded: PropTypes.number,
+    // The height of the container
+    containerHeight: PropTypes.number,
+    // The width of the container
+    containerWidth: PropTypes.number,
 }
 
 function mapStateToProps(state, props) {
