@@ -43,7 +43,7 @@ class DocumentGraphLine extends React.Component {
             const previous = reduction.count() ? reduction.slice(-1).get(0) : {x2:`${nodes[0].x}%`, y2:`${nodes[0].y}%`}
             // Dash the line if the line segment represents nodes that we aren't showing
             const strokeDashArray = !this.props.isExpanded && nodes.length < this.props.totalNodeCount && i==nodes.length-2 ?
-                "5,5,1,5" : "none"
+                "1,5" : "none"
             return reduction.push({
                 x1:`${previous.x2}`,
                  y1:`${previous.y2}`,
@@ -52,6 +52,23 @@ class DocumentGraphLine extends React.Component {
                  strokeDasharray: strokeDashArray
             })
         }, List()).toArray()
+    }
+
+    /***
+     * Creates the cross line segments at each node which connect the main line to the model/document node text
+     * @param nodes: The nodes to draw lines for. The 'end' node on the bottom is skipped
+     * @param length: The length of the lines. This is an absolute, non-percent length
+     * @returns {*}
+     */
+    getCrossLineSegments(nodes, length) {
+        return nodes.map(node =>
+            node.key != 'end' ? {
+                x1:`${node.x}`,
+                y1:`${node.y}%`,
+                x2:`${length}`,
+                y2:`${node.y}%`
+            } : null
+        ).filter(x=>x)
     }
 
 
@@ -63,7 +80,10 @@ class DocumentGraphLine extends React.Component {
     render() {
         const nodes = this.props.nodes
         const lineSegments = this.getLineSegments(nodes).map((lineSegment, index) =>
-            <line key={nodes[index].key} {...lineSegment} stroke="black" strokeLinecap="round" strokeLinejoin="round" strokeWidth={`${this.props.lineRadius}%`} />
+            <line key={nodes[index].key} {...lineSegment} stroke="black" strokeLinecap="round" strokeLinejoin="round" strokeWidth={`${this.props.lineRadius}`} />
+        )
+        const crossLineSegments = this.getCrossLineSegments(nodes, 40).map((lineSegment, index) =>
+            <line key={`${nodes[index].key}-cross`} {...lineSegment} stroke="black" strokeLinecap="round" strokeLinejoin="round" strokeWidth={`${this.props.lineRadius-2}`} />
         )
 
         return <svg className='document-graph-svg'
@@ -73,6 +93,7 @@ class DocumentGraphLine extends React.Component {
         >
             <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="solid" fillOpacity="1">
                 {lineSegments}
+                {crossLineSegments}
             </g>
         </svg>
     }
@@ -97,8 +118,6 @@ DocumentGraphLine.propKeys = {
     isExpanded: PropTypes.bool,
     // Is this the top graph (true) or bottom graph (false)
     isTop: PropTypes.bool,
-    // The radius of the node circles
-    circleRadius: PropTypes.number,
     // The line radius
     lineRadius: PropTypes.number,
     // The nodes

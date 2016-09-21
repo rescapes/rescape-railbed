@@ -258,9 +258,10 @@ class CommentsLoader extends ActionLoader {
  * Toggles the Table of Contents on and off
  * @param key: The Document key
  * @param force: Force a certain value, true or false
+ * @param isHover: True if the result of a hover. This means that mouse exit will turn it off
  */
-export function toggleTableOfContents(key, force) {
-    return { type: TOGGLE_DOCUMENT_TABLE_OF_CONTENTS, key, force }
+export function toggleTableOfContents(key, force, isHover) {
+    return { type: TOGGLE_DOCUMENT_TABLE_OF_CONTENTS, key, force, isHover }
 }
 
 // Use an ActionLoader to remotely load models

@@ -9,21 +9,20 @@
     z-index: 7;
 
     &.top {
-         top: 25px;
-         height: $table-of-contents-button-top-height;
+         top: $table-of-contents-top-offset;
+         height: $table-of-contents-top-height;
          left: $document-left;
-         width: $table-of-contents-button-top-width;
+         width: $table-of-contents-width;
          &.expanded {
-            height: $table-of-contents-button-top-height-expanded;
-            width: $table-of-contents-button-top-width-expanded;
+            height: $table-of-contents-height-expanded;
          }
     }
 
     &.bottom {
-        bottom: 10px;
-        height: calc($footer-height - 10px);
-        right: calc(calc(calc(100% - $document-absolute-left) / 2) - calc(2 * $table-of-contents-button-bottom-width / 3));
-        width: $table-of-contents-button-bottom-width;
+        bottom: $table-of-contents-bottom-offset;
+        height: $table-of-contents-bottom-height;
+        left: $document-left;
+        width: $table-of-contents-width;
         &.expanded {
             display: none;
         }
@@ -94,21 +93,20 @@
         vertical-align: middle;
     }
 
-    &.document {
-        right: calc(-1 * $table-of-contents-model-current-width);
-        height: $table-of-contents-document-current-height;
-        margin-left: -120px;
-        margin-top: -20px;
+    &.toc-document {
+        height: $table-of-contents-document-height;
+        margin-left: calc(-1 * $table-of-contents-document-height / 2);
+        margin-top: calc(-1 * $table-of-contents-document-height / 2);
         &:hover {
              cursor: pointer;
-             transition: width 300ms ease, height 300ms ease;
-             height: calc($table-of-contents-document-current-height + 10px);
+             transition: width 300ms ease, height 300ms ease, font-size 300ms ease;
+             height: calc($table-of-contents-document-height + 2px);
         }
         /***
             Hover makes it bigger, stay bigger while in expanded mode
         ***/
         &.expanded {
-             height: calc($table-of-contents-document-current-height + 10px);
+             height: calc($table-of-contents-document-height + 2px);
         }
 
         .circle {
@@ -122,7 +120,7 @@
         }
     }
 
-    &.model-current {
+    &.toc-model-current {
         height: $table-of-contents-model-current-height;
         margin-left: calc(-1 * $table-of-contents-model-current-height / 2);
         margin-top: calc(-1 * $table-of-contents-model-current-height / 2);
@@ -138,7 +136,7 @@
         }
     }
 
-    &.model {
+    &.toc-model {
         height: $table-of-contents-model-height;
         margin-left: calc(-1 * $table-of-contents-model-height / 2);
         margin-top: calc(-1 * $table-of-contents-model-height / 2);
@@ -166,7 +164,7 @@
     &.hidden-model-count {
         /*** Push the text away from the line **/
         height: 10px;
-        margin-left: -5px;
+        margin-left: -40px;
         margin-top: -5px;
         font-size: $h6-font-size;
         .outline {

@@ -165,6 +165,9 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], firstSceneOfPrevious.offsetTop - 30)
         }
     }
+    /***
+     * Handles and action to scroll to the given model
+     */
     else if (action.type==actions.SCROLL_TO_MODEL) {
         // Get the current scroll position
         const scrollPosition = state.getIn(['entries', currentDocumentKey, 'scrollPosition'])
@@ -179,10 +182,38 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         if (soughtModelAnchor)
             return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], soughtModelAnchor.offsetTop - 30)
     }
+    /***
+     * Handles and action to exapnd or collapse the table of contents.
+     * An optional argument of isHover is stored to determine whether expandsion is based on a hover rather than
+     * a click
+     */
     else if (action.type == actions.TOGGLE_DOCUMENT_TABLE_OF_CONTENTS) {
+        const currentValue = state.getIn(['entries', action.key, 'tableOfContentsIsExpanded'])
+        const expandedByHover = state.getIn(['entries', action.key, 'tableOfContentIsExpandedByHover'])
+
+        // If the state is expanded by click and we are trying to expand/collapse with a hover-on/off, ignore
+        if (action.isHover && currentValue && !expandedByHover)
+            return state
+        // If we click after hovering expanded it, then keep it expanded (lock) but switch tableOfContentsIsExpandedByHover
+        if (!action.isHover && currentValue && expandedByHover)
+            return state.setIn(
+                ['entries', action.key, 'tableOfContentIsExpandedByHover'],
+                false)
+        // If we click a second time to unlock but keep expanded since the hover will now control it
+        if (!action.isHover && currentValue && !expandedByHover)
+            return state.setIn(
+                ['entries', action.key, 'tableOfContentIsExpandedByHover'],
+                true)
+
+        const value = action.force != null ?
+            action.force :
+            !currentValue
+
         return state.setIn(
             ['entries', action.key, 'tableOfContentsIsExpanded'],
-            action.force != null ? action.force : !state.getIn(['entries', action.key, 'tableOfContentsIsExpanded']))
+            value).setIn(
+            ['entries', action.key, 'tableOfContentIsExpandedByHover'],
+            value && !!action.isHover)
     }
     else
         return state
