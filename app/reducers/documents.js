@@ -57,7 +57,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     // if action.options.isOverlay is specified, this instead makes the document
     // and overlay over the current document. Used for about, contact, etc pages
     else if (action.type==actions.SHOW_DOCUMENT) {
-        if (action.options.isOverlay) {
+        if (action.options && action.options.isOverlay) {
             return state
                 .set('currentOverlay', action.key)
                 .setIn(['entries', action.key, 'postUrl'], state.get('siteUrl')(action.key))

@@ -627,7 +627,7 @@ export default Map({
                 status: Statuses.INITIALIZED,
                 title: 'About',
                 isHeaderDocument: true,
-                id: '1GbrsFkL4hlMP9o-J1JLw4Qu08j6hEPde_ElJdanJX5U',
+                id: '1CRu-68GaWZcUxZkUf7RBAos39YrdYFYS8NEC07L5vQM',
                 modelKeys: List()
             }),
             'contact': Map({

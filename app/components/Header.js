@@ -57,7 +57,7 @@ class Header extends Component {
         const headerDocuments = this.props.documents.get('entries').entrySeq().filter(([key, document]) =>
             document.get('isHeaderDocument')
         ).map(([key, document]) =>
-            <span key={key} className="header-link" onClick={key => this.onClickHeaderLink(key)}>{document.get('title')}</span>
+            <span key={key} className="header-link" onClick={e => this.onClickHeaderLink(key)}>{document.get('title')}</span>
         )
 
         return <div className='header'>

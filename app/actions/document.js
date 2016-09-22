@@ -119,7 +119,7 @@ class DocumentLoader extends ActionLoader {
      * @param options: Object of options isOverlay is currently the only option
      * @returns {{type: string, key: *}}
      */
-    showIt(key, otpions) {
+    showIt(key, options) {
         return { type: SHOW_DOCUMENT, key, options }
     }
 }
@@ -179,5 +179,6 @@ export const documentLoader = new DocumentLoader();
 // Export the public methods of the action loader
 export const fetchDocumentIfNeeded = documentLoader.fetchIfNeeded.bind(documentLoader)
 export const showDocument = documentLoader.show.bind(documentLoader)
-export const overlayDocument = documentLoader.showAsOverlay.bind(documentLoader)
+// Like show document but overlays a document over the current one
+export const overlayDocument = (key) => documentLoader.show(key, {isOverlay:  true})
 
