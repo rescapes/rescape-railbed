@@ -12,10 +12,11 @@
 import React, { Component, PropTypes } from 'react'
 import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import DocumentGraphLine from './DocumentGraphLine';
-import DocumentGraphCircle from './DocumentGraphCircle';
+import DocumentGraphLineSegments from './DocumentGraphLineSegments';
+import DocumentGraphNode from './DocumentGraphNode';
 import {OrderedMap, Map, List} from 'immutable'
 import * as documentActions from '../actions/document'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 
 /***
@@ -145,14 +146,20 @@ class DocumentGraph extends React.Component {
              toggleTableOfContents: this.props.toggleTableOfContents
             }
         )
-        const documentGraphCircles = nodes.map(function(node, index) {
-            return <DocumentGraphCircle
+        const documentGraphCircles = nodes.map((node, index) =>
+            <DocumentGraphNode
                 key={node.key}
                 node={node}
                 index={index}
                 isExpandedByHover={this.props.isExpandedByHover}
-                {...modifiedProps} />
-        }, this)
+                {...modifiedProps} />, this)
+
+        const documentGraphCircleGroup = <ReactCSSTransitionGroup
+            transitionName="table-of-contents-nodes"
+            transitionEnterTimeout={1000}
+            transitionLeaveTimeout={100}>
+            {documentGraphCircles}
+        </ReactCSSTransitionGroup>
 
         // Get the number of models not showing because they don't fit
         const hiddenModelsCount = totalNodeCount - nodes.length;
@@ -168,13 +175,13 @@ class DocumentGraph extends React.Component {
         return <div className={`table-of-contents ${this.props.isTop ? 'top': 'bottom'} ${this.props.isExpanded ? 'expanded' : ''}`}
                     onMouseLeave={()=>this.props.toggleTableOfContents(this.props.documentKey, false, true)}
         >
-            <DocumentGraphLine {...Object.assign({},
+            <DocumentGraphLineSegments {...Object.assign({},
                     modifiedProps,
                     {viewboxWidth: this.props.containerWidth,
                     viewboxHeight: this.props.containerHeight,
                     lineRadius: 5 }) } />
             <div className="document-graph-circles">
-                {documentGraphCircles}
+                {documentGraphCircleGroup}
                 {hiddenModelDom}
             </div>
         </div>

@@ -28,7 +28,7 @@ import Dimensions from 'react-dimensions'
  *
  * The expanded view on the bottom makes a long line that shows all subsequent models.
  */
-class DocumentGraphLine extends React.Component {
+class DocumentGraphLineSegments extends React.Component {
 
 
     /***
@@ -86,6 +86,7 @@ class DocumentGraphLine extends React.Component {
             <line key={`${nodes[index].key}-cross`} {...lineSegment} stroke="black" strokeLinecap="round" strokeLinejoin="round" strokeWidth={`${this.props.lineRadius-2}`} />
         )
 
+        //{crossLineSegments}
         return <svg className='document-graph-svg'
              ref='svg'
              viewBox={`0 0 ${this.props.containerWidth} ${this.props.containerHeight}`}
@@ -93,13 +94,12 @@ class DocumentGraphLine extends React.Component {
         >
             <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="solid" fillOpacity="1">
                 {lineSegments}
-                {crossLineSegments}
             </g>
         </svg>
     }
 }
 
-DocumentGraphLine.propKeys = {
+DocumentGraphLineSegments.propKeys = {
     documents: ImmutablePropTypes.map,
     documentTitle: PropTypes.string,
     documentKey: PropTypes.string,
@@ -151,4 +151,4 @@ function mapStateToProps(state, props) {
  */
 export default connect(
     mapStateToProps,
-)(Dimensions({elementResize: true})(DocumentGraphLine))
+)(Dimensions({elementResize: true})(DocumentGraphLineSegments))

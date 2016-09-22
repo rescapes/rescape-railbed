@@ -17,8 +17,10 @@ import document_circle_unlocked_svg from '../images/document-circle-unlocked.svg
 import model_circle_svg from '../images/model-circle.svg'
 import model_circle_current_svg from '../images/model-circle-current.svg'
 
-
-export default class DocumentGraphCircle extends React.Component {
+/***
+ * Shows a node of the table of contents, including the circle and label
+ */
+export default class DocumentGraphNode extends React.Component {
 
     render() {
         const node = this.props.node
@@ -35,12 +37,15 @@ export default class DocumentGraphCircle extends React.Component {
                 document_circle_svg
 
             return <div className={`table-of-contents-node toc-document ${this.props.isExpanded ? 'expanded' : ''}`}
-                        onMouseEnter={()=>this.props.toggleTableOfContents(this.props.documentKey, true, true)}
-                        onClick={()=>this.props.toggleTableOfContents(this.props.documentKey)}
                         key={node.key}
                         style={{left: `${node.x}%`, top: `${node.y}%`}}>
-                <img className='circle' style={style} src={svg} />
-                <div className='outline'>
+                <img className='circle'
+                     style={style} src={svg}
+                     onMouseEnter={()=>this.props.toggleTableOfContents(this.props.documentKey, true, true)}
+                     onClick={()=>this.props.toggleTableOfContents(this.props.documentKey)}
+                />
+                <div className="connector" />
+                <div ref="outline" className='outline'>
                     {node.key}
                 </div>
             </div>
@@ -49,6 +54,7 @@ export default class DocumentGraphCircle extends React.Component {
             // The current model
             return <div className='table-of-contents-node toc-model-current' key={node.key} style={{left: `${node.x}%`, top: `${node.y}%`}}>
                 <img className='circle' src={model_circle_current_svg} />
+                <div className="connector" />
                 <div className='outline'>
                     {node.key}
                 </div>
@@ -65,6 +71,7 @@ export default class DocumentGraphCircle extends React.Component {
                         onClick={()=>this.props.scrollToModel(node.key)}
             >
                 <img className='circle' src={model_circle_svg} />
+                <div className="connector" />
                 <div className='outline'>
                     {node.key}
                 </div>
@@ -73,7 +80,7 @@ export default class DocumentGraphCircle extends React.Component {
     }
 }
 
-DocumentGraphCircle.propKeys = {
+DocumentGraphNode.propKeys = {
     documents: ImmutablePropTypes.map,
     documentTitle: PropTypes.string,
     documentKey: PropTypes.string,

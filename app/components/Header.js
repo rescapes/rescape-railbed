@@ -14,16 +14,23 @@ import rescape_png from '../images_dist/rescape-320.png'
 import * as documentActions from '../actions/document'
 import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import About from './About'
-import Contact from './Contact'
 
 class Header extends Component {
 
+
+    /***
+     * Overlay the header document when the link is clicked
+     * @param documentKey
+     */
+    onClickHeaderLink(documentKey) {
+        this.props.overlayDocument(documentKey)
+    }
 
     render() {
         if (!this.props.models || !this.props.modelKey || !this.props.document)
             return <div/>
 
+        /*
         // Show the page up button if we're notm at the top already
         const pageUpButton = !(this.props.modelKey && this.props.sceneKey) || (
             this.props.models.get('entries').keySeq().first() == this.props.modelKey &&
@@ -45,20 +52,26 @@ class Header extends Component {
                     </g>
                 </svg>
             </div>
+        */
 
-        /* {pageUpButton} */
+        const headerDocuments = this.props.documents.get('entries').entrySeq().filter(([key, document]) =>
+            document.get('isHeaderDocument')
+        ).map(([key, document]) =>
+            <span key={key} className="header-link" onClick={key => this.onClickHeaderLink(key)}>{document.get('title')}</span>
+        )
+
         return <div className='header'>
             <img className='header-icon' src={rescape_png}/>
             <div className='header-gradient left' />
             <div className='header-links'>
-                <About/>
-                <Contact/>
+                {headerDocuments}
             </div>
         </div>
     }
 }
 
 Header.propTypes = {
+    documents: ImmutablePropTypes.map,
     document: ImmutablePropTypes.map,
     documentTitle: PropTypes.string,
     models: ImmutablePropTypes.map,
@@ -73,6 +86,7 @@ Header.propTypes = {
  * @returns {{models: *, modelKey: *, sceneKey: *}}
  */
 function mapStateToProps(state) {
+    const documents = state.get('documents')
     const documentKey = state.getIn(['documents', 'current'])
     const document = state.getIn(['documents', 'entries', documentKey])
     const models = documentKey && state.get('models')
@@ -80,6 +94,7 @@ function mapStateToProps(state) {
     const sceneKey = models && models.getIn(['entries', modelKey, 'scenes', 'current'])
 
     return {
+        documents,
         documentKey,
         document,
         models,

@@ -37,6 +37,7 @@ import Statuses from '../statuses'
  *         url: Url of a publicly available document (e.g. from Google Drive)
  *         postUrl: Url of the blog post (e.g. http://rescapes.net/the_amtrak_standard)
  *         title: The title of the document
+ *         isHeaderDocument: true for documents like about and contact
  *         content: The loaded content of the document
  *         models: [the model keys of the document]
  *      }
@@ -53,10 +54,19 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     }
     // Sets the document to be the current one
     // Also sets up the siteUrl of the document for use in social media links, etc
+    // if action.options.isOverlay is specified, this instead makes the document
+    // and overlay over the current document. Used for about, contact, etc pages
     else if (action.type==actions.SHOW_DOCUMENT) {
-        return state
-            .set('current', action.key)
-            .setIn(['entries', action.key, 'postUrl'], state.get('siteUrl')(action.key))
+        if (action.options.isOverlay) {
+            return state
+                .set('currentOverlay', action.key)
+                .setIn(['entries', action.key, 'postUrl'], state.get('siteUrl')(action.key))
+        }
+        else {
+            return state
+                .set('current', action.key)
+                .setIn(['entries', action.key, 'postUrl'], state.get('siteUrl')(action.key))
+        }
     }
     else if (action.type==actions.REGISTER_DOCUMENT) {
         return (!state.get('keys').has(action.key)) ?

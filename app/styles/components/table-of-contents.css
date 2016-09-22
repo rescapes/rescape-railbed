@@ -36,22 +36,6 @@
     height: 100%;
 }
 
-.table-of-contents-close-icon {
-    position: absolute;
-    top: 0px;
-    height: 30px;
-    width: 30px;
-    right: 0px;
-    padding: 2px;
-    &:hover {
-         cursor: pointer;
-         width: 35px;
-         height: 35px;
-         transition: width 300ms ease, height 300ms ease
-    }
-
-}
-
 .document-graph-svg {
     position: absolute;
     width: 100%;
@@ -62,57 +46,88 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
     height: 100%;
+    width: 100%;
 }
 
 .table-of-contents-node {
     position: absolute;
-    /* Set right as far as possible so we don't worry about wrapping. This is how far the model node extends */
-    right: calc(-1 * $table-of-contents-model-current-width);
 
+    /***
+        Fade the text of new nodes in so the user notices the change
+    ***/
+    &.table-of-contents-nodes-enter {
+        .outline {
+            color: rgba(0, 0, 0, 0);
+            display: inline;
+        }
+    }
+    &.table-of-contents-nodes-enter.table-of-contents-nodes-enter-active {
+        .outline {
+            color: black;
+            transition: color 1000ms ease-in;
+        }
+    }
+    &.table-of-contents-nodes-leave {
+        color: black;
+        display: none;
+    }
     /***
         All text outlines have these properties
      ***/
     .outline {
+        position: relative;
+        display: inline;
+        z-index: 2;
+        vertical-align: middle;
         background: $half-white;
         border-color: $rescape-love;
         border-width: 2px;
         border-style: solid;
-        position: relative;
-        display: inline;
         font-family: $font-stack;
         color: black;
         text-align: center;
-        vertical-align: middle;
+
     }
     /***
         All circles have these properties
     ***/
     .circle {
+        position: relative;
+        z-index: 2;
         vertical-align: middle;
+    }
+
+    /***
+        Connects circles with outlines
+    ***/
+    .connector {
+        position: relative;
+        z-index: 1;
+        display:inline-block;
+        vertical-align: middle;
+        height: 1px;
+        background: black;
     }
 
     &.toc-document {
         height: $table-of-contents-document-height;
         margin-left: calc(-1 * $table-of-contents-document-height / 2);
         margin-top: calc(-1 * $table-of-contents-document-height / 2);
-        &:hover {
-             cursor: pointer;
-             transition: width 300ms ease, height 300ms ease, font-size 300ms ease;
-             height: calc($table-of-contents-document-height + 2px);
-        }
-        /***
-            Hover makes it bigger, stay bigger while in expanded mode
-        ***/
-        &.expanded {
-             height: calc($table-of-contents-document-height + 2px);
-        }
 
         .circle {
+            z-index: 2;
             height: 100%;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        .connector {
+            margin-left: calc(-1 * $table-of-contents-document-height / 2  );
+            width: calc($table-of-contents-document-height / 2)
         }
         .outline {
+            z-index: 2;
             height: 100%;
             font-size: $h4-font-size;
             border-radius: 10px;
@@ -128,10 +143,14 @@
             width: $table-of-contents-model-current-height;
             height: 100%;
         }
+        .connector {
+            margin-left: calc(-1 * $table-of-contents-model-current-height / 2  );
+            width: calc($table-of-contents-document-height / 2)
+        }
         .outline {
             height: $table-of-contents-model-current-height;
-            font-size: $h5-font-size;
-            border-radius: 10px;
+            font-size: $h6-font-size;
+            border-radius: 5px;
             padding: 4px;
         }
     }
@@ -145,6 +164,7 @@
             font-size: $h5-font-size;
             cursor: pointer;
             transition: width 300ms ease, height 300ms ease, margin-left 300ms ease, margin-top 300ms ease;
+            right: -200px;
             height: calc($table-of-contents-model-height + 10px);
             margin-left: calc(-1 * ($table-of-contents-model-height + 10px) / 2);
             margin-top: calc(-1 * ($table-of-contents-model-height + 10px) / 2);
@@ -153,9 +173,12 @@
         .circle {
             height: 100%;
         }
+        .connector {
+            margin-left: calc(-1 * $table-of-contents-model-height / 2  );
+            width: calc($table-of-contents-document-height / 2)
+        }
         .outline {
             height: 100%;
-            margin-left: 2px;
             border-radius: 5px;
             padding: 2px;
         }
