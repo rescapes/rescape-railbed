@@ -50,10 +50,6 @@ const sortedDocuments = state.getIn(['documents', 'entries']).sort(
     (a, b) => a.get('date') > b.get('date'))
 // Pretend it's the distant future
 const now = new Date('November 2016');
-const currentDocument = sortedDocuments.reverse().find(document => document.get('date') <= now)
+// Get the newest document. Ignore documents like About and Contact that have no date
+const currentDocument = sortedDocuments.reverse().find(document => document.get('date') && document.get('date') <= now)
 store.dispatch(showDocument(sortedDocuments.keyOf(currentDocument)))
-
-/*
-const shortName = state.getIn(['settings', ])
-store.dispatch(showComments(sortedDocuments.keyOf(currentDocument)), shortName, publicKey)
-*/

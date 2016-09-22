@@ -22,7 +22,7 @@ $showcase-top: 0px;
 */
 $showcase-height: calc(100% - $footer-height + $showcase-footer-overlap);
 $showcase-left: 10px;
-$showcase-width: 66%;
+$showcase-width: 67%;
 
 /*
     Make the model ratio should be 2 height to 3 width since that is what the Sketchup videos are.
@@ -72,17 +72,16 @@ $document-absolute-left: calc( $document-left - $document-margin-left);
 
 $table-of-contents-document-height: 40px;
 $table-of-contents-model-height: 15px;
-/* This width is used to calculate how far over the table of contents right side we go */
-$table-of-contents-model-current-width: 240px;
-$table-of-contents-model-current-height: 25px;
-
 /**
     The width and height of the table of contents and various nodes
 **/
-$table-of-contents-width: 200px; /* This defines the hover area when the toc is expanded */
 $table-of-contents-top-offset: 25px;
+/* This width is used to fit the wideset table-of-contents element but be minimum for hovering off the toc */
+$table-of-contents-width: 240px;
+$table-of-contents-model-current-height: 20px;
+
 $table-of-contents-top-height: calc($header-height - $table-of-contents-top-offset - 5px - $table-of-contents-model-current-height / 2);
-$table-of-contents-bottom-offset: 25px;
+$table-of-contents-bottom-offset: 15px;
 $table-of-contents-bottom-height: calc($footer-height - $table-of-contents-bottom-offset - 5px - $table-of-contents-model-height / 2);
 $table-of-contents-height-expanded: calc($table-of-contents-top-height + $model-3d-height);
 

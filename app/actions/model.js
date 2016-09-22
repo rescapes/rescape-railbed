@@ -26,22 +26,14 @@ export const LOAD_MODEL = 'LOAD_MODEL'
 export const RECEIVE_MODEL = 'RECEIVE_MODEL'
 export const MODEL_ERRED = 'MODEL_ERRED'
 export const SHOW_MODEL = 'SHOW_MODEL'
-export const CURRENT_MODEL = 'CURRENT_MODEL'
 
 export const TOGGLE_MODEL_COMMENTS = 'TOGGLE_MODEL_COMMENTS'
 export const TOGGLE_MODEL_3D = 'TOGGLE_MODEL_3D'
 
-// scene actions
+// scene actions--currently unused
 export const SHOW_SCENE = 'SHOW_SCENE'
 export const FREE_SCENE = 'FREE_SCENE'
 
-// medium actions
-export const REGISTER_MEDIUM = 'REGISTER_MEDIUM'
-export const LOAD_MEDIUM = 'LOAD_MEDIUM'
-export const RECEIVE_MEDIUM = 'RECEIVE_MEDIUM'
-export const MEDIUM_ERRED = 'MEDIUM_ERRED'
-export const SHOW_MEDIUM = 'SHOW_MEDIUM'
-export const SELECTED_MEDIUM = 'SELECTED_MEDIUM'
 
 /*
  * Action creators. 
@@ -190,69 +182,6 @@ export function freeScene(modelKey) {
  * List in the same order as the action types.
  */
 
-// medium actions
-
-/***
- * Register the given unloaded medium when encountered in the DOM.
- * This does not load the medium since we might want to skip, queue or otherwise delay loading
- *
- * @param key: The invariable key of the medium (e.g. 'denver_train_station_exterior')
- * @returns {{type: string, key: *}}
- */
-export function registerMedium(key) {
-    return { type: REGISTER_MEDIUM, key }
-}
-
-class MediumLoader extends ActionLoader {
-
-    constructor() {
-        super()
-        this.key = 'media'
-    }
-    
-    /***
-     * Loads the given unloaded 3D medium into the browser
-     * this does not show the medium since we might want to background load several models
-     *
-     * @param key: The invariable key of the medium (e.g. 'denver_train_station_exterior')
-     * @returns {{type: string, key: *}}
-     */
-    loadIt(state, key) {
-        return { type: LOAD_MEDIUM, key }
-    }
-
-    /***
-     * Receives the given unloaded medium from a remote source
-     *
-     * @param key: The invariable key of the model (e.g. 'denver_train_station')
-     * @returns {{type: string, key: *}}
-     */
-    receive(key) {
-        return { type: RECEIVE_MEDIUM, key }
-    }
-
-    /***
-     * Loads the given unloaded 3D model into the browser
-     * this does not show the model since we might want to background load several models
-     *
-     * @param key: The invariable key of the model (e.g. 'denver_train_station')
-     * @returns {{type: string, key: *}}
-     */
-    erred(key) {
-        return { type: MEDIUM_ERRED, key }
-    }
-
-    /***
-     * Shows the given medium of the model
-     *
-     * @param key: The key of the 3D model (e.g. 'denver_train_station')
-     * @returns {{type: string, key: *}}
-     */
-    showIt(key) {
-        return { type: SHOW_MEDIUM, key }
-    }
-}
-
 /***
  * Register the given unloaded 3D model when encountered in the DOM.
  * This does not load the 3D model since we might want to skip, queue or otherwise delay loading
@@ -270,8 +199,3 @@ export const showModel = modelLoader.show.bind(modelLoader)
 export const fetchModelIfNeeded = modelLoader.fetchIfNeeded.bind(modelLoader)
 // We expose this so that we can call it from the Model3d component when the iframe finishes loading
 export const receiveModel = modelLoader.receive.bind(modelLoader)
-
-// Export the only public method of the MediumLoader
-const mediumLoader = new MediumLoader()
-export const showMedium = mediumLoader.show.bind(mediumLoader)
-export const showMediumlIfNeeded = mediumLoader.fetchIfNeeded.bind(mediumLoader)

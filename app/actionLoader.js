@@ -96,13 +96,14 @@ export default class ActionLoader {
      * use fetchIfNeeded directory so that we don't set the current instance.
      *
      * @param entryKey: The key of the instance
+     * @param options: The only option is isOverlay. Set true if the loaded object will be used as an overlay
      * @returns {{type: string, key: *}}
      */
-    show(entryKey) {
+    show(entryKey, options) {
         var self = this;
         return (dispatch, getState) => {
-            dispatch(self.showIt(entryKey))
-            self.dispatchFetchIfNeeded(dispatch, getState(), entryKey)
+            dispatch(self.showIt(entryKey, options))
+            self.dispatchFetchIfNeeded(dispatch, getState(), entryKey, options)
         }
     }
 
@@ -113,7 +114,7 @@ export default class ActionLoader {
      * @param entryKey
      * @returns {*}
      */
-    dispatchFetchIfNeeded(dispatch, state, entryKey) {
+    dispatchFetchIfNeeded(dispatch, state, entryKey, options) {
         // Get the substate containing the thing we are fetching.
         // This defaults to the entire state but might be overridden in a subclass
         var substate = this.resolveSubstate(state)

@@ -617,12 +617,26 @@ export default Map({
         TABLE_OF_CONTENTS_MODEL_NODE_COUNT: 2
     }),
     documents: Map({
-        keys: List(['ths_amtrak_standard', 'the_new_rules_of_the_road']),
+        keys: List(['about', 'contact', 'ths_amtrak_standard', 'the_new_rules_of_the_road']),
         // The URL of the source document
         baseUrl: id => (`https://docs.google.com/document/d/${id}/pub`),
         // The URL of the site
         siteUrl: key => (`http://rescapes.net/${key}`),
         entries: Map({
+            'about': Map({
+                status: Statuses.INITIALIZED,
+                title: 'About',
+                isHeaderDocument: true,
+                id: '1GbrsFkL4hlMP9o-J1JLw4Qu08j6hEPde_ElJdanJX5U',
+                modelKeys: List()
+            }),
+            'contact': Map({
+                status: Statuses.INITIALIZED,
+                title: 'Contact',
+                isHeaderDocument: true,
+                id: '1X0zMTLoEaQ-mBmqrOOQR2ahmQSGaNNVa8unu0qz6u1w',
+                modelKeys: List()
+            }),
             'the_amtrak_standard': Map({
                 date: new Date('October 2016'),
                 author: 'Andy Likuski',

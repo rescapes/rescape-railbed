@@ -24,6 +24,7 @@ class Footer extends Component {
         if (!this.props.models || !this.props.modelKey || !this.props.document)
             return <div/>
 
+        /*
         const pageDownButton = !(this.props.modelKey && this.props.sceneKey) || (
             this.props.models.get('entries').keySeq().last() == this.props.modelKey &&
             this.props.models.getIn(['entries', this.props.modelKey, 'scenes', 'entries']).keySeq().last() == this.props.sceneKey) ?
@@ -44,9 +45,9 @@ class Footer extends Component {
                     </g>
                 </svg>
             </div>
+        */
         const modelTops = getModelTops(this.props.document, this.props.models, this.props.settings)
         const [fade, toward] = calculateModelFadeAndToward(modelTops)
-        /* {pageDownButton} */
         return <div className='footer'>
             <Model3dTitle
                 model={this.props.model}

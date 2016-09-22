@@ -24,7 +24,6 @@ import * as actions from '../actions/document'
 import * as siteActions from '../actions/site'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Scroll from 'react-scroll';
-import Contact from './Contact'
 
 var scroll = Scroll.animateScroll;
 var scrollSpy = Scroll.scrollSpy;
@@ -159,7 +158,7 @@ class Document extends Component {
         // Add in the document credit and date
         const extraHeaderHtml =
             renderToStaticMarkup(<div className="document-header">
-                <div className="document-credit">by <Contact className="author" inline>{document.get('author')}</Contact></div>
+                <div className="document-credit">by <span className="author">{document.get('author')}</span></div>
                 <div className="document-date"><span className="date">{moment(document.get('date')).format('MMMM Do, YYYY')}</span></div>
             </div>)
         // The only processing we do to the Google doc HTML is the following:
