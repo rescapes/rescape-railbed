@@ -27,6 +27,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 var himalaya = require('himalaya');
 import Comments from './Comments'
 import DocumentGraph from './DocumentGraph'
+import OverlayDocument from './OverlayDocument'
 
 export class Site extends Component {
 
@@ -80,8 +81,6 @@ export class Site extends Component {
         /> : <div/>
         const tableOfContentsTop = this.makeTableOfContents(true)
         const tableOfContentsBottom = this.makeTableOfContents(false)
-        // TODO I feel like I should pass props to Showcase and Document, but they have access
-        // to the state and use mapStateToProps, so why bother?
         // DocumentMeta merges the head tag data in from the document's head tag data
         // Header of the overall web page
         // Displays the current 3D model and accompanying media
@@ -94,6 +93,7 @@ export class Site extends Component {
             <Header />
             <Showcase />
             <Document />
+            <OverlayDocument />
             {tableOfContentsBottom}
             <Footer />
         </div>;

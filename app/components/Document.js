@@ -25,10 +25,11 @@ import * as siteActions from '../actions/site'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Scroll from 'react-scroll';
 
-var scroll = Scroll.animateScroll;
+const scroll = Scroll.animateScroll;
 var scrollSpy = Scroll.scrollSpy;
 
 class Document extends Component {
+
 
     /***
      * When the Document content is loaded we want to index all of the anhors in the document text
@@ -37,6 +38,7 @@ class Document extends Component {
         window.addEventListener('scroll', this.handleScroll.bind(this));
         this.indexAnchors()
 
+        // TODO is this used?
         scrollSpy.update();
     }
 
@@ -146,25 +148,37 @@ class Document extends Component {
     }
 
     /***
+     * The Document needs to add the Date and author credit
+     * @param date
+     * @param renderToStaticMarkup
+     */
+    getExtraHeaderHtml() {
+        const document = this.props.document
+        const date = document.get('date')
+        // Add in the document credit and date
+        return renderToStaticMarkup(<div className="document-header">
+            <div className="document-credit">by <span className="author">{document.get('author')}</span></div>
+            <div className="document-date"><span
+                className="date">{moment(document.get('date')).format('MMMM Do, YYYY')}</span></div>
+        </div>)
+    }
+
+    /***
      * Render the document to the right of the model
      * @returns {XML}
      */
     render() {
         // Since the HTML comes from a Google doc or similar we can completely trust it
         const document = this.props.document
+        if (!document)
+            return <div/>
         const body = document.getIn(['content', 'body'])
-        const date = document.get('date')
-
-        // Add in the document credit and date
-        const extraHeaderHtml =
-            renderToStaticMarkup(<div className="document-header">
-                <div className="document-credit">by <span className="author">{document.get('author')}</span></div>
-                <div className="document-date"><span className="date">{moment(document.get('date')).format('MMMM Do, YYYY')}</span></div>
-            </div>)
+        if (!body)
+            return <div/>
         // The only processing we do to the Google doc HTML is the following:
         // 1) Replace pairs of <hr> elements with <div className='modelSection'>...</div>
         // This allows us to style each portion of the doc to match a corresponding 3D model
-        const modifiedBody = this.injectStyledDivWrappers(body, extraHeaderHtml)
+        const modifiedBody = this.injectStyledDivWrappers(body, this.getExtraHeaderHtml())
 
         return <div className='document'>
             <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
@@ -172,6 +186,7 @@ class Document extends Component {
             <div className='document-gradient right' />
         </div>
     }
+
 
     /***
      * Wraps each section of text in a <div class="modelSection">...</div> So the user can tell
@@ -249,7 +264,7 @@ function mapStateToProps(state) {
     const modelKeysInDocument = document && document.get('modelKeys')
     return {
         settings,
-        document: currentDocumentKey ? state.getIn(['documents', 'entries', currentDocumentKey]) : Map({}),
+        document: document,
         models: modelKeysInDocument &&
             state.getIn(['models', 'entries']).filter((value,key) => modelKeysInDocument.includes(key)),
         scrollPosition
