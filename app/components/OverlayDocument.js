@@ -15,39 +15,19 @@ import {connect} from 'react-redux';
 import {Map, List} from 'immutable'
 import * as actions from '../actions/document'
 import * as siteActions from '../actions/site'
-import Document from './Document'
+import {RawDocument} from './Document'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
-class OverlayDocument extends Document {
+class OverlayDocument extends Component {
 
-    /***
-     * Override
-     * @returns {string}
-     */
-    className() {
-        return 'overlay-document'
-    }
+
 
     /***
      * Override to simplify. We don't need to inject headers
      * @returns {XML}
      */
     render() {
-        const document = this.props.document
-        if (!document)
-            return <div/>
-        const body = document.getIn(['content', 'body'])
-        if (!body)
-            return <div/>
-        // The only processing we do to the Google doc HTML is the following:
-        // 1) Replace pairs of <hr> elements with <div className='modelSection'>...</div>
-        // This allows us to style each portion of the doc to match a corresponding 3D model
-        const modifiedBody = this.injectStyledDivWrappers(body)
-
-        return <div className='overlay-document'>
-            <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
-            </div>
-            <div className='document-gradient right' />
-        </div>
+        return <ModifiedPropsDocument/>
     }
 }
 
@@ -58,21 +38,40 @@ class OverlayDocument extends Document {
  */
 function mapStateToProps(state) {
     const settings = state.get('settings')
-    const currentDocumentKey = state.getIn(['documents', 'currentOverlay'])
-    const document = state.getIn(['documents', 'entries', currentDocumentKey])
+    const documentKey = state.getIn(['documents', 'currentOverlay'])
+    const document = state.getIn(['documents', 'entries', documentKey])
     if (!document) {
         return {}
     }
 
     const scrollPosition = document && document.get('scrollPosition')
     const modelKeysInDocument = document && document.get('modelKeys')
+    const className = 'document overlay'
     return {
         settings,
         document: document,
+        documentKey,
         models: modelKeysInDocument &&
         state.getIn(['models', 'entries']).filter((value,key) => modelKeysInDocument.includes(key)),
-        scrollPosition
+        scrollPosition,
+        className,
     }
+}
+
+/***
+ * Create a modified version of Document with different props
+ */
+const ModifiedPropsDocument = connect(
+    mapStateToProps,
+    Object.assign(actions, siteActions)
+)(RawDocument)
+
+ModifiedPropsDocument.propTypes = {
+    settings: ImmutablePropTypes.map,
+    document: ImmutablePropTypes.map,
+    models: ImmutablePropTypes.map,
+    scrollPosition: PropTypes.number,
+    className: PropTypes.string,
 }
 
 /***

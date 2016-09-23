@@ -7,8 +7,26 @@
     right: 0px;
     margin-left: 10px;
     margin-right: 10px;
-    background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, .4) 50%, rgba(77, 78, 83, 1) 60%);
+    background: linear-gradient(to right, rgba(77, 78, 83, .8) 30%, rgba(77, 78, 83, 1) 50%);
 }
+
+.footer-gradient {
+    position: absolute;
+    z-index: 8;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+
+    &.left {
+         background: linear-gradient(to left, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
+         width: 10px;
+         right: auto;
+    }
+}
+
 
 /***
     The page down button. Most styling is handled in ender.css
@@ -17,21 +35,6 @@
     top: 0px;
 }
 
-.model-3d-title {
-    position: absolute;
-    bottom: calc($showcase-footer-overlap - 0px);
-    height: 20px;
-    width: $showcase-width;
-    color: $rescape-love;
-    font-weight: bold;
-    font-size: $h4-font-size;
-    left: 0px;
-    right: -100px;
-    padding-left: 10px;
-    padding-right: 5px;
-    padding-top: 0px;
-    background: linear-gradient(to right, rgba(255,255,255,.2), $white 2%, rgba(77, 78, 83, 1) 99%);
-}
 
 .gallery-open {
     display: none;

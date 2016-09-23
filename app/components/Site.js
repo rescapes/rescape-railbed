@@ -28,23 +28,20 @@ var himalaya = require('himalaya');
 import Comments from './Comments'
 import DocumentGraph from './DocumentGraph'
 import OverlayDocument from './OverlayDocument'
+import close_svg from '../images/close.svg'
+import * as documentActions from '../actions/document'
 
 export class Site extends Component {
 
-    /***
-     * This seems like the place to bind methods (?)
-     * @param props
-     */
-    constructor(props) {
-        super(props)
-    }
 
     /***
-     * Fetches the documents by url
+     * Close the Overlay Document when the close button is clicked
+     * This is here rather than in OverlayDocument so that it shows over the Header
      */
-    componentDidMount() {
+    onClickCloseButton() {
+        this.props.closeOverlayDocument()
     }
-    
+
     render() {
         // Convert the <head> tag elements from the document into JSON so that we can merge them into
         // our existing <head> tags
@@ -71,16 +68,35 @@ export class Site extends Component {
         if (!this.props.documentKey)
             return <div className="site"/>
 
-        const comments = this.props.modelKey ?
+        // This is our layout if an overlay document is showing (About, Contact, etc)
+        if (this.props.overlayDocumentIsShowing) {
+            return <div className='site'>
+                <DocumentMeta {...meta} extend />
+                <Header />
+                <Showcase />
+                <div>
+                    <img className='overlay-document-close-icon' src={close_svg} onClick={this.onClickCloseButton.bind(this)} />,
+                    <div className='showcase-screen' />
+                    <OverlayDocument />
+                </div>
+                <Footer />
+            </div>
+        }
+
+        // Shows the comments button for the current model
+        const modelComments = this.props.modelKey ?
             <Comments className='comments'
                 documentKey={this.props.documentKey}
                 documentTitle={this.props.documentTitle}
                 model={this.props.model}
                 modelKey={this.props.modelKey}
                 commentsAreShowing={this.props.commentsAreShowing}
-        /> : <div/>
+        /> : <span/>
+
+        // Our top and bottom table of contents
         const tableOfContentsTop = this.makeTableOfContents(true)
         const tableOfContentsBottom = this.makeTableOfContents(false)
+
         // DocumentMeta merges the head tag data in from the document's head tag data
         // Header of the overall web page
         // Displays the current 3D model and accompanying media
@@ -88,12 +104,11 @@ export class Site extends Component {
         // Footer of the overall web page
         return <div className='site'>
             <DocumentMeta {...meta} extend />
-            {comments}
+            {modelComments}
             {tableOfContentsTop}
             <Header />
             <Showcase />
-            <Document />
-            <OverlayDocument />
+            <Document/>
             {tableOfContentsBottom}
             <Footer />
         </div>;
@@ -120,6 +135,7 @@ export class Site extends Component {
 };
 
 Site.propTypes = {
+    settings: ImmutablePropTypes.map,
     documents: ImmutablePropTypes.map,
     documentKey: PropTypes.string,
     document: ImmutablePropTypes.map,
@@ -127,7 +143,9 @@ Site.propTypes = {
     modelKey: PropTypes.string,
     model: ImmutablePropTypes.map,
     documentTitle: PropTypes.string,
-    isTableOfContentsExpanded: PropTypes.bool,
+    commentsAreShowing: PropTypes.bool,
+    overlayDocumentIsShowing: PropTypes.bool,
+    sceneKey: PropTypes.string
 }
 
 /***
@@ -137,27 +155,34 @@ Site.propTypes = {
  */
 function mapStateToProps(state) {
 
+    const settings = state.get('settings')
     const documents = state.get('documents')
     const documentKey = documents.get('current')
     const document = documents.getIn(['entries', documentKey])
 
-    const models = documentKey ? state.get('models') :new Map()
+    const models = documentKey && state.get('models')
     const modelKey = models && models.get('current')
     const model = modelKey && models.getIn(['entries', modelKey])
 
-
     const documentTitle = document && document.get('title')
     const commentsAreShowing = model && model.get('commentsAreShowing')
+    // Announce if an overlay document is present (About, Contact, etc)
+    const overlayDocumentIsShowing = !!(documents && documents.get('currentOverlay'))
+    const sceneKey = models && models.getIn(['entries', modelKey, 'scenes', 'current'])
 
     return {
+        settings,
         document,
         documents,
         documentKey,
         model,
+        models,
         modelKey,
         documentTitle,
-        commentsAreShowing
+        commentsAreShowing,
+        overlayDocumentIsShowing,
+        sceneKey
     }
 }
 
-export default connect(mapStateToProps)(Site)
+export default connect(mapStateToProps, documentActions)(Site)
