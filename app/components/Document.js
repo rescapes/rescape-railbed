@@ -35,7 +35,8 @@ class Document extends Component {
      * When the Document content is loaded we want to index all of the anhors in the document text
      */
     componentDidMount(){
-        window.addEventListener('scroll', this.handleScroll.bind(this));
+        this.handleScrollBound = this.handleScroll.bind(this);
+        window.addEventListener('scroll', this.handleScrollBound);
         this.indexAnchors()
 
         // TODO is this used?
@@ -43,7 +44,8 @@ class Document extends Component {
     }
 
     componentWillUnmount(){
-        window.removeEventListener('scroll', this.handleScroll.bind(this));
+        window.removeEventListener('scroll', this.handleScrollBound);
+        this.handleScrollBound = null;
     }
 
     /***
@@ -137,11 +139,11 @@ class Document extends Component {
         // Previous props can be accessed by this.props
         // Calling setState here does not trigger an an additional re-render
         const closestAnchors = nextProps.document.get('closestAnchors')
-        const previousClosestAnchors = this.props.document.get('closestsAnchors')
+        const previousClosestAnchors = this.props.document && this.props.document.get('closestsAnchors')
         if ((!previousClosestAnchors && closestAnchors) || (previousClosestAnchors && !previousClosestAnchors.equals(closestAnchors))) {
             this.props.documentTellModelAnchorsChanged(closestAnchors)
         }
-        if (nextProps.document.get('scrollPosition') != this.props.document.get('scrollPosition')
+        if (!this.props.document || nextProps.document.get('scrollPosition') != this.props.document.get('scrollPosition')
             && nextProps.document.get('scrollPosition') != window.document.body.scrollTop) {
             this.scrollTo(nextProps.document.get('scrollPosition'))
         }
@@ -157,10 +159,18 @@ class Document extends Component {
         const date = document.get('date')
         // Add in the document credit and date
         return renderToStaticMarkup(<div className="document-header">
-            <div className="document-credit">by <span className="author">{document.get('author')}</span></div>
-            <div className="document-date"><span
-                className="date">{moment(document.get('date')).format('MMMM Do, YYYY')}</span></div>
-        </div>)
+            {document.get('author') ?
+                <div className="document-credit">by <span className="author">{document.get('author')}</span></div> :
+                <span/>}
+            {document.get('date') ?
+                <div className="document-date">
+                    <span
+                        className="date">{moment(document.get('date')).format('MMMM Do, YYYY')}
+                    </span>
+                </div> :
+                <span/>}
+            </div>
+        )
     }
 
     /***
@@ -180,7 +190,7 @@ class Document extends Component {
         // This allows us to style each portion of the doc to match a corresponding 3D model
         const modifiedBody = this.injectStyledDivWrappers(body, this.getExtraHeaderHtml())
 
-        return <div className='document'>
+        return <div className={`${this.props.className || 'document'} ${this.props.overlayDocumentIsShowing ? 'overlay-document-showing' : ''}`}>
             <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
             </div>
             <div className='document-gradient right' />
@@ -201,7 +211,7 @@ class Document extends Component {
             contentsDiv = '<div id="contents">',
             contentsDivLength = contentsDiv.length
         var index = 0,
-            modifiedBody = null,
+            modifiedBody = body,
             startLocation = null,
             result
         // For each <hr>
@@ -245,8 +255,14 @@ class Document extends Component {
 Document.propTypes = {
     settings: ImmutablePropTypes.map,
     document: ImmutablePropTypes.map,
+    documentKey: PropTypes.string,
     models: ImmutablePropTypes.map,
-    scrollPosition: PropTypes.number
+    scrollPosition: PropTypes.number,
+    // Tell the document if an overlay document is covering it
+    overlayDocumentIsShowing: PropTypes.bool,
+    // These are listed for ride in OverlayDocument
+    className: PropTypes.string,
+
 }
 
 /***
@@ -258,18 +274,22 @@ Document.propTypes = {
  */
 function mapStateToProps(state) {
     const settings = state.get('settings')
-    const currentDocumentKey = state.getIn(['documents', 'current'])
-    const document = state.getIn(['documents', 'entries', currentDocumentKey])
+    const documentKey = state.getIn(['documents', 'current'])
+    const document = state.getIn(['documents', 'entries', documentKey])
     const scrollPosition = document && document.get('scrollPosition')
     const modelKeysInDocument = document && document.get('modelKeys')
     return {
         settings,
         document: document,
+        documentKey,
         models: modelKeysInDocument &&
             state.getIn(['models', 'entries']).filter((value,key) => modelKeysInDocument.includes(key)),
         scrollPosition
     }
 }
+
+class RawDocument extends Document {}
+export {RawDocument}
 
 /***
  * Connect the mapStateToProps to provide the props to the component.

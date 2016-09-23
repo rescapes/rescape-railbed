@@ -46,7 +46,30 @@ import Statuses from '../statuses'
  * @returns {*}
  */
 export default function(state = Map({keys: List(), current: null, entries: Map({})}), action) {
-    const currentDocumentKey = state.get('current')
+    // Work in the context of the main Document or the overlay Document if the latter is showing
+    const currentDocumentKey = state.get('currentOverlay') || state.get('current')
+
+    /***
+     * Used by two reduces to register the current scroll position and find the closest anchors
+     * @param documentKey
+     * @param scrollPosition
+     * @returns {*}
+     */
+    var setScrollPosition = function (documentKey, scrollPosition) {
+        // Filter out anchors with an undefined name, meaning they didn't match anything in our initial state
+        // If a is closer the function will return <0, so a wins. If b is closer then >0 so b wins
+        const {current, next, previous, nextForDistinctModel, previousForDistinctModel} = getRelevantAnchors(scrollPosition)
+
+        return state
+            .setIn(['entries', documentKey, 'scrollPosition'], scrollPosition)
+            .setIn(['entries', documentKey, 'closestAnchors'], Map({
+                current,
+                previous,
+                next,
+                previousForDistinctModel,
+                nextForDistinctModel
+            }))
+    };
 
     // If setting state we will receive the full state
     if (action.type==SET_STATE) {
@@ -58,7 +81,8 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     // and overlay over the current document. Used for about, contact, etc pages
     else if (action.type==actions.SHOW_DOCUMENT) {
         if (action.options && action.options.isOverlay) {
-            return state
+            // When we show an overlay document set the scroll position to 0
+            return setScrollPosition(action.key, 0)
                 .set('currentOverlay', action.key)
                 .setIn(['entries', action.key, 'postUrl'], state.get('siteUrl')(action.key))
         }
@@ -67,6 +91,10 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                 .set('current', action.key)
                 .setIn(['entries', action.key, 'postUrl'], state.get('siteUrl')(action.key))
         }
+    }
+    // If an overlay Document is showing, close it.
+    else if (action.type == actions.CLOSE_OVERLAY_DOCUMENT) {
+        return state.set('currentOverlay', null)
     }
     else if (action.type==actions.REGISTER_DOCUMENT) {
         return (!state.get('keys').has(action.key)) ?
@@ -117,28 +145,16 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         // When the document is fully loaded our Component inspects its DOM and sends
         // all of the <a id=...> tags it finds. These represent anchors to the models
         // or their scenes.
-        return state.setIn(['entries', state.get('current'), 'anchors'], action.anchors)
+        return state.setIn(['entries', currentDocumentKey, 'anchors'], action.anchors)
     }
     // Sets the scroll position and closest anchor. The models reducer reacts to this by setting
     // the current model and scene based on the model or scene matching the anchor.
     // Also set the distance from the scroll position to the closest anchor, previous anchor, and next anchor.
     // These distances are used to calculate the vertical transition animation from one model to the next if the
     // anchors represent different models (as opposed to different scenes)
+    // The scrollPosition is recording in the state of the Document or the OverlayDocument if the latter is showing
     else if (action.type==actions.REGISTER_SCROLL_POSITION) {
-        const scrollPosition = action.position
-        // Filter out anchors with an undefined name, meaning they didn't match anything in our initial state
-        // If a is closer the function will return <0, so a wins. If b is closer then >0 so b wins
-        const {current, next, previous, nextForDistinctModel, previousForDistinctModel} = getRelevantAnchors(scrollPosition)
-
-        return state
-            .setIn(['entries', currentDocumentKey, 'scrollPosition'], scrollPosition)
-            .setIn(['entries', currentDocumentKey, 'closestAnchors'], Map({
-                current,
-                previous,
-                next,
-                previousForDistinctModel,
-                nextForDistinctModel
-            }))
+        return setScrollPosition(currentDocumentKey, action.position)
     }
     /***
      * If incrementing the scroll position to the anchor of the next model
@@ -164,7 +180,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         const {previousForDistinctModel, previous} = getRelevantAnchors(scrollPosition)
         const whichPrevious = previousForDistinctModel || previous
         const modelKey = resolveModelKeyFromAnchor(whichPrevious)
-        const anchors = getAnchors()
+        const anchors = getAnchors(currentDocumentKey)
         // Start at 0 and search up until whichPrevious. Take the first model match
         const firstSceneOfPrevious = anchors.slice(0, anchors.indexOf(whichPrevious)+1).find(function(anchor) {
             const seek = resolveModelKeyFromAnchor(anchor)
@@ -183,7 +199,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         const scrollPosition = state.getIn(['entries', currentDocumentKey, 'scrollPosition'])
         const {previousForDistinctModel, previous} = getRelevantAnchors(scrollPosition)
         const soughtModelAnchor = findForDistinctModel(
-            getAnchors(),
+            getAnchors(currentDocumentKey),
             null,
             action.key
         )
@@ -229,10 +245,13 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         return state
 
 
-    function getAnchors() {
-        const currentDocumentKey = state.get('current')
-        return (state.getIn(['entries', currentDocumentKey, 'anchors'])
-            .filter(anchor=>anchor.name != 'undefined') || List([]));
+    /***
+     * Gets the anchors of the given document
+     * @param documentKey
+     * @returns {*}
+     */
+    function getAnchors(documentKey) {
+        return (state.getIn(['entries', documentKey, 'anchors']) || List()).filter(anchor=>anchor.name != 'undefined')
     }
 
     /***
@@ -240,10 +259,14 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
      * anchors, based on the given scrollPosition, which normally corresponds to the actual
      * scroll position in the document
      * @param scrollPosition
+     * @param documentKey The current document
      * @returns {{current: *, previous: *, next: *, nextForDistinctModel: *, previousForDistinctModel: *}}
      */
-    function getRelevantAnchors(scrollPosition) {
-        const anchors = getAnchors()
+    function getRelevantAnchors(scrollPosition, documentKey) {
+        documentKey = documentKey || currentDocumentKey
+        const anchors = getAnchors(documentKey)
+        if (!anchors.count())
+            return {}
         // Current anchor is the last anchor whose position is absolutely closest to the scroll position.
         const current = anchors.sort((a, b) =>
             Math.abs(scrollPosition-a.offsetTop) - Math.abs(scrollPosition-b.offsetTop)).first()

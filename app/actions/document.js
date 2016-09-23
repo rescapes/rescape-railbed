@@ -33,6 +33,8 @@ export const SCROLL_TO_PREVIOUS_MODEL = 'SCROLL_TO_PREVIOUS_MODEL'
 export const SCROLL_TO_MODEL = 'SCROLL_TO_MODEL'
 
 export const TOGGLE_DOCUMENT_TABLE_OF_CONTENTS = 'TOGGLE_DOCUMENT_TABLE_OF_CONTENTS'
+
+export const CLOSE_OVERLAY_DOCUMENT = 'CLOSE_OVERLAY_DOCUMENT'
 /*
  * Action creators. 
  * List in the same order as the action types.
@@ -181,4 +183,11 @@ export const fetchDocumentIfNeeded = documentLoader.fetchIfNeeded.bind(documentL
 export const showDocument = documentLoader.show.bind(documentLoader)
 // Like show document but overlays a document over the current one
 export const overlayDocument = (key) => documentLoader.show(key, {isOverlay:  true})
+
+/***
+ * Closes an overlay Document (About, Contact, etc) if open
+ */
+export function closeOverlayDocument() {
+    return { type: CLOSE_OVERLAY_DOCUMENT }
+}
 

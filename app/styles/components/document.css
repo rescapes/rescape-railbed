@@ -10,12 +10,67 @@ html.noscroll {
     width: 100%;
 }
 
+
+::-webkit-scrollbar-track
+{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+    background: $faded-gray;
+}
+
+/*
+    If an overlay Document is showing like About or Contact, hide the main Document
+*/
 .document {
+    overflow-y: scroll;
     top: $document-top;
+    bottom: $footer-height;
     left: $document-left;
-    margin-right: $document-margin-left;
     z-index: 2;
     position: absolute;
+
+    &.overlay-document-showing {
+        display: none;
+    }
+
+    &.overlay {
+        left: $overlay-document-left;
+        display: block;
+    }
+}
+
+/**
+    Cover the showcase when an overlay Document is showing
+**/
+.showcase-screen {
+    position: fixed;
+    z-index: 2;
+    background-color: $faded-black-background;
+    top: $document-top;
+    height: $showcase-height;
+    left: 0;
+    right: 0;
+}
+
+.overlay-document-close-icon {
+    position: fixed;
+    z-index: 10;
+    top: calc($document-top - 30px);
+    height: 24px;
+    width: 24px;
+    right: 0;
+    margin-right: $document-margin-left;
+    padding-right: 10px;
+
+    &:hover {
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        transition: width 300ms ease, height 300ms ease;
+    }
 }
 
 /***
@@ -26,9 +81,10 @@ html.noscroll {
 }
 
 .document-gradient {
-    position: absolute;
+    top: $document-top;
+    position: fixed;
+    margin-right: $document-margin-left;
     z-index: 2;
-    top: 0;
     bottom: 0;
     left:0;
     right: 0;

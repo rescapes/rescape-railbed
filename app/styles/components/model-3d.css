@@ -169,3 +169,20 @@ video {
         font-size: $h6-font-size;
     }
 }
+
+.model-3d-title {
+    z-index: 7;
+    position: fixed;
+    bottom: calc($showcase-footer-overlap - 0px);
+    height: 20px;
+    width: calc($document-left - 100px);
+    left: 10px;
+    right: -100px;
+    color: $rescape-love;
+    font-weight: bold;
+    font-size: $h4-font-size;
+    padding-left: 10px;
+    padding-right: 5px;
+    padding-top: 0px;
+    background: linear-gradient(to right, rgba(255,255,255,.2), $white 2%, rgba(77, 78, 83, 1) 99%);
+}
