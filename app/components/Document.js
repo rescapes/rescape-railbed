@@ -34,17 +34,18 @@ class Document extends Component {
     /***
      * When the Document content is loaded we want to index all of the anhors in the document text
      */
-    componentDidMount(){
-        this.handleScrollBound = this.handleScroll.bind(this);
-        window.addEventListener('scroll', this.handleScrollBound);
-        this.indexAnchors()
 
-        // TODO is this used?
-        scrollSpy.update();
+    componentDidMount() {
+        this.handleScrollBound = this.handleScroll.bind(this)
+        const document = ReactDOM.findDOMNode(this.documentDiv)
+        document.addEventListener('scroll', this.handleScrollBound);
+        if (this.props.scrollPosition)
+            this.scrollTo(this.props.scrollPosition)
     }
 
-    componentWillUnmount(){
-        window.removeEventListener('scroll', this.handleScrollBound);
+    componentWillUnmount() {
+        const document = ReactDOM.findDOMNode(this.documentDiv)
+        document.removeEventListener('scroll', this.handleScrollBound);
         this.handleScrollBound = null;
     }
 
@@ -114,7 +115,11 @@ class Document extends Component {
      */
     handleScroll(event) {
 
-        let scrollTop = event ? event.srcElement.body.scrollTop : window.document.body.scrollTop
+        if (this._scrolling)
+            return
+        const scrollTop = this.documentDiv && this.documentDiv.scrollTop
+        if (!scrollTop)
+            return
         const interval = 50
         const now = new Date()
         if (now - (this.state && this.state.lastScrollTime || 0) > interval) {
@@ -125,8 +130,45 @@ class Document extends Component {
         }
     }
 
-    scrollTo(scrollPosition) {
-        scroll.scrollTo(scrollPosition)
+    /***
+     * Scroll immediately or smoothly
+     * http://stackoverflow.com/questions/8917921/cross-browser-javascript-not-jquery-scroll-to-top-animation
+     * @param to: To this position
+     * @param duration: if null immediately, otherwise in this duration
+     */
+    scrollTo(to, duration) {
+        duration = duration || 0
+        const element = this.documentDiv,
+            start = element.scrollTop,
+            change = to - start,
+            increment = 20;
+
+        var animateScroll = function(elapsedTime) {
+            elapsedTime += increment;
+            if (duration==0) {
+                element.scrollTop = to
+                return
+            }
+            var position = this.easeInOut(elapsedTime, start, change, duration);
+            element.scrollTop = position;
+            const self = this
+            if (elapsedTime < duration) {
+                setTimeout(function() {
+                    animateScroll.apply(self, [elapsedTime]);
+                }, increment);
+            }
+        };
+
+        animateScroll.apply(this, [0]);
+    }
+
+    easeInOut(currentTime, start, change, duration) {
+        currentTime /= duration / 2;
+        if (currentTime < 1) {
+            return change / 2 * currentTime * currentTime + start;
+        }
+        currentTime -= 1;
+        return -change / 2 * (currentTime * (currentTime - 2) - 1) + start;
     }
 
     /***
@@ -143,9 +185,10 @@ class Document extends Component {
         if ((!previousClosestAnchors && closestAnchors) || (previousClosestAnchors && !previousClosestAnchors.equals(closestAnchors))) {
             this.props.documentTellModelAnchorsChanged(closestAnchors)
         }
-        if (!this.props.document || nextProps.document.get('scrollPosition') != this.props.document.get('scrollPosition')
-            && nextProps.document.get('scrollPosition') != window.document.body.scrollTop) {
-            this.scrollTo(nextProps.document.get('scrollPosition'))
+        if (!this.props.document ||
+            (nextProps.document.get('scrollPosition') != this.props.scrollPosition
+            && nextProps.document.get('scrollPosition') != this.documentDiv.scrollTop)) {
+            this.scrollTo(nextProps.document.get('scrollPosition'), 100)
         }
     }
 
@@ -181,16 +224,19 @@ class Document extends Component {
         // Since the HTML comes from a Google doc or similar we can completely trust it
         const document = this.props.document
         if (!document)
-            return <div/>
+            return <div ref={(c) => this.documentDiv = c} />
         const body = document.getIn(['content', 'body'])
         if (!body)
-            return <div/>
+            return <div ref={(c) => this.documentDiv = c} />
         // The only processing we do to the Google doc HTML is the following:
         // 1) Replace pairs of <hr> elements with <div className='modelSection'>...</div>
         // This allows us to style each portion of the doc to match a corresponding 3D model
         const modifiedBody = this.injectStyledDivWrappers(body, this.getExtraHeaderHtml())
 
-        return <div className={`${this.props.className || 'document'} ${this.props.overlayDocumentIsShowing ? 'overlay-document-showing' : ''}`}>
+        return <div
+            ref={(c) => this.documentDiv = c}
+            className={`${this.props.className || 'document'} ${this.props.overlayDocumentIsShowing ? 'overlay-document-showing' : ''}`}
+        >
             <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
             </div>
             <div className='document-gradient right' />
