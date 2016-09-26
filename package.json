@@ -17,6 +17,8 @@
     "babel-loader": "^6.2.5",
     "babel-preset-es2015": "^6.14.0",
     "file-loader": "^0.9.0",
+    "google-auth-library": "^0.9.8",
+    "googleapis": "^13.0.0",
     "himalaya": "^0.2.0",
     "history": "^2.1.2",
     "moment": "^2.15.0",

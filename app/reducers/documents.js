@@ -251,7 +251,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
      * @returns {*}
      */
     function getAnchors(documentKey) {
-        return (state.getIn(['entries', documentKey, 'anchors']) || List()).filter(anchor=>anchor.name != 'undefined')
+        return (state.getIn(['entries', documentKey, 'anchors']) ||[]).filter(anchor=>anchor.name != 'undefined')
     }
 
     /***
@@ -265,15 +265,15 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     function getRelevantAnchors(scrollPosition, documentKey) {
         documentKey = documentKey || currentDocumentKey
         const anchors = getAnchors(documentKey)
-        if (!anchors.count())
+        if (!anchors.length)
             return {}
         // Current anchor is the last anchor whose position is absolutely closest to the scroll position.
-        const current = anchors.sort((a, b) =>
-            Math.abs(scrollPosition-a.offsetTop) - Math.abs(scrollPosition-b.offsetTop)).first()
+        const current = anchors.slice(0).sort((a, b) =>
+            Math.abs(scrollPosition-a.offsetTop) - Math.abs(scrollPosition-b.offsetTop))[0]
 
         // The next anchor is the next in the list
         const nextAnchorIndex = anchors.indexOf(current) + 1
-        const next = nextAnchorIndex < anchors.count() ? anchors.get(nextAnchorIndex) : null
+        const next = nextAnchorIndex < anchors.length ? anchors[nextAnchorIndex] : null
         // We also need to find the next anchor key of a unique model if one exists.
         // This might be the same as next or different if next is a different scene but the same model
         // as current
@@ -284,7 +284,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
 
         // The previous anchor is the next positive one
         const previousAnchorIndex = anchors.indexOf(current) - 1
-        const previous = previousAnchorIndex >= 0 ? anchors.get(previousAnchorIndex) : null
+        const previous = previousAnchorIndex >= 0 ? anchors[previousAnchorIndex] : null
         // We also need to find the previous anchor key of a unique model if one exists.
         // This might be the same as previous or different if previous is a different scene but the same model
         // as current
