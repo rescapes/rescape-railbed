@@ -19,7 +19,7 @@ import ReactDOM from 'react-dom'
 import { renderToStaticMarkup } from 'react-dom/server'
 import moment from 'moment';
 import {connect} from 'react-redux';
-import {Map, List} from 'immutable'
+import {Map, OrderedMap, List} from 'immutable'
 import * as actions from '../actions/document'
 import * as siteActions from '../actions/site'
 import ImmutablePropTypes from 'react-immutable-proptypes'
@@ -40,7 +40,9 @@ class Document extends Component {
         const document = ReactDOM.findDOMNode(this.documentDiv)
         document.addEventListener('scroll', this.handleScrollBound);
         if (this.props.scrollPosition)
-            this.scrollTo(this.props.scrollPosition)
+            this.scrollTo(this.props.scrollPosition || 0)
+        else
+            this.handleScroll()
     }
 
     componentWillUnmount() {
@@ -58,49 +60,69 @@ class Document extends Component {
     }
 
     /***
-     * Finds all the anchors that anchor models and scenes.
-     * Sends an update to the state with the info.
+     * Get the Model3d anchor elements. The models have an anchorId that corresponds to one of the anchor ids
+     * in the document HTML. Related models share the same anchor. We create pseudo-anchors for each scene
+     * of the models, giving the pseudo-anchors an offset that evenly spaces them. If models share the same anchor,
+     * we spread the pseudo-anchors for all the scenes of the shared models evenly.
+     *
+     * When all anchors are processed an action is sent to store the anchors in the state.
      */
     indexAnchors() {
 
-        // Get the anchor elements. The models/scenes have an anchorId that corresponds to one of the anchor ids
-        const dom = ReactDOM.findDOMNode(this)
-        var anchors = List([...dom.querySelectorAll('a[id]')])
+        const domElement = ReactDOM.findDOMNode(this)
         const models = this.props.models
-        
-        // If no anchors yet or our anchors are already named return
-        if (!anchors.count() || anchors.first().name)
-            return
-        // If our models aren't set return
-        if (!models)
+        const anchors = List([...domElement.querySelectorAll('a[id]')])
+        // If no models or anchors yet or our anchors are already named return
+        if (!models || !anchors.count() || anchors.first().name)
             return
 
+        const maxScenePosition = this.props.settings.get('MAX_SCENE_POSITION')
+
+        // Map anchors to models. One anchor can represent to one or more models
+        // As a side-effect we give the anchor the generic model name the first time we encounter a new anchor
+        const anchorToModels = this.props.models.entrySeq().reduce(function(reduction, [modelKey, model]) {
+            const anchor = anchors.find(anchor=>anchor.id == model.get('anchorId'))
+            if (!anchor)
+                throw `Model: ${modelKey} with anchorId ${model.get('anchorId')} cannot find its anchor in the document`
+            // Remove the () of the model key to generalize the name
+            // Models with the same anchors use (difference) to differentiate their keys
+            const modelKeyNormalized = modelKey.replace(/ \(.*?\)$/, '')
+            // Make a pseudoAnchor since DOM elements don't hash properly
+            const pseudoAnchor = Map({key:modelKeyNormalized, offsetTop:anchor.offsetTop})
+            const models = (reduction.get(pseudoAnchor) || OrderedMap()).set(modelKey, model)
+            if (models.count() == 1) {
+                // Side-effect: put a name on the anchor so it can be used for url navigation
+                anchor.name = modelKeyNormalized
+            }
+            return reduction.set(pseudoAnchor, models)
+        }, OrderedMap())
+
+        const allAnchors = anchorToModels.entrySeq().flatMap(function([anchor, models], i) {
+            // Find the next anchor position or failing that the bottom of the dom element
+            const nextAnchorOffsetTop = anchorToModels.count() > i + 1 ?
+                anchorToModels.keySeq().get(i + 1).get('offsetTop') :
+                domElement.scrollHeight
+
+            // Get the scenes of all models of this anchor
+            const sceneKeys = models.valueSeq().flatMap(model => model.getIn(['scenes', 'entries']).keySeq())
+            const allScenesCount = sceneKeys.count()
+            const sceneAnchors = models.entrySeq().flatMap(([modelKey, model], index) =>
+                model.getIn(['scenes', 'entries']).keySeq().map(function(sceneKey) {
+                    return {
+                        name: `${modelKey}_${sceneKey}`,
+                        // Position the scene between this anchor and the next (or bottom of document)
+                        // The first scene is positioned at the anchor and the last somewhere before the next anchor
+                        // Use maxScenePosition % (e.g. .8) to make sure no scene is too close to the next model
+                        offsetTop: anchor.get('offsetTop') + maxScenePosition * (nextAnchorOffsetTop - anchor.get('offsetTop')) * sceneKeys.indexOf(sceneKey) / allScenesCount
+                    }
+                })
+            )
+            return sceneAnchors
+        }).toArray()
+
         // Once we certainly have the anchors loaded, put them into the document's state
-        this.props.registerAnchors(anchors)
-        
-        anchors.forEach(function(anchor) {
-            // Get the single key/value Map of the matching model
-            const matchingModelEntry = models.findEntry((model, key) => model.get('anchorId') == anchor.id)
-            // If the anchor doesn't match a model, we need to find the scene that matches the anchor
-            const {modelKey, sceneKey} = matchingModelEntry ?
-                    // If model matches the anchor return null for the scene
-                    {modelKey: matchingModelEntry[0],
-                    sceneKey: null} :
-                    // Otherwise iterate through the models and return a model and scene where the scene matches the anchor
-                    models.mapEntries(function ([modelKey, model]) {
-                        const sceneKey = model.getIn(['scenes', 'entries']).findKey(
-                            (scene, sceneKey) => scene.get('anchorId') == anchor.id)
-                        return sceneKey ? ['FOUND', {
-                            modelKey: modelKey,
-                            sceneKey: sceneKey
-                        }] : null
-                    }).get('FOUND') || {}
-            // Set the anchor name to the model and scene that we found
-            if (sceneKey)
-                anchor.setAttribute('name', `${modelKey}_${sceneKey}`)
-            else
-                anchor.setAttribute('name', modelKey) 
-        })
+        this.props.registerAnchors(allAnchors)
+
         // Immediately register the scroll position so that the closest 3d model to the current text loads.
         // If we don't do this no model will load until the user scrolls
         this.handleScroll()
@@ -114,11 +136,8 @@ class Document extends Component {
      * could do in any case)
      */
     handleScroll(event) {
-
-        if (this._scrolling)
-            return
         const scrollTop = this.documentDiv && this.documentDiv.scrollTop
-        if (!scrollTop)
+        if (!scrollTop && scrollTop != 0)
             return
         const interval = 50
         const now = new Date()

@@ -19,7 +19,7 @@ import Statuses from '../statuses'
 import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import ModelVideo from './ModelVideo'
-import {currentSceneKeyOfModel, currentSceneOfModel} from '../utils/modelHelpers'
+import {currentSceneKeyOfModel} from '../utils/modelHelpers'
 import load_3d_png from '../images_dist/load3d-320.png'
 import close_svg from '../images/close.svg'
 
@@ -266,10 +266,10 @@ class Model3d extends Component {
             else {
                 // The videoUrl is that of the current model
                 const videoUrl = iterModel.get('videoUrl')
-                const scene =  currentSceneOfModel(iterModel)
+                const sceneKey =  currentSceneKeyOfModel(iterModel)
                 // Get the time to play the video to transition from one scene to the next
                 const sceneTransitionTime = iterModel.get('sceneTransitionTime') || this.props.settings.get('SCENE_TRANSITION_TIME')
-                const sceneIndex = (iterModel.getIn(['scenes', 'entries']) || Map()).toArray().indexOf(scene)
+                const sceneIndex = (iterModel.getIn(['scenes', 'entries']) || Map()).keySeq().indexOf(sceneKey)
                 // We need to transition from the last scene (or position) to the current scene
                 const start = (sceneIndex-1 >= 0 ? sceneIndex-1 : 0) * sceneTransitionTime,
                       end = (sceneIndex >=0 ? sceneIndex : 0) * sceneTransitionTime
