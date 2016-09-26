@@ -26,7 +26,7 @@ import DocumentMeta from 'react-document-meta';
 import ImmutablePropTypes from 'react-immutable-proptypes'
 var himalaya = require('himalaya');
 import Comments from './Comments'
-import DocumentGraph from './DocumentGraph'
+import TableOfContents from './TableOfContents'
 import OverlayDocument from './OverlayDocument'
 import close_svg from '../images/close.svg'
 import * as documentActions from '../actions/document'
@@ -123,7 +123,7 @@ export class Site extends Component {
      */
     makeTableOfContents(isTop) {
         return this.props.modelKey ?
-            <DocumentGraph   isTop={isTop}
+            <TableOfContents isTop={isTop}
                              isExpanded={this.props.isExpanded}
                              documentKey={this.props.documentKey}
                              documentTitle={this.props.documentTitle}

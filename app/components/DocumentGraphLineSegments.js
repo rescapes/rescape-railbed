@@ -107,9 +107,9 @@ DocumentGraphLineSegments.propKeys = {
     models: ImmutablePropTypes.map,
     model: ImmutablePropTypes.map,
     tableOfContentsAreShowing: PropTypes.bool,
-    // The normalized height of the overall DocumentGraph
+    // The normalized height of the overall TableOfContents
     height: PropTypes.number,
-    // The normalized width of the DocumentGraph
+    // The normalized width of the TableOfContents
     width: PropTypes.number,
     // The width and height to give the viewbox so the normalized values work
     containerWidth: PropTypes.number,

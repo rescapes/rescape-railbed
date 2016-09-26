@@ -24,9 +24,8 @@ import * as actions from '../actions/document'
 import * as siteActions from '../actions/site'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Scroll from 'react-scroll';
-
+import {getAnchorToModels} from '../utils/documentHelpers'
 const scroll = Scroll.animateScroll;
-var scrollSpy = Scroll.scrollSpy;
 
 class Document extends Component {
 
@@ -52,7 +51,7 @@ class Document extends Component {
     }
 
     /***
-     * Likewkise when the Document content udpates we want to index anchors if we haven't done so.
+     * Likewkise when the Document content updates we want to index anchors if we haven't done so.
      * I'm not sure if this is needed if componentDidMount fires at the right time, unless we
      */
     componentDidUpdate() {
@@ -73,29 +72,15 @@ class Document extends Component {
         const models = this.props.models
         const anchors = List([...domElement.querySelectorAll('a[id]')])
         // If no models or anchors yet or our anchors are already named return
-        if (!models || !anchors.count() || anchors.first().name)
+        if (!models || !anchors.count() || this.state.scrollHeight == domElement.scrollHeight)
             return
+        this.setState({scrollHeight: domElement.scrollHeight})
 
         const maxScenePosition = this.props.settings.get('MAX_SCENE_POSITION')
 
         // Map anchors to models. One anchor can represent to one or more models
         // As a side-effect we give the anchor the generic model name the first time we encounter a new anchor
-        const anchorToModels = this.props.models.entrySeq().reduce(function(reduction, [modelKey, model]) {
-            const anchor = anchors.find(anchor=>anchor.id == model.get('anchorId'))
-            if (!anchor)
-                throw `Model: ${modelKey} with anchorId ${model.get('anchorId')} cannot find its anchor in the document`
-            // Remove the () of the model key to generalize the name
-            // Models with the same anchors use (difference) to differentiate their keys
-            const modelKeyNormalized = modelKey.replace(/ \(.*?\)$/, '')
-            // Make a pseudoAnchor since DOM elements don't hash properly
-            const pseudoAnchor = Map({key:modelKeyNormalized, offsetTop:anchor.offsetTop})
-            const models = (reduction.get(pseudoAnchor) || OrderedMap()).set(modelKey, model)
-            if (models.count() == 1) {
-                // Side-effect: put a name on the anchor so it can be used for url navigation
-                anchor.name = modelKeyNormalized
-            }
-            return reduction.set(pseudoAnchor, models)
-        }, OrderedMap())
+        const anchorToModels = getAnchorToModels(anchors, models)
 
         const allAnchors = anchorToModels.entrySeq().flatMap(function([anchor, models], i) {
             // Find the next anchor position or failing that the bottom of the dom element
@@ -121,12 +106,13 @@ class Document extends Component {
         }).toArray()
 
         // Once we certainly have the anchors loaded, put them into the document's state
-        this.props.registerAnchors(allAnchors)
+        this.props.registerAnchors(anchorToModels, allAnchors)
 
         // Immediately register the scroll position so that the closest 3d model to the current text loads.
         // If we don't do this no model will load until the user scrolls
         this.handleScroll()
     }
+
 
 
     /***

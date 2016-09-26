@@ -133,3 +133,13 @@ export function closestAnchorDistances(document, models) {
             Math.abs(scrollPosition - value.offsetTop) : null
     )
 }
+
+/***
+ * For models that are grouped with others, this removes the parens from their title, so all group models
+ * normalize to the same name
+ * @param modelKey
+ * @returns {*}
+ */
+export function normalizeModelName(modelKey) {
+    return modelKey.replace(/ \(.*?\)$/, '')
+}

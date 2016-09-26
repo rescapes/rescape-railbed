@@ -117,7 +117,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Fixed-Guideways': Map({
+    'Smoothness and Comfort of Travel': Map({
         status: Statuses.INITIALIZED,
         id: '419df1d2-949f-4e60-adbc-59da24a5c6ce',
         anchorId: 'id.2y8fqiblaq2h',
@@ -372,7 +372,7 @@ var amtrakStandardModels = OrderedMap({
     'Seat Comfort (AMTRAK and Bus)': Map({
         title: 'Space and Seat Comfort',
         status: Statuses.INITIALIZED,
-        anchorId: 'id.53cvna734bl4',
+        anchorId: 'id.em6st57x7wbe',
         id: '843cbe82-5a4a-4453-9766-488049133e9d',
         scenes: OrderedMap({ entries: Map({
             'Forward-facing Seats on AMTRAK': Map({

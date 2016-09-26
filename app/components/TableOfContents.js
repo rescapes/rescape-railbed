@@ -17,47 +17,41 @@ import DocumentGraphNode from './DocumentGraphNode';
 import {OrderedMap, Map, List} from 'immutable'
 import * as documentActions from '../actions/document'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import {normalizeModelName} from '../utils/modelHelpers'
 
 
 /***
  * Shows the Model3ds of the current Document and will in the future show other documents
  */
-class DocumentGraph extends React.Component {
-
-    componentDidMount() {
-        this.setUnknownAttributes()
-    }
-
-    componentWillReceiveProps() {
-        this.setUnknownAttributes()
-    }
+class TableOfContents extends React.Component {
 
     /***
-     * Set svg attributes that React can't handle
-     * @returns {XML}
+     * The total number of objects above of below the current model
+     * @returns {*}
      */
-    setUnknownAttributes() {
-        if (this.refs.radialGradient)
-            this.refs.radialGradient.setAttribute('xl:href', "#Gradient")
-    }
-
     getTotalObjectCount() {
-        const allModels = this.props.models.get('entries')
+        const anchorNames = this.props.document.get('anchorToModels').keySeq().map(anchor => anchor.get('name'))
+        const normalizedModelName = normalizeModelName(this.props.modelKey)
         const modelsForPosition = this.props.isTop ?
-            allModels.slice(0, allModels.keySeq().indexOf(this.props.modelKey) + 1).reverse() :
-            allModels.slice(allModels.keySeq().indexOf(this.props.modelKey) + 1)
+            anchorNames.slice(0, anchorNames.indexOf(normalizedModelName) + 1).reverse() :
+            anchorNames.slice(anchorNames.indexOf(normalizedModelName) + 1)
         // Nodes are the document (top only) plus the models.
-        return new OrderedMap(
-            this.props.isTop ? {[this.props.documentTitle]: this.props.document} : {}
+        return new List(
+            this.props.isTop ? [this.props.documentTitle] : []
         ).concat(modelsForPosition).count()
     }
 
     /***
      * All of the models before and including the current or all of the models after the current
      * If this is the top graph reverse the items so we go from the current toward the beginning
+     * Models are grouped together that have the same anchor representation
      **/
     getObjects() {
-        const allModels = this.props.models.get('entries')
+        // We only want the first model of each anchor. This avoids separate of contents entries for grouped models.
+        const allModels = OrderedMap(this.props.document.get('anchorToModels').entrySeq().map(([anchor, models]) =>
+            // Return the anchor name and first Model
+            [anchor.get('name'), models.entrySeq().first()[1]]
+        ))
         const modelsForPosition = this.props.isTop ?
             allModels.slice(0, allModels.keySeq().indexOf(this.props.modelKey) + 1).reverse() :
             allModels.slice(allModels.keySeq().indexOf(this.props.modelKey) + 1)
@@ -188,7 +182,7 @@ class DocumentGraph extends React.Component {
     }
 }
 
-DocumentGraph.propKeys = {
+TableOfContents.propKeys = {
     documents: ImmutablePropTypes.map,
     documentTitle: PropTypes.string,
     documentKey: PropTypes.string,
@@ -233,4 +227,4 @@ function mapStateToProps(state, props) {
 export default connect(
     mapStateToProps,
     documentActions
-)(DocumentGraph)
+)(TableOfContents)
