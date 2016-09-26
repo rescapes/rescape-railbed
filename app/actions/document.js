@@ -130,11 +130,12 @@ class DocumentLoader extends ActionLoader {
  * Stores the anchor div elements in the state that represent 3D models and their scenes
  * We compare the position of these to figure out which is closest to the current scroll
  * position in order to show that model/scene
- * @param anchors
+ * @param anchorToModels: A Map mapping pseudo model anchors to models, where one anchor can represent multiple models
+ * @param sceneAnchors: The full list of scene pseudo-anchors
  * @returns {{type: string, anchors: *}}
  */
-export function registerAnchors(anchors) {
-    return { type: REGISTER_ANCHORS, anchors }
+export function registerAnchors(anchorToModels, sceneAnchors) {
+    return { type: REGISTER_ANCHORS, anchorToModels, sceneAnchors }
 }
 /***
  * Stores the scroll position in the state so the reducers can determine which anchor

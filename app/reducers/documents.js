@@ -143,9 +143,14 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     }
     else if (action.type==actions.REGISTER_ANCHORS) {
         // When the document is fully loaded our Component inspects its DOM and sends
+        // for anchors representing models or groups of models.
+        // The anchorToModels are an OrderedMap representation of these
+        // The sceneAnchors are a flat array of pseudo-anchors representing the position of each scene of each model
         // all of the <a id=...> tags it finds. These represent anchors to the models
         // or their scenes.
-        return state.setIn(['entries', currentDocumentKey, 'anchors'], action.anchors)
+        return state
+            .setIn(['entries', currentDocumentKey, 'anchorToModels'], action.anchorToModels)
+            .setIn(['entries', currentDocumentKey, 'anchors'], action.sceneAnchors)
     }
     // Sets the scroll position and closest anchor. The models reducer reacts to this by setting
     // the current model and scene based on the model or scene matching the anchor.
@@ -195,18 +200,17 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
      * Handles and action to scroll to the given model
      */
     else if (action.type==actions.SCROLL_TO_MODEL) {
+        const document = state.getIn(['entries', currentDocumentKey])
         // Get the current scroll position
-        const scrollPosition = state.getIn(['entries', currentDocumentKey, 'scrollPosition'])
+        const scrollPosition = document.get('scrollPosition')
         const {previousForDistinctModel, previous} = getRelevantAnchors(scrollPosition)
-        const soughtModelAnchor = findForDistinctModel(
-            getAnchors(currentDocumentKey),
-            null,
-            action.key
-        )
+        // Use the model anchor
+        const soughtModelAnchor = document.get('anchorToModels').entrySeq().find(([anchor, models]) =>
+            anchor.get('name') == action.key
+        )[0]
         // Update it to that of the anchor of the next distinct model
         // Scroll up a tad to make it look better
-        if (soughtModelAnchor)
-            return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], soughtModelAnchor.offsetTop - 30)
+        return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], soughtModelAnchor.get('offsetTop') - 30)
     }
     /***
      * Handles and action to exapnd or collapse the table of contents.
