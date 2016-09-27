@@ -47,14 +47,15 @@ class TableOfContents extends React.Component {
      * Models are grouped together that have the same anchor representation
      **/
     getObjects() {
+        const normalizedModelName = normalizeModelName(this.props.modelKey)
         // We only want the first model of each anchor. This avoids separate of contents entries for grouped models.
         const allModels = OrderedMap(this.props.document.get('anchorToModels').entrySeq().map(([anchor, models]) =>
             // Return the anchor name and first Model
             [anchor.get('name'), models.entrySeq().first()[1]]
         ))
         const modelsForPosition = this.props.isTop ?
-            allModels.slice(0, allModels.keySeq().indexOf(this.props.modelKey) + 1).reverse() :
-            allModels.slice(allModels.keySeq().indexOf(this.props.modelKey) + 1)
+            allModels.slice(0, allModels.keySeq().indexOf(normalizedModelName) + 1).reverse() :
+            allModels.slice(allModels.keySeq().indexOf(normalizedModelName) + 1)
         // Reduce the models to our table of contents settings length unless we are expanded
         const maxNodeCount = this.props.settings.get('TABLE_OF_CONTENTS_MODEL_NODE_COUNT')
         const models = this.props.isExpanded ? allModels : modelsForPosition.slice(
@@ -150,8 +151,8 @@ class TableOfContents extends React.Component {
 
         const documentGraphCircleGroup = <ReactCSSTransitionGroup
             transitionName="table-of-contents-nodes"
-            transitionEnterTimeout={1000}
-            transitionLeaveTimeout={100}>
+            transitionEnterTimeout={200}
+            transitionLeaveTimeout={200}>
             {documentGraphCircles}
         </ReactCSSTransitionGroup>
 

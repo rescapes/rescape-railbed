@@ -83,14 +83,23 @@ export class Site extends Component {
             </div>
         }
 
+        // Shows comments for the overall document
+        const documentComments = this.props.documentKey ?
+            <Comments className='document-comments'
+                      document={this.props.document}
+                      documentKey={this.props.documentKey}
+                      documentTitle={this.props.documentTitle}
+                      commentsAreShowing={this.props.documentCommentsAreShowing}
+            /> : <span/>
+
         // Shows the comments button for the current model
         const modelComments = this.props.modelKey ?
-            <Comments className='comments'
+            <Comments className='model-comments'
                 documentKey={this.props.documentKey}
                 documentTitle={this.props.documentTitle}
                 model={this.props.model}
                 modelKey={this.props.modelKey}
-                commentsAreShowing={this.props.commentsAreShowing}
+                commentsAreShowing={this.props.modelCommentsAreShowing}
         /> : <span/>
 
         // Our top and bottom table of contents
@@ -104,6 +113,7 @@ export class Site extends Component {
         // Footer of the overall web page
         return <div className='site'>
             <DocumentMeta {...meta} extend />
+            {documentComments}
             {modelComments}
             {tableOfContentsTop}
             <Header />
@@ -143,7 +153,8 @@ Site.propTypes = {
     modelKey: PropTypes.string,
     model: ImmutablePropTypes.map,
     documentTitle: PropTypes.string,
-    commentsAreShowing: PropTypes.bool,
+    documentCommentsAreShowing: PropTypes.bool,
+    modelCommentsAreShowing: PropTypes.bool,
     overlayDocumentIsShowing: PropTypes.bool,
     sceneKey: PropTypes.string
 }
@@ -165,7 +176,8 @@ function mapStateToProps(state) {
     const model = modelKey && models.getIn(['entries', modelKey])
 
     const documentTitle = document && document.get('title')
-    const commentsAreShowing = model && model.get('commentsAreShowing')
+    const documentCommentsAreShowing = document && document.get('commentsAreShowing')
+    const modelCommentsAreShowing = model && model.get('commentsAreShowing')
     // Announce if an overlay document is present (About, Contact, etc)
     const overlayDocumentIsShowing = !!(documents && documents.get('currentOverlay'))
     const sceneKey = models && models.getIn(['entries', modelKey, 'scenes', 'current'])
@@ -179,7 +191,8 @@ function mapStateToProps(state) {
         models,
         modelKey,
         documentTitle,
-        commentsAreShowing,
+        documentCommentsAreShowing,
+        modelCommentsAreShowing,
         overlayDocumentIsShowing,
         sceneKey
     }

@@ -129,7 +129,7 @@
         .outline {
             z-index: 2;
             height: 100%;
-            font-size: $h4-font-size;
+            font-size: $h5-font-size;
             border-radius: 10px;
             padding: 5px;
         }
@@ -163,7 +163,7 @@
         &:hover {
             font-size: $h5-font-size;
             cursor: pointer;
-            transition: width 300ms ease, height 300ms ease, margin-left 300ms ease, margin-top 300ms ease;
+            transition: width 200ms ease, height 200ms ease, margin-left 200ms ease, margin-top 200ms ease;
             right: -200px;
             height: calc($table-of-contents-model-height + 10px);
             margin-left: calc(-1 * ($table-of-contents-model-height + 10px) / 2);

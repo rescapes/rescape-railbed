@@ -22,6 +22,7 @@ import Statuses from '../statuses'
  *      current: null,
  *      baseUrl: null,
  *      postUrl: null,
+ *      location: null,
  *      entries: {
  *      }
  *  } (default): The documents is not loaded 
@@ -30,6 +31,7 @@ import Statuses from '../statuses'
  *   current: documents key of the current model,
  *   baseUrl: base url of the documents, the url of the entry completes the url
  *   siteUrl: base url of the blog site, the postUrl of the entry completes the url
+ *   location: The Router location object, used for reading the presence of a hash in the URL
  *   entries: {
  *      [documents key]: {
  *         status: one of Statuses
@@ -95,6 +97,10 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     // If an overlay Document is showing, close it.
     else if (action.type == actions.CLOSE_OVERLAY_DOCUMENT) {
         return state.set('currentOverlay', null)
+    }
+    // Stores the router's location object
+    else if (action.type==actions.SET_DOCUMENT_LOCATION) {
+        return state.set('location', action.location)
     }
     else if (action.type==actions.REGISTER_DOCUMENT) {
         return (!state.get('keys').has(action.key)) ?
@@ -211,6 +217,13 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         // Update it to that of the anchor of the next distinct model
         // Scroll up a tad to make it look better
         return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], soughtModelAnchor.get('offsetTop') - 30)
+    }
+    // Toggle comments showing or hidden for the current document
+    else if (action.types == actions.TOGGLE_DOCUMENT_COMMENTS) {
+        return state.setIn(
+            ['entries', action.key, 'commentsAreShowing'],
+            action.force != null ? action.force : !state.getIn(['entries', action.key, 'commentsAreShowing'])
+        ).setIn(['entries', action.key, 'commentsHaveShown'], true)
     }
     /***
      * Handles and action to exapnd or collapse the table of contents.
