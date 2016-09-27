@@ -22,7 +22,7 @@ $showcase-top: 0px;
 */
 $showcase-height: calc(100% - $footer-height + $showcase-footer-overlap);
 $showcase-left: 10px;
-$showcase-width: 67%;
+$showcase-width: 69%;
 
 /*
     Make the model ratio should be 2 height to 3 width since that is what the Sketchup videos are.
@@ -74,7 +74,8 @@ $document-absolute-left: calc( $document-left - $document-margin-left);
 */
 $overlay-document-left: calc($document-left - 200px);
 
-$table-of-contents-document-height: 40px;
+$table-of-contents-document-height: 30px;
+
 $table-of-contents-model-height: 15px;
 /**
     The width and height of the table of contents and various nodes

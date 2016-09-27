@@ -121,7 +121,7 @@ fades away where ever the document overlaps */
 }
 
 /* This class is injected with divs to separate the documents by the 3d Model that goes with it */
-.modelSection {
+.model-section {
     background: linear-gradient(to right, rgba(255, 255, 255, .7), $white);
     border-radius: 5px;
     margin-top: 10px;
@@ -134,4 +134,12 @@ fades away where ever the document overlaps */
 
 .author {
     color: $rescape-love;
+}
+
+.bookmark-icon {
+    position: relative;
+    float: right;
+    margin-right: -5px;
+    margin-top: -5px;
+    height: 20px;
 }

@@ -31,8 +31,9 @@ export function getAnchorToModels(anchors, models) {
         const pseudoAnchor = Map({name: modelKeyNormalized, offsetTop: anchor.offsetTop})
         const models = (reduction.get(pseudoAnchor) || OrderedMap()).set(modelKey, model)
         if (models.count() == 1) {
-            // Side-effect: put a name on the anchor so it can be used for url navigation
+            // Side-effect: put a name and href on the anchor so it can be used for url navigation
             anchor.name = modelKeyNormalized
+            anchor.href = `#${modelKeyNormalized}`
         }
         return reduction.set(pseudoAnchor, models)
     }, OrderedMap());

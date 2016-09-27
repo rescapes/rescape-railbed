@@ -16,11 +16,27 @@ import ReactDisqusThread from 'react-disqus-thread';
 import {normalizeKeyToFilename} from "../utils/fileHelpers";
 import close_svg from '../images/close.svg'
 import comment_svg from '../images/comment.svg'
+import * as documentActions from '../actions/document'
 import * as modelActions from '../actions/model'
 
 class Comments extends Component {
-    handleNewComment(comment) {
-        console.log(comment.text);
+    constructor () {
+        super()
+        this.state = {
+            commentObject: null,
+            commentObjectKey: null,
+            toggle: null
+        }
+    }
+
+    componentWillMount() {
+        // We are either showing coments for the document or a specific model
+        const commentObject = this.props.modelKey ? this.props.model : this.props.document
+        this.setState({
+            commentObject: commentObject,
+            commentObjectKey: this.props.modelKey || this.props.documentKey,
+            toggle: this.props.modelKey ? this.props.toggleModelComments : this.props.toggleDocumentComments
+        })
     }
 
     componentDidMount() {
@@ -28,7 +44,7 @@ class Comments extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (!this.props.documentKey || !this.props.modelKey)
+        if (!this.state.commentKey)
             return;
         if (this.formArticleKey(nextProps) != this.formArticleKey() ||
                 nextProps.commentsAreShowing != this.props.commentsAreShowing)
@@ -52,14 +68,14 @@ class Comments extends Component {
      * Show the comments when the user clicks the comment count button
      */
     onClickCommentButton() {
-        this.props.toggleModelComments(this.props.modelKey, true)
+        this.state.toggle(this.state.commentObjectKey, true)
     }
 
     /***
      * Hide the comments when the user clicks the close button
      */
     onClickCloseButton() {
-        this.props.toggleModelComments(this.props.modelKey, false)
+        this.state.toggle(this.state.commentObjectKey, true)
         this.enableMainBodyScroll()
     }
 
@@ -87,19 +103,16 @@ class Comments extends Component {
     }
 
     /***
-     * Render the comment counter button for the current model or render the comments if the button is
+     * Render the comment counter button for the current document or model or render the comments if the button is
      * clicked
      * @returns {XML}
      */
     render() {
-        if (!this.props.documentTitle || !this.props.modelKey) {
-            return <div/>
-        }
         const articleKey = this.formArticleKey()
         // Once we load the comments once keep the Disqus iframe around but undisplayed when not in use
-        const commentsHaveShown = this.props.model.get('commentsHaveShown')
+        const commentsHaveShown = this.state.commentObject.get('commentsHaveShown')
         // TODO this isn't actually preventing the comments from reloading
-        const commentsAreShowing = this.props.model.get('commentsAreShowing')
+        const commentsAreShowing = this.state.commentObject.get('commentsAreShowing')
 
         const disqus = commentsHaveShown || commentsAreShowing ?
             <div className="disqus-comment-thread-container"
@@ -113,7 +126,7 @@ class Comments extends Component {
                 className="disqus-comment-thread"
                 shortname="rescapes"
                 identifier={articleKey}
-                title={`${this.props.documentTitle}: ${this.props.modelKey}`}
+                title={this.props.modelKey ? `${this.props.documentTitle}: ${this.props.modelKey}` : this.props.documentTitle}
                 url={`http://rescapes.net/${articleKey.replace('__','#')}`}
                 onNewComment={this.handleNewComment}
             />
@@ -134,25 +147,29 @@ class Comments extends Component {
                 </div>
             </div>
 
-        return <div className={`comments ${commentsAreShowing ? 'showing' : ''}`}>
+        return <div className={`${this.props.className || 'comments'} ${commentsAreShowing ? 'showing' : ''}`}>
             {commentCountButton}
             {disqus}
         </div>
     }
 
     /***
-     * Uses the docuemnt key and model key to form the article key
+     * Uses the document key and optional model key to form the article key
+     *
      * @param props: Optional props so we can use nextProps. Defaults to this.props
      * @returns {string}
      */
     formArticleKey(props) {
         const documentUrlKey = normalizeKeyToFilename((props || this.props).documentTitle)
-        const modelUrlKey = normalizeKeyToFilename((props ||this.props).modelKey)
-        return `${documentUrlKey}__${modelUrlKey}`
+        const modelKey = (props ||this.props).modelKey
+        const modelUrlKey = modelKey && normalizeKeyToFilename(modelKey)
+        return modelKey ? `${documentUrlKey}__${modelUrlKey}` : documentUrlKey
     }
 }
 
 Comments.propKeys = {
+    className: PropTypes.string,
+    document: ImmutablePropTypes.map,
     documentTitle: PropTypes.string,
     documentKey: PropTypes.string,
     modelKey: PropTypes.string,
@@ -170,5 +187,5 @@ function mapStateToProps(state, props) {
  */
 export default connect(
     mapStateToProps,
-    Object.assign(modelActions)
+    Object.assign(documentActions, modelActions)
 )(Comments)

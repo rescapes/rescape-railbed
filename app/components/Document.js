@@ -26,6 +26,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import Scroll from 'react-scroll';
 import {getAnchorToModels} from '../utils/documentHelpers'
 const scroll = Scroll.animateScroll;
+import bookmark_png from '../images_dist/bookmark-320.png'
 
 class Document extends Component {
 
@@ -51,7 +52,7 @@ class Document extends Component {
     }
 
     /***
-     * Likewkise when the Document content updates we want to index anchors if we haven't done so.
+     * Likewise when the Document content updates we want to index anchors if we haven't done so.
      * I'm not sure if this is needed if componentDidMount fires at the right time, unless we
      */
     componentDidUpdate() {
@@ -182,17 +183,33 @@ class Document extends Component {
      */
     componentWillReceiveProps(nextProps){
 
-        // Not called for the initial render
-        // Previous props can be accessed by this.props
-        // Calling setState here does not trigger an an additional re-render
         const closestAnchors = nextProps.document.get('closestAnchors')
-        const previousClosestAnchors = this.props.document && this.props.document.get('closestsAnchors')
+        const previousClosestAnchors = this.props.document && this.props.document.get('closestAnchors')
+        // If the anchors changed that means the document is newly loaded
         if ((!previousClosestAnchors && closestAnchors) || (previousClosestAnchors && !previousClosestAnchors.equals(closestAnchors))) {
+            // Have the Model3ds react to the new closest anchors
             this.props.documentTellModelAnchorsChanged(closestAnchors)
+
         }
-        if (!this.props.document ||
-            (nextProps.document.get('scrollPosition') != this.props.scrollPosition
-            && nextProps.document.get('scrollPosition') != this.documentDiv.scrollTop)) {
+        // If a hash is in the Router location scroll to it if we aren't already there
+        // This is only needed on initial load when the document isn't ready yet
+        if (nextProps.anchorToModels != this.props.anchorToModels || nextProps.location.hash != this.props.location.hash) {
+            // If we have a Router location hash, scroll to it now
+            // The Router can't do this for us because the Document isn't loaded
+            const hash = nextProps.location.hash
+            if (hash) {
+                const entry = nextProps.anchorToModels.entrySeq().find(
+                    ([anchor, models]) => anchor.get('name') == hash.replace('#','')
+                )
+                // Update the Document scroll state to the first model of the matching anchor
+                this.props.scrollToModel(entry[1].keySeq().first())
+            }
+        }
+        // If the desired document scrollPosition has been changed by clicking a table of contents button or similar
+        else if (
+            nextProps.document.get('scrollPosition') != this.props.scrollPosition &&
+            nextProps.document.get('scrollPosition') != this.documentDiv.scrollTop) {
+            // Scroll in 100 ms
             this.scrollTo(nextProps.document.get('scrollPosition'), 100)
         }
     }
@@ -287,12 +304,19 @@ class Document extends Component {
             // ...content since last hr to this hr minus the spacer before hr ...
             // </div>
             // We remove the spacers in favor of padding/margin styling
+            // We move the anchor to the top of the section and give it an image wrapper
             const startSpacerMatch = hrSpacerRegexStart.exec(bodyContent)
             const startSpacerIndex = startSpacerMatch ? startSpacerMatch[0].length : undefined
             const endSpacerMatch = hrSpacerRegexEnd.exec(bodyContent)
             const endSpacerIndex = endSpacerMatch ? endSpacerMatch.index : undefined
-            modifiedBody = modifiedBody.concat(`<div class='modelSection'>
-                ${bodyContent.slice(startSpacerIndex, endSpacerIndex)}
+            const bodySlice = bodyContent.slice(startSpacerIndex, endSpacerIndex)
+            const regex = /(<a.*?>)(<\/a>)/
+            const match = regex.exec(bodySlice)
+            modifiedBody = modifiedBody.concat(`<div class='model-section'>
+                ${match[1]} 
+                <img class="bookmark-icon" src=${bookmark_png} />
+                ${match[2]} 
+                ${bodySlice.replace(regex, '')}
             </div>`)
 
             // Store the index after the <hr>
@@ -313,7 +337,11 @@ Document.propTypes = {
     overlayDocumentIsShowing: PropTypes.bool,
     // These are listed for ride in OverlayDocument
     className: PropTypes.string,
-
+    // Once the Document is loaded we'll have a mapping of it's anchors to its Model3ds
+    anchorToModels: ImmutablePropTypes.map,
+    // The router's location so we can scroll to the correct bookmark.
+    // The router doesn't do this for us because we set the name of the bookmarks when the Document loads
+    location:PropTypes.object
 }
 
 /***
@@ -329,13 +357,17 @@ function mapStateToProps(state) {
     const document = state.getIn(['documents', 'entries', documentKey])
     const scrollPosition = document && document.get('scrollPosition')
     const modelKeysInDocument = document && document.get('modelKeys')
+    const anchorToModels = document.get('anchorToModels')
+    const location = state.getIn(['documents', 'location'])
     return {
         settings,
         document: document,
         documentKey,
         models: modelKeysInDocument &&
             state.getIn(['models', 'entries']).filter((value,key) => modelKeysInDocument.includes(key)),
-        scrollPosition
+        scrollPosition,
+        anchorToModels,
+        location
     }
 }
 

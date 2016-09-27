@@ -14,13 +14,37 @@
  */
 // Do this once before any other code in your app (http://redux.js.org/docs/advanced/AsyncActions.html)
 import 'babel-polyfill'
-
-import React from 'react'
+import React, { Component, PropTypes } from 'react'
 import { render } from 'react-dom';
+import * as actions from '../actions/document'
+import {connect} from 'react-redux';
 
 // The children are the components of the chosen route
-export default React.createClass({
-    render: function() {
+class App extends Component {
+
+    componentDidMount() {
+        this.props.setDocumentLocation(this.props.location)
+    }
+    componentWillReceiveProps(nextProps){
+        if (this.props.location.hash != nextProps.location.hash) {
+            this.props.setDocumentLocation(nextProps.location)
+        }
+    }
+
+    render() {
         return React.cloneElement(this.props.children, {});
     }
-});
+};
+
+App.PropTypes = {
+    location: React.PropTypes.object
+}
+
+function mapStateToProps(state) {
+    return state.toObject()
+}
+
+export default connect(
+    mapStateToProps,
+    actions
+)(App)

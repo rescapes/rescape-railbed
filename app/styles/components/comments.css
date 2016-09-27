@@ -1,13 +1,24 @@
 
+.document-comments {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: calc($showcase-width - $model-3d-document-overlap - 80px);
+    width: $comment-button-width;
+    height: $comment-button-height;
 
-.comments {
+}
+
+.model-comments {
     position: fixed;
     z-index: 10;
     top: calc($model-3d-top - 35px);
     left: calc($showcase-width - $model-3d-document-overlap - 80px);
     width: $comment-button-width;
     height: $comment-button-height;
+}
 
+.document-comments, .model-comments {
     &.showing {
         margin-left: 10px;
         left: 0px;
@@ -33,9 +44,9 @@
 }
 
 .comment-counter {
-    position: absolute;
+    position: relative;
     right: 0;
-    top: 35px;
+    top: 0px;
     width: 100%;
     height: 100%;
     color: $rescape-love;

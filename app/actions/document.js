@@ -20,6 +20,8 @@ import {Map} from 'immutable'
  * Action types. See action definition for explanation
 */
 
+export const SET_DOCUMENT_LOCATION = 'SET_DOCUMENT_LOCATION'
+
 export const REGISTER_DOCUMENT = 'REGISTER_DOCUMENT'
 export const LOAD_DOCUMENT = 'LOAD_DOCUMENT'
 export const RECEIVE_DOCUMENT = 'RECEIVE_DOCUMENT'
@@ -32,6 +34,7 @@ export const SCROLL_TO_NEXT_MODEL = 'SCROLL_TO_NEXT_MODEL'
 export const SCROLL_TO_PREVIOUS_MODEL = 'SCROLL_TO_PREVIOUS_MODEL'
 export const SCROLL_TO_MODEL = 'SCROLL_TO_MODEL'
 
+export const TOGGLE_DOCUMENT_COMMENTS = 'TOGGLE_DOCUMENT_COMMENTS'
 export const TOGGLE_DOCUMENT_TABLE_OF_CONTENTS = 'TOGGLE_DOCUMENT_TABLE_OF_CONTENTS'
 
 export const CLOSE_OVERLAY_DOCUMENT = 'CLOSE_OVERLAY_DOCUMENT'
@@ -39,6 +42,16 @@ export const CLOSE_OVERLAY_DOCUMENT = 'CLOSE_OVERLAY_DOCUMENT'
  * Action creators. 
  * List in the same order as the action types.
  */
+
+/***
+ * Stores the location information of the Router in the state.
+ * This might already be available some other way but the docs say to use the childContext, which doesn't work
+ * @param location
+ * @returns {{type: string, location: *}}
+ */
+export function setDocumentLocation(location) {
+    return { type: SET_DOCUMENT_LOCATION, location }
+}
 
 /***
  * Register the given unloaded documents when encountered in the DOM or via the browser URL/parameters
@@ -165,6 +178,15 @@ export function scrollToPreviousModel() {
  */
 export function scrollToModel(modelKey) {
     return { type: SCROLL_TO_MODEL, key: modelKey }
+}
+
+/***
+ * Toggles the Document's comments on and off
+ * @param key: The Document key
+ * @param force: Force a certain value, true or false
+ */
+export function toggleDocumentComments(key, force) {
+    return { type: TOGGLE_DOCUMENT_COMMENTS, key, force }
 }
 
 /***
