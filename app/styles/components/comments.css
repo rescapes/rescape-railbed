@@ -3,7 +3,7 @@
     position: fixed;
     z-index: 10;
     top: 0;
-    left: calc($showcase-width - $model-3d-document-overlap - 82px);
+    left: calc($showcase-width - $model-3d-document-overlap - 85px);
     width: $comment-button-width;
     height: $comment-button-height;
 
@@ -13,7 +13,7 @@
     position: fixed;
     z-index: 10;
     top: calc($model-3d-top - 38px);
-    left: calc($showcase-width - $model-3d-document-overlap - 70px);
+    left: calc($showcase-width - $model-3d-document-overlap - 75px);
     width: $comment-button-width-small;
     height: $comment-button-height-small;
 }

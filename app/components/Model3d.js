@@ -25,7 +25,7 @@ import load_3d_png from '../images_dist/load3d-320.png'
 import close_svg from '../images/close.svg'
 
 // This garbage has to be done to force webpack to know about all the media files
-var req = require.context('../videos/', true, /\.(mp4)$/)
+var req = require.context('../videos/', true, /\.(webm)$/)
 req.keys().forEach(function(key){
     req(key);
 })

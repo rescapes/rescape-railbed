@@ -319,7 +319,6 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         anchorId: 'id.em6st57x7wbe',
         // Scenes aren't able to transition fast enough for this model, so everide the usual time
-        sceneTransitionTime: 6,
         scenes: OrderedMap({ entries: Map({
             'Empty Rows': Map({
             }),
@@ -483,6 +482,8 @@ var amtrakStandardModels = OrderedMap({
         anchorId: 'id.phqdf6isq3v4',
         id: '04163027-d8a3-4912-9997-0f30573fd0fc',
         scenes: OrderedMap({entries: Map({
+            'Space for personal mobility, freight, and strollers': Map({
+            }),
             'A hundred bikes fit on a long metro': Map({
             }),
         })})
@@ -517,6 +518,8 @@ var amtrakStandardModels = OrderedMap({
         anchorId: 'id.hcrfkm926ytq',
         id: '731899d7-02b7-4f47-9a3b-7ae84454e0c7',
         scenes: OrderedMap({entries: Map({
+            'Lobby': Map({
+            }),
             'New Station Amenities': Map({
             }),
         })}),
@@ -535,7 +538,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Station and Stop Amenities (Outside, Poor)': Map({
+    'Station and Stop Amenities (Outside Poor)': Map({
         status: Statuses.INITIALIZED,
         anchorId: 'id.hcrfkm926ytq',
         id: '87320bcf-05d7-4df9-8e51-f5c1e8ed82d1',
@@ -545,7 +548,7 @@ var amtrakStandardModels = OrderedMap({
         })})
     }),
 
-    'Station and Stop Amenities (Outside, Improved)': Map({
+    'Station and Stop Amenities (Outside Improved)': Map({
         status: Statuses.INITIALIZED,
         anchorId: 'id.hcrfkm926ytq',
         id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
@@ -577,9 +580,9 @@ export default Map({
         // This prevents switching scenes and models at the same time.
         MAX_SCENE_POSITION: .8,
 
-        // Video scenes are 4 seconds long, so 3 seconds takes us from a still scene to the next
+        // Video scenes are 4 seconds long,
         // This can be overridden in each model if needed
-        SCENE_TRANSITION_TIME: 3,
+        SCENE_TRANSITION_TIME: 4,
         DISQUS_PUBLIC_KEY: "TU5gJqORTRMUd1w9YOLUvlcc17YlldegfOPg0xuZp00FRX5o3UopHjXdz0SBeAwb",
         DISQUS_SHORT_NAME: "rescape",
         // The normal number of model nodes to show for both the top and bottom table of contents
@@ -630,7 +633,7 @@ export default Map({
          * @param etp: 'im' for still images. Blank for 3d
          */
         baseUrl: (id, etp) => (`https://my.sketchup.com/viewer/3dw?WarehouseModelId=${id}`),
-        baseVideoUrl: modelKey => `/videos/${modelKey}.mp4`,
+        baseVideoUrl: modelKey => `/videos/${modelKey}.webm`,
 
         entries: amtrakStandardModels
     })

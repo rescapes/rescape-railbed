@@ -212,9 +212,15 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         const scrollPosition = document.get('scrollPosition')
         const {previousForDistinctModel, previous} = getRelevantAnchors(scrollPosition)
         // Use the model anchor
-        const soughtModelAnchor = document.get('anchorToModels').entrySeq().find(([anchor, models]) =>
+        const soughtModelAnchorModels = document.get('anchorToModels').entrySeq().find(([anchor, models]) =>
             anchor.get('name') == action.key
-        )[0]
+        )
+        if (!soughtModelAnchorModels) {
+            console.error `The anchor with name ${action.key} does not exist`
+            return
+        }
+
+        const soughtModelAnchor = soughtModelAnchorModels[0]
         // Update it to that of the anchor of the next distinct model
         // Scroll up a tad to make it look better
         return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], soughtModelAnchor.get('offsetTop') - 30)
