@@ -8,7 +8,7 @@ $header-bottom: calc( $header-top + $header-height );
 **/
 $comment-button-width: 70px;
 $comment-button-height: calc($comment-button-width * 2 / 3);
-$comment-count-font-size: .6vw;
+$comment-count-font-size: .55vw;
 $comment-button-width-small: 60px;
 $comment-button-height-small: calc($comment-button-width-small * 2 / 3);
 $comment-count-font-size-small: .5vw;

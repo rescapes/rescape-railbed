@@ -13,6 +13,7 @@ import React, { Component, PropTypes } from 'react'
 import {connect} from 'react-redux'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import ReactCSSTransitionGroup  from 'react-addons-css-transition-group';
+import {normalizeModelName} from '../utils/modelHelpers'
 
 export default class Model3dTitle extends Component {
 
@@ -26,7 +27,7 @@ export default class Model3dTitle extends Component {
         // .scene-title-enter and .scene-title-enter-active to the entering element
         // .scene-title-leave and .scene-title-leave-active to the exiting element
         return <span className={`model-3d-title ${this.props.lightboxVisibility ? 'fade-out' : this.props.fade} ${this.props.toward}`}>
-                    {this.props.model && this.props.model.get('title') || this.props.modelKey}
+                    {this.props.model && this.props.model.get('title') || normalizeModelName(this.props.modelKey)}
             <ReactCSSTransitionGroup
                 className="scene-title"
                 transitionName="scene-title"

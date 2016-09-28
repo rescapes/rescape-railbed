@@ -77,13 +77,13 @@
     width: $document-width;
     height: $document-height;
 
+/* This gradient matches the overlap of the 3d model and document so that the 3d model
+fades away where ever the document overlaps */
 &.left {
      background: linear-gradient(to left, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
      width: 10px;
      right: auto;
  }
-/* This gradient matches the overlap of the 3d model and document so that the 3d model
-fades away where ever the document overlaps */
 &.right {
      background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
      width: 10px;

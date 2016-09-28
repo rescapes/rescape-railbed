@@ -198,11 +198,11 @@ class Document extends Component {
             // The Router can't do this for us because the Document isn't loaded
             const hash = nextProps.location.hash
             if (hash) {
-                const entry = nextProps.anchorToModels.entrySeq().find(
-                    ([anchor, models]) => anchor.get('name') == hash.replace('#','')
+                const anchor = nextProps.anchorToModels.keySeq().find(
+                    anchor => anchor.get('name') == hash.replace('#','')
                 )
                 // Update the Document scroll state to the first model of the matching anchor
-                this.props.scrollToModel(entry[1].keySeq().first())
+                this.props.scrollToModel(anchor.get('name'))
             }
         }
         // If the desired document scrollPosition has been changed by clicking a table of contents button or similar
@@ -261,7 +261,6 @@ class Document extends Component {
         >
             <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
             </div>
-            <div className='document-gradient right' />
         </div>
     }
 
@@ -312,6 +311,8 @@ class Document extends Component {
             const bodySlice = bodyContent.slice(startSpacerIndex, endSpacerIndex)
             const regex = /(<a.*?>)(<\/a>)/
             const match = regex.exec(bodySlice)
+            if (!match)
+                throw `Missing anchor for section ${bodySlice}`
             modifiedBody = modifiedBody.concat(`<div class='model-section'>
                 ${match[1]} 
                 <img class="bookmark-icon" src=${bookmark_png} />

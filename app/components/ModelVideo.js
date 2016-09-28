@@ -63,8 +63,10 @@ class ModelVideo extends Component {
     }
 
     onProgress() {
-        if (this.refs.video.videoEl.currentTime  >= this.state.end)
+        console.log(this.state.start, this.refs.video.videoEl.currentTime, this.state.end)
+        if (this.refs.video.videoEl.currentTime  >= this.state.end) {
             this.pause();
+        }
     }
 
     pause() {
@@ -113,7 +115,7 @@ class ModelVideo extends Component {
                 muted
                 onTimeUpdate={this._onProgress}
                 ref="video">
-                <source src={this.props.videoUrl} type="video/mp4" />
+                <source src={this.props.videoUrl} type="video/webm" />
                 <Overlay />
                 <Controls />
             </Video>
