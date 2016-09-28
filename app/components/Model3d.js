@@ -14,6 +14,7 @@ import ReactDOM from 'react-dom'
 import {connect} from 'react-redux'
 import Iframe from './Iframe'
 import * as actions from '../actions/model'
+import * as documentActions from '../actions/document'
 import * as settingsActions from '../actions/settings'
 import Statuses from '../statuses'
 import {Map} from 'immutable'
@@ -102,6 +103,7 @@ class Model3d extends Component {
                     this.props.fetchModelIfNeeded(modelKeyToLoad)
                 // Make sure comments are off if we are switching models
                 this.props.toggleModelComments(models.get(key), false)
+                this.props.toggleDocumentComments(this.props.documentKey, false)
             }
         }, this)
 
@@ -315,6 +317,7 @@ Model3d.propTypes = {
     settings: ImmutablePropTypes.map,
     models: ImmutablePropTypes.map,
     defaultIs3dSet: PropTypes.bool,
+    documentKey: PropTypes.string,
     modelKey: PropTypes.string,
     is3dSet: PropTypes.bool,
     sceneKey: PropTypes.string,
@@ -336,6 +339,7 @@ function mapStateToProps(state) {
 
     return {
         settings,
+        documentKey,
         models,
         defaultIs3dSet,
         sceneKey,
@@ -345,6 +349,6 @@ function mapStateToProps(state) {
 
 export default connect(
     mapStateToProps,
-    Object.assign(actions, settingsActions)
+    Object.assign(actions, documentActions, settingsActions)
 )(Model3d)
 

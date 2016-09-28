@@ -12,6 +12,7 @@
 import {List, Map} from 'immutable';
 import {SET_STATE} from '../actions/site'
 import * as actions from '../actions/model'
+import * as documentActions from '../actions/document'
 import {DOCUMENT_TELL_MODEL_ANCHOR_CHANGED} from '../actions/site'
 import Statuses from '../statuses'
 import {normalizeKeyToFilename} from '../utils/fileHelpers'
@@ -159,6 +160,13 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                 ['entries', action.key, 'commentsAreShowing'],
                 action.force != null ? action.force : !state.getIn(['entries', action.key, 'commentsAreShowing'])
             ).setIn(['entries', action.key, 'commentsHaveShown'], true)
+        // Turn off model comments whenver document comments are showing
+        case documentActions.TOGGLE_DOCUMENT_COMMENTS:
+            if (action.force)
+                return state.setIn(
+                    ['entries', state.get('current'), 'commentsAreShowing'],
+                    false)
+            return state
         case actions.TOGGLE_MODEL_3D:
             return state.setIn(
                 ['entries', action.key, 'is3dSet'],

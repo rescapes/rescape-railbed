@@ -15,25 +15,16 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import ReactDisqusThread from 'react-disqus-thread';
 import {normalizeKeyToFilename} from "../utils/fileHelpers";
 import close_svg from '../images/close.svg'
+import comment_svg from '../images/comment.svg'
 import * as documentActions from '../actions/document'
 import * as modelActions from '../actions/model'
 
 class Comments extends Component {
-
-    /***
-     * Choose the model or document toggle action
-     * @returns {*}
-     */
-    toggle() {
-        return this.props.modelKey ? this.props.toggleModelComments : this.props.toggleDocumentComments
-    }
-
-    /**
-     * The current model or document
-     * @returns {*}
-     */
-    commentObject() {
-        return this.props.modelKey ? this.props.model : this.props.document
+    constructor () {
+        super()
+        this.state = {
+            toggle: null
+        }
     }
 
     /**
@@ -44,65 +35,64 @@ class Comments extends Component {
         return this.props.modelKey ? this.props.modelKey : this.props.documentKey
     }
 
-    commentObjectTitle() {
-        return this.props.modelKey ? this.props.modelKey : this.props.documentTitle
-    }
-
     componentWillMount() {
         this.setState({
+            toggle: this.props.modelKey ? this.props.toggleModelComments : this.props.toggleDocumentComments
         })
+    }
+
+    componentDidMount() {
+        this.mirrorProps(this.props);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (!this.commentObjectKey())
+            return;
+        if (this.formArticleKey(nextProps) != this.formArticleKey() ||
+                nextProps.commentsAreShowing != this.props.commentsAreShowing)
+            this.mirrorProps(nextProps);
+    }
+
+    mirrorProps(props) {
+        if (this.refs.counter) {
+            this.refs.counter.setAttribute('data-disqus-identifier', this.formArticleKey(props));
+            if (window.DISQUSWIDGETS)
+                window.DISQUSWIDGETS.getCount({reset: true});
+        }
     }
 
     shouldComponentUpdate(nextProps, nextState) {
         return this.formArticleKey(nextProps) != this.formArticleKey() ||
                 nextProps.commentsAreShowing != this.props.commentsAreShowing
+
     }
 
     /***
-     * Hide the comments when the user clicks the close button
+     * Show the comments when the user clicks the comment count button
      */
-    onClickCloseButton() {
-        this.toggle()(this.commentObjectKey(), false)
+    onClickCommentButton() {
+        // Close the model or document comments if open
+        this.state.toggle(this.commentObjectKey(), true)
     }
 
     /***
-     * Render the comment counter button for the current document or model or render the comments if the button is
-     * clicked
+     * Render the comment counter button for the current document or model if comments are not expanded
+     * The comment button shows the number of comments for this model.
+     * Disqus injects the number into div when we call mirrorProps
+     * @type {XML}
      * @returns {XML}
      */
     render() {
-        const articleKey = this.formArticleKey()
-        // Once we load the comments once keep the Disqus iframe around but undisplayed when not in use
-        const commentsHaveShown = this.commentObject().get('commentsHaveShown')
-        // TODO this isn't actually preventing the comments from reloading
-        const commentsAreShowing = this.commentObject().get('commentsAreShowing')
-        // Disqus doesn't show the title, nonsensically, so add it in the header
-        const title = `Comments about ${this.commentObjectTitle()}`
-        const disqus = commentsHaveShown || commentsAreShowing ?
-            <div className="disqus-comment-thread-container"
-                 style={{display: commentsAreShowing ? 'block' : 'none'}}
-                 onMouseEnter={this.disableMainBodyScroll}
-                 onMouseLeave={this.enableMainBodyScroll}
-        >
-            <img className='disqus-close-icon' src={close_svg} onClick={this.onClickCloseButton.bind(this)} />
-            <div className="disqus-comment-thread-header">
-                <span className="disqus-header-title">
-                {title}
-                </span>
+        return <div className={`${this.props.className || 'comments'} ${this.props.commentsAreShowing ? 'showing' : ''}`}>
+            <div
+                className={`comment-counter ${this.props.modelKey ? 'comment-counter-model' : 'comment-counter-document'}`}
+                style={{display: this.props.commentsAreShowing ? 'none' : 'block'}}
+                onClick={this.onClickCommentButton.bind(this)} >
+                <img className='comment-icon' src={comment_svg} />
+                <div className='comment-count'>
+                    <div ref='counter' className="disqus-comment-count" />
+                </div>
             </div>
-            <ReactDisqusThread
-                className="disqus-comment-thread"
-                shortname="rescapes"
-                identifier={articleKey}
-                title={this.props.modelKey ? `${this.props.documentTitle}: ${this.props.modelKey}` : this.props.documentTitle}
-                url={`http://rescapes.net/${articleKey.replace('__','#')}`}
-                onNewComment={this.handleNewComment}
-            />
-        </div> : <span/>
-
-
-        return <div className={`${this.props.className || 'comments'} ${commentsAreShowing ? 'showing' : ''}`}>
-            {disqus}
         </div>
     }
 

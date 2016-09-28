@@ -4,22 +4,8 @@
     injected for each section of the document that represents a 3d Model (as demarcated in the original
     doc with <hr> elements)
 ***/
-html.noscroll {
-    position: fixed;
-    overflow-y: scroll;
-    width: 100%;
-}
 
 
-::-webkit-scrollbar-track
-{
-    background: rgba(0, 0, 0, 0.1);
-}
-
-::-webkit-scrollbar-thumb
-{
-    background: $faded-gray;
-}
 
 /*
     If an overlay Document is showing like About or Contact, hide the main Document
