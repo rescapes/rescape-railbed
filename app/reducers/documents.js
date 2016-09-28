@@ -12,6 +12,7 @@
 import {Map, List} from 'immutable';
 import {SET_STATE} from '../actions/site'
 import * as actions from '../actions/document'
+import * as modelActions from '../actions/model'
 import Statuses from '../statuses'
 
 /***
@@ -219,12 +220,22 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], soughtModelAnchor.get('offsetTop') - 30)
     }
     // Toggle comments showing or hidden for the current document
-    else if (action.types == actions.TOGGLE_DOCUMENT_COMMENTS) {
+    else if (action.type == actions.TOGGLE_DOCUMENT_COMMENTS) {
         return state.setIn(
             ['entries', action.key, 'commentsAreShowing'],
             action.force != null ? action.force : !state.getIn(['entries', action.key, 'commentsAreShowing'])
         ).setIn(['entries', action.key, 'commentsHaveShown'], true)
     }
+    // Toggle off document comments if model comments are toggled on
+    else if (action.type == modelActions.TOGGLE_MODEL_COMMENTS) {
+        if (action.force)
+            return state.setIn(
+                ['entries', state.get('current'), 'commentsAreShowing'],
+                false
+            )
+        return state
+    }
+
     /***
      * Handles and action to exapnd or collapse the table of contents.
      * An optional argument of isHover is stored to determine whether expandsion is based on a hover rather than

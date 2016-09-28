@@ -26,6 +26,7 @@ import DocumentMeta from 'react-document-meta';
 import ImmutablePropTypes from 'react-immutable-proptypes'
 var himalaya = require('himalaya');
 import Comments from './Comments'
+import CommentsButton from './CommentsButton'
 import TableOfContents from './TableOfContents'
 import OverlayDocument from './OverlayDocument'
 import close_svg from '../images/close.svg'
@@ -53,7 +54,7 @@ export class Site extends Component {
             // In addition to the document's <head> tags add in a title since the document meta data doesn't include it
             meta = document && document.get('content') && head.reduce(function (o, v) {
                     // sometimes garbage is parsed, so check for the tagName property
-                    if (v['tagName']) {
+                    if (v['tagName'] && v['attributes'].rel!='shortcut_icon') {
                         // Set the tagName value key to the attributes
                         o[v['tagName']] = v['attributes'];
                         // Use _text to indicate text node content, if any
@@ -83,9 +84,10 @@ export class Site extends Component {
             </div>
         }
 
-        // Shows comments for the overall document
-        const documentComments = this.props.documentKey ?
-            <Comments className='document-comments'
+        // Shows the commetns button for the overall document
+        const documentCommentsButton = this.props.documentKey ?
+            <CommentsButton className='document-comments'
+                      key="'document-comments"
                       document={this.props.document}
                       documentKey={this.props.documentKey}
                       documentTitle={this.props.documentTitle}
@@ -93,14 +95,26 @@ export class Site extends Component {
             /> : <span/>
 
         // Shows the comments button for the current model
-        const modelComments = this.props.modelKey ?
-            <Comments className='model-comments'
+        const modelCommentsButton = this.props.modelKey ?
+            <CommentsButton className='model-comments'
+                key="model-comments"
                 documentKey={this.props.documentKey}
                 documentTitle={this.props.documentTitle}
                 model={this.props.model}
                 modelKey={this.props.modelKey}
                 commentsAreShowing={this.props.modelCommentsAreShowing}
         /> : <span/>
+
+        // Shows the document or model comments if expanded
+        const comments = <Comments className='comments'
+            document={this.props.document}
+            documentKey={this.props.documentKey}
+            documentTitle={this.props.documentTitle}
+            // null out the model key if the documentCommentsAreShowing so we have the document context
+            model={this.props.documentCommentsAreShowing ? null : this.props.model}
+            modelKey={this.props.documentCommentsAreShowing ? null : this.props.modelKey}
+            commentsAreShowing={this.props.documentCommentsAreShowing || this.props.modelCommentsAreShowing}
+        />
 
         // Our top and bottom table of contents
         const tableOfContentsTop = this.makeTableOfContents(true)
@@ -113,8 +127,9 @@ export class Site extends Component {
         // Footer of the overall web page
         return <div className='site'>
             <DocumentMeta {...meta} extend />
-            {documentComments}
-            {modelComments}
+            {documentCommentsButton}
+            {modelCommentsButton}
+            {comments}
             {tableOfContentsTop}
             <Header />
             <Showcase />
