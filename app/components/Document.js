@@ -193,7 +193,7 @@ class Document extends Component {
         }
         // If a hash is in the Router location scroll to it if we aren't already there
         // This is only needed on initial load when the document isn't ready yet
-        if (nextProps.anchorToModels != this.props.anchorToModels || nextProps.location.hash != this.props.location.hash) {
+        if (nextProps.anchorToModels != this.props.anchorToModels || (nextProps.location && this.props.location && nextProps.location.hash != this.props.location.hash)) {
             // If we have a Router location hash, scroll to it now
             // The Router can't do this for us because the Document isn't loaded
             const hash = nextProps.location.hash
@@ -311,14 +311,10 @@ class Document extends Component {
             const bodySlice = bodyContent.slice(startSpacerIndex, endSpacerIndex)
             const regex = /(<a.*?>)(<\/a>)/
             const match = regex.exec(bodySlice)
-            if (!match)
-                throw `Missing anchor for section ${bodySlice}`
-            modifiedBody = modifiedBody.concat(`<div class='model-section'>
-                ${match[1]} 
-                <img class="bookmark-icon" src=${bookmark_png} />
-                ${match[2]} 
-                ${bodySlice.replace(regex, '')}
-            </div>`)
+            modifiedBody = modifiedBody.concat(
+                "<div class='model-section'>").concat(
+                match ? `${match[1]}<img class="bookmark-icon" src=${bookmark_png} />${match[2]}` : '').concat(
+                `${bodySlice.replace(regex, '')}</div>`)
 
             // Store the index after the <hr>
             startLocation = result.index + hrLength

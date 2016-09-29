@@ -161,6 +161,7 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'IngolfBLN'
             }),
             'Los Angeles Orange Line BRT': Map({
+                type: 'png',
                 caption: "BRT busline built upon Southern Pacific Railroad's former Burbank Branch Line. This uncomfortable, overcrowded bus will now be upgraded to light rail",
                 sourceUrl: 'http://rescapes.net',
                 credit: 'Rescape',
@@ -391,7 +392,7 @@ var amtrakStandardModels = OrderedMap({
                 type: 'jpg',
                 caption: "AMTRAK's Sightseer Lounge Car offers a social and scenic passtime for coach and sleeper car passengers",
                 sourceImageUrl: 'http://i2.photobucket.com/albums/y34/Nolaguy79/IMG_0998.jpg',
-                sourceUrl: 'https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwjghrnD1rPPAhVC3mMKHS6HBboQjxwIAw&url=http%3A%2F%2Fwww.airliners.net%2Fforum%2Fviewtopic.php%3Ft%3D959419&psig=AFQjCNHmXpMBf9vJ0V1TUVmNDg2rq8XkDA&ust=1475207521804810',
+                sourceUrl: 'http://www.airliners.net/forum/viewtopic.php?t=959419',
                 credit: 'Airliners.net by user MSYtristar'
             }),
             'Brightline Interior': Map({
@@ -437,7 +438,55 @@ var amtrakStandardModels = OrderedMap({
             }),
             'Private Metro Compartments': Map({
             }),
-        })})
+        })}),
+        media: OrderedMap({
+            'ICE_First_Class_Compartment': Map({
+                caption: "A first class compartment in Deutsche Bahn's Intercity Express (ICE) between Amsterdam and Berlin",
+                sourceImageUrl: 'http://www.vagonweb.cz/fotogalerie/foto/201003/IMGP8329.jpg',
+                sourceUrl: 'http://www.railforums.co.uk/showthread.php?t=52925',
+                credit: 'vagonWEB'
+            }),
+            'Eurostar_First_Class': Map({
+                caption: "Friends crowd into a first class compartment on Eurostar between Naples and Florence",
+                sourceImageUrl: 'http://www.adventurouskate.com/wp-content/uploads/2010/04/004_21A-1024x679.jpg',
+                sourceUrl: 'http://www.adventurouskate.com/travelers-night-in-the-best-of-europe/',
+                credit: 'Eurail.com'
+            }),
+            'First_Class_Denmark': Map({
+                caption: "This first-class compartment in Denver is spacious and functional",
+                sourceImageUrl: 'http://blog.eurail.com/wp-content/uploads/2014/08/2-1st-class-compartment-on-a-train-in-Denmark.jpg',
+                sourceUrl: 'http://blog.eurail.com/essential-guide-first-class-vs-second-class-eurail-passes/',
+                credit: 'Kate McCulley'
+            }),
+            'Women_In_3_Bed_Compartment': Map({
+                caption: "A 3-bed compartment on Deutsche Bahn's City Night Line (CNL). Overnight trains in Europe have been declining; hopefully they will rebound",
+                sourceImageUrl: 'http://www.eurail.com/sites/eurail.com/files/styles/asset_image_images_slider_big/public/girls_in_3_bed_compartment_of_citynightline.jpg?itok=kYrbL3RR',
+                sourceUrl: 'http://www.eurail.com/europe-by-train/night-trains/city-night-line',
+                credit: 'Eurrail.com'
+            }),
+            'AMTRAK_3_Bed_Compartment': Map({
+                caption: "AMTRAK's Bedroom offers space for 3 and a sink",
+                sourceImageUrl: 'http://cal.streetsblog.org/wp-content/uploads/sites/13/2015/10/SleepingCompartmentOnAmtrak-AdjustingExistingSchedulesCouldProvideOvernightServiceFromLAtoTheBayArea.jpg',
+                sourceUrl: 'http://cal.streetsblog.org/2015/10/14/dreaming-of-the-night-train-sleeping-from-la-to-the-bay-area/',
+                credit: 'Roger Rudick, Streetsblog California',
+                date: 'October 2015'
+            }),
+            'AMTRAK_Roomette': Map({
+                type: 'png',
+                caption: "Though charmingly dated in appearance, AMTRAK roomettes provide two comfortable seats in a private compartment that convert to beds",
+                sourceImageUrl: 'http://trainweb.org/carl/LATrainDay2011/640/IMG_5267.jpg',
+                sourceUrl: 'http://discuss.amtraktrains.com/index.php?/topic/58967-is-first-class-worth-it/page-2',
+                credit: 'User SarahZ on Amtrak Unlimited',
+                date: 'October 2015'
+            }),
+            'Family Section': Map({
+                type: 'png',
+                caption: "Deutsche Bahn designates cabin space to families on it's inter-city trains, creating tender interactions between strangers",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+                date: 'August 2016'
+            })
+        })
     }),
 
     'Access to Amenities': Map({

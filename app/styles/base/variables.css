@@ -27,7 +27,7 @@ $showcase-top: 0px;
 */
 $showcase-height: calc(100% - $footer-height + $showcase-footer-overlap);
 $showcase-left: 10px;
-$showcase-width: 69%;
+$showcase-width: 66%;
 
 /*
     Make the model ratio should be 2 height to 3 width since that is what the Sketchup videos are.
@@ -37,14 +37,17 @@ $showcase-width: 69%;
     along with the showcase-width percent
 */
 $model-3d-top: calc($header-height);
+/**
+    This forces the 16 * 9 aspect ratio that the videos need
+**/
+$model-3d-padding-bottom: 56.26%;
 $model-3d-width: 100%;
-$model-3d-height: calc(calc(100% - $header-height - $showcase-footer-overlap));
 $model-3d-toggle-width: 70px;
 $model-3d-toggle-height: calc($model-3d-toggle-width / 1.5);
 /*
     The model overlaps the document
 */
-$model-3d-document-overlap: 20px;
+$model-3d-document-overlap: 10px;
 
 $media-height: 100px;
 $gallery-thumbnail-width: 100px;
@@ -95,7 +98,7 @@ $table-of-contents-model-current-height: 20px;
 $table-of-contents-top-height: calc($header-height - $table-of-contents-top-offset - 5px - $table-of-contents-model-current-height / 2);
 $table-of-contents-bottom-offset: 15px;
 $table-of-contents-bottom-height: calc($footer-height - $table-of-contents-bottom-offset - 5px - $table-of-contents-model-height / 2);
-$table-of-contents-height-expanded: calc($table-of-contents-top-height + $model-3d-height);
+$table-of-contents-height-expanded: calc($showcase-height - $showcase-footer-overlap);
 
 $white: floralwhite;
 $blue: color(deepskyblue lightness(30%));
