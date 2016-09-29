@@ -148,6 +148,7 @@
             width: calc($table-of-contents-document-height / 2)
         }
         .outline {
+            color: $rescape-love;
             height: $table-of-contents-model-current-height;
             font-size: $h6-font-size;
             border-radius: 5px;

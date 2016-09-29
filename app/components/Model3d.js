@@ -247,6 +247,7 @@ class Model3d extends Component {
             // If this iframe has relevance then set the top style to the percent of relevance
             const style = relevance && modelTops[relevance] ? {
                 top: `${Math.round(modelTops[relevance]*100)}%`,
+                bottom: `${-1 * Math.round(modelTops[relevance]*100)}%`,
             } : {}
 
 
