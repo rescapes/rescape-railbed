@@ -138,8 +138,9 @@ export function closestAnchorDistances(document, models) {
  * For models that are grouped with others, this removes the parens from their title, so all group models
  * normalize to the same name
  * @param modelKey
+ * @param model. Used to look for model.title, which takes precedence over modelKey
  * @returns {*}
  */
-export function normalizeModelName(modelKey) {
-    return modelKey.replace(/ \(.*?\)$/, '')
+export function normalizeModelName(modelKey, model) {
+    return model.get('title') || modelKey.replace(/ \(.*?\)$/, '')
 }

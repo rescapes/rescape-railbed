@@ -39,6 +39,8 @@ $showcase-width: 69%;
 $model-3d-top: calc($header-height);
 $model-3d-width: 100%;
 $model-3d-height: calc(calc(100% - $header-height - $showcase-footer-overlap));
+$model-3d-toggle-width: 70px;
+$model-3d-toggle-height: calc($model-3d-toggle-width / 1.5);
 /*
     The model overlaps the document
 */

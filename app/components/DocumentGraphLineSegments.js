@@ -42,8 +42,7 @@ class DocumentGraphLineSegments extends React.Component {
             // Get the last point of the last segment, or if at the start use x and y
             const previous = reduction.count() ? reduction.slice(-1).get(0) : {x2:`${nodes[0].x}%`, y2:`${nodes[0].y}%`}
             // Dash the line if the line segment represents nodes that we aren't showing
-            const strokeDashArray = !this.props.isExpanded && nodes.length < this.props.totalNodeCount && i==nodes.length-2 ?
-                "1,5" : "none"
+            const strokeDashArray = !this.props.isExpanded && nodes.length < this.props.totalNodeCount && i==nodes.length-2
             return reduction.push({
                 x1:`${previous.x2}`,
                  y1:`${previous.y2}`,
@@ -79,23 +78,20 @@ class DocumentGraphLineSegments extends React.Component {
      */
     render() {
         const nodes = this.props.nodes
-        const lineSegments = this.getLineSegments(nodes).map((lineSegment, index) =>
-            <line key={nodes[index].key} {...lineSegment} stroke="black" strokeLinecap="round" strokeLinejoin="round" strokeWidth={`${this.props.lineRadius}`} />
-        )
-        const crossLineSegments = this.getCrossLineSegments(nodes, 40).map((lineSegment, index) =>
-            <line key={`${nodes[index].key}-cross`} {...lineSegment} stroke="black" strokeLinecap="round" strokeLinejoin="round" strokeWidth={`${this.props.lineRadius-2}`} />
-        )
-
-        //{crossLineSegments}
-        return <svg className='document-graph-svg'
-             ref='svg'
-             viewBox={`0 0 ${this.props.containerWidth} ${this.props.containerHeight}`}
-             preserveAspectRatio="xMinYMin meet"
-        >
-            <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="solid" fillOpacity="1">
-                {lineSegments}
-            </g>
-        </svg>
+        const lineSegments = this.getLineSegments(nodes).map(function (lineSegment, index) {
+            var top = Math.min(parseFloat(lineSegment.y1), parseFloat(lineSegment.y2))
+            var height = Math.abs(parseFloat(lineSegment.y2) - parseFloat(lineSegment.y1))
+            return <div key={nodes[index].key}
+                 className={`line-segment ${lineSegment.strokeDasharray ? 'dashed' : ''}`}
+                 style={{
+                     top: `${top}%`,
+                     height: `${height}%`,
+                 }}
+            />
+        })
+        return <div className="line-segments">
+            {lineSegments}
+        </div>
     }
 }
 

@@ -26,7 +26,7 @@ export function getAnchorToModels(anchors, models) {
             throw `Model: ${modelKey} with anchorId ${model.get('anchorId')} cannot find its anchor in the document`
         // Remove the () of the model key to generalize the name
         // Models with the same anchors use (difference) to differentiate their keys
-        const modelKeyNormalized = normalizeModelName(modelKey)
+        const modelKeyNormalized = normalizeModelName(modelKey, model)
         // Make a pseudoAnchor since DOM elements don't hash properly
         const pseudoAnchor = Map({name: modelKeyNormalized, offsetTop: anchor.offsetTop})
         const models = (reduction.get(pseudoAnchor) || OrderedMap()).set(modelKey, model)

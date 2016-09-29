@@ -109,9 +109,11 @@ export default class Media extends Component {
             // We can't use spaces in our file names, it confuses babel or webpack or something
             const file = normalizeKeyToFilename(key)
             return {
+                // The default size is 800px
                 src: `${dir}/${file}-800.${type}`,
                 thumbnail: `${dir}/${file}-320.${type}`,
                 srcset: [
+                    `${dir}/${file}-100pc.${type} 2048w`, // full size image for downloads
                     `${dir}/${file}-1024.${type} 1024w`,
                     `${dir}/${file}-800.${type} 800w`,
                     `${dir}/${file}-500.${type} 500w`,
