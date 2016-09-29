@@ -16,15 +16,20 @@ import document_circle_locked_svg from '../images/document-circle-locked.svg'
 import document_circle_unlocked_svg from '../images/document-circle-unlocked.svg'
 import model_circle_svg from '../images/model-circle.svg'
 import model_circle_current_svg from '../images/model-circle-current.svg'
+import {normalizeModelName} from '../utils/modelHelpers'
 
 /***
  * Shows a node of the table of contents, including the circle and label
+ * We only show the normalized models as nodes, so two models such
+ * as Comfort of Seating (Tram) vand Comfort of Seating (AMTRAK) will share a node
  */
 export default class DocumentGraphNode extends React.Component {
 
     render() {
         const node = this.props.node
         let style = null
+        // The normalized model name
+        const normalizedModelName = normalizeModelName(this.props.modelKey, this.props.model)
         if (this.props.isTop && node.key==this.props.documentTitle) {
             // The document. We can toggle the table of contents here with mouseEnter
             // The mouseLeave is on the overall toc DOM element so that it stays open after hover
@@ -50,7 +55,7 @@ export default class DocumentGraphNode extends React.Component {
                 </div>
             </div>
         }
-        else if (this.props.isTop && this.props.node.key == this.props.modelKey) {
+        else if (this.props.isTop && this.props.node.key == normalizedModelName) {
             // The current model
             return <div className='table-of-contents-node toc-model-current' key={node.key} style={{left: `${node.x}%`, top: `${node.y}%`}}>
                 <img className='circle' src={model_circle_current_svg} />

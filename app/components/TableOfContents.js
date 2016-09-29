@@ -31,7 +31,7 @@ class TableOfContents extends React.Component {
      */
     getTotalObjectCount() {
         const anchorNames = this.props.document.get('anchorToModels').keySeq().map(anchor => anchor.get('name'))
-        const normalizedModelName = normalizeModelName(this.props.modelKey)
+        const normalizedModelName = normalizeModelName(this.props.modelKey, this.props.model)
         const modelsForPosition = this.props.isTop ?
             anchorNames.slice(0, anchorNames.indexOf(normalizedModelName) + 1).reverse() :
             anchorNames.slice(anchorNames.indexOf(normalizedModelName) + 1)
@@ -47,7 +47,7 @@ class TableOfContents extends React.Component {
      * Models are grouped together that have the same anchor representation
      **/
     getObjects() {
-        const normalizedModelName = normalizeModelName(this.props.modelKey)
+        const normalizedModelName = normalizeModelName(this.props.modelKey, this.props.model)
         // We only want the first model of each anchor. This avoids separate of contents entries for grouped models.
         const allModels = OrderedMap(this.props.document.get('anchorToModels').entrySeq().map(([anchor, models]) =>
             // Return the anchor name and first Model

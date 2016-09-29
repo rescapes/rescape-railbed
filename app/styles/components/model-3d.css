@@ -101,8 +101,8 @@ iframe {
 }
 
 .video {
+    left: 0;
     width: 100%;
-    height: 100%;
 }
 
 /***
@@ -115,20 +115,20 @@ video {
 
 .toggle-3d-is-off {
     z-index: 5;
-    width: 80px;
-    height: 53px;
+    width: $model-3d-toggle-width;
+    height: $model-3d-toggle-height;
     position: absolute;
     left: 0px;
     margin: 5px;
 
 }
 .toggle-3d-is-off-icon {
-    width: 80px;
-    height: 53px;
+    width: $model-3d-toggle-width;
+    height: $model-3d-toggle-height;
     &:hover {
         cursor: pointer;
-        width: 110px;
-        height: 96px;
+        width: calc($model-3d-toggle-width * 1.5);
+        height: calc($model-3d-toggle-height * 1.5);
         transition: width 300ms ease, height 300ms ease;
     }
 }

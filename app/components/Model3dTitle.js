@@ -27,7 +27,7 @@ export default class Model3dTitle extends Component {
         // .scene-title-enter and .scene-title-enter-active to the entering element
         // .scene-title-leave and .scene-title-leave-active to the exiting element
         return <span className={`model-3d-title ${this.props.lightboxVisibility ? 'fade-out' : this.props.fade} ${this.props.toward}`}>
-                    {this.props.model && this.props.model.get('title') || normalizeModelName(this.props.modelKey)}
+                    {this.props.model && normalizeModelName(this.props.modelKey, this.props.model)}
             <ReactCSSTransitionGroup
                 className="scene-title"
                 transitionName="scene-title"

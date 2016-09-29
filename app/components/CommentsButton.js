@@ -12,12 +12,11 @@
 import React, { Component, PropTypes } from 'react'
 import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import ReactDisqusThread from 'react-disqus-thread';
 import {normalizeKeyToFilename} from "../utils/fileHelpers";
-import close_svg from '../images/close.svg'
 import comment_svg from '../images/comment.svg'
 import * as documentActions from '../actions/document'
 import * as modelActions from '../actions/model'
+import statuses from '../statuses'
 
 class Comments extends Component {
     constructor () {
@@ -83,6 +82,8 @@ class Comments extends Component {
      * @returns {XML}
      */
     render() {
+        if (!this.props.document || this.props.document.get(status) != statuses.READY)
+            return <div/>
         return <div className={`${this.props.className || 'comments'} ${this.props.commentsAreShowing ? 'showing' : ''}`}>
             <div
                 className={`comment-counter ${this.props.modelKey ? 'comment-counter-model' : 'comment-counter-document'}`}

@@ -83,7 +83,8 @@ class Gallery extends Component {
 	// from http://stackoverflow.com/questions/283956/
 	handleDownload() {
 		var link = document.createElement('a');
-        const src = this.props.images[this.state.currentImage].src
+		// Use the largest image from the srcset
+        const src = this.props.images[this.state.currentImage].srcset[0].split(' ')[0]
 		if (typeof link.download === 'string') {
 			document.body.appendChild(link); //Firefox requires the link to be in the body
 			link.download = ''
@@ -126,8 +127,7 @@ Gallery.propTypes = {
 };
 
 function mapStateToProps(state) {
-	return {
-	}
+	return {}
 }
 
 /***

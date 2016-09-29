@@ -314,8 +314,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Seat Comfort (Metro and Tram)': Map({
-        title: 'Space and Seat Comfort',
+    'Space and Seat Comfort (Metro and Tram)': Map({
         status: Statuses.INITIALIZED,
         anchorId: 'id.em6st57x7wbe',
         // Scenes aren't able to transition fast enough for this model, so everide the usual time
@@ -375,8 +374,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Seat Comfort (AMTRAK and Bus)': Map({
-        title: 'Space and Seat Comfort',
+    'Space and Seat Comfort (AMTRAK and Bus)': Map({
         status: Statuses.INITIALIZED,
         anchorId: 'id.em6st57x7wbe',
         id: '843cbe82-5a4a-4453-9766-488049133e9d',
@@ -411,7 +409,7 @@ var amtrakStandardModels = OrderedMap({
                 date: 'September 2016'
             }),
             'Switzerland Bus Comfort': Map({
-                caption: "This Swiss bus in the Alps in the nicest bus I have ever been in, the only local bus I've experienced that focuses on comfort and shows off the scenery",
+                caption: "This Swiss bus in the Alps in the nicest local bus I have ever been in, the only local bus I've experienced that focuses on comfort and shows off the scenery",
                 sourceUrl: 'http://rescapes.net',
                 credit: 'Rescape',
                 date: 'July 2016'
