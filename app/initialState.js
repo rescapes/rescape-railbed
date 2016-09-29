@@ -346,6 +346,13 @@ var amtrakStandardModels = OrderedMap({
                 sourceUrl: 'https://en.wikipedia.org/wiki/Bay_Area_Rapid_Transit',
                 credit: 'Wikipedia',
             }),
+            'Moscow Metro Car': Map({
+                caption: "Moscow's subway stations are famous for their architectural beauty. The cars offer padded seats and soft lighting",
+                sourceImageUrl: 'http://www.architecture-online.org/wp-content/uploads/2013/04/Moscow_metro_car_from_inside.jpg',
+                sourceUrl: 'http://www.architecture-online.org/2013/04/moscow-metro-subway/',
+                credit: 'Architecture Online by user Ada',
+                date: 'April 2013'
+            }),
             'Edinburgh Tram': Map({
                 caption: "Edinburgh's trams feature padded seats with high seatbacks. There is no reason to deny passengers such niceties",
                 sourceImageUrl: 'http://upload.wikimedia.org/wikipedia/commons/2/2b/Interior_of_Edinburgh_Tram_-_geograph.org.uk_-_1175899.jpg',
@@ -382,17 +389,39 @@ var amtrakStandardModels = OrderedMap({
             }),
         })}),
         media: OrderedMap({
+            'AMTRAK Sightseer Lounge': Map({
+                type: 'jpg',
+                caption: "AMTRAK's Sightseer Lounge Car offers a social and scenic passtime for coach and sleeper car passengers",
+                sourceImageUrl: 'http://i2.photobucket.com/albums/y34/Nolaguy79/IMG_0998.jpg',
+                sourceUrl: 'https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&ved=0ahUKEwjghrnD1rPPAhVC3mMKHS6HBboQjxwIAw&url=http%3A%2F%2Fwww.airliners.net%2Fforum%2Fviewtopic.php%3Ft%3D959419&psig=AFQjCNHmXpMBf9vJ0V1TUVmNDg2rq8XkDA&ust=1475207521804810',
+                credit: 'Airliners.net by user MSYtristar'
+            }),
             'Brightline Interior': Map({
                 caption: 'Brightline, a company building now rail service in Florida (All Aboard Florida) has designed train cars with "intuitive interiors"',
                 sourceImageUrl: 'http://m.allaboardflorida.com/images/bl/Press-Release-Images/brightline_interiors_press-release.jpg?sfvrsn=4',
                 sourceUrl: 'http://m.allaboardflorida.com/press/press-releases/2016/06/10/brightline-reveals-innovative-trains-under-construction',
                 credit: 'Brightline',
             }),
+            'TGV Océane': Map({
+                type: 'jpg',
+                caption: "France's SNCF's new TGV Océane high-speed-rail cars are designed for working and relaxing",
+                sourceUrl: "http://www.europeanrailwayreview.com/29822/rail-industry-news/tgv-oceane-interior/",
+                imageUrl: "http://d1p2xdir0176pq.cloudfront.net/wp-content/uploads/TGV-Oc%C3%A9ane-3.jpg",
+                credit: 'Katie Sadler, European Railway Review',
+                date: 'September 2016'
+            }),
             'Switzerland Bus Comfort': Map({
                 caption: "This Swiss bus in the Alps in the nicest bus I have ever been in, the only local bus I've experienced that focuses on comfort and shows off the scenery",
                 sourceUrl: 'http://rescapes.net',
                 credit: 'Rescape',
                 date: 'July 2016'
+            }),
+            'Sound Transit': Map({
+                type: 'jpg',
+                caption: "Sound Transit's express buses serving the Seattle region manage to have plush seats with armrests that recline",
+                sourceImageUrl: 'https://c1.staticflickr.com/9/8768/17134452856_eab76d6f0b_b.jpg',
+                sourceUrl: 'https://www.flickr.com/photos/zheistand/17134452856',
+                credit: 'Zack Heistand'
             })
         })
     }),
