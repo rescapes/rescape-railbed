@@ -37,6 +37,10 @@ class ModelVideo extends Component {
      * Plays from the current start to end or seeks the start if no start and end are set
      */
     playOrReset() {
+        // Never do anything while seeking a certain model
+        if (this.props.isSeeking)
+            return
+
         if (this.state.start == 0 && this.state.end == 0) {
             // Seeking the start amazingly doesn't work. We have to reload
             this.refs.video.load()
@@ -63,6 +67,10 @@ class ModelVideo extends Component {
     }
 
     onProgress() {
+
+        console.warn(window.document.getElementsByClassName('document')[0].scrollTop)
+        console.warn(this.props.isSeeking)
+        console.log(this.props.videoUrl)
         console.log(this.state.start, this.refs.video.videoEl.currentTime, this.state.end)
         if (this.refs.video.videoEl.currentTime  >= this.state.end) {
             this.pause();
@@ -128,7 +136,9 @@ ModelVideo.propTypes = {
     start: PropTypes.number,
     end: PropTypes.number,
     toward: PropTypes.string,
-    scrollDirection: PropTypes.string
+    scrollDirection: PropTypes.string,
+    // If true this meens we are seeking through the videos so don't play anything
+    isSeeking: PropTypes.bool
 }
 
 export default ModelVideo

@@ -86,8 +86,8 @@ export class Site extends Component {
 
         // Shows the commetns button for the overall document
         const documentCommentsButton = this.props.documentKey ?
-            <CommentsButton className='document-comments'
-                      key="'document-comments"
+            <CommentsButton className='document-comments-counter'
+                      key="'document-comments-counter"
                       document={this.props.document}
                       documentKey={this.props.documentKey}
                       documentTitle={this.props.documentTitle}
@@ -96,8 +96,9 @@ export class Site extends Component {
 
         // Shows the comments button for the current model
         const modelCommentsButton = this.props.modelKey ?
-            <CommentsButton className='model-comments'
-                key="model-comments"
+            <CommentsButton className='model-comments-counter'
+                key="model-comments-counter"
+                document={this.props.document}
                 documentKey={this.props.documentKey}
                 documentTitle={this.props.documentTitle}
                 model={this.props.model}

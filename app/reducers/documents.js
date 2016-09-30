@@ -14,6 +14,7 @@ import {SET_STATE} from '../actions/site'
 import * as actions from '../actions/document'
 import * as modelActions from '../actions/model'
 import Statuses from '../statuses'
+import config from '../config'
 
 /***
  * Reduces the state of the documents
@@ -59,6 +60,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
      * @returns {*}
      */
     var setScrollPosition = function (documentKey, scrollPosition) {
+
         // Filter out anchors with an undefined name, meaning they didn't match anything in our initial state
         // If a is closer the function will return <0, so a wins. If b is closer then >0 so b wins
         const {current, next, previous, nextForDistinctModel, previousForDistinctModel} = getRelevantAnchors(scrollPosition)
@@ -168,6 +170,13 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     else if (action.type==actions.REGISTER_SCROLL_POSITION) {
         return setScrollPosition(currentDocumentKey, action.position)
     }
+    /**
+     * Tracks if we are actively scrolling to a model.
+     * This disables things like video scene changes until the scrolling completes.
+     */
+    else if (action.type==actions.DOCUMENT_IS_SCROLLING) {
+        return state .setIn(['entries', currentDocumentKey, 'isScrolling'], action.isScrolling)
+    }
     /***
      * If incrementing the scroll position to the anchor of the next model
      */
@@ -223,7 +232,10 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         const soughtModelAnchor = soughtModelAnchorModels[0]
         // Update it to that of the anchor of the next distinct model
         // Scroll up a tad to make it look better
-        return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], soughtModelAnchor.get('offsetTop') - 30)
+        return state.setIn(
+            ['entries', currentDocumentKey, 'scrollPosition'],
+            soughtModelAnchor.get('offsetTop') - config.SCROLL_OFFSET
+        )
     }
     // Toggle comments showing or hidden for the current document
     else if (action.type == actions.TOGGLE_DOCUMENT_COMMENTS) {

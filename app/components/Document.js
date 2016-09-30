@@ -27,6 +27,7 @@ import Scroll from 'react-scroll';
 import {getAnchorToModels} from '../utils/documentHelpers'
 const scroll = Scroll.animateScroll;
 import bookmark_png from '../images_dist/bookmark-320.png'
+import config from '../config'
 
 class Document extends Component {
 
@@ -77,7 +78,7 @@ class Document extends Component {
             return
         this.setState({scrollHeight: domElement.scrollHeight})
 
-        const maxScenePosition = this.props.settings.get('MAX_SCENE_POSITION')
+        const maxScenePosition = config.MAX_SCENE_POSITION
 
         // Map anchors to models. One anchor can represent to one or more models
         // As a side-effect we give the anchor the generic model name the first time we encounter a new anchor
@@ -153,6 +154,7 @@ class Document extends Component {
             elapsedTime += increment;
             if (duration==0) {
                 element.scrollTop = to
+                this.props.documentIsScrolling(false)
                 return
             }
             var position = this.easeInOut(elapsedTime, start, change, duration);
@@ -209,7 +211,7 @@ class Document extends Component {
         else if (
             nextProps.document.get('scrollPosition') != this.props.scrollPosition &&
             nextProps.document.get('scrollPosition') != this.documentDiv.scrollTop) {
-            // Scroll in 100 ms
+            // Scroll in 100 ms. This updates the this.documentDiv.scrollTop incrementally to the value
             this.scrollTo(nextProps.document.get('scrollPosition'), 100)
         }
     }
@@ -276,18 +278,22 @@ class Document extends Component {
             hrSpacerRegexStart = /^((?:<p class="c\d+?"><span class="c\d+?"><\/span><\/p>)+)/,
             hrSpacerRegexEnd = /((?:<p class="c\d+?"><span class="c\d+?"><\/span><\/p>)+)$/,
             contentsDiv = '<div id="contents">',
-            contentsDivLength = contentsDiv.length
+            contentsDivLength = contentsDiv.length,
+            // For the top of the document
+            // Grab everything starting with the "content" div and put the just header inside it
+            contentDivIndex = body.indexOf(contentsDiv)
+
+
         var index = 0,
-            modifiedBody = body,
+            modifiedBody = null,
             startLocation = null,
-            result
-        // For each <hr>
-        while ( (result = regex.exec(body)) ) {
+            // Look for <hr> tags separating the document. If there are none make a pseudo
+            // one representing the whole document except for the div footer
+            result = regex.exec(body) || {index: body.indexOf('<div id="footer">')}
+        // For each <hr> or for the single pseudo one
+        do {
             let bodyContent = null
             if (index == 0) {
-                // For the top of the document
-                // Grab everything starting with the "content" div and put the just header inside it
-                const contentDivIndex = body.indexOf(contentsDiv)
                 // <div id="content">
                 modifiedBody = body.slice(contentDivIndex, contentDivIndex + contentsDivLength)
                 // <div id="header>header</div>...spacer<hr> (not including spacer<hr>)
@@ -319,7 +325,7 @@ class Document extends Component {
             // Store the index after the <hr>
             startLocation = result.index + hrLength
             index++
-        }
+        } while ( (result = regex.exec(body)) )
         return modifiedBody
     }
 }

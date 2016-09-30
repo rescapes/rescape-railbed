@@ -33,6 +33,7 @@ export const REGISTER_SCROLL_POSITION = 'REGISTER_SCROLL_POSITION'
 export const SCROLL_TO_NEXT_MODEL = 'SCROLL_TO_NEXT_MODEL'
 export const SCROLL_TO_PREVIOUS_MODEL = 'SCROLL_TO_PREVIOUS_MODEL'
 export const SCROLL_TO_MODEL = 'SCROLL_TO_MODEL'
+export const DOCUMENT_IS_SCROLLING = 'DOCUMENT_IS_SCROLLING'
 
 export const TOGGLE_DOCUMENT_COMMENTS = 'TOGGLE_DOCUMENT_COMMENTS'
 export const TOGGLE_DOCUMENT_TABLE_OF_CONTENTS = 'TOGGLE_DOCUMENT_TABLE_OF_CONTENTS'
@@ -178,6 +179,10 @@ export function scrollToPreviousModel() {
  */
 export function scrollToModel(modelKey) {
     return { type: SCROLL_TO_MODEL, key: modelKey }
+}
+
+export function documentIsScrolling(isScrolling) {
+    return { type: DOCUMENT_IS_SCROLLING, isScrolling }
 }
 
 /***
