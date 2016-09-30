@@ -17,6 +17,7 @@ import comment_svg from '../images/comment.svg'
 import * as documentActions from '../actions/document'
 import * as modelActions from '../actions/model'
 import statuses from '../statuses'
+import {isSeeking} from '../utils/documentHelpers'
 
 class Comments extends Component {
     constructor () {
@@ -47,8 +48,10 @@ class Comments extends Component {
     componentWillReceiveProps(nextProps) {
         if (!this.commentObjectKey())
             return;
-        if (this.formArticleKey(nextProps) != this.formArticleKey() ||
-                nextProps.commentsAreShowing != this.props.commentsAreShowing)
+        if (!this.props.isSeeking && (
+            this.formArticleKey(nextProps) != this.formArticleKey() ||
+            nextProps.commentsAreShowing != this.props.commentsAreShowing
+        ))
             this.mirrorProps(nextProps);
     }
 
@@ -82,11 +85,13 @@ class Comments extends Component {
      * @returns {XML}
      */
     render() {
-        if (!this.props.document || this.props.document.get(status) != statuses.READY)
+        if (!this.props.document)
             return <div/>
-        return <div className={`${this.props.className || 'comments'} ${this.props.commentsAreShowing ? 'showing' : ''}`}>
+        return <div className={this.props.className} >
             <div
-                className={`comment-counter ${this.props.modelKey ? 'comment-counter-model' : 'comment-counter-document'}`}
+                className={`comment-counter
+                    ${this.props.modelKey ? 'comment-counter-model' : 'comment-counter-document'}
+                    ${this.props.documentStatus != statuses.READY ? 'loading' : ''} `}
                 style={{display: this.props.commentsAreShowing ? 'none' : 'block'}}
                 onClick={this.onClickCommentButton.bind(this)} >
                 <img className='comment-icon' src={comment_svg} />
@@ -119,10 +124,20 @@ Comments.propKeys = {
     modelKey: PropTypes.string,
     model: ImmutablePropTypes.map,
     commentsAreShowing: PropTypes.bool,
+    documentStatus: PropTypes.bool,
+    // Don't load the comment count if we are seeking
+    isSeeking: PropTypes.bool
 }
 
 function mapStateToProps(state, props) {
-    return state.toObject()
+    const documents = state.get('documents')
+    const documentKey = documents.get('current')
+    const document = documents.getIn(['entries', documentKey])
+    return Object.assign(
+        state.toObject(), {
+            documentStatus: document && document.get('status'),
+            isSeeking: isSeeking(document)
+        })
 }
 
 /***

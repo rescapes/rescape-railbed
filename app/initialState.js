@@ -171,7 +171,7 @@ var amtrakStandardModels = OrderedMap({
                 caption: "BRT in Cambridge, England that attempts to imitate the aesthetics of a modern tram. A tram track would be safer in this pedestrian environment",
                 sourceImageUrl: 'http://www.buszone.co.uk/Streetcar%5E061005_02.jpg',
                 sourceUrl: 'http://www.skyscrapercity.com/showthread.php?t=1155659&page=2',
-                credit: 'Thefancydanhimself, user of SkyscraperCity.com',
+                credit: 'Thefancydanhimself, user/SkyscraperCity.com',
             }),
             'O Bahn Busway': Map({
                 caption: "A rare fixed-guideway bus in Adelaide, South Australia, which also functions off-track in the suburbs",
@@ -486,7 +486,8 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'Rescape',
                 date: 'August 2016'
             })
-        })
+        }),
+
     }),
 
     'Access to Amenities': Map({
@@ -504,7 +505,45 @@ var amtrakStandardModels = OrderedMap({
             }),
             'Tram Café': Map({
             })
-        })})
+        })}),
+        media: OrderedMap({
+            'AMTRAK Toilet': Map({
+                caption: "AMTRAK has handicap accessible toilets on all trains",
+                sourceImageUrl: 'https://farm1.staticflickr.com/83/248892234_a52b84005c_o_d.jpg, https://www.flickr.com/photos/sgroi/248892234',
+                sourceUrl: 'http://www.trainsandtravel.com/a-preview-look-at-amtraks-new-viewliner-sleeping-cars/',
+                credit: 'Jim Loomis, Trains & Travel',
+            }),
+            'Tramtrain': Map({
+                caption: "Karlsruhe, Germany's innovated tramtrain, which runs both on city tram track and regional rails, offers toilets onboard",
+                sourceImageUrl: 'http://www.karlsruhe-tourismus.de/var/ka/storage/images/media/bilder/gruppenangebote/tramstadt_01/6905-1-ger-DE/tramstadt_01_front_colorbox.jpg',
+                sourceUrl: 'http://www.karlsruhe-tourismus.de/en/book/special-interest/the-tramtrain-system',
+                credit: 'Karlsruhe Tourismus',
+            }),
+            'Parlour Car': Map({
+                caption: "Strangers and friends mingle for meals and sightseeing on AMTRAK's Coast Starlight first class Parlour Car",
+                sourceImageUrl: 'http://1.bp.blogspot.com/-Gtaa0F0Di0w/VB51swNMg_I/AAAAAAAAH7w/pNTWbutCzDQ/s1600/Parlour%2BCar.JPG',
+                sourceUrl: 'http://www.trainsandtravel.com/there-really-is-something-were-doing-better-than-the-europeans-overnight-trains/',
+                credit: 'Jim Loomis, Trains & Travel'
+            }),
+            'Parlour Car Tasting': Map({
+                caption: "Wine tasting in AMTRAK's Coast Starlight first class Parlour Car",
+                sourceImageUrl: 'http://cdn.akamai.steamstatic.com/steam/apps/222610/ss_0b93f50e5ecabbb4dde32756405bba6ccb93f8d9.jpg, http://cdn.akamai.steamstatic.com/steam/apps/',
+                sourceUrl: 'http://www.trainsandtravel.com/getting-a-taste-of-the-parlour-car/',
+                credit: 'Jim Loomis, Trains & Travel'
+            }),
+            'Munich Tram Helpful Digital Station List': Map({
+                caption: "This first-class compartment in Denver is spacious and functional",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape'
+            }),
+            'Bus with Locked Bike Storage': Map({
+                type: 'png',
+                caption: "This local bus in the French Alps wastes space with like bike storage, forcing passengers to cram",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+                date: 'July 2016'
+            }),
+        })
     }),
 
     'Expectation of Good Behavior (Poor)': Map({
@@ -520,7 +559,35 @@ var amtrakStandardModels = OrderedMap({
             }),
             'Accessing Transit is Cumbersome': Map({
             }),
-        })})
+        })}),
+        media: OrderedMap({
+            'BART Powell St Station': Map({
+                caption: "Faregates needlessly delay passengers existing BART's Powell St Station in San Francisco",
+                sourceImageUrl: 'http://subwaynut.com/california/bart/powell/powell39.jpg',
+                sourceUrl: 'http://subwaynut.com/california/bart/powell/p2.php',
+                credit: 'Jeremiah Cox/SubwayNut.com',
+                date: '2014'
+            }),
+            'BART Clipper Card': Map({
+                caption: "RFID Cards, like the Clipper Card of the San Francisco Bay Area, could be tapped without requiring faregates",
+                sourceImageUrl: 'http://farm6.staticflickr.com/5258/5505480382_fb3fec7082_b.jpg',
+                sourceUrl: 'http://www.akit.org/2012_10_01_archive.html',
+                credit: 'Akit',
+            }),
+            'Los Angeles Tapreader': Map({
+                type: 'png',
+                caption: "Los Angeles Metro installed faregates in its subways but not above ground in 2009 to prevent fare evasion",
+                sourceImageUrl: 'https://www.transit.wiki/File:Tapreader.jpg',
+                sourceUrl: 'https://www.transit.wiki/Los_Angeles_Metro_ticket_machine',
+                credit: 'Transit Wiki',
+            }),
+            'BART Police': Map({
+                caption: "Presence of officials on the San Francisco Bay Area's BART is relatively rare and for stark cases rather than frequent, friendly supervision",
+                sourceImageUrl: 'https://p931z2nb6eo1jytzj2ufrzyoiz-wpengine.netdna-ssl.com/news/wp-content/uploads/sites/10/2014/12/RS13482_3301483-qut.jpg',
+                sourceUrl: 'https://ww2.kqed.org/news/2016/07/18/bart-still-hasnt-installed-surveillance-cameras/',
+                credit: 'Justin Sullivan/Getty Images',
+            }),
+        })
     }),
 
     'Expectation of Good Behavior (Improved)': Map({
@@ -536,9 +603,47 @@ var amtrakStandardModels = OrderedMap({
             }),
             'Fast Fare Inspection': Map({
             }),
-            'Luggage & Bike Conveyor': Map({
+            'Quicker Access without Barriers and Perhaps No Mezzanine Level': Map({
             }),
-        })})
+        })}),
+        media: OrderedMap({
+            'Munich Ü-Bahn Inspection': Map({
+                caption: "On board ticket inspection on the Munich Ü-Bahn (metro system)",
+                sourceImageUrl: 'http://polpix.sueddeutsche.com/bild/1.997485.1356593680/900x600/ein-kontrolleur-muenchner-verkehrsgesellschaft-mvg-muenchner-ubahn.jpg',
+                sourceUrl: 'http://www.sueddeutsche.de/muenchen/muenchner-tatsachen-verruchte-boazn-und-eine-geheimmission-1.1142794-5',
+                credit: 'Süddeutsche Zeitung',
+            }),
+            'Cologne Ü-Bahn Inspection': Map({
+                caption: "Platform ticket inspection on the Cologn Ü-Bahn (metro system)",
+                sourceImageUrl: 'http://blog.kvb-koeln.de/wp-content/uploads/2016/03/Header_Standkontrolle.jpg',
+                sourceUrl: 'http://blog.kvb-koeln.de/grosseinsatz-am-westbahnhof-schwerpunktkontrolle-in-der-u-bahn',
+                credit: 'Susanne Zeidler-Goll/Menschen bewegen',
+            }),
+            'Oystercard Readers': Map({
+                caption: "Card-readers like those for London's Oystercard could be used without faregates in metro systems",
+                sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Oystercard_readers.jpg',
+                sourceUrl: 'http://www.wikiwand.com/en/Oyster_card',
+                credit: 'Wikiwand',
+            }),
+            'Portland Fare Inspection': Map({
+                caption: "The presence of officials checking fares and enforcing behavior is relatively frequent on Portland, Oregon's MAX Light Rail",
+                sourceImageUrl: 'https://maxfaqs.files.wordpress.com/2012/02/fareinspectorsupervisor.jpg',
+                sourceUrl: 'https://maxfaqs.wordpress.com/tag/fare-evasion/',
+                credit: 'The Oregonian',
+            }),
+            'Berlin Smart Phone Inspection': Map({
+                caption: "Tickets purchased online are quickly inspected on Berlin's S-Bahn, and through Germany on Deutsche Bahn trains",
+                sourceImageUrl: 'http://www.it-zoom.de/fileadmin/_processed_/csm_moba-sbahn_berlin-scanner_casio_192e0f5ea4.jpg',
+                sourceUrl: 'http://www.it-zoom.de/mobile-business/e/mobile-ticketkontrolle-9524/',
+                credit: 'Bianca Brandis/IT-Zoom',
+            }),
+            'AMTRAK Smart Phone Inspection': Map({
+                caption: "Tickets purchased online are quickly inspected on all AMTRAK trains. Metro systems should do spot checks instead of faregates",
+                sourceImageUrl: 'http://www.railway-technology.com/uploads/newsarticle/734904/images/149435/large/eticket%20smartphone%20l.jpg',
+                sourceUrl: 'http://www.railway-technology.com/features/featureamtrak-eticketing-ereader-rail-tickets-us/featureamtrak-eticketing-ereader-rail-tickets-us-1.html',
+                credit: 'railway-technology.com',
+            }),
+        })
     }),
 
     'Personal Transportation and Freight (AMTRAK)': Map({
@@ -611,6 +716,11 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'Andy Likuski',
                 date: 'August 2014'
             }),
+            'Copenhagen Central Station Amenities on the Platform': Map({
+                caption: "Food is available right on the platform at Copenhagen's Central Station",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape'
+            }),
         })
     }),
 
@@ -646,23 +756,7 @@ export default Map({
     settings: Map({
         [settingsActions.SET_3D]: false,
         [settingsActions.SET_RELATED_IMAGES]: true,
-        [settingsActions.SET_LIGHTBOX_VISIBILITY]: false,
-        // Threshold for visually switching between 3d models in the showcase
-        // The previous/next must be > 40% closer than the current model
-        MODEL_THRESHOLD: .4,
-        // Padding between models when switching
-        MODEL_PADDING: .1,
-        // Don't put scene anchors more than this close to the next model
-        // This prevents switching scenes and models at the same time.
-        MAX_SCENE_POSITION: .8,
-
-        // Video scenes are 4 seconds long,
-        // This can be overridden in each model if needed
-        SCENE_TRANSITION_TIME: 4,
-        DISQUS_PUBLIC_KEY: "TU5gJqORTRMUd1w9YOLUvlcc17YlldegfOPg0xuZp00FRX5o3UopHjXdz0SBeAwb",
-        DISQUS_SHORT_NAME: "rescape",
-        // The normal number of model nodes to show for both the top and bottom table of contents
-        TABLE_OF_CONTENTS_MODEL_NODE_COUNT: 2
+        [settingsActions.SET_LIGHTBOX_VISIBILITY]: false
     }),
     documents: Map({
         keys: List(['about', 'contact', 'ths_amtrak_standard', 'the_new_rules_of_the_road']),

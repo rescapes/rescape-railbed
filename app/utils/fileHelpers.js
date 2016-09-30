@@ -15,6 +15,9 @@
  */
 export function normalizeKeyToFilename(key) {
     // Make - into _, make accents not, remove parens
-    return key.replace(/( |-)/g, '_').replace(/é/g, 'e').replace(/(\(|\))/g, '')
+    return key.replace(/( |-)/g, '_')
+        .replace(/é/g, 'e')
+        .replace(/Ü/g, 'U')
+        .replace(/(\(|\))/g, '')
 }
 

@@ -1,5 +1,5 @@
 
-.document-comments {
+.document-comments-counter {
     position: fixed;
     z-index: 10;
     top: 0;
@@ -9,13 +9,18 @@
 
 }
 
-.model-comments {
+.model-comments-counter {
     position: fixed;
     z-index: 10;
     top: calc($model-3d-top - 38px);
     left: calc($showcase-width - $model-3d-document-overlap - 75px);
     width: $comment-button-width-small;
     height: $comment-button-height-small;
+}
+
+.comments-counter {
+    position: fixed;
+    z-index: 10;
 }
 
 .comments {
@@ -26,7 +31,7 @@
         top: calc($model-3d-top);
         left: 0px;
         width: calc($showcase-width - $model-3d-document-overlap);
-        height: $model-3d-height;
+        height: $document-height;
     }
 }
 

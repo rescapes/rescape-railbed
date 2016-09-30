@@ -9,7 +9,7 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 import {Map} from 'immutable'
-
+import config from '../config'
 
 /**
  * Gets the current Scene key of the given Model3d used when iterating through all models
@@ -86,23 +86,23 @@ export function getModelTops(document, models, settings) {
         // Increases as next becomes more relevant
         nextFraction = currentDistance / (nextDistance + currentDistance)
     // If we're closer to the previous than the next and within the threshold for transition
-    if (previousFraction > nextFraction && previousFraction > settings.get('MODEL_THRESHOLD') && previousForDistinctModel != current) {
+    if (previousFraction > nextFraction && previousFraction > config.MODEL_THRESHOLD && previousForDistinctModel != current) {
         return {
             // Start at 0 and scroll down as previous gets more relevant
             current: currentDistance / (previousDistance + currentDistance),
             // Start at above showcase at -(MODEL_PADDING + 1) and scroll down as previous gets more relevant
-            previous: previousFraction - (settings.get('MODEL_PADDING') + 1),
+            previous: previousFraction - (config.MODEL_PADDING + 1),
             next: null
         }
     }
     // If we're closer to the next than the previous and within the threshold for transition
-    else if (nextFraction > previousFraction && nextFraction > settings.get('MODEL_THRESHOLD') && nextForDistinctModel != current) {
+    else if (nextFraction > previousFraction && nextFraction > config.MODEL_THRESHOLD && nextForDistinctModel != current) {
         return {
             // Start at 0 and scroll up as next gets more relevant
             current: 0 - (currentDistance / (nextDistance + currentDistance)),
             previous: null,
             // Start at 1 + MODEL_PADDING below screen and scroll up as next gets more relevant
-            next: (1 + settings.get('MODEL_PADDING')) - nextFraction
+            next: (1 + config.MODEL_PADDING) - nextFraction
         }
     }
     else {

@@ -21,8 +21,10 @@ import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import ModelVideo from './ModelVideo'
 import {currentSceneKeyOfModel} from '../utils/modelHelpers'
+import {isSeeking} from '../utils/documentHelpers'
 import load_3d_png from '../images_dist/load3d-320.png'
 import close_svg from '../images/close.svg'
+import config from '../config'
 
 // This garbage has to be done to force webpack to know about all the media files
 var req = require.context('../videos/', true, /\.(webm)$/)
@@ -271,14 +273,21 @@ class Model3d extends Component {
                 const videoUrl = iterModel.get('videoUrl')
                 const sceneKey =  currentSceneKeyOfModel(iterModel)
                 // Get the time to play the video to transition from one scene to the next
-                const sceneTransitionTime = iterModel.get('sceneTransitionTime') || this.props.settings.get('SCENE_TRANSITION_TIME')
+                const sceneTransitionTime = iterModel.get('sceneTransitionTime') || config.SCENE_TRANSITION_TIME
                 const sceneIndex = (iterModel.getIn(['scenes', 'entries']) || Map()).keySeq().indexOf(sceneKey)
                 // We need to transition from the last scene (or position) to the current scene
                 const start = (sceneIndex-1 >= 0 ? sceneIndex-1 : 0) * sceneTransitionTime,
                       end = (sceneIndex >=0 ? sceneIndex : 0) * sceneTransitionTime
-                model3dPresentation = <ModelVideo className="model-3d-video" videoUrl={videoUrl} start={start} end={end} scrollDirection={this.state.scrollDirection}
-                >
-                </ModelVideo>
+
+
+                model3dPresentation = <ModelVideo
+                    className="model-3d-video"
+                    videoUrl={videoUrl}
+                    start={start}
+                    end={end}
+                    scrollDirection={this.state.scrollDirection}
+                    isSeeking={this.props.isSeeking}
+                />
             }
 
             const toggle3d = !is3dSet ?
@@ -329,6 +338,7 @@ Model3d.propTypes = {
 function mapStateToProps(state) {
     const settings = state.get('settings')
     const documentKey = state.getIn(['documents', 'current'])
+    const document = state.getIn(['documents', 'entries', documentKey])
     const models = documentKey && state.get('models')
     const defaultIs3dSet = state.getIn(['settings', settingsActions.SET_3D])
     // Pass modelKey and sceneKey so that React recalculates the current
@@ -337,14 +347,16 @@ function mapStateToProps(state) {
     // Note if 3d is set for the current model
     const is3dSet = models.getIn(['entries', modelKey, 'is3dSet'])
     const sceneKey = currentSceneKeyOfModel(models.getIn(['entries', modelKey]))
-
+    // Are we currently seeking the desired document position
+    const seeking = isSeeking(document)
     return {
         settings,
         documentKey,
         models,
         defaultIs3dSet,
         sceneKey,
-        is3dSet
+        is3dSet,
+        isSeeking:seeking
     }
 }
 

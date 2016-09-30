@@ -39,3 +39,11 @@ export function getAnchorToModels(anchors, models) {
     }, OrderedMap());
 }
 
+/***
+ * If we are in the process of scrolling to a model, this returns true
+ * @param document: The Document
+ * @returns {boolean}
+ */
+export function isSeeking(document) {
+    return document.get('isScrolling')
+}

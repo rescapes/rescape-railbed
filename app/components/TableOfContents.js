@@ -18,6 +18,7 @@ import {OrderedMap, Map, List} from 'immutable'
 import * as documentActions from '../actions/document'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import {normalizeModelName} from '../utils/modelHelpers'
+import config from '../config'
 
 
 /***
@@ -57,7 +58,7 @@ class TableOfContents extends React.Component {
             allModels.slice(0, allModels.keySeq().indexOf(normalizedModelName) + 1).reverse() :
             allModels.slice(allModels.keySeq().indexOf(normalizedModelName) + 1)
         // Reduce the models to our table of contents settings length unless we are expanded
-        const maxNodeCount = this.props.settings.get('TABLE_OF_CONTENTS_MODEL_NODE_COUNT')
+        const maxNodeCount = config.TABLE_OF_CONTENTS_MODEL_NODE_COUNT
         const models = this.props.isExpanded ? allModels : modelsForPosition.slice(
             0,
             maxNodeCount
