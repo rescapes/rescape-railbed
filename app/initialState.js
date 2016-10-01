@@ -536,13 +536,7 @@ var amtrakStandardModels = OrderedMap({
                 sourceUrl: 'http://rescapes.net',
                 credit: 'Rescape'
             }),
-            'Bus with Locked Bike Storage': Map({
-                type: 'png',
-                caption: "This local bus in the French Alps wastes space with like bike storage, forcing passengers to cram",
-                sourceUrl: 'http://rescapes.net',
-                credit: 'Rescape',
-                date: 'July 2016'
-            }),
+
         })
     }),
 
@@ -657,6 +651,13 @@ var amtrakStandardModels = OrderedMap({
             }),
         })}),
         media: OrderedMap({
+            'Bikes on AMTRAK': Map({
+                caption: "Long distance AMTRAK trains had poor bike service, forcing bikes into boxes. New trains will have racks but still sadly only allow access at staffed stations.",
+                sourceImageUrl: 'http://cs.trains.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-00-11-12-Malcolm+Kenton/2311.amtrakbikeboxes.jpg',
+                sourceUrl: 'http://cs.trains.com/trn/b/observation-tower/archive/2015/04/02/the-greatest-advantage-of-amtrak-39-s-new-baggage-cars-bike-racks.aspx',
+                credit: 'Malcolm Kenton/Observation Tower',
+                date: 'April 2015'
+            }),
             'Bikes on Capitol Corridor': Map({
                 caption: "Bike storage is plentiful, safe, and simple on AMTRAK's Capitol Corridor in Northern California",
                 sourceImageUrl: 'http://www.capitolcorridor.org/blogs/get_on_board/wp-content/uploads/2015/05/akf_0769a.jpg',
@@ -668,6 +669,12 @@ var amtrakStandardModels = OrderedMap({
                 sourceImageUrl: 'http://radreise-wiki.de/Datei:Fahrradabteil.jpg',
                 sourceUrl: 'http://radreise-wiki.de/Transport_im_Zug',
                 credit: 'radreise-wiki.de',
+            }),
+            'AMTRAK Retractable Platforms': Map({
+                caption: "Although many North American train station platforms outdated and not level with train floors, retractable platforms can help disabled passengers on modern platforms",
+                sourceImageUrl: 'http://www.crainsdetroit.com/article/20150728/news01/150729870/amtrak-testing-retractable-platform-at-ann-arbor-train-station',
+                sourceUrl: 'http://www.crainsdetroit.com/article/20150728/news01/150729870/amtrak-testing-retractable-platform-at-ann-arbor-train-station',
+                credit: 'Chuck Gomez/AMTRAK',
             }),
         })
     }),
@@ -688,6 +695,18 @@ var amtrakStandardModels = OrderedMap({
                 sourceImageUrl: 'http://www.bart.gov/sites/default/files/images/basic_page/bike_rack_0.jpg',
                 sourceUrl: 'http://www.bart.gov/about/projects/cars/new-features',
                 credit: 'Bay Area Rapid Transit',
+            }),
+            'Wheelchairs on BART': Map({
+                caption: "Wheelchairs can easily board most metro systems, like the Bay Area's BART system, as long as elevators exist and work",
+                sourceImageUrl: 'https://i.ytimg.com/vi/nlPELKb1KFU/hqdefault.jpg',
+                sourceUrl: 'http://www.bart.gov/guide/accessibility/mobility',
+                credit: 'Bay Area Rapid Transit',
+            }),
+            'Luggage on BART': Map({
+                caption: "Transporting luggage on metro, like the Bay Area's BART system, is relatively painless if systems eliminate normal crowding on trains",
+                sourceImageUrl: 'http://f.tqn.com/y/gocalifornia/1/S/5/Z/3/P1010642-a.jpg',
+                sourceUrl: 'http://gocalifornia.about.com/od/casfmenu/ss/Bart-Train-SFO-to-San-Francisco.htm',
+                credit: 'Betsy Malloy/About Travel',
             }),
         })
     }),
@@ -715,6 +734,12 @@ var amtrakStandardModels = OrderedMap({
                 sourceUrl: 'http://bikeportland.org/2015/04/01/sneak-peek-inside-trimets-new-max-trains-136400',
                 credit: 'Jim “K’Tesh” Parsons/Bike Portland',
             }),
+            "Wheelchairs on Trams": Map({
+                caption: "Long, modern trams can accommodate dozens of wheelchairs and provide seamless boarding with a platform or simply a sidewalk",
+                sourceImageUrl: 'https://www.uestra.de/fileadmin/_processed_/csm_barrierefrei_tw6000_web_4d199a78aa.jpg',
+                sourceUrl: 'https://www.uestra.de/kundenservice/barrierefreie-uestra/barrierefreiheit-in-der-stadtbahn/',
+                credit: 'üstra',
+            }),
         })
     }),
 
@@ -734,6 +759,37 @@ var amtrakStandardModels = OrderedMap({
                 sourceImageUrl: 'https://i.ytimg.com/vi/wGaUAyfQIQQ/maxresdefault.jpg',
                 sourceUrl: 'https://www.youtube.com/watch?v=wGaUAyfQIQQ',
                 credit: 'Ruth Miller',
+            }),
+            'Bus with Locked Bike Storage': Map({
+                type: 'png',
+                caption: "This local bus in the French Alps wastes precious space with locked bike storage, forcing passengers to cram",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+                date: 'July 2016'
+            }),
+            'BRT Stroller': Map({
+                caption: "Boarding and alighting strollers from bus rapid transit (BRT) is cumbersome. BRT is supposed to have retractable level platforms but almost never does",
+                sourceImageUrl: 'http://www.lightrailnow.org/images02/la-bus-brt-orangeline-pax-stroller-deboarding-n-hollywood-80116-20060927brx2_D-Dobbs.jpg',
+                sourceUrl: 'http://www.lightrailnow.org/facts/fa_brt_2006-10a-5.htm',
+                credit: 'Dave Dobbs/Light Rail Now',
+            }),
+            'Level Boarding Bus': Map({
+                caption: "This bus in the Nuremberg, Germany region has on level boarding for strollers, but needs a ramp for wheelchairs. Trams by contrast have a dozen for each",
+                sourceImageUrl: 'https://www.vag.de/fileadmin/user_upload/01_headerbilder/05_service_und_mehr/service_rollstuhl_kinderwagen_03.jpg',
+                sourceUrl: 'https://www.vag.de/service-mehr/mit-rollstuhl-und-kinderwagen.html',
+                credit: 'VAG',
+            }),
+            'Wheelchairs on Buses': Map({
+                caption: "Wheelchairs must be secured by the driver of the bus, like here in Edmonton, AB, and at most two can fit on typical buses",
+                sourceImageUrl: 'https://www.edmonton.ca/transportation/Images/18121_430.jpg',
+                sourceUrl: 'https://www.edmonton.ca/ets/accessible-vehicles.aspx',
+                credit: 'Edmonton Transit System',
+            }),
+            'Boston Silver Line': Map({
+                caption: "Boston's disastrous Silver Line BRT is a terrible fit for airport service. Passengers must lug suitcases up steps and store them on crowded racks",
+                sourceImageUrl: 'https://www.edmonton.ca/transportation/Images/18121_430.jpg',
+                sourceUrl: 'https://c.o0bg.com/rf/image_960w/Boston/2011-2020/2012/06/04/BostonGlobe.com/Metro/Images/05silver_photo2.jpg',
+                credit: 'www.bostonglobe.com',
             }),
         })
     }),
