@@ -287,6 +287,7 @@ class Model3d extends Component {
                     end={end}
                     scrollDirection={this.state.scrollDirection}
                     isSeeking={this.props.isSeeking}
+                    isCurrentModel={iterModel==model}
                 />
             }
 
@@ -332,7 +333,8 @@ Model3d.propTypes = {
     is3dSet: PropTypes.bool,
     sceneKey: PropTypes.string,
     // This is from the parent, not the state
-    modelTops: PropTypes.object
+    modelTops: PropTypes.object,
+    isSeeking: PropTypes.bool,
 }
 
 function mapStateToProps(state) {
@@ -356,7 +358,7 @@ function mapStateToProps(state) {
         defaultIs3dSet,
         sceneKey,
         is3dSet,
-        isSeeking:seeking
+        isSeeking:seeking,
     }
 }
 

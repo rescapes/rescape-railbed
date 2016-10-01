@@ -144,6 +144,7 @@ class Document extends Component {
      * @param duration: if null immediately, otherwise in this duration
      */
     scrollTo(to, duration) {
+        this.props.documentIsScrolling(true)
         duration = duration || 0
         const element = this.documentDiv,
             start = element.scrollTop,
@@ -153,11 +154,16 @@ class Document extends Component {
         var animateScroll = function(elapsedTime) {
             elapsedTime += increment;
             if (duration==0) {
-                element.scrollTop = to
+                // Indicate we are no longer scrolling so the scrollTop set is noticed
                 this.props.documentIsScrolling(false)
+                element.scrollTop = to
                 return
             }
             var position = this.easeInOut(elapsedTime, start, change, duration);
+            if (elapsedTime >= duration) {
+                // Indicate we are no longer scrolling so the scrollTop set is noticed
+                this.props.documentIsScrolling(false)
+            }
             element.scrollTop = position;
             const self = this
             if (elapsedTime < duration) {
