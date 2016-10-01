@@ -42,12 +42,15 @@ class Comments extends Component {
     }
 
     componentDidMount() {
-        this.mirrorProps(this.props);
+        if (!this.props.isSeeking)
+            this.mirrorProps(this.props);
     }
 
     componentWillReceiveProps(nextProps) {
         if (!this.commentObjectKey())
             return;
+        // Don't load the comment count if we are seeking, because we are possibly seeking
+        // another model
         if (!this.props.isSeeking && (
             this.formArticleKey(nextProps) != this.formArticleKey() ||
             nextProps.commentsAreShowing != this.props.commentsAreShowing

@@ -607,13 +607,13 @@ var amtrakStandardModels = OrderedMap({
             }),
         })}),
         media: OrderedMap({
-            'Munich Ü-Bahn Inspection': Map({
+            'Munich U-Bahn Inspection': Map({
                 caption: "On board ticket inspection on the Munich Ü-Bahn (metro system)",
                 sourceImageUrl: 'http://polpix.sueddeutsche.com/bild/1.997485.1356593680/900x600/ein-kontrolleur-muenchner-verkehrsgesellschaft-mvg-muenchner-ubahn.jpg',
                 sourceUrl: 'http://www.sueddeutsche.de/muenchen/muenchner-tatsachen-verruchte-boazn-und-eine-geheimmission-1.1142794-5',
                 credit: 'Süddeutsche Zeitung',
             }),
-            'Cologne Ü-Bahn Inspection': Map({
+            'Cologne U-Bahn Inspection': Map({
                 caption: "Platform ticket inspection on the Cologn Ü-Bahn (metro system)",
                 sourceImageUrl: 'http://blog.kvb-koeln.de/wp-content/uploads/2016/03/Header_Standkontrolle.jpg',
                 sourceUrl: 'http://blog.kvb-koeln.de/grosseinsatz-am-westbahnhof-schwerpunktkontrolle-in-der-u-bahn',
@@ -655,7 +655,21 @@ var amtrakStandardModels = OrderedMap({
             }),
             'Personal Bike Storage on Regional Trains': Map({
             }),
-        })})
+        })}),
+        media: OrderedMap({
+            'Bikes on Capitol Corridor': Map({
+                caption: "Bike storage is plentiful, safe, and simple on AMTRAK's Capitol Corridor in Northern California",
+                sourceImageUrl: 'http://www.capitolcorridor.org/blogs/get_on_board/wp-content/uploads/2015/05/akf_0769a.jpg',
+                sourceUrl: 'http://www.capitolcorridor.org/blogs/get_on_board/rider-tip-taking-your-bike-on-the-train-for-the-first-time/',
+                credit: 'Capitol Corridor',
+            }),
+            'Bikes on Deutsche Bahn': Map({
+                caption: "Some train system's in Europe, like Germany's Deutsche Bahn, charge a small fee per bike",
+                sourceImageUrl: 'http://radreise-wiki.de/Datei:Fahrradabteil.jpg',
+                sourceUrl: 'http://radreise-wiki.de/Transport_im_Zug',
+                credit: 'radreise-wiki.de',
+            }),
+        })
     }),
 
     'Personal Transportation and Freight (Metro)': Map({
@@ -667,7 +681,15 @@ var amtrakStandardModels = OrderedMap({
             }),
             'A hundred bikes fit on a long metro': Map({
             }),
-        })})
+        })}),
+        media: OrderedMap({
+            'Bikes on BART': Map({
+                caption: "Metro trains have room for up to a hundred bikes. New cars of the Bay Area's BART system will have racks",
+                sourceImageUrl: 'http://www.bart.gov/sites/default/files/images/basic_page/bike_rack_0.jpg',
+                sourceUrl: 'http://www.bart.gov/about/projects/cars/new-features',
+                credit: 'Bay Area Rapid Transit',
+            }),
+        })
     }),
 
     'Personal Transportation and Freight (Tram)': Map({
@@ -679,7 +701,21 @@ var amtrakStandardModels = OrderedMap({
             }),
             'Trams have flush, level boarding': Map({
             }),
-        })})
+        })}),
+        media: OrderedMap({
+            "Bikes on Bordeaux's Trams": Map({
+                caption: "Bikes load easily on modern trams, which are long enough to have plentiful space for them",
+                sourceImageUrl: 'http://sedeplacer.bordeaux-metropole.fr/var/bdxmetro/storage/images/media/images/se-deplacer/velo/intermodalite-velo-tramway/93952-1-fre-FR/Intermodalite-Velo-Tramway.jpg',
+                sourceUrl: 'http://sedeplacer.bordeaux-metropole.fr/Velo/Intermodalite',
+                credit: 'Bordeaux Métropole',
+            }),
+            "Bikes on Portland's MAX Light Rail": Map({
+                caption: "Modern trams, such as Portland's MAX Light Rail have dedicated space for bikes",
+                sourceImageUrl: 'http://bikeportland.org/wp-content/uploads/2015/03/max-jimpics-6.jpg',
+                sourceUrl: 'http://bikeportland.org/2015/04/01/sneak-peek-inside-trimets-new-max-trains-136400',
+                credit: 'Jim “K’Tesh” Parsons/Bike Portland',
+            }),
+        })
     }),
 
     'Personal Transportation and Freight (Bus)': Map({
@@ -691,7 +727,15 @@ var amtrakStandardModels = OrderedMap({
             }),
             'Wheelchairs on buses': Map({
             }),
-        })})
+        })}),
+        media: OrderedMap({
+            'Bikes on AC Transit': Map({
+                caption: "Transporting bikes on buses, as here on AC Transit in the San Francisco East Bay, is valuable but cumbersome, unreliable, and inefficient",
+                sourceImageUrl: 'https://i.ytimg.com/vi/wGaUAyfQIQQ/maxresdefault.jpg',
+                sourceUrl: 'https://www.youtube.com/watch?v=wGaUAyfQIQQ',
+                credit: 'Ruth Miller',
+            }),
+        })
     }),
 
     'Station and Stop Amenities (Inside)': Map({
