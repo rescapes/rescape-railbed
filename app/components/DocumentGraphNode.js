@@ -65,8 +65,8 @@ export default class DocumentGraphNode extends React.Component {
                 </div>
             </div>
         }
-        else if (!this.props.isTop && this.props.node.key == 'end') {
-            // A fake node representing the end of the line
+        else if (['start', 'end'].includes(this.props.node.key)) {
+            // A fake node representing the start/end of the line
             return <div className='table-of-contents-node toc-end' key={node.key} style={{left: `${node.x}%`, top: `${node.y}%`}}>
             </div>
         }

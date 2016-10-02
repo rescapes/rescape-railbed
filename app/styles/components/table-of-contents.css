@@ -189,7 +189,6 @@
         /*** Push the text away from the line **/
         height: 10px;
         margin-left: -40px;
-        margin-top: -5px;
         font-size: $h6-font-size;
         .outline {
              height: 10px;

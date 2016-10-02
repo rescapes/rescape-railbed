@@ -69,8 +69,14 @@ class TableOfContents extends React.Component {
                 // document first
                 new OrderedMap({[this.props.documentTitle]: this.props.document}).merge(models) :
                 // document last
-                models.set(this.props.documentTitle, this.props.document)):
-            (modelsForPosition.count() > maxNodeCount ? models.set('end', null) : models)
+                new OrderedMap({start: null}).merge(models.set(this.props.documentTitle, this.props.document))):
+            // Add a fake node to the start so we can make a line from the document to the first node
+            // Add an extra fake node to the end for the bottom if there are more models than the max allowed
+            new OrderedMap({start: null}).merge(
+                models
+            ).merge(
+                !this.props.isTop && modelsForPosition.count() > maxNodeCount ? {end: null} : {}
+            )
     }
 
     /***
@@ -126,19 +132,19 @@ class TableOfContents extends React.Component {
      */
     calculateHiddenModelDomPosition(node1, node2) {
         return {
-            left: `${Math.abs(node2.x + node1.x) * .65}%`,
-            top: `${Math.abs(node2.y + node1.y) * .65}%`
+            left: `${Math.abs(node2.x + node1.x) * .5}%`,
+            top: `${Math.abs(node2.y + node1.y) * .5}%`
         }
     }
 
     render() {
         const objs = this.getObjects()
         const nodes = this.getNodes(objs)
-        const totalNodeCount = this.getTotalObjectCount()
+        const totalObjectCount = this.getTotalObjectCount()
         // Set the width based on whether or not the graph is expanded
         const modifiedProps =  Object.assign({},
             this.props,
-            {nodes: nodes, totalNodeCount: totalNodeCount, width: 100,  height: 100, x: 0, y: 0,
+            {nodes: nodes, totalObjectCount: totalObjectCount, width: 100,  height: 100, x: 0, y: 0,
              toggleTableOfContents: this.props.toggleTableOfContents
             }
         )
@@ -157,9 +163,9 @@ class TableOfContents extends React.Component {
             {documentGraphCircles}
         </ReactCSSTransitionGroup>
 
-        // Get the number of models not showing because they don't fit
-        const hiddenModelsCount = totalNodeCount - nodes.length;
-        const hiddenModelDom = !this.props.isExpanded && hiddenModelsCount ?
+        const hiddenModelsCount = this.hiddenModelsCount(totalObjectCount, nodes.length)
+
+        const hiddenModelDom = !this.props.isExpanded && hiddenModelsCount > 0 ?
             <div style={this.calculateHiddenModelDomPosition(...nodes.slice(-2))}
                  className="table-of-contents-node hidden-model-count">
                 <div className='outline'>
@@ -175,12 +181,28 @@ class TableOfContents extends React.Component {
                     modifiedProps,
                     {viewboxWidth: this.props.containerWidth,
                     viewboxHeight: this.props.containerHeight,
-                    lineRadius: 5 }) } />
+                    lineRadius: 5,
+                    hiddenModelsCount}) } />
             <div className="document-graph-circles">
                 {documentGraphCircleGroup}
                 {hiddenModelDom}
             </div>
         </div>
+    }
+
+    /***
+     * Returns the number of models not able to show due to space constraints
+     * @param totalObjectCount: The total number of objects (models + document)
+     * @param nodesCount: The number of visible nodes, including start and end nodes
+     * @returns {number}
+     */
+    hiddenModelsCount(totalObjectCount, nodesCount) {
+        // Get the number of models not showing because they don't fit
+        // Discount the 1 or 2 fake nodes
+        const maxNodeCount = config.TABLE_OF_CONTENTS_MODEL_NODE_COUNT
+        return totalObjectCount > maxNodeCount ?
+            totalObjectCount - (nodesCount - (this.props.isTop ? 1 : 2)) :
+            0
     }
 }
 

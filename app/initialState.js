@@ -593,11 +593,11 @@ var amtrakStandardModels = OrderedMap({
             }),
             'Quicker Access to Amenities': Map({
             }),
-            'Improved Movement Througout Station': Map({
+            'Improved Movement Throughout Station': Map({
             }),
             'Fast Fare Inspection': Map({
             }),
-            'Quicker Access without Barriers and Perhaps No Mezzanine Level': Map({
+            'Escalators Could Skip the Mezzanine and Go to the Street': Map({
             }),
         })}),
         media: OrderedMap({
@@ -722,13 +722,13 @@ var amtrakStandardModels = OrderedMap({
             }),
         })}),
         media: OrderedMap({
-            "Bikes on Bordeaux's Trams": Map({
-                caption: "Bikes load easily on modern trams, which are long enough to have plentiful space for them",
+            "Bikes on Trams": Map({
+                caption: "Bikes load easily on modern trams, like those in Bordeaux, France, which are long enough to have plentiful space for them",
                 sourceImageUrl: 'http://sedeplacer.bordeaux-metropole.fr/var/bdxmetro/storage/images/media/images/se-deplacer/velo/intermodalite-velo-tramway/93952-1-fre-FR/Intermodalite-Velo-Tramway.jpg',
                 sourceUrl: 'http://sedeplacer.bordeaux-metropole.fr/Velo/Intermodalite',
                 credit: 'Bordeaux Métropole',
             }),
-            "Bikes on Portland's MAX Light Rail": Map({
+            "Bikes on Portland Light Rail": Map({
                 caption: "Modern trams, such as Portland's MAX Light Rail have dedicated space for bikes",
                 sourceImageUrl: 'http://bikeportland.org/wp-content/uploads/2015/03/max-jimpics-6.jpg',
                 sourceUrl: 'http://bikeportland.org/2015/04/01/sneak-peek-inside-trimets-new-max-trains-136400',

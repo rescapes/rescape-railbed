@@ -95,9 +95,9 @@ $table-of-contents-top-offset: 25px;
 $table-of-contents-width: 240px;
 $table-of-contents-model-current-height: 20px;
 
-$table-of-contents-top-height: calc($header-height - $table-of-contents-top-offset - 5px - $table-of-contents-model-current-height / 2);
+$table-of-contents-top-height: calc($header-height - $table-of-contents-top-offset);
 $table-of-contents-bottom-offset: 15px;
-$table-of-contents-bottom-height: calc($footer-height - $table-of-contents-bottom-offset - 5px - $table-of-contents-model-height / 2);
+$table-of-contents-bottom-height: calc($footer-height - $table-of-contents-bottom-offset);
 $table-of-contents-height-expanded: calc($showcase-height - $showcase-footer-overlap);
 
 $white: floralwhite;
