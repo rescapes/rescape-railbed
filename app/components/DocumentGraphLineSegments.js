@@ -42,7 +42,7 @@ class DocumentGraphLineSegments extends React.Component {
             // Get the last point of the last segment, or if at the start use x and y
             const previous = reduction.count() ? reduction.slice(-1).get(0) : {x2:`${nodes[0].x}%`, y2:`${nodes[0].y}%`}
             // Dash the line if the line segment represents nodes that we aren't showing
-            const strokeDashArray = !this.props.isExpanded && nodes.length < this.props.totalNodeCount && i==nodes.length-2
+            const strokeDashArray = !this.props.isExpanded && this.props.hiddenModelsCount > 0 && i==nodes.length-2
             return reduction.push({
                 x1:`${previous.x2}`,
                  y1:`${previous.y2}`,
@@ -118,8 +118,8 @@ DocumentGraphLineSegments.propKeys = {
     lineRadius: PropTypes.number,
     // The nodes
     nodes: PropTypes.array,
-    // This tells the nonexpanded line whether or not the last segment represents non-showing nodes
-    totalNodeCount: PropTypes.number,
+    // The number of models not showing due to space constraints. We use this to dash the last line
+    hiddenModelsCount: PropTypes.number
 }
 
 function mapStateToProps(state, props) {
