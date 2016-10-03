@@ -17,6 +17,7 @@ import document_circle_unlocked_svg from '../images/document-circle-unlocked.svg
 import model_circle_svg from '../images/model-circle.svg'
 import model_circle_current_svg from '../images/model-circle-current.svg'
 import {normalizeModelName} from '../utils/modelHelpers'
+import CommentsButton from './CommentsButton'
 
 /***
  * Shows a node of the table of contents, including the circle and label
@@ -40,10 +41,21 @@ export default class DocumentGraphNode extends React.Component {
                     document_circle_locked_svg
                 ) :
                 document_circle_svg
+            // Shows the comments button for the overall document
+            const documentCommentsButton = this.props.documentKey ?
+                <CommentsButton className='document-comments-counter'
+                                key="'document-comments-counter"
+                                document={this.props.document}
+                                documentKey={this.props.documentKey}
+                                documentTitle={this.props.documentTitle}
+                                commentsAreShowing={this.props.documentCommentsAreShowing}
+                /> : <span/>
+
 
             return <div className={`table-of-contents-node toc-document ${this.props.isExpanded ? 'expanded' : ''}`}
                         key={node.key}
                         style={{left: `${node.x}%`, top: `${node.y}%`}}>
+                {documentCommentsButton}
                 <img className='circle'
                      style={style} src={svg}
                      onMouseEnter={()=>this.props.toggleTableOfContents(this.props.documentKey, true, true)}
@@ -56,8 +68,22 @@ export default class DocumentGraphNode extends React.Component {
             </div>
         }
         else if (this.props.isTop && this.props.node.key == normalizedModelName) {
+
+            // Shows the comments button for the current model
+            const modelCommentsButton = this.props.modelKey ?
+                <CommentsButton className='model-comments-counter'
+                                key="model-comments-counter"
+                                document={this.props.document}
+                                documentKey={this.props.documentKey}
+                                documentTitle={this.props.documentTitle}
+                                model={this.props.model}
+                                modelKey={this.props.modelKey}
+                                commentsAreShowing={this.props.modelCommentsAreShowing}
+                /> : <span/>
+
             // The current model
             return <div className='table-of-contents-node toc-model-current' key={node.key} style={{left: `${node.x}%`, top: `${node.y}%`}}>
+                {modelCommentsButton}
                 <img className='circle' src={model_circle_current_svg} />
                 <div className="connector" />
                 <div className='outline'>
@@ -100,5 +126,7 @@ DocumentGraphNode.propKeys = {
     width: PropTypes.number,
     height: PropTypes.number,
     isExpanded: PropTypes.bool,
-    isExpandedByHover: PropTypes.bool
+    isExpandedByHover: PropTypes.bool,
+    documentCommentsAreShowing: PropTypes.bool,
+    modelCommentsAreShowing: PropTypes.bool
 }

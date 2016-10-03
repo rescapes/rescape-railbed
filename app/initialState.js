@@ -274,8 +274,6 @@ var amtrakStandardModels = OrderedMap({
             }),
             'Tram Upgrade': Map({
             }),
-            'Consolidation Challenges': Map({
-            }),
         })}),
         media: OrderedMap({
             'AC Transit': Map({
@@ -735,7 +733,7 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'Jim “K’Tesh” Parsons/Bike Portland',
             }),
             "Wheelchairs on Trams": Map({
-                caption: "Long, modern trams can accommodate dozens of wheelchairs and provide seamless boarding with a platform or simply a sidewalk",
+                caption: "Long, modern trams can accommodate dozens of wheelchairs and provide seamless boarding with a platform or simply a hight sidewalk",
                 sourceImageUrl: 'https://www.uestra.de/fileadmin/_processed_/csm_barrierefrei_tw6000_web_4d199a78aa.jpg',
                 sourceUrl: 'https://www.uestra.de/kundenservice/barrierefreie-uestra/barrierefreiheit-in-der-stadtbahn/',
                 credit: 'üstra',
@@ -806,10 +804,17 @@ var amtrakStandardModels = OrderedMap({
         })}),
         media: OrderedMap({
             'Denver Union Station': Map({
-                caption: 'Eastern AMTRAK Café Car tables with bike space',
-                sourceImageUrl: 'http://www.bikenyc.org/sites/default/files/Bikes%20On%20Board%20Between%20ALB%20%26%20SDY.JPG',
-                sourceUrl: 'http://www.bikenyc.org/blog/bikes-amtrak-trains-northeast-nyc-summer',
-                credit: 'Bike NYC'
+                caption: "Renovation of Denver's Union Station created a new beautiful, stately, and functional center for the city",
+                sourceImageUrl: 'http://denverinfill.com/blog/wp-content/uploads/2014/07/2014-07-13_UnionStation-08.jpg',
+                sourceUrl: 'http://denverinfill.com/blog/2014/07/denver-union-station-update-128-the-historic-station-opens.html',
+                credit: 'Ryan Dravitz/DenverInfill',
+                date: 'July 2014'
+            }),
+            'Nashville Union Station Hotel': Map({
+                caption: "Indoor transit stations should aspire to look like hotel lobbies like the Union Station Hotel in Nashville, not dungeons",
+                sourceImageUrl: 'http://media.bizj.us/view/img/2106261/unionstationhotelnshflickr*750xx600-338-0-5.jpg',
+                sourceUrl: 'http://www.bizjournals.com/nashville/blog/real-estate/2014/11/nashvilles-iconic-union-station-hotel-up-for-sale.html',
+                credit: 'Geoff Stearns (tensafefrogs)/Flickr'
             }),
             'Bakery in Munich Hauptbahnhof': Map({
                 caption: 'Fresh bakeries are common in train stations throughout Europe, but especially in Bavaria',
@@ -821,6 +826,12 @@ var amtrakStandardModels = OrderedMap({
                 sourceUrl: 'http://rescapes.net',
                 credit: 'Rescape'
             }),
+            'Lockers at Hamburg-Altona': Map({
+                caption: "Lockers like these in Hamburg, Germany, are a fundamental amenity at European train stations",
+                sourceImageUrl: 'https://rail.cc/img/loc/1/1410294086b273a4740319fdbb8ce9638de353da46.jpg',
+                sourceUrl: 'https://en.rail.cc/hamburg-altona-railway-station/hamburg/station/10455/1416',
+                credit: 'rail.cc',
+            }),
         })
     }),
 
@@ -831,7 +842,38 @@ var amtrakStandardModels = OrderedMap({
         scenes: OrderedMap({entries: Map({
             'Amenity-Poor Transit Center': Map({
             }),
-        })})
+        })}),
+        media: OrderedMap({
+            'Oakland Transit Center': Map({
+                caption: "Transit centers like this one in Oakland, CA that connect buses to metro need tram and amenity upgrades",
+                sourceUrl: 'http://rescapes.org',
+                credit: 'Rescape',
+                date: 'October, 2016'
+            }),
+            'Los Angeles BRT': Map({
+                caption: "Wise investment in Los Angeles BRT stops are wasted without high quality fixed-guideway transit like trams",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+            }),
+            'Oakland BRT': Map({
+                caption: "Investing in stop amenities like this future BRT line in Oakland warrant fixed-guideway transit to accompany it",
+                sourceImageUrl: 'http://media2.fdncms.com/eastbayexpress/imager/bus-rapid-transit-originally-was-going-to-extend-from-downtown-berkeley-to/u/zoom/2414179/fulldisclosure.jpg',
+                sourceUrl: 'http://www.eastbayexpress.com/oakland/whats-left-of-brt/Content?oid=2414177',
+                credit: 'AC Transit',
+            }),
+            'Berkeley AMTRAK Station': Map({
+                caption: "Although this Berkeley, CA AMTRAK station is in a popular shopping area, the platform is dismally under an overpass and only 2 train cars can be boarded at time!",
+                sourceImageUrl: 'http://movechiro.com/wp-content/uploads/2014/01/amtrak.jpg',
+                sourceUrl: 'http://movechiro.com/',
+                credit: 'Move',
+            }),
+            'Frankfurt Tram Stop': Map({
+                caption: "Despite having high quality tram service in Frankfurt, Germany, stops lacks amenities like platforms with shelter",
+                sourceUrl: 'http://rescapes.org',
+                credit: 'Rescape',
+                date: 'August, 2016'
+            }),
+        }),
     }),
 
     'Station and Stop Amenities (Outside Improved)': Map({
@@ -843,8 +885,56 @@ var amtrakStandardModels = OrderedMap({
             }),
             'Transit Center Amenities': Map({
             }),
-        })})
+        })}),
+        media: OrderedMap({
+            'Montpelier Tram Stop': Map({
+                caption: "Tram stops like this one in Montpelier, France are strategically situated right next to all the action",
+                sourceImageUrl: 'http://www.paddlesteamers.info/Montpellier%20tram.jpg',
+                sourceUrl: 'http://www.paddlesteamers.info/Trams/Montpellier/Montpellier%202014.html',
+                credit: 'http://www.paddlesteamers.info',
+            }),
+            'Tours Tram Stop': Map({
+                caption: "A marathon in downtown Tours, France where cafés and the tram are ready to give runners a lift",
+                sourceImageUrl: 'http://www.paddlesteamers.info/Montpellier%20tram.jpg',
+                sourceUrl: 'http://www.paddlesteamers.info/Trams/Montpellier/Montpellier%202014.html',
+                credit: 'http://www.paddlesteamers.info',
+            }),
+            'Angers Tram Stop': Map({
+                caption: "Outdoor transit stops should aspire to create or adopt an important pedestrian center, like here in Angers, France",
+                sourceImageUrl: 'http://www.angers.fr/fileadmin/_migrated/pics/020_ralliementTB.jpg',
+                sourceUrl: 'http://www.angers.fr/actualites/photos/inauguration-du-tramway/',
+                credit: "Thierry Bonnet/Ville d'Angers"
+            }),
+            'Angers Tram Inauguration': Map({
+                caption: "Inauguration of tram service in Angers, France. The quality of transit should does matter to every citizen",
+                sourceImageUrl: 'http://www.angers.fr/fileadmin/_migrated/pics/006_ralliementJPC.jpg',
+                sourceUrl: 'http://www.angers.fr/actualites/photos/inauguration-du-tramway/',
+                credit: "Patrice Campion/Ville d'Angers"
+            }),
+            'Calgary Lightrail Stop': Map({
+                caption: "Some North American Cities like Calgary, AB, have good station amenities downtown for their light rail systems",
+                sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/Calgary_LRT-3.JPG',
+                sourceUrl: 'https://en.wikipedia.org/wiki/Calgary',
+                credit: "Mpr001/Wikipedia"
+            })
+
+        })
     }),
+    'Funding High Quality Transit': Map({
+        status: Statuses.INITIALIZED,
+        anchorId: 'id.btsrxfdifb6m',
+        id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
+        scenes: OrderedMap({entries: Map({
+            'Tram Upgrade': Map({
+            }),
+            'Fee District': Map({
+            }),
+            'New Lines Extend Fee District': Map({
+            }),
+        })}),
+        media: OrderedMap({
+        })
+    })
 });
 
 /***

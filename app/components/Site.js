@@ -26,7 +26,6 @@ import DocumentMeta from 'react-document-meta';
 import ImmutablePropTypes from 'react-immutable-proptypes'
 var himalaya = require('himalaya');
 import Comments from './Comments'
-import CommentsButton from './CommentsButton'
 import TableOfContents from './TableOfContents'
 import OverlayDocument from './OverlayDocument'
 import close_svg from '../images/close.svg'
@@ -84,28 +83,6 @@ export class Site extends Component {
             </div>
         }
 
-        // Shows the commetns button for the overall document
-        const documentCommentsButton = this.props.documentKey ?
-            <CommentsButton className='document-comments-counter'
-                      key="'document-comments-counter"
-                      document={this.props.document}
-                      documentKey={this.props.documentKey}
-                      documentTitle={this.props.documentTitle}
-                      commentsAreShowing={this.props.documentCommentsAreShowing}
-            /> : <span/>
-
-        // Shows the comments button for the current model
-        const modelCommentsButton = this.props.modelKey ?
-            <CommentsButton className='model-comments-counter'
-                key="model-comments-counter"
-                document={this.props.document}
-                documentKey={this.props.documentKey}
-                documentTitle={this.props.documentTitle}
-                model={this.props.model}
-                modelKey={this.props.modelKey}
-                commentsAreShowing={this.props.modelCommentsAreShowing}
-        /> : <span/>
-
         // Shows the document or model comments if expanded
         const comments = <Comments className='comments'
             document={this.props.document}
@@ -128,8 +105,6 @@ export class Site extends Component {
         // Footer of the overall web page
         return <div className='site'>
             <DocumentMeta {...meta} extend />
-            {documentCommentsButton}
-            {modelCommentsButton}
             {comments}
             {tableOfContentsTop}
             <Header />
