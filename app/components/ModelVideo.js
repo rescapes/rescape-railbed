@@ -47,13 +47,15 @@ class ModelVideo extends Component {
         }
         else {
             // If scrolling backward go straight to the target scene
+            // -1 so make sure we are still on the scene
             if  (this.props.scrollDirection == 'backward') {
-                this.seek(this.state.end, true)
+                this.refs.video.videoEl.currentTime = this.state.end
             }
             // If we are scrolling upward, meaning forward-progress in the document,
             // then play the animation transition
+            // +1 to transition faster
             else {
-                this.seek(this.state.start, true)
+                this.seek(this.state.start+1, true)
                 // If end > 0 play to that point
                 if (this.state.end)
                     this.refs.video.play();
@@ -67,7 +69,6 @@ class ModelVideo extends Component {
     }
 
     onProgress() {
-
         console.warn(window.document.getElementsByClassName('document')[0].scrollTop)
         console.warn(this.props.isSeeking)
         console.log(this.props.videoUrl)

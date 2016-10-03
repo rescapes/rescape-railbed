@@ -51,8 +51,8 @@
 
     &.scene-title-enter-active {
         opacity: 1;
-        transition: opacity 1500ms ease-in;
-        transition-delay: 1800ms;
+        transition: opacity 200ms ease-in;
+        transition-delay: 300ms;
     }
 }
 

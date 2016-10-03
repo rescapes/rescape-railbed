@@ -31,8 +31,8 @@ export default class Model3dTitle extends Component {
             <ReactCSSTransitionGroup
                 className="scene-title"
                 transitionName="scene-title"
-                transitionEnterTimeout={1800}
-                transitionLeaveTimeout={300}
+                transitionEnterTimeout={0}
+                transitionLeaveTimeout={0}
             >
                 <span key={this.props.sceneKey}>: {this.props.sceneKey}</span>
             </ReactCSSTransitionGroup>

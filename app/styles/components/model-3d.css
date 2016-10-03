@@ -35,7 +35,7 @@ iframe {
     }
     &.previous {
         display: block;
-        top: -120%;
+        top: -200%;
         &.active {
             transition: top 1s ease, bottom 1s ease;
         }
@@ -45,7 +45,7 @@ iframe {
     }
     &.next {
         display: block;
-        top: 120%;
+        top: 200%;
         &.active {
             transition: top 1s ease, bottom 1s ease;
         }

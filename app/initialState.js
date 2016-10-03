@@ -840,6 +840,8 @@ var amtrakStandardModels = OrderedMap({
         anchorId: 'id.hcrfkm926ytq',
         id: '87320bcf-05d7-4df9-8e51-f5c1e8ed82d1',
         scenes: OrderedMap({entries: Map({
+            'Initial': Map({
+            }),
             'Amenity-Poor Transit Center': Map({
             }),
         })}),
@@ -920,6 +922,7 @@ var amtrakStandardModels = OrderedMap({
 
         })
     }),
+
     'Funding High Quality Transit': Map({
         status: Statuses.INITIALIZED,
         anchorId: 'id.btsrxfdifb6m',
@@ -930,6 +933,18 @@ var amtrakStandardModels = OrderedMap({
             'Fee District': Map({
             }),
             'New Lines Extend Fee District': Map({
+            }),
+        })}),
+        media: OrderedMap({
+        })
+    }),
+
+    'Conclusion': Map({
+        status: Statuses.INITIALIZED,
+        anchorId: 'id.uq68osxi5mc9',
+        id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
+        scenes: OrderedMap({entries: Map({
+            'Conclusion': Map({
             }),
         })}),
         media: OrderedMap({

@@ -132,12 +132,11 @@ class Model3d extends Component {
         }
 
         // Figure out if we are scrolling forward or backward based on model state
-        if (props.modelTops.next || 0 > this.props.modelTops.next || 0) {
+        const direction = (props.scrollPosition || 0) - (this.props.scrollPosition || 0)
+        if (direction > 0)
            this.setState({scrollDirection: 'forward'})
-        }
-        else if (props.modelTops.previous || 0 > this.props.modelTops.previous || 0) {
+        else if (direction < 0)
             this.setState({scrollDirection: 'backward'})
-        }
         else
             this.setState({scrollDirection: null})
     }
@@ -329,6 +328,7 @@ Model3d.propTypes = {
     models: ImmutablePropTypes.map,
     defaultIs3dSet: PropTypes.bool,
     documentKey: PropTypes.string,
+    scrollPosition: PropTypes.number,
     modelKey: PropTypes.string,
     is3dSet: PropTypes.bool,
     sceneKey: PropTypes.string,
@@ -341,6 +341,7 @@ function mapStateToProps(state) {
     const settings = state.get('settings')
     const documentKey = state.getIn(['documents', 'current'])
     const document = state.getIn(['documents', 'entries', documentKey])
+    const scrollPosition = document.get('scrollPosition')
     const models = documentKey && state.get('models')
     const defaultIs3dSet = state.getIn(['settings', settingsActions.SET_3D])
     // Pass modelKey and sceneKey so that React recalculates the current
@@ -354,6 +355,7 @@ function mapStateToProps(state) {
     return {
         settings,
         documentKey,
+        scrollPosition,
         models,
         defaultIs3dSet,
         sceneKey,
