@@ -20,7 +20,6 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import {normalizeModelName} from '../utils/modelHelpers'
 import config from '../config'
 
-
 /***
  * Shows the Model3ds of the current Document and will in the future show other documents
  */
@@ -64,19 +63,30 @@ class TableOfContents extends React.Component {
             maxNodeCount
         )
         // Nodes are the document (top only) plus the models.
-        return this.props.isTop ?
-            (this.props.isExpanded ?
+        if (this.props.isTop) {
+            // Top TOC
+            return this.props.isExpanded ?
                 // document first
                 new OrderedMap({[this.props.documentTitle]: this.props.document}).merge(models) :
                 // document last
-                new OrderedMap({start: null}).merge(models.set(this.props.documentTitle, this.props.document))):
+                new OrderedMap({start: null})
+                    .merge(models)
+                    // Add a node to push down the current model node on the top if we don't have enough
+                    .merge(this.props.isTop && modelsForPosition.count() < maxNodeCount ? {end: null} : {})
+                    // document is always last
+                    .merge({[this.props.documentTitle]: this.props.document})
+        }
+        else {
+            // Bottom TOC
             // Add a fake node to the start so we can make a line from the document to the first node
             // Add an extra fake node to the end for the bottom if there are more models than the max allowed
-            new OrderedMap({start: null}).merge(
+            return new OrderedMap({start: null}).merge(
                 models
             ).merge(
+                // Indicate that more nodes are present than showing on the bottom
                 !this.props.isTop && modelsForPosition.count() > maxNodeCount ? {end: null} : {}
             )
+        }
     }
 
     /***
@@ -154,7 +164,10 @@ class TableOfContents extends React.Component {
                 node={node}
                 index={index}
                 isExpandedByHover={this.props.isExpandedByHover}
-                {...modifiedProps} />, this)
+                documentCommentsAreShowing={this.props.documentCommentsAreShowing}
+                modelCommentsAreShowing={this.props.modelCommentsAreShowing}
+                {...modifiedProps}
+            />, this)
 
         const documentGraphCircleGroup = <ReactCSSTransitionGroup
             transitionName="table-of-contents-nodes"
@@ -220,6 +233,8 @@ TableOfContents.propKeys = {
     containerHeight: PropTypes.number,
     // The width of the container
     containerWidth: PropTypes.number,
+    documentCommentsAreShowing: PropTypes.bool,
+    modelCommentsAreShowing: PropTypes.bool
 }
 
 function mapStateToProps(state, props) {
@@ -228,10 +243,13 @@ function mapStateToProps(state, props) {
     const documentKey = documents.get('current')
     const models = documentKey ? state.get('models') : Map()
     const modelKey = models && models.get('current')
+    const model = models && models.getIn(['entries', modelKey])
     const document = state.getIn(['documents', 'entries', documentKey])
     const documentTitle = document && document.get('title')
     const isExpanded = document.get('tableOfContentsIsExpanded')
     const isExpandedByHover = document.get('tableOfContentIsExpandedByHover')
+    const documentCommentsAreShowing = document && document.get('commentsAreShowing')
+    const modelCommentsAreShowing = model && model.get('commentsAreShowing')
     return {
         settings,
         documents,
@@ -241,7 +259,9 @@ function mapStateToProps(state, props) {
         modelKey,
         documentTitle,
         isExpanded,
-        isExpandedByHover
+        isExpandedByHover,
+        documentCommentsAreShowing,
+        modelCommentsAreShowing
     }
 }
 
