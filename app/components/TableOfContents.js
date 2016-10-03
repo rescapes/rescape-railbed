@@ -96,11 +96,9 @@ class TableOfContents extends React.Component {
      */
     getNodes(objects) {
         // We will use percentages for SVG since the viewBox takes care of the scaling
-        //
-        const x = 0,
-            // If we are the top contents and not expanded. Start y at 100 and go to 0. Otherwise go from 0 to 100
-            y = this.props.isTop && !this.props.isExpanded ? 100 : 0,
-            width=100, height=100,
+        // If we are the top contents and not expanded. Start y at 100 and go to 0. Otherwise go from 0 to 100
+        const y = this.props.isTop && !this.props.isExpanded ? 100 : 0,
+            height=100,
             // The top graph goes up when not expanded (-y) the bottom graph goes down (+y).
             yDirection = this.props.isTop && !this.props.isExpanded ? -1 : 1
 
@@ -111,13 +109,10 @@ class TableOfContents extends React.Component {
         const totalLength = Math.sqrt(Math.pow(0, 2) + Math.pow(height, 2))
 
         // The segment length for the line
-        // If the document is connected, allocate extra length for it
-        const extraLengthForDocument = this.props.isTop ? 6 : 0
-        const segmentLength = (totalLength-extraLengthForDocument) / (objects.count()-1)
+        // If the document is connected, allocate extra length for it and take it from the bottom line
+        const extraLengthForDocument = this.props.isTop ? 10 : 0
+        const segmentLength = totalLength / (objects.count()-1)
 
-        //const theta = Math.atan(isExpanded ? Infinity : height / width);
-        // Lets make the line always vertical. The code above can be used to slope it
-        //const theta = Math.atan(Infinity)
         // Apply the extra length if going downward and the document was the previous node
         // or apply if going upward and the document is the current node
         const documentTitleIndex = objects.keySeq().indexOf(this.props.documentTitle)
@@ -126,10 +121,14 @@ class TableOfContents extends React.Component {
             (yDirection == 1 ? documentTitleIndex + 1 : documentTitleIndex)
 
         return objects.entrySeq().map(([key, obj], i) => {
-            // Apply extra space for the document once we get to the node before or after it
-            const length = i * segmentLength + (i >= applyExtraLengthAtIndex ? extraLengthForDocument : 0)
-            const xi = 0 //x - length * Math.cos(theta)
-            const yi = y + yDirection * length //Math.sin(theta)
+            // Apply extra space for the document node by
+            // Substracting that space starting at the second node (first non-hidden node)
+            var length =  0
+            if (i >= 1 && i < applyExtraLengthAtIndex)
+                length = -1 * extraLengthForDocument
+
+            const xi = 0
+            const yi = y + yDirection * (i * segmentLength + length)
             return { x:xi, y:yi, key: key, obj: obj}
         }, List()).toArray()
     }

@@ -159,7 +159,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         // or their scenes.
         return state
             .setIn(['entries', currentDocumentKey, 'anchorToModels'], action.anchorToModels)
-            .setIn(['entries', currentDocumentKey, 'anchors'], action.sceneAnchors)
+            .setIn(['entries', currentDocumentKey, 'sceneAnchors'], action.sceneAnchors)
     }
     // Sets the scroll position and closest anchor. The models reducer reacts to this by setting
     // the current model and scene based on the model or scene matching the anchor.
@@ -201,9 +201,9 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         const {previousForDistinctModel, previous} = getRelevantAnchors(scrollPosition)
         const whichPrevious = previousForDistinctModel || previous
         const modelKey = resolveModelKeyFromAnchor(whichPrevious)
-        const anchors = getAnchors(currentDocumentKey)
+        const sceneAnchors = getSceneAnchors(currentDocumentKey)
         // Start at 0 and search up until whichPrevious. Take the first model match
-        const firstSceneOfPrevious = anchors.slice(0, anchors.indexOf(whichPrevious)+1).find(function(anchor) {
+        const firstSceneOfPrevious = sceneAnchors.slice(0, sceneAnchors.indexOf(whichPrevious)+1).find(function(anchor) {
             const seek = resolveModelKeyFromAnchor(anchor)
             return seek==modelKey
         })
@@ -292,12 +292,12 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
 
 
     /***
-     * Gets the anchors of the given document
+     * Gets the pseudo scene anchors of the given document
      * @param documentKey
      * @returns {*}
      */
-    function getAnchors(documentKey) {
-        return (state.getIn(['entries', documentKey, 'anchors']) ||[]).filter(anchor=>anchor.name != 'undefined')
+    function getSceneAnchors(documentKey) {
+        return (state.getIn(['entries', documentKey, 'sceneAnchors']) ||[]).filter(anchor=>anchor.name != 'undefined')
     }
 
     /***
@@ -309,37 +309,51 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
      * @returns {{current: *, previous: *, next: *, nextForDistinctModel: *, previousForDistinctModel: *}}
      */
     function getRelevantAnchors(scrollPosition, documentKey) {
+        // Correct our scrollPosition to be down a bit
+        // The actual position right at the visible top of the document isn't ideal
+        const adjustedScrollPosition = scrollPosition + 50
+
         documentKey = documentKey || currentDocumentKey
-        const anchors = getAnchors(documentKey)
-        if (!anchors.length)
+        const sceneAnchors = getSceneAnchors(documentKey)
+        if (!sceneAnchors.length)
             return {}
-        // Current anchor is the last anchor whose position is absolutely closest to the scroll position.
-        const current = anchors.slice(0).sort((a, b) =>
-            Math.abs(scrollPosition-a.offsetTop) - Math.abs(scrollPosition-b.offsetTop))[0]
+        // Current anchor is the last anchor whose position is the least less than or equal to the scroll position.
+        const current = sceneAnchors.slice(0).sort((a, b) => {
+            const aDiff = adjustedScrollPosition - a.offsetTop,
+                  bDiff = adjustedScrollPosition - b.offsetTop
+            if (aDiff >= 0 && bDiff >= 0)
+                // If both below the scrollPosition take the closer
+                return aDiff - bDiff
+            if (aDiff < 0 && bDiff < 0)
+                // If both above greater than the scroll position, take the least greater
+                return bDiff - aDiff
+            // If one is greater and one less, take the one that is less
+            return aDiff >= 0 ? -1 : 1
+        })[0]
 
         // The next anchor is the next in the list
-        const nextAnchorIndex = anchors.indexOf(current) + 1
-        const next = nextAnchorIndex < anchors.length ? anchors[nextAnchorIndex] : null
+        const nextAnchorIndex = sceneAnchors.indexOf(current) + 1
+        const next = nextAnchorIndex < sceneAnchors.length ? sceneAnchors[nextAnchorIndex] : null
         // We also need to find the next anchor key of a unique model if one exists.
         // This might be the same as next or different if next is a different scene but the same model
         // as current
         const nextForDistinctModel = findForDistinctModel(
-            anchors.slice(next ? nextAnchorIndex : 0),
+            sceneAnchors.slice(next ? nextAnchorIndex : 0),
             current
         )
 
         // The previous anchor is the next positive one
-        const previousAnchorIndex = anchors.indexOf(current) - 1
-        const previous = previousAnchorIndex >= 0 ? anchors[previousAnchorIndex] : null
+        const previousAnchorIndex = sceneAnchors.indexOf(current) - 1
+        const previous = previousAnchorIndex >= 0 ? sceneAnchors[previousAnchorIndex] : null
         // We also need to find the previous anchor key of a unique model if one exists.
         // This might be the same as previous or different if previous is a different scene but the same model
         // as current
         const previousForDistinctModel = findForDistinctModel(
-            anchors.slice(0, previous ? previousAnchorIndex+1 : 0).reverse(),
+            sceneAnchors.slice(0, previous ? previousAnchorIndex+1 : 0).reverse(),
             current
         )
 
-        console.log(`Scroll Position: ${scrollPosition}`)
+        /*console.log(`Scroll Position: ${scrollPosition}`)
         function nameAndPosition(anchor) {
             return `${anchor.name} ${anchor.offsetTop}`
         }
@@ -347,7 +361,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         console.log(`Previous: ${previous && nameAndPosition(previous)}`)
         console.log(`Current: ${current && nameAndPosition(current)}`)
         console.log(`Next: ${next && nameAndPosition(next)}`)
-        console.log(`Next Distinct: ${nextForDistinctModel && nameAndPosition(nextForDistinctModel)}`)
+        console.log(`Next Distinct: ${nextForDistinctModel && nameAndPosition(nextForDistinctModel)}`)*/
         return {current, previous, next, nextForDistinctModel, previousForDistinctModel}
     }
 

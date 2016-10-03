@@ -10,6 +10,7 @@
  */
 import {Map, OrderedMap, List} from 'immutable'
 import {normalizeModelName} from './modelHelpers'
+import config from '../config'
 
 /***
  * Maps the DOM anchors of a document to the given models.
@@ -37,6 +38,42 @@ export function getAnchorToModels(anchors, models) {
         }
         return reduction.set(pseudoAnchor, models)
     }, OrderedMap());
+}
+
+/***
+ * Create the Scene pseudo-anchors of all of the models. Scene anchors are positioned equidistant
+ * between models. If several models share the same anchor, all the scenes of those models are
+ * spread equally
+ * @param anchorToModels
+ * @param scrollHeight: Used for the spread between the last model and the bottom of the document
+ */
+export function getSceneAnchors(anchorToModels, scrollHeight) {
+    const maxScenePosition = config.MAX_SCENE_POSITION
+    return anchorToModels.entrySeq().flatMap(function ([anchor, models], i) {
+        // Find the next anchor position or failing that the bottom of the dom element
+        const nextAnchorOffsetTop = anchorToModels.count() > i + 1 ?
+            anchorToModels.keySeq().get(i + 1).get('offsetTop') :
+            scrollHeight
+
+        // Get the scenes of all models of this anchor
+        const sceneKeys = models.valueSeq().flatMap(model => model.getIn(['scenes', 'entries']).keySeq())
+        const allScenesCount = sceneKeys.count()
+        let counter = 0
+        return models.entrySeq().flatMap(([modelKey, model], index) =>
+            model.getIn(['scenes', 'entries']).keySeq().map(function (sceneKey) {
+                return {
+                    name: `${modelKey}_${sceneKey}`,
+                    // The scene index of the model or model group
+                    // Used for displaying the scene circles
+                    index: counter++,
+                    // Position the scene between this anchor and the next (or bottom of document)
+                    // The first scene is positioned at the anchor and the last somewhere before the next anchor
+                    // Use maxScenePosition % (e.g. .8) to make sure no scene is too close to the next model
+                    offsetTop: anchor.get('offsetTop') + maxScenePosition * (nextAnchorOffsetTop - anchor.get('offsetTop')) * sceneKeys.indexOf(sceneKey) / allScenesCount
+                }
+            })
+        )
+    }).toArray()
 }
 
 /***

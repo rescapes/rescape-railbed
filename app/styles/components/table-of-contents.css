@@ -201,10 +201,17 @@
         }
     }
 
+    &.toc-scene {
+         left: -5px;
+         height: 2px;
+         width: 10px;
+         background: black;
+    }
+
     &.hidden-model-count {
         /*** Push the text away from the line **/
         height: 10px;
-        margin-left: -40px;
+        margin-left: -45px;
         font-size: $h6-font-size;
         .outline {
              height: 10px;
@@ -289,7 +296,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 35%;
+    top: 32%;
     left: 10%;
     text-align: left;
     line-height: 10px;

@@ -79,27 +79,39 @@ export function getModelTops(document, models, settings) {
         return {current: null, previous: null, next: null}
     }
     const currentDistance = distances.get('current'),
-        previousDistance = distances.get('previousForDistinctModel'),
-        nextDistance = distances.get('nextForDistinctModel'),
+        previousForDistinctModelDistance = distances.get('previousForDistinctModel'),
+        previousDistance = distances.get('previous'),
+        nextForDistinctModelDistance = distances.get('nextForDistinctModel'),
+        nextDistance = distances.get('next'),
         // Increases as previous becomes more relevant
-        previousFraction = currentDistance / (previousDistance + currentDistance),
+        previousFraction = currentDistance / (previousForDistinctModelDistance + currentDistance),
         // Increases as next becomes more relevant
-        nextFraction = currentDistance / (nextDistance + currentDistance)
-    // If we're closer to the previous than the next and within the threshold for transition
-    if (previousFraction > nextFraction && previousFraction > config.MODEL_THRESHOLD && previousForDistinctModel != current) {
+        nextFraction = currentDistance / (nextForDistinctModelDistance + currentDistance)
+    // If we're closer to the previous than the next,
+    // the previous scene is a different model,
+    // and within the threshold for transition
+    if (previousFraction > nextFraction &&
+        previousDistance == previousForDistinctModel &&
+        previousFraction > config.MODEL_THRESHOLD &&
+        previousForDistinctModel != current) {
         return {
             // Start at 0 and scroll down as previous gets more relevant
-            current: currentDistance / (previousDistance + currentDistance),
+            current: currentDistance / (previousForDistinctModelDistance + currentDistance),
             // Start at above showcase at -(MODEL_PADDING + 1) and scroll down as previous gets more relevant
             previous: previousFraction - (config.MODEL_PADDING + 1),
             next: null
         }
     }
-    // If we're closer to the next than the previous and within the threshold for transition
-    else if (nextFraction > previousFraction && nextFraction > config.MODEL_THRESHOLD && nextForDistinctModel != current) {
+    // If we're closer to the next than the previous,
+    // the next scene is a different model,
+    // and within the threshold for transition
+    else if (nextFraction > previousFraction &&
+        nextDistance == nextForDistinctModelDistance &&
+        nextFraction > config.MODEL_THRESHOLD &&
+        nextForDistinctModel != current) {
         return {
             // Start at 0 and scroll up as next gets more relevant
-            current: 0 - (currentDistance / (nextDistance + currentDistance)),
+            current: 0 - (currentDistance / (nextForDistinctModelDistance + currentDistance)),
             previous: null,
             // Start at 1 + MODEL_PADDING below screen and scroll up as next gets more relevant
             next: (1 + config.MODEL_PADDING) - nextFraction

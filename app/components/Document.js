@@ -24,10 +24,10 @@ import * as actions from '../actions/document'
 import * as siteActions from '../actions/site'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Scroll from 'react-scroll';
-import {getAnchorToModels} from '../utils/documentHelpers'
+import {getAnchorToModels, getSceneAnchors} from '../utils/documentHelpers'
 const scroll = Scroll.animateScroll;
 import bookmark_png from '../images_dist/bookmark-320.png'
-import config from '../config'
+import scene_circle_svg from '../images/model-circle.svg'
 
 class Document extends Component {
 
@@ -58,6 +58,10 @@ class Document extends Component {
      */
     componentDidUpdate() {
         this.indexAnchors()
+        if (this.props.sceneAnchors) {
+            // Once we have registered anchors add scene circles to the Document div
+            this.injectSceneCircles(this.documentDiv, this.props.sceneAnchors)
+        }
     }
 
     /***
@@ -74,41 +78,20 @@ class Document extends Component {
         const models = this.props.models
         const anchors = List([...domElement.querySelectorAll('a[id]')])
         // If no models or anchors yet or our anchors are already named return
-        if (!models || !anchors.count() || this.state.scrollHeight == domElement.scrollHeight)
+        if (!models || !anchors.count() || !this.state || this.state.scrollHeight == domElement.scrollHeight)
             return
         this.setState({scrollHeight: domElement.scrollHeight})
 
-        const maxScenePosition = config.MAX_SCENE_POSITION
 
         // Map anchors to models. One anchor can represent to one or more models
         // As a side-effect we give the anchor the generic model name the first time we encounter a new anchor
         const anchorToModels = getAnchorToModels(anchors, models)
+        // Create pseudo anchors for each scenes. These are used to change the scene of the current
+        // model as the user scrolls
+        const sceneAnchors = getSceneAnchors(anchorToModels, domElement.scrollHeight)
 
-        const allAnchors = anchorToModels.entrySeq().flatMap(function([anchor, models], i) {
-            // Find the next anchor position or failing that the bottom of the dom element
-            const nextAnchorOffsetTop = anchorToModels.count() > i + 1 ?
-                anchorToModels.keySeq().get(i + 1).get('offsetTop') :
-                domElement.scrollHeight
-
-            // Get the scenes of all models of this anchor
-            const sceneKeys = models.valueSeq().flatMap(model => model.getIn(['scenes', 'entries']).keySeq())
-            const allScenesCount = sceneKeys.count()
-            const sceneAnchors = models.entrySeq().flatMap(([modelKey, model], index) =>
-                model.getIn(['scenes', 'entries']).keySeq().map(function(sceneKey) {
-                    return {
-                        name: `${modelKey}_${sceneKey}`,
-                        // Position the scene between this anchor and the next (or bottom of document)
-                        // The first scene is positioned at the anchor and the last somewhere before the next anchor
-                        // Use maxScenePosition % (e.g. .8) to make sure no scene is too close to the next model
-                        offsetTop: anchor.get('offsetTop') + maxScenePosition * (nextAnchorOffsetTop - anchor.get('offsetTop')) * sceneKeys.indexOf(sceneKey) / allScenesCount
-                    }
-                })
-            )
-            return sceneAnchors
-        }).toArray()
-
-        // Once we certainly have the anchors loaded, put them into the document's state
-        this.props.registerAnchors(anchorToModels, allAnchors)
+        // Once we have the anchors loaded, put them into the document's state
+        this.props.registerAnchors(anchorToModels, sceneAnchors)
 
         // Immediately register the scroll position so that the closest 3d model to the current text loads.
         // If we don't do this no model will load until the user scrolls
@@ -334,6 +317,31 @@ class Document extends Component {
         } while ( (result = regex.exec(body)) )
         return modifiedBody
     }
+    /***
+     * Inject scene circles into the document div
+     * This happens post render once we have create the scene anchors
+     * Create a marker for each scene other than the first scene of the model or model group
+     * We don't mark the first scene because it's clearly marekd by the start of the model or model group
+     * @param documentDiv
+     * @param sceneAnchors
+     */
+    injectSceneCircles(documentDiv, sceneAnchors) {
+        const oldList = documentDiv.getElementsByClassName("scene-circles")[0];
+        if (oldList)
+            documentDiv.removeChild(oldList)
+        const list = document.createElement('div')
+        list.className = "scene-circles";
+        documentDiv.appendChild(list)
+
+        sceneAnchors.forEach((sceneAnchor) => {
+            if (sceneAnchor.index != 0) {
+                var node = document.createElement("div");
+                node.className = 'table-of-contents-node toc-scene'
+                node.style.top = `${sceneAnchor.offsetTop}px`
+                list.appendChild(node)
+            }
+        })
+    }
 }
 
 Document.propTypes = {
@@ -348,6 +356,9 @@ Document.propTypes = {
     className: PropTypes.string,
     // Once the Document is loaded we'll have a mapping of it's anchors to its Model3ds
     anchorToModels: ImmutablePropTypes.map,
+    // Once the Document is loaded we'll have sceneAnchors representing the document position
+    // of each scene
+    sceneAnchors: PropTypes.array,
     // The router's location so we can scroll to the correct bookmark.
     // The router doesn't do this for us because we set the name of the bookmarks when the Document loads
     location:PropTypes.object
@@ -367,6 +378,7 @@ function mapStateToProps(state) {
     const scrollPosition = document && document.get('scrollPosition')
     const modelKeysInDocument = document && document.get('modelKeys')
     const anchorToModels = document.get('anchorToModels')
+    const sceneAnchors = document.get('sceneAnchors')
     const location = state.getIn(['documents', 'location'])
     return {
         settings,
@@ -376,6 +388,7 @@ function mapStateToProps(state) {
             state.getIn(['models', 'entries']).filter((value,key) => modelKeysInDocument.includes(key)),
         scrollPosition,
         anchorToModels,
+        sceneAnchors,
         location
     }
 }
