@@ -69,10 +69,12 @@ class ModelVideo extends Component {
     }
 
     onProgress() {
-        console.warn(window.document.getElementsByClassName('document')[0].scrollTop)
-        console.warn(this.props.isSeeking)
-        console.log(this.props.videoUrl)
-        console.log(this.state.start, this.refs.video.videoEl.currentTime, this.state.end)
+        /*
+        console.debug(window.document.getElementsByClassName('document')[0].scrollTop)
+        console.debug(this.props.isSeeking)
+        console.debug(this.props.videoUrl)
+        console.debug(this.state.start, this.refs.video.videoEl.currentTime, this.state.end)
+        */
         if (this.refs.video.videoEl.currentTime  >= this.state.end) {
             this.pause();
         }

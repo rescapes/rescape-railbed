@@ -44,17 +44,6 @@ module.exports = {
             mainPath
         ],
         style: STYLE,
-        /*
-        testEmbed: [
-            // For hot style updates
-            'webpack/hot/dev-server',
-
-            // The script refreshing the browser on none hot updates
-            'webpack-dev-server/client?http://localhost:8080',
-
-            sketchupStartupPath
-        ]
-        */
     },
     output: {
         path: BUILD,
