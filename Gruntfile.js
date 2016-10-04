@@ -1,6 +1,10 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         responsive_images: {
+            options: {
+                // ImageMagick is available on Heroku, not GraphicsMagick
+                engine: 'im'
+            },
             dev: {
                 options: {
                     sizes: [{
