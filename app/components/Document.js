@@ -27,7 +27,6 @@ import Scroll from 'react-scroll';
 import {getAnchorToModels, getSceneAnchors} from '../utils/documentHelpers'
 const scroll = Scroll.animateScroll;
 import bookmark_png from '../images_dist/bookmark-320.png'
-import scene_circle_svg from '../images/model-circle.svg'
 
 class Document extends Component {
 

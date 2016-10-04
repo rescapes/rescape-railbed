@@ -119,7 +119,7 @@
         .document-comments-counter {
             position: absolute;
             top: calc(-1 * calc($table-of-contents-document-height / 2) + calc($comment-button-height / 6));
-            left: calc(calc(-1 * $comment-button-width) - 5px);
+            left: calc(calc(-1 * $comment-button-width) - 2px);
             width: $comment-button-width;
             height: $comment-button-height;
 
@@ -151,7 +151,7 @@
         .model-comments-counter {
             position: absolute;
             top: calc(-1 * calc($table-of-contents-model-current-height / 2));
-            left: calc(calc(-1 * $comment-button-width-small) - 5px);
+            left: calc(calc(-1 * $comment-button-width-small) - 2px);
             width: $comment-button-width-small;
             height: $comment-button-height-small;
         }
@@ -246,10 +246,6 @@
         border-left: 2px dotted black;
     }
 }
-
-
-
-
 
 .comments-counter {
     position: fixed;
