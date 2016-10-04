@@ -852,12 +852,12 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'Rescape',
                 date: 'October, 2016'
             }),
-            'Los Angeles BRT': Map({
+            'Los Angeles BRT Stop': Map({
                 caption: "Wise investment in Los Angeles BRT stops are wasted without high quality fixed-guideway transit like trams",
                 sourceUrl: 'http://rescapes.net',
                 credit: 'Rescape',
             }),
-            'Oakland BRT': Map({
+            'Oakland BRT Stop': Map({
                 caption: "Investing in stop amenities like this future BRT line in Oakland warrant fixed-guideway transit to accompany it",
                 sourceImageUrl: 'http://media2.fdncms.com/eastbayexpress/imager/bus-rapid-transit-originally-was-going-to-extend-from-downtown-berkeley-to/u/zoom/2414179/fulldisclosure.jpg',
                 sourceUrl: 'http://www.eastbayexpress.com/oakland/whats-left-of-brt/Content?oid=2414177',
@@ -934,6 +934,19 @@ var amtrakStandardModels = OrderedMap({
             }),
             'New Lines Extend Fee District': Map({
             }),
+        })}),
+        media: OrderedMap({
+        })
+    }),
+
+    'User-Experience Policy Recommendations': Map({
+        status: Statuses.INITIALIZED,
+        anchorId: 'id.rguwchja4zl1',
+        id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
+        scenes: OrderedMap({entries: Map({
+            'Initial': Map({
+
+            })
         })}),
         media: OrderedMap({
         })

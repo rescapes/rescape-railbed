@@ -13,6 +13,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const PUBLIC = __dirname + '/app/public';
 const APP = __dirname + '/app';
 const BUILD = __dirname + '/build';
 const STYLE = __dirname + '/app/style.css';
@@ -29,8 +31,9 @@ module.exports = {
         app: APP,
         style: STYLE,
         vendor: PACKAGE
-    }, resolve: {
-        extensions: ['', '.js', '.jsx']
+    },
+    resolve: {
+        extensions: ['', '.js']
     },
     output: {
         path: BUILD,
@@ -40,7 +43,7 @@ module.exports = {
     module: {
         loaders: [
             {
-                test: /\.jsx?$/,
+                test: /\.js?$/,
                 loaders: ['babel?cacheDirectory'],
                 include: APP
             },
@@ -52,11 +55,17 @@ module.exports = {
             }]
     },
     postcss: function () {
-        return [precss, autoprefixer];
+        return [
+            precss,
+            autoprefixer({ browsers: ['last 2 versions'] })
+        ]
     },
     plugins: [
         new CleanPlugin([BUILD]),
-        new HtmlWebpackPlugin({template: TEMPLATE, inject: 'body'}),
+        new HtmlWebpackPlugin({
+            template: TEMPLATE,
+            inject: 'body'
+        }),
         new ExtractTextPlugin('[name].[chunkhash].css'), new webpack.optimize.DedupePlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             names: ['vendor', 'manifest']
@@ -71,6 +80,8 @@ module.exports = {
                 warnings: false
             }
         }),
-
+        new CopyWebpackPlugin([
+            { from: PUBLIC, to: BUILD }
+        ])
     ]
 };
