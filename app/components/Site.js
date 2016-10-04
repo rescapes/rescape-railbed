@@ -59,8 +59,9 @@ export class Site extends Component {
                         // Use _text to indicate text node content, if any
                         o[v['tagName']]._text = v.content
                         // A title tag has the text in the children
+                        // Show Rescape here. We could show the Document title
                         if (v['tagName'] == 'title')
-                            o[v['tagName']] = v.children && v.children[0].content
+                            o[v['tagName']] = 'Rescape' // v.children && v.children[0].content
                     }
                     return o
                 }, {});
