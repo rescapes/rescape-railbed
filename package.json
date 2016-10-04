@@ -24,6 +24,7 @@
     "grunt": "^1.0.1",
     "grunt-cli": "^1.2.0",
     "himalaya": "^0.2.0",
+    "html-webpack-plugin": "^2.22.0",
     "json-loader": "^0.5.4",
     "moment": "^2.15.0",
     "normalize-css": "^2.3.1",
