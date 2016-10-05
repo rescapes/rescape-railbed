@@ -13,7 +13,7 @@
  * Defines the all actions of the application used manipulate the DOM.
  */
 
-import ActionLoader from '../ActionLoader'
+import ActionLoader from '../actionLoader'
 import {Map} from 'immutable'
 
 /*
