@@ -9,16 +9,16 @@ module.exports = function(grunt) {
                 options: {
                     sizes: [{
                         width: 320
-                    }, {
+                    }, /*{
                         width: 500
                     }, {
                         width: 800
-                    }, {
+                    }*/, {
                         width: 1024
-                    }, {
+                    }, /*{
                        name: '',
                        width: '100%'
-                    }
+                    }*/
                     ]
                 },
                 files: [{
