@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" viewBox="-5 18 168 163"
+     width="14pc" height="163pt" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <metadata>Produced by OmniGraffle 6.5.2
+        <dc:date>2016-09-21 18:38:18 +0000</dc:date>
+    </metadata>
+    <defs/>
+    <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+        <title>Canvas 1</title>
+        <g>
+            <title>Layer 1</title>
+            <ellipse cx="79.199316" cy="99.2126" rx="70.695492" ry="68.031604" fill="#949498"/>
+            <ellipse cx="79.199316" cy="99.2126" rx="70.695492" ry="68.031604" stroke="#6e2236" stroke-linecap="round"
+                     stroke-linejoin="round" stroke-width="4"/>
+            <path d="M 57.4763 86.606146 L 74.897942 121.44943 C 76.13289 123.91932 79.136254 124.92044 81.606146 123.685496 C 82.573783 123.20168 83.358396 122.417065 83.842214 121.44943 L 101.263855 86.606146 C 102.4988 84.136254 101.49768 81.13289 99.02779 79.89794 C 98.33351 79.550804 97.567945 79.37008 96.79172 79.37008 L 61.948437 79.37008 C 59.187014 79.37008 56.948437 81.608655 56.948437 84.37008 C 56.948437 85.146304 57.129163 85.91187 57.4763 86.606146 Z"
+                  stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+        </g>
+    </g>
+</svg>
