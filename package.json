@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development webpack-dev-server",
     "build": "NODE_ENV=production webpack --config webpack.prod.config.js",
-    "postinstall": "grunt default && NODE_ENV=production webpack --config ./webpack.prod.config.js",
+    "postinstall": "grunt default && npm prune --production && NODE_ENV=production webpack --config ./webpack.prod.config.js",
     "buildDev": "NODE_ENV=development webpack --config webpack.config.js",
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
