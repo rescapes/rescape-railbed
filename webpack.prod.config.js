@@ -27,7 +27,7 @@ const autoprefixer = require('autoprefixer');
 
 // Constants
 const APP = path.join(__dirname, 'app');
-const BUILD = path.join(__dirname, 'build');
+const DIST = path.join(__dirname, 'dist');
 const STYLE = path.join(__dirname, 'app/style.css');
 const PUBLIC = path.join(__dirname, 'app/public');
 const TEMPLATE = path.join(__dirname, 'app/templates/index_default.html');
@@ -46,7 +46,7 @@ module.exports = {
         //extensions: ['', '.js', '.jsx']
     },
     output: {
-        path: BUILD,
+        path: DIST,
         filename: '[name].[chunkhash].js',
         chunkFilename: '[chunkhash].js',
         publicPath: '/'
@@ -92,7 +92,7 @@ module.exports = {
         ];
     },
     // Remove comment if you require sourcemaps for your production code
-    // devtool: 'cheap-module-source-map',
+    devtool: 'cheap-module-source-map',
     plugins: [
         // Required to inject NODE_ENV within React app.
         // Reduntant package.json script entry does not do that, but required for .babelrc
@@ -103,9 +103,9 @@ module.exports = {
             }
         }),
         // Clean build directory
-        new CleanPlugin([BUILD]),
+        new CleanPlugin([DIST]),
         new CopyWebpackPlugin([
-                { from: PUBLIC, to: BUILD }
+                { from: PUBLIC, to: DIST }
             ],
             {
                 ignore: [
