@@ -13,7 +13,7 @@
  * Defines the all actions of the models which contains the current model and the media that accompany the model
  */
 
-import ActionLoader from '../ActionLoader'
+import ActionLoader from '../actionLoader'
 import {Map} from 'immutable'
 
 /*
