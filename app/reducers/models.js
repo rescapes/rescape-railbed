@@ -131,8 +131,8 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                 // Get the name of the anchor and look for an _, which divides the modelKey from sceneKey if
                 // a scene is associated with the anchor. Otherwise the anchor represents the entire model
                 const [modelKey, sceneKey] = anchor && anchor.name ? anchor.name.split('_') : null
-                //if (anchorKey=='current')
-                //    console.log(`Model: ${modelKey} Scene: ${sceneKey || anchor.id}`)
+                if (anchorKey=='current')
+                    console.log(`Model: ${modelKey} Scene: ${sceneKey || anchor.id}`)
                 // If there is no anchor don't change state
                 if (!modelKey || modelKey == 'undefined')
                     return state;

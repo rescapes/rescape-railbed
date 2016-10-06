@@ -24,6 +24,8 @@ const path = require('path');
 const postcssImport = require('postcss-easy-import');
 const precss = require('precss');
 const autoprefixer = require('autoprefixer');
+const postcssCustomMedia = require('postcss-custom-media');
+const postcssCssVariables = require('postcss-css-variables');
 
 // Constants
 const APP = path.join(__dirname, 'app');
@@ -82,15 +84,19 @@ module.exports = {
             }
         ]
     },
-    postcss: function processPostcss(webpack) {  // eslint-disable-line no-shadow
+
+    postcss: function processPostcss(webpack) {
         return [
             postcssImport({
                 addDependencyTo: webpack
             }),
+            postcssCustomMedia(),
+            postcssCssVariables(),
             precss,
             autoprefixer({ browsers: ['last 2 versions'] })
         ];
     },
+
     // Remove comment if you require sourcemaps for your production code
     devtool: 'cheap-module-source-map',
     plugins: [

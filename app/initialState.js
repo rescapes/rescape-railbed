@@ -998,7 +998,7 @@ export default Map({
                 modelKeys: List()
             }),
             'the_amtrak_standard': Map({
-                date: new Date('October 2016'),
+                date: new Date(2016, 9),
                 author: 'Andy Likuski',
                 status: Statuses.INITIALIZED,
                 title: 'The AMTRAK Standard',
@@ -1006,7 +1006,7 @@ export default Map({
                 modelKeys: List(amtrakStandardModels.keys())
             }),
             'the_new_rules_of_the_road': Map({
-                date: new Date('January 2017'),
+                date: new Date(2017, 0),
                 author: 'Andy Likuski',
                 status: Statuses.INITIALIZED,
                 title: 'The New Rules of the Road',

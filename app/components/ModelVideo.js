@@ -15,6 +15,7 @@ import ReactDOM from 'react-dom'
 
 class ModelVideo extends Component {
 
+
     reloadVideo() {
         // When changing a HTML5 video, you have to reload it.
         this.refs.video.load();
@@ -86,7 +87,11 @@ class ModelVideo extends Component {
 
     constructor(props) {
         super()
-        this.state = {start: props.start || 0, end: props.end || 0}
+        this.state = {
+            start: props.start || 0,
+            end: props.end || 0,
+            mp4: window.isIE || window.isSafari
+        }
         this._onProgress = (event)=>this.onProgress(event)
     }
 
@@ -115,18 +120,25 @@ class ModelVideo extends Component {
             this.playOrReset()
     }
 
+
+
     render() {
         if (!this.props.videoUrl) {
             return <div className="model-video"/>
         }
-
+        const src = this.state.mp4 ?
+            this.props.videoUrl.replace('webm', 'mp4') :
+            this.props.videoUrl;
+        const type = this.state.mp4 ?
+            'video/mp4':
+            'video/webm'
         return <div className="model-video">
             <Video
                 className="video"
                 muted
                 onTimeUpdate={this._onProgress}
                 ref="video">
-                <source src={this.props.videoUrl} type="video/webm" />
+                <source src={src} type={type}/>
                 <Overlay />
                 <Controls />
             </Video>

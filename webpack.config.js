@@ -35,6 +35,7 @@ const precss = require('precss');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
+    node: {fs: "empty"},
     entry: {
         main: [
             // For hot style updates
@@ -71,7 +72,7 @@ module.exports = {
                 include: APP
             },
             {
-                test: /\.(webm)$/,
+                test: /\.(webm|mp4)$/,
                 loader: 'file-loader?name=/videos/[name].[ext]',
                 include: APP
             },
@@ -96,12 +97,14 @@ module.exports = {
         inline: true,
         progress: true,
         //stats: 'errors-only',
-        'display-reasons': true,
         'display-modules': true,
         host: HOST,
         port: PORT
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+        }),
         new HtmlWebpackPlugin({
             template: TEMPLATE, inject: 'body'
         }),
