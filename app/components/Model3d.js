@@ -27,7 +27,7 @@ import close_svg from '../images/close.svg'
 import config from '../config'
 
 // This garbage has to be done to force webpack to know about all the media files
-var req = require.context('../videos/', true, /\.(webm)$/)
+var req = require.context('../videos/', true, /\.(webm|mp4)$/)
 req.keys().forEach(function(key){
     req(key);
 })

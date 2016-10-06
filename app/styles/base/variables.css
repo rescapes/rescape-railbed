@@ -125,7 +125,7 @@
     --model-3d-title-font-size: var(--h4-font-size);
     --model-3d-title-height: 20px;
 
-    --document-top: calc( var(--header-bottom) );
+    --document-top: var(--header-bottom);
     --document-height: calc( 100% - var(--footer-height) );
     /*
         The left side of the document bleeds over the 3d model
@@ -228,7 +228,7 @@
         --lightbox-top: calc(var(--factor) * var(--lightbox-top));
         --image-credit-font-size: calc(1.5 * var(--factor) * var(--image-credit-font-size));
         --lightbox-caption-font-size: calc(1.2 * var(--factor) * var(--lightbox-caption-font-size));
-        --document-top: calc( var(--header-bottom) );
+        --document-top: var(--header-bottom);
         --document-height: calc( 100% - var(--footer-height) );
         --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
         --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
@@ -279,7 +279,7 @@
         --lightbox-top: calc(var(--factor) * var(--lightbox-top));
         --image-credit-font-size: calc(1.5 * var(--factor) * var(--image-credit-font-size));
         --lightbox-caption-font-size: calc(1.5 * var(--factor) * var(--lightbox-caption-font-size));
-        --document-top: calc( var(--header-bottom) );
+        --document-top: var(--header-bottom);
         --document-height: calc( 100% - var(--footer-height) );
         --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
         --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));

@@ -27,6 +27,23 @@ const appHistory = useRouterHistory(createHistory)({ queryKey: false })
 
 const store = makeStore()
 window.store = store;
+
+// Initialize Firebase
+// TODO: Replace with your project's customized code snippet
+
+/*
+import firebase from "firebase/app";
+const firebaseConfig = {
+    apiKey: "AIzaSyB4Kz8zXJaqOTOzEu5ZvwEKiOfu_ZVUK-o",
+    authDomain: "rescape-railbed.firebaseapp.com",
+    databaseURL: "https://rescape-railbed.firebaseio.com",
+    storageBucket: "rescape-railbed.appspot.com",
+    messagingSenderId: "895444132656"
+};
+firebase.initializeApp(firebaseConfig);
+*/
+
+
 /***
  * App is the common component for all of our routes
  */
@@ -41,6 +58,21 @@ ReactDOM.render(
     document.getElementById('app')
 );
 
+// Opera 8.0+
+window.isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+// Firefox 1.0+
+window.isFirefox = typeof InstallTrigger !== 'undefined';
+// Safari <= 9 "[object HTMLElementConstructor]"
+window.isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+// Internet Explorer 6-11
+window.isIE = /*@cc_on!@*/false || !!document.documentMode;
+// Edge 20+
+window.isEdge = !isIE && !!window.StyleMedia;
+// Chrome 1+
+window.isChrome = !!window.chrome && !!window.chrome.webstore;
+// Blink engine detection
+window.isBlink = (isChrome || isOpera) && !!window.CSS;
+
 store.dispatch(setState(initialState))
 
 const state = store.getState()
@@ -49,7 +81,7 @@ const state = store.getState()
 const sortedDocuments = state.getIn(['documents', 'entries']).sort(
     (a, b) => a.get('date') > b.get('date'))
 // Pretend it's the distant future
-const now = new Date('November 2016');
+const now = new Date();
 // Get the newest document. Ignore documents like About and Contact that have no date
 const currentDocument = sortedDocuments.reverse().find(document => document.get('date') && document.get('date') <= now)
 store.dispatch(showDocument(sortedDocuments.keyOf(currentDocument)))

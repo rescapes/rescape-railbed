@@ -39,10 +39,21 @@ class Document extends Component {
         this.handleScrollBound = this.handleScroll.bind(this)
         const document = ReactDOM.findDOMNode(this.documentDiv)
         document.addEventListener('scroll', this.handleScrollBound);
+        document.addEventListener('scroll', function(e) {
+            console.log(document.scrollTop)
+        })
+
         if (this.props.scrollPosition)
             this.scrollTo(this.props.scrollPosition || 0)
         else
             this.handleScroll()
+
+        function fixSafariScrolling(event) {
+            event.target.style.overflowY = 'hidden';
+            setTimeout(function () { event.target.style.overflowY = 'auto'; });
+        }
+
+        this.documentDiv.addEventListener('webkitAnimationEnd', fixSafariScrolling);
     }
 
     componentWillUnmount() {
@@ -106,6 +117,7 @@ class Document extends Component {
      * could do in any case)
      */
     handleScroll(event) {
+
         const scrollTop = this.documentDiv && this.documentDiv.scrollTop
         if (!scrollTop && scrollTop != 0)
             return
