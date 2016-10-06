@@ -170,7 +170,7 @@ video {
 
 .model-credits-positioner {
     position: absolute;
-    top: calc(var(--model-3d-toggle-height) * .875);
+    top: calc(var(--model-3d-toggle-height) * .9);
     width: var(--model-3d-toggle-width);
     z-index: 5;
     left: 5px;
@@ -190,8 +190,8 @@ video {
 
 .model-3d-title {
     z-index: 7;
-    position: fixed;
-    bottom: calc(var(--showcase-footer-overlap) - 0px);
+    position: absolute;
+    top: 0;
     height: var(--model-3d-title-height);
     width: calc(var(--document-left) - 100px);
     left: 10px;
