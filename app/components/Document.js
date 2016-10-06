@@ -109,7 +109,7 @@ class Document extends Component {
         const scrollTop = this.documentDiv && this.documentDiv.scrollTop
         if (!scrollTop && scrollTop != 0)
             return
-        const interval = 50
+        const interval = 300
         const now = new Date()
         if (now - (this.state && this.state.lastScrollTime || 0) > interval) {
             // Tell the reducers the scroll position so that they can determine what model and scene

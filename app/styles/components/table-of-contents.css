@@ -9,21 +9,21 @@
     z-index: 7;
 
     &.top {
-         top: $table-of-contents-top-offset;
-         height: $table-of-contents-top-height;
-         left: $document-left;
-         width: $table-of-contents-width;
+         top: var(--table-of-contents-top-offset);
+         height: var(--table-of-contents-top-height);
+         left: var(--document-left);
+         width: var(--table-of-contents-width);
          &.expanded {
-            height: $table-of-contents-height-expanded;
-            background: $faded-gray-background;
+            height: var(--table-of-contents-height-expanded);
+            background: var(--faded-gray-background);
          }
     }
 
     &.bottom {
-        bottom: $table-of-contents-bottom-offset;
-        height: $table-of-contents-bottom-height;
-        left: $document-left;
-        width: $table-of-contents-width;
+        bottom: var(--table-of-contents-bottom-offset);
+        height: var(--table-of-contents-bottom-height);
+        left: var(--document-left);
+        width: var(--table-of-contents-width);
         &.expanded {
             display: none;
         }
@@ -81,11 +81,11 @@
         display: inline;
         z-index: 2;
         vertical-align: middle;
-        background: $half-white;
-        border-color: $rescape-love;
+        background: var(--half-white);
+        border-color: var(--rescape-love);
         border-width: 2px;
         border-style: solid;
-        font-family: $font-stack;
+        font-family: var(--font-stack);
         color: black;
         text-align: center;
 
@@ -112,16 +112,16 @@
     }
 
     &.toc-document {
-        height: $table-of-contents-document-height;
-        margin-left: calc(-1 * $table-of-contents-document-height / 2);
-        margin-top: calc(-1 * $table-of-contents-document-height / 2);
+        height: var(--table-of-contents-document-height);
+        margin-left: calc(-1 * var(--table-of-contents-document-height) / 2);
+        margin-top: calc(-1 * var(--table-of-contents-document-height) / 2);
 
         .document-comments-counter {
             position: absolute;
-            top: calc(-1 * calc($table-of-contents-document-height / 2) + calc($comment-button-height / 6));
-            left: calc(calc(-1 * $comment-button-width) - 2px);
-            width: $comment-button-width;
-            height: $comment-button-height;
+            top: calc(-1 * calc(var(--table-of-contents-document-height) / 2) + calc(var(--comment-button-height) / 6));
+            left: calc(calc(-1 * var(--comment-button-width)) - 2px);
+            width: var(--comment-button-width);
+            height: var(--comment-button-height);
 
         }
         .circle {
@@ -132,72 +132,73 @@
             }
         }
         .connector {
-            margin-left: calc(-1 * $table-of-contents-document-height / 2  );
-            width: calc($table-of-contents-document-height / 2)
+            margin-left: calc(-1 * var(--table-of-contents-document-height) / 2  );
+            width: calc(var(--table-of-contents-document-height) / 2)
         }
         .outline {
             z-index: 2;
             height: 100%;
-            font-size: $h5-font-size;
+            font-size: var(--table-of-contents-font-size);
             border-radius: 10px;
-            padding: 5px;
+            padding: var(--table-of-contents-outline-padding);
         }
     }
 
     &.toc-model-current {
-        height: $table-of-contents-model-current-height;
-        margin-left: calc(-1 * $table-of-contents-model-current-height / 2);
-        margin-top: calc(-1 * $table-of-contents-model-current-height / 2);
+        height: var(--table-of-contents-model-current-height);
+        margin-left: calc(-1 * var(--table-of-contents-model-current-height) / 2);
+        margin-top: calc(-1 * var(--table-of-contents-model-current-height) / 2);
         .model-comments-counter {
             position: absolute;
-            top: calc(-1 * calc($table-of-contents-model-current-height / 2));
-            left: calc(calc(-1 * $comment-button-width-small) - 2px);
-            width: $comment-button-width-small;
-            height: $comment-button-height-small;
+            top: calc(-1 * calc(var(--table-of-contents-model-current-height) / 2));
+            left: calc(calc(-1 * var(--comment-button-width-small)) - 2px);
+            width: var(--comment-button-width-small);
+            height: var(--comment-button-height-small);
         }
         .circle {
-            width: $table-of-contents-model-current-height;
+            width: var(--table-of-contents-model-current-height);
             height: 100%;
         }
         .connector {
-            margin-left: calc(-1 * $table-of-contents-model-current-height / 2  );
-            width: calc($table-of-contents-document-height / 2)
+            margin-left: calc(-1 * var(--table-of-contents-model-current-height) / 2  );
+            width: calc(var(--table-of-contents-document-height) / 2)
         }
         .outline {
-            color: $rescape-love;
-            height: $table-of-contents-model-current-height;
-            font-size: $h6-font-size;
+            color: var(--rescape-love);
+            height: var(--table-of-contents-model-current-height);
+            font-size: calc(2 * var(--table-of-contents-font-size) / 3);
+            font-size: var(--h6-font-size);
             border-radius: 5px;
-            padding: 4px;
+            padding: calc(var(--table-of-contents-outline-padding) * .8);
         }
     }
 
     &.toc-model {
-        height: $table-of-contents-model-height;
-        margin-left: calc(-1 * $table-of-contents-model-height / 2);
-        margin-top: calc(-1 * $table-of-contents-model-height / 2);
-        font-size: $h6-font-size;
+        height: var(--table-of-contents-model-height);
+        margin-left: calc(-1 * var(--table-of-contents-model-height) / 2);
+        margin-top: calc(-1 * var(--table-of-contents-model-height) / 2);
+        font-size: calc(2 * var(--table-of-contents-font-size) / 3);
         &:hover {
-            font-size: $h5-font-size;
+            font-size: var(--table-of-contents-font-size);
             cursor: pointer;
             transition: width 200ms ease, height 200ms ease, margin-left 200ms ease, margin-top 200ms ease;
             right: -200px;
-            height: calc($table-of-contents-model-height + 10px);
-            margin-left: calc(-1 * ($table-of-contents-model-height + 10px) / 2);
-            margin-top: calc(-1 * ($table-of-contents-model-height + 10px) / 2);
+            height: calc(var(--table-of-contents-model-height) + 10px);
+            margin-left: calc(-1 * (var(--table-of-contents-model-height) + 10px) / 2);
+            margin-top: calc(-1 * (var(--table-of-contents-model-height) + 10px) / 2);
         }
 
         .circle {
             height: 100%;
         }
         .connector {
-            margin-left: calc(-1 * $table-of-contents-model-height / 2  );
-            width: calc($table-of-contents-document-height / 2)
+            margin-left: calc(-1 * var(--table-of-contents-model-height) / 2  );
+            width: calc(var(--table-of-contents-document-height) / 2)
         }
         .outline {
             height: 100%;
             border-radius: 5px;
-            padding: 2px;
+            padding: calc(var(--table-of-contents-outline-padding) * .4);
         }
     }
 
@@ -211,14 +212,14 @@
     &.hidden-model-count {
         /*** Push the text away from the line **/
         height: 10px;
-        margin-left: -45px;
-        font-size: $h6-font-size;
+        margin-left: var(--hidden-model-count-margin-left);
+        font-size: calc(2 * var(--table-of-contents-font-size) / 3);
         .outline {
+             font-size: var(--table-of-contents-font-size);
              height: 10px;
-             font-size: $h6-font-size;
              margin-left: 2px;
              border-radius: 5px;
-             padding: 2px;
+             padding: calc(var(--table-of-contents-outline-padding) * .4);
         }
     }
 }
@@ -258,18 +259,18 @@
     top: 0px;
     width: 100%;
     height: 100%;
-    color: $rescape-love;
+    color: var(--rescape-love);
     transition: right 300ms ease, width 300ms ease, height 300ms ease;
     &.comment-counter-document {
-        font-size: $comment-count-font-size;
+        font-size: var(--comment-count-font-size);
         &:hover {
-            font-size: calc($comment-count-font-size * 1.1);
+            font-size: calc(var(--comment-count-font-size) * 1.1);
         }
     }
     &.comment-counter-model {
-        font-size: $comment-count-font-size-small;
+        font-size: var(--comment-count-font-size-small);
         &:hover {
-            font-size: calc($comment-count-font-size-small * 1.1);
+            font-size: calc(var(--comment-count-font-size-small) * 1.1);
         }
     }
     &:hover {
@@ -292,7 +293,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 32%;
+    top: var(--comment-count-top);
     left: 10%;
     text-align: left;
     line-height: 10px;

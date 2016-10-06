@@ -3,16 +3,16 @@
     It is also used for the
 */
 iframe {
-    width: $model-3d-width;
+    width: var(--model-3d-width);
     height: 100%;
 }
 
 .model-3ds {
     position: relative;
-    width: $model-3d-width;
-    top: $model-3d-top;
-    padding-bottom: $model-3d-padding-bottom;
-    background: $black;
+    width: var(--model-3d-width);
+    top: var(--model-3d-top);
+    padding-bottom: var(--model-3d-padding-bottom);
+    background: var(--black);
 }
 
 .model-3d {
@@ -55,7 +55,7 @@ iframe {
     }
 }
 .model-3d-iframe {
-    width: calc(100% - $model-3d-document-overlap - 10px);
+    width: calc(100% - var(--model-3d-document-overlap) - 10px);
 }
 .model-3d-video {
 
@@ -68,8 +68,8 @@ iframe {
     bottom: 0;
     left:0;
     right: 0;
-    width: $model-3d-width;
-    height: $showcase-3d-height;
+    width: var(--model-3d-width);
+    height: var(--showcase-3d-height);
 
     &.left {
         background: linear-gradient(to left, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
@@ -80,7 +80,7 @@ iframe {
      fades away where ever the document overlaps */
     &.right {
          background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
-         width: $model-3d-document-overlap;
+         width: var(--model-3d-document-overlap);
          left: auto;
     }
     &.top {
@@ -115,32 +115,29 @@ video {
 }
 
 .toggle-3d-is-off {
-    z-index: 5;
-    width: $model-3d-toggle-width;
-    height: $model-3d-toggle-height;
     position: absolute;
-    left: 0px;
+    z-index: 5;
     margin: 5px;
-
+    height: var(--model-3d-toggle-height);
 }
+
 .toggle-3d-is-off-icon {
-    width: $model-3d-toggle-width;
-    height: $model-3d-toggle-height;
+    height: var(--model-3d-toggle-height);
     &:hover {
         cursor: pointer;
-        width: calc($model-3d-toggle-width * 1.5);
-        height: calc($model-3d-toggle-height * 1.5);
+        width: calc(var(--model-3d-toggle-width) * 1.5);
+        height: calc(var(--model-3d-toggle-height) * 1.5);
         transition: width 300ms ease, height 300ms ease;
     }
 }
 
 .toggle-3d-is-on {
+    position: absolute;
     z-index: 5;
+    margin: 5px;
     width: 180px;
     height: 80px;
-    position: absolute;
     left: 0px;
-    margin: 5px;
     display: flex;
     justify-content: space-between;
 }
@@ -163,27 +160,47 @@ video {
     background-color: rgba(255, 255, 255, .5);
     border-style: solid;
     border-width: 2px;
-    border-color: $rescape-love;
+    border-color: var(--rescape-love);
     border-radius: 5px;
     >p {
-        color: $rescape-love;
-        font-size: $h6-font-size;
+        color: var(--rescape-love);
+        font-size: var(--h6-font-size);
     }
+}
+
+.model-credits-positioner {
+    position: absolute;
+    top: calc(var(--model-3d-toggle-height) * .875);
+    width: var(--model-3d-toggle-width);
+    z-index: 5;
+    left: 5px;
+    margin-left: 5px;
+}
+
+.model-credits {
+    z-index: 10;
+    font-size: var(--model-credits-font-size);
+    position: relative;
+    padding-bottom: 1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 3px;
+    background: linear-gradient(to right, rgba(255,255,255,.2), var(--white) 50%, rgba(255, 255, 255, .5) 80%);
 }
 
 .model-3d-title {
     z-index: 7;
     position: fixed;
-    bottom: calc($showcase-footer-overlap - 0px);
-    height: 20px;
-    width: calc($document-left - 100px);
+    bottom: calc(var(--showcase-footer-overlap) - 0px);
+    height: var(--model-3d-title-height);
+    width: calc(var(--document-left) - 100px);
     left: 10px;
     right: -100px;
-    color: $rescape-love;
-    font-size: $h4-font-size;
+    color: var(--rescape-love);
+    font-size: var(--model-3d-title-font-size);
     padding-left: 10px;
     padding-right: 5px;
     padding-top: 0px;
     padding-bottom: 2px;
-    background: linear-gradient(to right, rgba(255,255,255,.2), $white 2%, rgba(77, 78, 83, 1) 99%);
+    background: linear-gradient(to right, rgba(255,255,255,.2), var(--white) 2%, rgba(77, 78, 83, 1) 99%);
 }

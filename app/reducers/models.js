@@ -68,7 +68,7 @@ import {normalizeKeyToFilename} from '../utils/fileHelpers'
  *            }
  *         }
  *         url: the url of the model, formed by combining the key with a base url
- *         url2d: the 2d url of the model, formed by combining the key with a base url
+ *         modelCreditUrl: A link to the 3d Warehouse page of the model
  *      }
  *      ...
  *   }
@@ -107,7 +107,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             return state.mergeDeep({entries: { [action.key] : {
                 status: Statuses.LOADING,
                 url: action.url,
-                url2d: action.url2d,
+                modelCreditUrl: action.modelCreditUrl,
                 // Full url combines the baseUrl with the key
                 // TODO this belongs in some sort of initialize model
                 videoUrl: state.get('baseVideoUrl')(file),
@@ -136,16 +136,14 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                 // If there is no anchor don't change state
                 if (!modelKey || modelKey == 'undefined')
                     return state;
-                // Store the current, previous or next model key. Only store previous/next if they are different
-                // than the current model.
-                // Optionally store the scene key of the current model (we don't care what the scene is of
-                // the previous and next models)
+                // Store the current modelKey and current model scene key
                 if (anchorKey == 'current') {
                     return state
                         .set(anchorKey, modelKey)
                         .setIn(['entries', modelKey, 'scenes', anchorKey], sceneKey || null)
                 }
-                // previous, next, previousForDistinctModel, nextForDistinctModel
+                // Only store the modelKey, not the scene for
+                // previous, next, previousForDistinctModel, and nextForDistinctModel
                 else if (modelKey != state['current']) {
                     return state.set(anchorKey, modelKey)
                 }

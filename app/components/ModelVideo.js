@@ -75,7 +75,7 @@ class ModelVideo extends Component {
         console.debug(this.props.videoUrl)
         console.debug(this.state.start, this.refs.video.videoEl.currentTime, this.state.end)
         */
-        if (this.refs.video.videoEl.currentTime  >= this.state.end) {
+        if (this.state.end != 0 && this.refs.video.videoEl.currentTime  >= this.state.end) {
             this.pause();
         }
     }

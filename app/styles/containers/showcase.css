@@ -1,19 +1,19 @@
 .showcase {
     /* allows z-indexing to work with iframes */
-    left: $showcase-left;
+    left: var(--showcase-left);
     position: fixed;
-    top: $showcase-top;
-    height: $showcase-height;
-    width: $showcase-width;
+    top: var(--showcase-top);
+    height: var(--showcase-height);
+    width: var(--showcase-width);
     z-index: 2;
 }
 
 .share-icons {
     display: flex;
     position: absolute;
-    top: $header-height;
+    top: var(--header-height);
     height: 32px;
-    right: $model-3d-document-overlap;
+    right: var(--model-3d-document-overlap);
     padding:5px;
     margin-right: 10px;
     &:hover {

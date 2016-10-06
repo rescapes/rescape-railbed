@@ -1,147 +1,315 @@
+:root {
 
-$header-top: 0px;
-$header-height: 100px;
-$header-bottom: calc( $header-top + $header-height );
+    --white: floralwhite;
+    --blue: color(deepskyblue lightness(30%));
+    --red: tomato;
+    --yellow: wheat;
+    --black: #4D4E53; /* charcoal gray */
+    --rescape-love: #6E2236;
 
-/**
+    --fadeblue: color(deepskyblue saturation(30%));
+    --lightblue: color(deepskyblue lightness(80%));
+    --fadesand: color(wheat saturation(30%));
+    --sand: color(wheat lightness(80%));
+    --gray: color(var(--black) lightness(80%));
+    --faded-gray: color(var(--white) a(90%));
+    --faded-gray-background: color(var(--black) a(70%));
+    --faded-black-background: color(var(--black) a(90%));
+    --half-white: rgb(148,148,152);
+
+    --font-stack: Railway, Arial, Helvetica, sans-serif;
+    --page-background: var(--black);
+    --page-padding: 2em;
+
+    --h1-font-size: 3em;
+    --h2-font-size: calc( var(--h1-font-size) * 80 / 100 );
+    --h3-font-size: calc( var(--h1-font-size) * 60 / 100 );
+    --h3-and-a-half-font-size: calc( var(--h1-font-size) * 58 / 100 );
+    --h4-font-size: calc( var(--h1-font-size) * 40 / 100 );
+    --h4-and-a-half-font-size: calc( var(--h1-font-size) * 35 / 100 );
+    --h5-font-size: calc( var(--h1-font-size) * 30 / 100 );
+    --h6-font-size: calc( var(--h1-font-size) * 20 / 100 );
+    --h7-font-size: calc( var(--h1-font-size) * 10 / 100 );
+    --normal-font-size: calc( var(--h1-font-size) * 33.3 / 100 );
+
+    --h1-line-height: 50px;
+    --h2-line-height: calc( var(--h1-line-height) * 80 / 100 );
+    --h3-line-height: calc( var(--h1-line-height) * 60 / 100 );
+    --h4-line-height: calc( var(--h1-line-height) * 40 / 100 );
+    --h5-line-height: calc( var(--h1-line-height) * 30 / 100 );
+    --h6-line-height: calc( var(--h1-line-height) * 20 / 100 );
+    --normal-line-height: calc( var(--h1-line-height) * 33.3 / 100 );
+
+    --heading-color: var(--black);
+    --normal-font-color: var(--black);
+    --link-color: color(var(--rescape-love) lightness(50%));
+    --link-color-hover: color(var(--rescape-love) lightness(60%));
+    --transparent-black: color(var(--black) alpha(60%));
+    --standard-left-margin: 10px;
+
+    /**
+        Header bar settings
+    **/
+    --header-height: 100px;
+    --header-top: 0px;
+    --header-bottom: calc( var(--header-top) + var(--header-height) );
+    --rescape-icon-height: var(--header-height);
+    --header-link-font-size: var(--h4-font-size);
+
+    /**
+        Footer bar settings
+    **/
+    --footer-height: 75px;
+    --showcase-footer-overlap: 50px;
+
+    /*
+        The showcase overlaps with the header completely and extends half way into the footer
+    */
+    --showcase-top: 0px;
+    /*
+        Make the showcase extend half way into the footer
+    */
+    --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
+    --showcase-left: 10px;
+    --showcase-width: 66%;
+
+    /*
+        Make the model ratio should be 2 height to 3 width since that is what the Sketchup videos are.
+        The Sketchup models don't care what the ratio is but look best at that ration
+        since the scenes are created based on that. I can't figure out a good way to automate
+        the 2 / 3 ration at this point, so it's a matter of adjusting the footer or header height
+        along with the showcase-width percent
+    */
+    --model-3d-top: calc(var(--header-height));
+    /**
+        This forces the 16 * 9 aspect ratio that the videos need
+    **/
+    --model-3d-padding-bottom: 56.26%;
+    --model-3d-width: 100%;
+    /**
+        Toggle button to switch from video to 3d Model
+    **/
+    --model-3d-toggle-height: 70px;
+
+    --model-credits-font-size: var(--h6-font-size);
+    /*
+        The model overlaps the document
+    */
+    --model-3d-document-overlap: 10px;
+
+    --media-height: 100px;
+    --gallery-thumbnail-width: 100px;
+    --gallery-thumbnail-height: 75px;
+    /*
+        The gallery containing the lightbox doesn't quite extend to the document
+    */
+    --gallery-width: calc( var(--model-3d-width) - var(--model-3d-document-overlap) - 5px);
+    /*
+        The lightbox top overlaps the header. We want the lightbox header
+        to be in the header and the actual lightbox image to match the model-3d-top
+    */
+    --lightbox-top: calc(var(--header-height) * .6);
+    /*
+        The lightbox footer overlaps the footer. We want the lightbox footer
+        to be in the footer and the actual lightbox image to match the footer top
+    */
+    --lightbox-height: calc( 100% - calc(var(--lightbox-top) + var(--footer-height)) + var(--showcase-footer-overlap) * .7);
+    --lightbox-left: var(--showcase-left);
+    --lightbox-button-size: 40px;
+    --lightbox-caption-font-size: var(--h5-font-size);
+    --image-credit-font-size: var(--h5-font-size);
+
+    /*
+        The model and scene title in the footer
+    */
+    --model-3d-title-font-size: var(--h4-font-size);
+    --model-3d-title-height: 20px;
+
+    --document-top: calc( var(--header-bottom) );
+    --document-height: calc( 100% - var(--footer-height) );
+    /*
+        The left side of the document bleeds over the 3d model
+        The 3d model's right gradient fades the 3d model away so we can see the document
+    */
+    --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
+    --document-width: calc( 100% );
+    --document-margin-left: 10px;
+    /* Discounts the margin for use positioning the page up/down arrows */
+    --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
+    /*
+        Overlay documents (About, Contact, etc) are wider because they lack showcase stuff
+    */
+    --overlay-document-left: calc(var(--document-left) - 200px);
+    /*
+        We inject this title and header into the Google Doc so we control the style
+    */
+    --document-title-font-size: var(--h3-font-size);
+    --document-header-font-size: var(--h5-font-size);
+    /*
+        We assume Google Docs names it's classes c1 - c9 and adjust the font-size
+        only for small devices
+    */
+    --document-font-size: 12pt;
+    --document-line-height: 1.15;
+
+    /**
+        The width and height of the table of contents and various nodes
+    **/
+    --table-of-contents-document-height: 30px;
+    --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
+    --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
+    /* This width is used to fit the wideset table-of-contents element but be minimum for hovering off the toc */
+    --table-of-contents-width: 240px;
+    --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
+
+    --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
+    --table-of-contents-bottom-offset: 15px;
+    --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
+    --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
+    --table-of-contents-font-size: var(--h5-font-size);
+    --table-of-contents-outline-padding: 5px;
+    --hidden-model-count-margin-left: -45px;
+
+    /**
     The width and height of the comment button expander that shows for each model
-**/
-$comment-button-width: 70px;
-$comment-button-height: calc($comment-button-width * .5);
-$comment-count-font-size: .55vw;
-$comment-button-width-small: 60px;
-$comment-button-height-small: calc($comment-button-width-small * .5);
-$comment-count-font-size-small: .5vw;
+    **/
+    --comment-button-width: 70px;
+    --comment-button-width-small: calc(var(--comment-button-width) * .86);
+    --comment-button-height: calc(var(--comment-button-width) * .5);
+    --comment-button-height-small: calc(var(--comment-button-width-small) * .5);
+    --comment-count-font-size: .55vw;
+    --comment-count-font-size-small: calc(var(--comment-count-font-size) * .9);
+    --comment-count-top: 32%;
 
+    /*** The following is all specific to the Gallery and Lightbox ***/
 
+    --gutter:						20px;
+    --table-cell-gutter:			10px;
+    --left-col-width:				180px;
+    --heading-color:				black;
 
-$footer-height: 75px;
-$showcase-footer-overlap: 50px;
+    --kbd-bg-color:					#fafafa;
+    --kbd-border-color:				#ccc;
 
-/*
-    The showcase overlaps with the header completely and extends half way into the footer
-*/
-$showcase-top: 0px;
-/*
-    Make the showcase extend half way into the footer
-*/
-$showcase-height: calc(100% - $footer-height + $showcase-footer-overlap);
-$showcase-left: 10px;
-$showcase-width: 66%;
+    --text-color:					#333;
 
-/*
-    Make the model ratio should be 2 height to 3 width since that is what the Sketchup videos are.
-    The Sketchup models don't care what the ratio is but look best at that ration
-    since the scenes are created based on that. I can't figure out a good way to automate
-    the 2 / 3 ration at this point, so it's a matter of adjusting the footer or header height
-    along with the showcase-width percent
-*/
-$model-3d-top: calc($header-height);
-/**
-    This forces the 16 * 9 aspect ratio that the videos need
-**/
-$model-3d-padding-bottom: 56.26%;
-$model-3d-width: 100%;
-$model-3d-toggle-width: 70px;
-$model-3d-toggle-height: calc($model-3d-toggle-width / 1.5);
-/*
-    The model overlaps the document
-*/
-$model-3d-document-overlap: 10px;
+    --nav-gutter:					30px;
+    --nav-item-padding:				5px;
+    --nav-padding:					-var(nav-gutter) - -var(--nav-item-padding);
+    --page-nav-padding:				0 0 0 0;
 
-$media-height: 100px;
-$gallery-thumbnail-width: 100px;
-$gallery-thumbnail-height: 75px;
-/*
-    The gallery containing the lightbox doesn't quite extend to the document
-*/
-$gallery-width: calc( $model-3d-width - $model-3d-document-overlap - 5px);
-/*
-    The lightbox top overlaps the header. We want the lightbox header
-    to be in the header and the actual lightbox image to match the model-3d-top
-*/
-$lightbox-top: calc($header-height - 40px);
-/*
-    The lightbox footer overlaps the footer. We want the lightbox footer
-    to be in the footer and the actual lightbox image to match the footer top
-*/
-$lightbox-height: calc( 100% - calc($lightbox-top + $footer-height) + $showcase-footer-overlap * .7);
-$lightbox-left: $showcase-left;
+    --factor: 1;
+}
 
-$document-top: calc( $header-bottom );
-$document-height: calc( 100% - $footer-height );
-/*
-    The left side of the document bleeds over the 3d model
-    The 3d model's right gradient fades the 3d model away so we can see the document
-*/
-$document-left: calc( $showcase-width - $model-3d-document-overlap);
-$document-width: calc( 100% );
-$document-margin-left: 10px;
-/* Discounts the margin for use positioning the page up/down arrows */
-$document-absolute-left: calc( $document-left - $document-margin-left);
-/*
-    Overlay documents (About, Contact, etc) are wider because they lack showcase stuff
-*/
-$overlay-document-left: calc($document-left - 200px);
+@custom-media --lvp (min-width: 1280px);
+@custom-media --mvp (min-width: 769px) and (max-width: 1279px);
+@custom-media --svp (max-width: 768px);
 
-$table-of-contents-document-height: 30px;
+@media (--lvp) {
+    :root {
+        --factor: 1;
+    }
+}
+@media (--mvp) {
+    :root {
+        --factor: .75;
+        --header-height: calc(1.5 * var(--factor) * var(--header-height));
+        --header-bottom: calc( var(--header-top) + var(--header-height) );
+        --rescape-icon-height: var(--header-height);
+        --footer-height: calc(1.5 * var(--factor) * var(--footer-height));
+        --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
+        --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
+        --showcase-width: calc(1.25 * var(--factor) * var(--showcase-width));
+        --model-3d-top: calc(var(--header-height));
+        --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
+        --media-height: calc(var(--factor) * var(--media-height));
+        --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
+        --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));
+        --lightbox-top: calc(var(--factor) * var(--lightbox-top));
+        --image-credit-font-size: calc(1.5 * var(--factor) * var(--image-credit-font-size));
+        --lightbox-caption-font-size: calc(1.5 * var(--factor) * var(--lightbox-caption-font-size));
+        --document-top: calc( var(--header-bottom) );
+        --document-height: calc( 100% - var(--footer-height) );
+        --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
+        --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
+        --table-of-contents-document-height: calc(var(--factor) * var(--table-of-contents-document-height));
+        --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
+        --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
+        --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
+        --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
+        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
+        --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
+        --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
+        --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
+        --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
+        --comment-button-width: calc(var(--factor) * var(--comment-button-width));
+        --comment-button-width-small: calc(var(--comment-button-width) * .86);
+        --comment-button-height: calc(var(--comment-button-width) * .5);
+        --comment-button-height-small: calc(var(--comment-button-width-small) * .5);
+        --comment-count-font-size: calc(2.25 * var(--factor) * var(--comment-count-font-size));
+        --comment-count-font-size-small: calc(var(--comment-count-font-size) * .9);
+        --comment-count-top: calc(var(--factor) * var(--comment-count-top));
+        --model-3d-title-font-size: calc(var(--factor) * var(--model-3d-title-font-size));
+        --model-3d-title-height: calc(var(--factor) * var(--model-3d-title-height));
+        --header-link-font-size: calc(var(--factor) * var(--header-link-font-size));
+        --hidden-model-count-margin-left: calc(var(--factor) * var(--hidden-model-count-margin-left));
+        --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
+        --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
+        --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
+        --document-header-font-size: calc(var(--factor) * var(--document-header-font-size));
+        --document-font-size: calc(var(--factor) * var(--document-font-size));
+        --document-line-height: calc(2.2 * var(--factor) * var(--document-line-height));
+    }
+}
+@media (--svp) {
+    :root {
+        --factor: .5;
+        --header-height: calc(var(--factor) * var(--header-height));
+        --header-bottom: calc( var(--header-top) + var(--header-height) );
+        --rescape-icon-height: var(--header-height);
+        --footer-height: calc(var(--factor) * var(--footer-height));
+        --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
+        --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
+        --showcase-width: calc(1.75 * var(--factor) * var(--showcase-width));
+        --model-3d-top: calc(var(--header-height));
+        --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
+        --media-height: calc(var(--factor) * var(--media-height));
+        --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
+        --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));
+        --lightbox-top: calc(var(--factor) * var(--lightbox-top));
+        --image-credit-font-size: calc(1.5 * var(--factor) * var(--image-credit-font-size));
+        --lightbox-caption-font-size: calc(1.5 * var(--factor) * var(--lightbox-caption-font-size));
+        --document-top: calc( var(--header-bottom) );
+        --document-height: calc( 100% - var(--footer-height) );
+        --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
+        --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
+        --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
+        --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
+        --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
+        --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
+        --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
+        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
+        --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
+        --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
+        --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
+        --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
+        --comment-button-width: calc(var(--factor) * var(--comment-button-width));
+        --comment-button-width-small: calc(var(--comment-button-width) * .86);
+        --comment-button-height: calc(var(--comment-button-width) * .5);
+        --comment-button-height-small: calc(var(--comment-button-width-small) * .5);
+        --comment-count-font-size: calc(2.25 * var(--factor) * var(--comment-count-font-size));
+        --comment-count-font-size-small: calc(var(--comment-count-font-size) * .9);
+        --comment-count-top: calc(var(--factor) * var(--comment-count-top));
+        --model-3d-title-font-size: calc(var(--factor) * var(--model-3d-title-font-size));
+        --model-3d-title-height: calc(var(--factor) * var(--model-3d-title-height));
+        --header-link-font-size: calc(var(--factor) * var(--header-link-font-size));
+        --hidden-model-count-margin-left: calc(var(--factor) * var(--hidden-model-count-margin-left));
+        --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
+        --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
+        --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
+        --document-header-font-size: calc(var(--factor) * var(--document-header-font-size));
+        --document-font-size: calc(var(--factor) * var(--document-font-size));
+        --document-line-height: calc(2.2 * var(--factor) * var(--document-line-height));
+    }
+}
 
-$table-of-contents-model-height: 15px;
-/**
-    The width and height of the table of contents and various nodes
-**/
-$table-of-contents-top-offset: 25px;
-/* This width is used to fit the wideset table-of-contents element but be minimum for hovering off the toc */
-$table-of-contents-width: 240px;
-$table-of-contents-model-current-height: 20px;
-
-$table-of-contents-top-height: calc($header-height - $table-of-contents-top-offset);
-$table-of-contents-bottom-offset: 15px;
-$table-of-contents-bottom-height: calc($footer-height - $table-of-contents-bottom-offset);
-$table-of-contents-height-expanded: calc($showcase-height - $showcase-footer-overlap);
-
-$white: floralwhite;
-$blue: color(deepskyblue lightness(30%));
-$red: tomato;
-$yellow: wheat;
-$black: #4D4E53; /* charcoal gray */
-$rescape-love: #6E2236;
-
-$fadeblue: color(deepskyblue saturation(30%));
-$lightblue: color(deepskyblue lightness(80%));
-$fadesand: color(wheat saturation(30%));
-$sand: color(wheat lightness(80%));
-$gray: color($black lightness(80%));
-$faded-gray: color($white a(90%));
-$faded-gray-background: color($black a(70%));
-$faded-black-background: color($black a(90%));
-$half-white: rgb(148,148,152);
-
-$font-stack: Railway, Arial, Helvetica, sans-serif;
-$page-background: $black;
-$page-padding: 2em;
-
-$h1-font-size: 3em;
-$h2-font-size: calc( $h1-font-size * 80 / 100 );
-$h3-font-size: calc( $h1-font-size * 60 / 100 );
-$h3-and-a-half-font-size: calc( $h1-font-size * 58 / 100 );
-$h4-font-size: calc( $h1-font-size * 40 / 100 );
-$h4-and-a-half-font-size: calc( $h1-font-size * 35 / 100 );
-$h5-font-size: calc( $h1-font-size * 30 / 100 );
-$h6-font-size: calc( $h1-font-size * 20 / 100 );
-$h7-font-size: calc( $h1-font-size * 10 / 100 );
-$normal-font-size: calc( $h1-font-size * 33.3 / 100 );
-
-$h1-line-height: 50px;
-$h2-line-height: calc( $h1-line-height * 80 / 100 );
-$h3-line-height: calc( $h1-line-height * 60 / 100 );
-$h4-line-height: calc( $h1-line-height * 40 / 100 );
-$h5-line-height: calc( $h1-line-height * 30 / 100 );
-$h6-line-height: calc( $h1-line-height * 20 / 100 );
-$normal-line-height: calc( $h1-line-height * 33.3 / 100 );
-
-$heading-color: $black;
-$normal-font-color: $black;
-$link-color: color($rescape-love lightness(50%));
-$link-color-hover: color($rescape-love lightness(60%));
-$transparent-black: color($black alpha(60%));
