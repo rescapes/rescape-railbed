@@ -1020,7 +1020,8 @@ export default Map({
          * @param id: The unique id of the Sketchup model
          * @param etp: 'im' for still images. Blank for 3d
          */
-        baseUrl: (id, etp) => (`https://my.sketchup.com/viewer/3dw?WarehouseModelId=${id}`),
+        baseUrl: id => (`https://my.sketchup.com/viewer/3dw?WarehouseModelId=${id}`),
+        baseModelCreditUrl: id => (`https://3dwarehouse.sketchup.com/model.html?id=${id}`),
         baseVideoUrl: modelKey => `/videos/${modelKey}.webm`,
 
         entries: amtrakStandardModels

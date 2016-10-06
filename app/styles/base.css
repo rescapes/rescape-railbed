@@ -1,8 +1,8 @@
 body {
-    color: $normal-font-color;
-    background: $page-background;
-    font-family: $font-stack;
-    padding: $page-padding;
+    color: var(--normal-font-color);
+    background: var(--page-background);
+    font-family: var(--font-stack);
+    padding: var(--page-padding);
     font-size: 100%;
 }
 

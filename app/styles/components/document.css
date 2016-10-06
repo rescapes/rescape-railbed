@@ -12,9 +12,9 @@
 */
 .document {
     overflow-y: scroll;
-    top: $document-top;
-    bottom: $footer-height;
-    left: $document-left;
+    top: var(--document-top);
+    bottom: var(--footer-height);
+    left: var(--document-left);
     z-index: 2;
     position: absolute;
 
@@ -23,7 +23,7 @@
     }
 
     &.overlay {
-        left: $overlay-document-left;
+        left: var(--overlay-document-left);
         display: block;
     }
 }
@@ -34,9 +34,9 @@
 .showcase-screen {
     position: fixed;
     z-index: 2;
-    background-color: $faded-black-background;
-    top: $document-top;
-    height: $showcase-height;
+    background-color: var(--faded-black-background);
+    top: var(--document-top);
+    height: var(--showcase-height);
     left: 0;
     right: 0;
 }
@@ -44,11 +44,11 @@
 .overlay-document-close-icon {
     position: fixed;
     z-index: 10;
-    top: calc($document-top - 30px);
+    top: calc(var(--document-top) - 30px);
     height: 24px;
     width: 24px;
     right: 0;
-    margin-right: $document-margin-left;
+    margin-right: var(--document-margin-left);
     padding-right: 10px;
 
     &:hover {
@@ -63,19 +63,19 @@
     Author credit, date, etc.
 ***/
 .document-header {
-    font-size: $h5-font-size;
+    font-size: var(--document-header-font-size);
 }
 
 .document-gradient {
-    top: $document-top;
+    top: var(--document-top);
     position: fixed;
-    margin-right: $document-margin-left;
+    margin-right: var(--document-margin-left);
     z-index: 2;
     bottom: 0;
     left:0;
     right: 0;
-    width: $document-width;
-    height: $document-height;
+    width: var(--document-width);
+    height: var(--document-height);
 
 /* This gradient matches the overlap of the 3d model and document so that the 3d model
 fades away where ever the document overlaps */
@@ -102,13 +102,25 @@ fades away where ever the document overlaps */
 }
 
 #header {
-    color: $rescape-love;
-    font-size: $h3-font-size;
+    color: var(--rescape-love);
+    font-size: var(--document-title-font-size);
+}
+/**
+    This matches the classes google uses for the document text
+    we only want to override the font size for small devices
+**/
+p,li {
+
+    &.c0,&.c1,&.c2,&.c3,&.c4,&.c5,&.c6,&.c7,&.c8,&.c9 {
+        font-size: var(--document-font-size);
+        line-height: var(--document-line-height);
+    }
+
 }
 
 /* This class is injected with divs to separate the documents by the 3d Model that goes with it */
 .model-section {
-    background: linear-gradient(to right, rgba(255, 255, 255, .7), $white);
+    background: linear-gradient(to right, rgba(255, 255, 255, .7), var(--white));
     border-radius: 5px;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -119,7 +131,7 @@ fades away where ever the document overlaps */
 }
 
 .author {
-    color: $rescape-love;
+    color: var(--rescape-love);
 }
 
 .bookmark-icon {

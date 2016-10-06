@@ -4,18 +4,17 @@
     z-index: 6;
     left: 0px;
     right: 0px;
-    top: $header-top;
-    height: $header-height;
+    top: var(--header-top);
+    height: var(--header-height);
     margin-left: 10px;
     margin-right: 10px;
-    background: linear-gradient(to right, $white, rgba(77, 78, 83, .8) 30%, rgba(77, 78, 83, 1) 50%);
+    background: linear-gradient(to right, var(--white), rgba(77, 78, 83, .8) 30%, rgba(77, 78, 83, 1) 50%);
 };
 
 .header-icon {
     position: absolute;
-    height: 100px;
-    left: 10px;
-    width: 100px;
+    height: var(--rescape-icon-height);
+    margin-left: var(--standard-left-margin)
 }
 
 .header-gradient {
@@ -60,19 +59,20 @@ fades away where ever the document overlaps */
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 20px;
-    padding-right: $document-margin-left;
+    padding-right: var(--document-margin-left);
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: flex-end;
     align-content: center;
-    background: linear-gradient(to right, rgba(77, 78, 83, .8), rgba(255,255,255, .8) 20%, $white 50%, rgba(255,255,255, .8) 80%, rgba(77, 78, 83, .8) 100%);
+    background: linear-gradient(to right, rgba(77, 78, 83, .8), rgba(255,255,255, .8) 20%, var(--white) 50%, rgba(255,255,255, .8) 80%, rgba(77, 78, 83, .8) 100%);
     &:hover {
         cursor: pointer;
     }
 }
 .header-link {
-    color: $rescape-love;
+    color: var(--rescape-love);
+    font-size: var(--header-link-font-size);
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 10px;

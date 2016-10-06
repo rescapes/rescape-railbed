@@ -2,7 +2,7 @@
     position: fixed;
     z-index: 6;
     bottom: 0px;
-    height: $footer-height;
+    height: var(--footer-height);
     left: 0px;
     right: 0px;
     margin-left: 10px;

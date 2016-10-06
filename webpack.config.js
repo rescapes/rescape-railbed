@@ -22,6 +22,8 @@ const PORT = process.env.PORT || 8080;
 const TEMPLATE = __dirname + '/app/templates/index_default.html'
 const FONTS = __dirname + `/app/fonts/[name].[ext]`;
 const postcssImport = require('postcss-easy-import');
+const postcssCustomMedia = require('postcss-custom-media');
+const postcssCssVariables = require('postcss-css-variables');
 
 var path = require('path');
 var mainPath = path.resolve(__dirname, 'app', 'index.js');
@@ -80,6 +82,8 @@ module.exports = {
             postcssImport({
                 addDependencyTo: webpack
             }),
+            postcssCustomMedia(),
+            postcssCssVariables(),
             precss,
             autoprefixer({ browsers: ['last 2 versions'] })
         ];

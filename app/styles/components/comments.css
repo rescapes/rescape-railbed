@@ -5,10 +5,10 @@
     z-index: 10;
     &.showing {
         margin-left: 10px;
-        top: calc($model-3d-top);
+        top: calc(var(--model-3d-top));
         left: 0px;
-        width: calc($showcase-width - $model-3d-document-overlap);
-        height: $document-height;
+        width: calc(var(--showcase-width) - var(--model-3d-document-overlap));
+        height: var(--document-height);
     }
 }
 
@@ -39,10 +39,10 @@
 .disqus-comment-thread-container {
     position: absolute;
     top: 0px;
-    bottom: calc($footer-height - $showcase-footer-overlap);
+    bottom: calc(var(--footer-height) - var(--showcase-footer-overlap));
     left: 0px;
     right: 0px;
-    background-color: color($black alpha(90%));
+    background-color: color(var(--black) alpha(90%));
 }
 
 .disqus-comment-thread-header {
@@ -53,7 +53,7 @@
     position: absolute;
     padding: 5px;
     top: 30px;
-    bottom: calc($footer-height - $showcase-footer-overlap);
+    bottom: calc(var(--footer-height) - var(--showcase-footer-overlap));
     left: 0px;
     right: 0px;
     overflow-y: scroll;
@@ -62,7 +62,7 @@
 
 .disqus-header-title {
     color: rgb(195, 60, 96);
-    font-size: $h3-and-a-half-font-size;
+    font-size: var(--h3-and-a-half-font-size);
     font-weight: 700;
     line-height: 1.25em;
 }

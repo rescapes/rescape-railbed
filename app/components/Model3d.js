@@ -86,8 +86,9 @@ class Model3d extends Component {
     }
 
     /***
-     * If the current, previous, or next model changes, fetch them if needed
-     * which just sets the url so the 3d model or video can load.
+     * If the current, previous, previousForDistinctModel, next, or nextForDistinctModel model changes,
+     * fetch them if needed, which just sets the url so the 3d model or video can load.
+     * Some of these keys will point to the same model, that's okay
      * This also closes the comments window if the current model changes by telling the current/previous/next models
      * to toggle off showing comments
      * @param nextProps
@@ -98,7 +99,7 @@ class Model3d extends Component {
         if (!models)
             return
 
-        ['current', 'previousForDistinctModel', 'nextForDistinctModel'].forEach(function(key) {
+        ['current', 'previous', 'next', 'previousForDistinctModel', 'nextForDistinctModel'].forEach(function(key) {
             if (!nextModels || (nextModels.get(key) != models.get(key))) {
                 const modelKeyToLoad = (nextModels || models).get(key)
                 if (modelKeyToLoad)
@@ -213,8 +214,9 @@ class Model3d extends Component {
         const modelLoadingOrReady = model && (model.get('status') & loadingOrReady)
         const modelTops = this.props.modelTops
 
-        // Maintain an iframe for each model. Only the iframe of the current model is ever visible.
-        // We don't want to set the url of the iframe until it is desired to load a certain model
+        // Maintain an iframe (Sketchup) or div (video )for each model.
+        // Only the iframe of the current model is ever visible.
+        // We don't want to set the url of the iframe or video until it is desired to load a certain model
         // (e.g. when it is the current model or about to become the current one)
         // Once the model is loaded, we never want to unload it by clearing its URL
         const iframes = (modelLoadingOrReady && modelEntries) ? modelEntries.map(function (iterModel, modelKey) {
@@ -228,7 +230,6 @@ class Model3d extends Component {
             })
             // Node the relevance if any
             const relevance = modelRelevance.findKey((value, key)=>value) || null
-
 
             // When the previous/next model anchor is closer than the current, we want to show the closer
             // model above/below the current model to create a scroll-controlled transition effect
@@ -268,7 +269,7 @@ class Model3d extends Component {
                 />
             }
             else {
-                // The videoUrl is that of the current model
+                // The videoUrl is that of the model if already loaded, current, or in the loading queue
                 const videoUrl = iterModel.get('videoUrl')
                 const sceneKey =  currentSceneKeyOfModel(iterModel)
                 // Get the time to play the video to transition from one scene to the next
@@ -303,9 +304,15 @@ class Model3d extends Component {
                         <p>Right-side button for scenes</p>
                     </span>
                 </div>
+            const modelCredits = <div className='model-credits-positioner'>
+                <span className='model-credits'>
+                    <a target="credits" href={iterModel.get('modelCreditUrl')}>Credits</a>
+                </span>
+            </div>
             // Return the iframe or video wrapped in a div. The div must have a unique key for React
             return <div key={modelKey} className={`${divClass} ${divStateClass}`} style={style}>
                 { toggle3d }
+                { modelCredits }
                 { model3dPresentation }
                 <div className='model-3d-gradient left'/>
                 <div className='model-3d-gradient right'/>
