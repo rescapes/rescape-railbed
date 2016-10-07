@@ -70,12 +70,13 @@ class ModelVideo extends Component {
     }
 
     onStateChange(event) {
+        var self = this
         if (event.data == YT.PlayerState.PLAYING) {
             console.log(this.state.player.getCurrentTime());
             setTimeout(function() {
-                this._onStateChange(event)
+                self._onStateChange(event)
             }, 200);
-            if (this.state.end != 0 && event.target.currentTime  >= this.state.end) {
+            if (this.state.end != 0 && event.target.getCurrentTime()  >= this.state.end) {
                 this.state.player.pauseVideo();
             }
         }
