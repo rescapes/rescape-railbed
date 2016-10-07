@@ -54,7 +54,7 @@
     --header-top: 0px;
     --header-bottom: calc( var(--header-top) + var(--header-height) );
     --rescape-icon-height: var(--header-height);
-    --header-link-font-size: var(--h4-font-size);
+    --header-link-font-size: var(--h5-font-size);
 
     /**
         Footer bar settings

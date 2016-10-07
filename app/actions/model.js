@@ -74,7 +74,8 @@ class ModelLoader extends ActionLoader {
             type: LOAD_MODEL,
             key,
             url,
-            modelCreditUrl: state.getIn(['models', 'baseModelCreditUrl'])(entry.get('id'))
+            modelCreditUrl: state.getIn(['models', 'baseModelCreditUrl'])(entry.get('id')),
+            videoId: entry.get('videoId')
         }
     }
 
