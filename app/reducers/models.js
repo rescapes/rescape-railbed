@@ -110,7 +110,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                 modelCreditUrl: action.modelCreditUrl,
                 // Full url combines the baseUrl with the key
                 // TODO this belongs in some sort of initialize model
-                videoUrl: state.get('baseVideoUrl')(file),
+                videoUrl: state.get('baseVideoUrl')(action.videoId),
             }}})
         // Upon loading indicates the model is ready for interaction
         case actions.RECEIVE_MODEL:

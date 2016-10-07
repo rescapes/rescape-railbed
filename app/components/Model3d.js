@@ -271,6 +271,8 @@ class Model3d extends Component {
             else {
                 // The videoUrl is that of the model if already loaded, current, or in the loading queue
                 const videoUrl = iterModel.get('videoUrl')
+                // The Youtube video id
+                const videoId = iterModel.get('videoId')
                 const sceneKey =  currentSceneKeyOfModel(iterModel)
                 // Get the time to play the video to transition from one scene to the next
                 const sceneTransitionTime = iterModel.get('sceneTransitionTime') || config.SCENE_TRANSITION_TIME
@@ -279,10 +281,10 @@ class Model3d extends Component {
                 const start = (sceneIndex-1 >= 0 ? sceneIndex-1 : 0) * sceneTransitionTime,
                       end = (sceneIndex >=0 ? sceneIndex : 0) * sceneTransitionTime
 
-
                 model3dPresentation = <ModelVideo
                     className="model-3d-video"
                     videoUrl={videoUrl}
+                    videoId={videoId}
                     start={start}
                     end={end}
                     scrollDirection={this.state.scrollDirection}

@@ -18,6 +18,7 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         id: '2b495238-e77d-4edf-bb23-b186daf0640f',
         anchorId: 'id.5ktmpvprnx88',
+        videoId: 'S3Xf3gUZSKI',
         scenes: OrderedMap({ entries: Map({
             'Outside': Map({
             }),
@@ -1022,7 +1023,8 @@ export default Map({
          */
         baseUrl: id => (`https://my.sketchup.com/viewer/3dw?WarehouseModelId=${id}`),
         baseModelCreditUrl: id => (`https://3dwarehouse.sketchup.com/model.html?id=${id}`),
-        baseVideoUrl: modelKey => `/videos/${modelKey}.webm`,
+        baseVideoUrl: id => `https://youtu.be/${id}`,
+        //baseVideoUrl: modelKey => `/videos/${modelKey}.webm`,
 
         entries: amtrakStandardModels
     })

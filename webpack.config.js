@@ -24,6 +24,7 @@ const FONTS = __dirname + `/app/fonts/[name].[ext]`;
 const postcssImport = require('postcss-easy-import');
 const postcssCustomMedia = require('postcss-custom-media');
 const postcssCssVariables = require('postcss-css-variables');
+const postcssCalc = require("postcss-calc")
 
 var path = require('path');
 var mainPath = path.resolve(__dirname, 'app', 'index.js');
@@ -85,6 +86,7 @@ module.exports = {
             }),
             postcssCustomMedia(),
             postcssCssVariables(),
+            postcssCalc(),
             precss,
             autoprefixer({ browsers: ['last 2 versions'] })
         ];
