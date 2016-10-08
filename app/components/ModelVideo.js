@@ -45,25 +45,23 @@ class ModelVideo extends Component {
         // Never do anything while seeking a certain model
         if (this.props.isSeeking || !this.props.isCurrentModel)
             return
-
         if (this.state.start == 0 && this.state.end == 0) {
-            // Seeking the start amazingly doesn't work. We have to reload
+            this.state.player.pauseVideo()
             this.state.player.seekTo(this.state.start)
         }
         else {
             // If scrolling backward go straight to the target scene
             // -1 so make sure we are still on the scene
             if  (this.props.scrollDirection == 'backward') {
+                this.state.player.pauseVideo()
                 this.state.player.seekTo(this.state.end)
             }
             // If we are scrolling upward, meaning forward-progress in the document,
             // then play the animation transition
             // +1 to transition faster
-            else {
-                this.state.player.seekTo(this.state.start + 1)
-                // If end > 0 play to that point
-                if (this.state.end)
-                    this.state.player.playVideo()
+            else if (this.state.end) {
+                this.state.player.seekTo(this.state.start)
+                this.state.player.playVideo()
             }
         }
 
@@ -110,7 +108,7 @@ class ModelVideo extends Component {
      * @returns {boolean}
      */
     shouldComponentUpdate(nextProps, nextState) {
-        return !this.refs.video || this.state.start != nextState.start || this.state.end != nextState.end
+        return !this.state.player || this.state.start != nextState.start || this.state.end != nextState.end
     }
 
     componentDidMount() {
@@ -127,7 +125,14 @@ class ModelVideo extends Component {
         const opts = {
             height: '390',
             width: '640',
-            playerVars: { // https://developers.google.com/youtube/player_parameters
+            playerVars:{
+                controls: 0,
+                disablekb: 0,
+                fs: 0,
+                modestbranding: 1,
+                playsinline: 1,
+                rel: 0,
+                showinfo: 0,
             }
         };
 
@@ -147,6 +152,7 @@ class ModelVideo extends Component {
                 opts={opts}
                 onReady={this._onPlayerReady}
                 onStateChange={this._onStateChange}
+
             />
         </div>
             /*
