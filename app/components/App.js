@@ -18,6 +18,7 @@ import React, { Component, PropTypes } from 'react'
 import { render } from 'react-dom';
 import * as actions from '../actions/document'
 import {connect} from 'react-redux';
+import DeviceOrientation, { Orientation } from 'react-screen-orientation'
 
 // The children are the components of the chosen route
 class App extends Component {
@@ -31,8 +32,54 @@ class App extends Component {
         }
     }
 
+    isBrowser() {
+        const isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0
+        const isIE = !!document.documentMode
+        const isChrome = !!window.chrome && !!window.chrome.webstore
+        return {
+            // Opera 8.0+
+            isOpera: isOpera,
+            // Firefox 1.0+
+            isFirefox: typeof InstallTrigger !== 'undefined',
+            // Safari <= 9 "[object HTMLElementConstructor]"
+            isSafari: Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0,
+            // Internet Explorer 6-11
+            isIE: isIE,
+            // Edge 20+
+            isEdge: !isIE && !!window.StyleMedia,
+            // Chrome 1+
+            isChrome: isChrome,
+            // Blink engine detection
+            isBlink: (isChrome || isOpera) && !!window.CSS
+        }
+    }
+
     render() {
-        return React.cloneElement(this.props.children, {});
+        if (!this.isBrowser()['isSafari']) {
+            return <DeviceOrientation lockOrientation={'landscape'}>
+                {/* Will only be in DOM in landscape */}
+                <Orientation orientation='landscape' alwaysRender={false}>
+                    {React.cloneElement(this.props.children, {})}
+                </Orientation>
+                {/* Will stay in DOM, but is only visible in portrait */}
+                <Orientation orientation='portrait'>
+                    <div className="please-rotate">
+                        <p>Please rotate your device</p>
+                    </div>
+                </Orientation>
+            </DeviceOrientation>
+        }
+        else {
+            switch (window.orientation) {
+                case -90:
+                case 90:
+                    return React.cloneElement(this.props.children, {})
+                default:
+                    return <div className="please-rotate">
+                        <p>Please rotate your device</p>
+                    </div>
+            }
+        }
     }
 };
 

@@ -71,14 +71,19 @@ class Showcase extends Component {
             <Media media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/> :
             // Share icons!
             <div className={`share-icons ${fade} ${toward}`}>
-                {SHARE_BUTTONS.map((shareButton, i) =>
+                {SHARE_BUTTONS.map(function(shareButton, i) {
                     // TODO need a media URL for pinterest. Need scene-specific urls
-                    React.createElement(shareButton, {key:i, title: shareTitle, url: this.props.postUrl },
+                    return React.createElement(
+                        shareButton,
+                        Object.assign({key:i, title: shareTitle, url: this.props.postUrl},
+                         shareButton == PinterestShareButton ? {media:
+                         `http://img.youtube.com/vi/${this.props.model.get('videoId')}/0.jpg`} : {}
+                        ),
                         // size: null keeps the icons from setting there style width/height
                         // so that we can do it with css
                         React.createElement(SHARE_ICONS[i], {key:i, size:null, round:true })
                     )
-                )}
+                }, this)}
             </div>
         </div>
     }

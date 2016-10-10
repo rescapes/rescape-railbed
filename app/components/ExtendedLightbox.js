@@ -31,9 +31,9 @@ class ExtendedLightbox extends Lightbox {
 
         const image = images[currentImage];
 
-        const dates = (image.date || '').split(',').map(date => date ?
-            <div>{date}</div> :
-            <span/>)
+        const dates = (image.date || '').split(',').map((date, i) => date ?
+            <div key={i}>{date}</div> :
+            <span key={i} />)
 
         const sourceUrls = image.sourceUrl.split(',')
         const credits = image.credit.split(',')
