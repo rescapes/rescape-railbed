@@ -84,11 +84,12 @@ class App extends Component {
 };
 
 App.PropTypes = {
-    location: React.PropTypes.object
+    location: React.PropTypes.object,
+    orientation: React.PropTypes.string
 }
 
 function mapStateToProps(state) {
-    return state.toObject()
+    return Object.assign(state.toObject(), {orientation: window.orientation})
 }
 
 export default connect(

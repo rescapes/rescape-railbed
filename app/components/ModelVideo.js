@@ -43,7 +43,7 @@ class ModelVideo extends Component {
      */
     playOrReset() {
         // Never do anything while seeking a certain model
-        if (this.props.isSeeking)
+        if (this.props.isSeeking || !this.state.player)
             return
         // If scrolling backward go straight to the target scene
         // -1 so make sure we are still on the scene
