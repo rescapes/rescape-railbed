@@ -10,12 +10,10 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-//import {default as Video, Controls, Overlay} from 'react-html5video'
 import YouTube from 'react-youtube'
 import ReactDOM from 'react-dom'
 
 class ModelVideo extends Component {
-
 
     reloadVideo() {
         // When changing a HTML5 video, you have to reload it.
@@ -37,45 +35,40 @@ class ModelVideo extends Component {
 
     onPlayerReady(event) {
         this.setState(Object.assign(this.state, {player:event.target}))
+        // Seek to the start
+        this.playOrReset()
     }
     /***
      * Plays from the current start to end or seeks the start if no start and end are set
      */
     playOrReset() {
         // Never do anything while seeking a certain model
-        if (this.props.isSeeking || !this.props.isCurrentModel)
+        if (this.props.isSeeking)
             return
-        if (this.state.start == 0 && this.state.end == 0) {
+        // If scrolling backward go straight to the target scene
+        // -1 so make sure we are still on the scene
+        if  (this.props.scrollDirection == 'backward') {
             this.state.player.pauseVideo()
-            this.state.player.seekTo(this.state.start)
+            this.state.player.seekTo(this.state.end)
         }
+        // If we are scrolling upward, meaning forward-progress in the document,
+        // then play the animation transition
         else {
-            // If scrolling backward go straight to the target scene
-            // -1 so make sure we are still on the scene
-            if  (this.props.scrollDirection == 'backward') {
-                this.state.player.pauseVideo()
-                this.state.player.seekTo(this.state.end)
-            }
-            // If we are scrolling upward, meaning forward-progress in the document,
-            // then play the animation transition
-            // +1 to transition faster
-            else if (this.state.end) {
-                this.state.player.seekTo(this.state.start)
-                this.state.player.playVideo()
-            }
+            this.state.player.seekTo(this.state.start)
+            this.state.player.playVideo()
         }
-
     }
 
     onStateChange(event) {
         var self = this
         if (event.data == YT.PlayerState.PLAYING) {
-            console.log(this.state.player.getCurrentTime());
-            setTimeout(function() {
-                self._onStateChange(event)
-            }, 200);
-            if (this.state.end != 0 && event.target.getCurrentTime()  >= this.state.end) {
+            if (event.target.getCurrentTime()  >= this.state.end) {
                 this.state.player.pauseVideo();
+            }
+            else {
+                setTimeout(function() {
+                    self._onStateChange(event)
+                }, 200);
             }
         }
     }
@@ -89,7 +82,6 @@ class ModelVideo extends Component {
         this.state = {
             start: props.start || 0,
             end: props.end || 0,
-            mp4: window.isIE || window.isSafari
         }
         this._onProgress = (event)=>this.onProgress(event)
         this._onStateChange = (event)=>this.onStateChange(event)
@@ -102,13 +94,17 @@ class ModelVideo extends Component {
     }
 
     /***
-     * Only update when the scene has changed, or if we don't have a video yet
+     * Only update when the scene has changed, or if we don't have a video yet,
+     * or if we just became the current model
      * @param nextProps and thus play the video if start or end changed
      * @param nextState
      * @returns {boolean}
      */
     shouldComponentUpdate(nextProps, nextState) {
-        return !this.state.player || this.state.start != nextState.start || this.state.end != nextState.end
+        return !this.state.player ||
+            this.state.start != nextState.start ||
+            this.state.end != nextState.end ||
+            nextProps.isCurrentModel && !this.props.isCurrentModel
     }
 
     componentDidMount() {
@@ -139,33 +135,16 @@ class ModelVideo extends Component {
         if (!this.props.videoUrl) {
             return <div className="model-video"/>
         }
-        const src = this.state.mp4 ?
-            this.props.videoUrl.replace('webm', 'mp4') :
-            this.props.videoUrl;
-        const type = this.state.mp4 ?
-            'video/mp4':
-            'video/webm'
         return <div key={this.props.videoId} className="model-video">
             <YouTube
                 videoId={this.props.videoId}
                 className='model-video-youtube'
+                suggestedQuality='hd1080'
                 opts={opts}
                 onReady={this._onPlayerReady}
                 onStateChange={this._onStateChange}
-
             />
         </div>
-            /*
-            <Video
-                className="video"
-                muted
-                onTimeUpdate={this._onProgress}
-                ref="video">
-                <source src={src} type={type}/>
-                <Overlay />
-                <Controls />
-            </Video>
-            */
     }
 }
 

@@ -252,8 +252,8 @@ var amtrakStandardModels = OrderedMap({
                 caption: 'A planned BRT route in Madison, Wisconsin is already to be compromised by Class C right-of-way',
                 sourceImageUrl: 'http://s3.amazonaws.com/stb-wp/wp-content/uploads/2015/11/10113329/Madison-BRT-Profile-01.png, http://bloximages.chicago2.vip.townnews.com/host.madison.com/content/tncms/assets/v3/editorial/7/c0/7c0fff53-3e68-5dd1-847f-4d7a8ea4953e/543306d6a2f32.image.jpg',
                 sourceUrl: 'http://seattletransitblog.com/2015/11/11/madison-brt-creep/, http://host.madison.com/wsj/news/local/govt-and-politics/madison-poised-for-next-steps-to-bus-rapid-transit-system/article_2c526b02-0100-51fd-92e7-39bb330b943a.html',
-                credit: 'Mike Chechvala - Wisconsin State Journal',
-                date: 'December 2015'
+                credit: 'Mike Chechvala/Wisconsin State Journal, Zach Schaner/Seattle Transit Blog',
+                date: 'December 2015, November 2105'
             }),
             'St Charles Streetcar versus Car': Map({
                 caption: 'A Saint Charles streetcar runs in Class B right-of-way besides a car. Downtown the streetcar must compete with the car in class C right-of-way',
@@ -416,7 +416,7 @@ var amtrakStandardModels = OrderedMap({
                 date: 'September 2016'
             }),
             'Switzerland Bus Comfort': Map({
-                caption: "This Swiss bus in the Alps in the nicest local bus I have ever been in, the only local bus I've experienced that focuses on comfort and shows off the scenery",
+                caption: "This Swiss bus in the Alps is the nicest local bus I have ever been in, the only local bus I've experienced that focuses on comfort and shows off the scenery",
                 sourceUrl: 'http://rescapes.net',
                 credit: 'Rescape',
                 date: 'July 2016'
@@ -597,7 +597,7 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         id: '1ed98a7a-99ec-4bb7-9fb1-41df8361c2ce',
         anchorId: 'id.97xvu0r03y0e',
-        videoId: 'Yv0yT7LPKvk',
+        videoId: '72iqdi13OUw',
         scenes: OrderedMap({entries: Map({
             'Validators Replace Faregates and Barriers': Map({
             }),
@@ -606,8 +606,6 @@ var amtrakStandardModels = OrderedMap({
             'Improved Movement Throughout Station': Map({
             }),
             'Fast Fare Inspection': Map({
-            }),
-            'Escalators Could Skip the Mezzanine and Go to the Street': Map({
             }),
         })}),
         media: OrderedMap({

@@ -89,7 +89,7 @@
     /**
         Toggle button to switch from video to 3d Model
     **/
-    --model-3d-toggle-height: 70px;
+    --model-3d-toggle-height: 50px;
 
     --model-credits-font-size: var(--h6-font-size);
     /*

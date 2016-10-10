@@ -31,22 +31,40 @@ class ExtendedLightbox extends Lightbox {
 
         const image = images[currentImage];
 
-        const date = image.date ?
-            <div>{image.date}</div> :
-            <span/>
+        const dates = (image.date || '').split(',').map(date => date ?
+            <div>{date}</div> :
+            <span/>)
 
         const sourceUrls = image.sourceUrl.split(',')
         const credits = image.credit.split(',')
         const links = sourceUrls.map((sourceUrl, i) =>
-            <a key={credits[i]} target="rescape_source" href={image.sourceUrl}>{credits[i]}</a>)
+            <a key={credits[i]} target="rescape_source" href={sourceUrls[i]}>{credits[i]}</a>)
+        const title = links.length > 1 ? 'Sources' : 'Source'
         return <div className='footer-wrapper'>
             {ret}
             <span className='image-credit'>
-                <i>Source: </i>
-                {links}
-                <span className='image-date'>{date}</span>
+                <i>{title}</i>
+                {this.intersperse(links, ' and ')}
+                <span className='image-date'>{this.intersperse(dates, ' and ')}</span>
             </span>
         </div>
+    }
+    /*
+     * http://stackoverflow.com/questions/23618744/rendering-comma-separated-list-of-links
+     * intersperse: Return an array with the separator interspersed between
+     * each element of the input array.
+     *
+     * > _([1,2,3]).intersperse(0)
+     * [1,0,2,0,3]
+     */
+    intersperse(arr, sep) {
+        if (arr.length === 0) {
+            return [];
+        }
+
+        return arr.slice(1).reduce(function(xs, x, i) {
+            return xs.concat([sep, x]);
+        }, [arr[0]]);
     }
 }
 
