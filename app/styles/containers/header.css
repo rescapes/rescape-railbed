@@ -66,9 +66,6 @@ fades away where ever the document overlaps */
     align-items: flex-end;
     align-content: center;
     background: linear-gradient(to right, rgba(77, 78, 83, .8), rgba(255,255,255, .8) 20%, var(--white) 50%, rgba(255,255,255, .8) 80%, rgba(77, 78, 83, .8) 100%);
-    &:hover {
-        cursor: pointer;
-    }
 }
 .header-link {
     color: var(--rescape-love);
@@ -77,6 +74,9 @@ fades away where ever the document overlaps */
     padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
+    &:hover {
+        cursor: pointer;
+    }
     &.inline {
         padding: 0px;
     }

@@ -995,7 +995,7 @@ export default Map({
         [settingsActions.SET_LIGHTBOX_VISIBILITY]: false
     }),
     documents: Map({
-        keys: List(['about', 'contact', 'ths_amtrak_standard', 'the_new_rules_of_the_road']),
+        keys: List(['about', 'contact', 'cv', 'ths_amtrak_standard', 'the_new_rules_of_the_road']),
         // The URL of the source document
         baseUrl: id => (`https://docs.google.com/document/d/${id}/pub`),
         // The URL of the site
@@ -1005,6 +1005,7 @@ export default Map({
                 status: Statuses.INITIALIZED,
                 title: 'About',
                 isHeaderDocument: true,
+                showHeaderLink: true,
                 id: '1CRu-68GaWZcUxZkUf7RBAos39YrdYFYS8NEC07L5vQM',
                 modelKeys: List()
             }),
@@ -1012,7 +1013,16 @@ export default Map({
                 status: Statuses.INITIALIZED,
                 title: 'Contact',
                 isHeaderDocument: true,
+                showHeaderLink: true,
                 id: '1X0zMTLoEaQ-mBmqrOOQR2ahmQSGaNNVa8unu0qz6u1w',
+                modelKeys: List()
+            }),
+            'cv': Map({
+                status: Statuses.INITIALIZED,
+                title: 'CV',
+                isHeaderDocument: true,
+                showHeaderLink: false,
+                id: '13bN_BoYl1GfvozUK8e7rNqYI0Y9ZxMLoexpA57mpWcM',
                 modelKeys: List()
             }),
             'the_amtrak_standard': Map({

@@ -72,6 +72,14 @@ class Document extends Component {
             // Once we have registered anchors add scene circles to the Document div
             this.injectSceneCircles(this.documentDiv, this.props.sceneAnchors)
         }
+        // Hack for the Contact page
+        if (this.props.document.get('title')=='Contact') {
+            const cvLink = this.documentDiv.getElementsByClassName("header-link")[0]
+            if (cvLink) {
+                const self = this
+                cvLink.onclick = () => self.onClickHeaderLink('cv')
+            }
+        }
     }
 
     /***
@@ -241,6 +249,14 @@ class Document extends Component {
     }
 
     /***
+     * Overlay the header document when the link is clicked
+     * @param documentKey
+     */
+    onClickHeaderLink(documentKey) {
+        this.props.overlayDocument(documentKey)
+    }
+
+    /***
      * Render the document to the right of the model
      * @returns {XML}
      */
@@ -253,9 +269,13 @@ class Document extends Component {
         if (!body)
             return <div ref={(c) => this.documentDiv = c} />
         // The only processing we do to the Google doc HTML is the following:
-        // 1) Replace pairs of <hr> elements with <div className='modelSection'>...</div>
+        // 1) Make anchors have a target
+        let modifiedBody = this.injectAnchorTarget(body)
+        // 2) Replace pairs of <hr> elements with <div className='modelSection'>...</div>
         // This allows us to style each portion of the doc to match a corresponding 3D model
-        const modifiedBody = this.injectStyledDivWrappers(body, this.getExtraHeaderHtml())
+        modifiedBody = this.injectStyledDivWrappers(body, this.getExtraHeaderHtml())
+        if (document.get('title') == 'Contact')
+            modifiedBody = modifiedBody.replace('CV', renderToStaticMarkup(<span className="header-link inline">CV</span>))
 
         return <div
             ref={(c) => this.documentDiv = c}
@@ -266,6 +286,14 @@ class Document extends Component {
         </div>
     }
 
+    /***
+     * Adds a target to all anchors  This must skip internal anchors
+     * @param body
+     */
+    injectAnchorTarget(body) {
+        const regex = /(<a.*href='(?!#).*?)(>.*?)(<\/a>)/
+        return body.replace(regex, '$1 target="rescape_external"$2$3')
+    }
 
     /***
      * Wraps each section of text in a <div class="modelSection">...</div> So the user can tell
@@ -325,7 +353,7 @@ class Document extends Component {
             // Store the index after the <hr>
             startLocation = result.index + hrLength
             index++
-        } while ( (result = regex.exec(body)) )
+        } while (result = regex.exec(body))
         return modifiedBody
     }
     /***
