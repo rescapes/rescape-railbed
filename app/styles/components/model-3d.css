@@ -34,23 +34,25 @@ iframe {
         }
     }
     &.previous {
-        display: block;
+        display: none;
         top: -200%;
         &.active {
+            display: block;
             transition: top 1s ease, bottom 1s ease;
         }
         &.inactive {
-            transition: top 1s ease, bottom 1s ease;
+            transition: top 1s ease, bottom 1s ease, display 1s ease;
         }
     }
     &.next {
-        display: block;
+        display: none;
         top: 200%;
         &.active {
+            display: block;
             transition: top 1s ease, bottom 1s ease;
         }
         &.inactive {
-            transition: top 1s ease, bottom 1s ease;
+            transition: top 1s ease, bottom 1s ease, display 1s ease;
         }
     }
 }
