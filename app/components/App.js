@@ -19,6 +19,7 @@ import { render } from 'react-dom';
 import * as actions from '../actions/document'
 import {connect} from 'react-redux';
 import DeviceOrientation, { Orientation } from 'react-screen-orientation'
+import {isBrowser} from '../utils/appHelpers'
 
 // The children are the components of the chosen route
 class App extends Component {
@@ -32,30 +33,9 @@ class App extends Component {
         }
     }
 
-    isBrowser() {
-        const isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0
-        const isIE = !!document.documentMode
-        const isChrome = !!window.chrome && !!window.chrome.webstore
-        return {
-            // Opera 8.0+
-            isOpera: isOpera,
-            // Firefox 1.0+
-            isFirefox: typeof InstallTrigger !== 'undefined',
-            // Safari <= 9 "[object HTMLElementConstructor]"
-            isSafari: Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0,
-            // Internet Explorer 6-11
-            isIE: isIE,
-            // Edge 20+
-            isEdge: !isIE && !!window.StyleMedia,
-            // Chrome 1+
-            isChrome: isChrome,
-            // Blink engine detection
-            isBlink: (isChrome || isOpera) && !!window.CSS
-        }
-    }
 
     render() {
-        if (!this.isBrowser()['isSafari']) {
+        if (!isBrowser()['isSafari']) {
             return <DeviceOrientation lockOrientation={'landscape'}>
                 {/* Will only be in DOM in landscape */}
                 <Orientation orientation='landscape' alwaysRender={false}>
@@ -70,7 +50,8 @@ class App extends Component {
             </DeviceOrientation>
         }
         else {
-            switch (window.orientation) {
+            switch (this.props.orientation) {
+                case undefined:
                 case -90:
                 case 90:
                     return React.cloneElement(this.props.children, {})
@@ -85,7 +66,7 @@ class App extends Component {
 
 App.PropTypes = {
     location: React.PropTypes.object,
-    orientation: React.PropTypes.string
+    orientation: React.PropTypes.bool
 }
 
 function mapStateToProps(state) {

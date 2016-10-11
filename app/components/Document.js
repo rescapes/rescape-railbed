@@ -72,7 +72,15 @@ class Document extends Component {
             // Once we have registered anchors add scene circles to the Document div
             this.injectSceneCircles(this.documentDiv, this.props.sceneAnchors)
         }
-        // Hack for the Contact page
+        // Add targets to external anchors since Google Docs won't do it
+        const anchors = this.documentDiv.getElementsByTagName('a')
+        var i;
+        for (i = 0; i < anchors.length; i++) {
+            if (!anchors[i].href.startsWith('#'))
+                anchors[i].target = 'rescape_link'
+        }
+
+        // Hacks for the Contact page
         if (this.props.document.get('title')=='Contact') {
             const cvLink = this.documentDiv.getElementsByClassName("header-link")[0]
             if (cvLink) {
@@ -269,13 +277,11 @@ class Document extends Component {
         if (!body)
             return <div ref={(c) => this.documentDiv = c} />
         // The only processing we do to the Google doc HTML is the following:
-        // 1) Make anchors have a target
-        let modifiedBody = this.injectAnchorTarget(body)
-        // 2) Replace pairs of <hr> elements with <div className='modelSection'>...</div>
+        // 1) Replace pairs of <hr> elements with <div className='modelSection'>...</div>
         // This allows us to style each portion of the doc to match a corresponding 3D model
-        modifiedBody = this.injectStyledDivWrappers(body, this.getExtraHeaderHtml())
+        let modifiedBody = this.injectStyledDivWrappers(body, this.getExtraHeaderHtml())
         if (document.get('title') == 'Contact')
-            modifiedBody = modifiedBody.replace('CV', renderToStaticMarkup(<span className="header-link inline">CV</span>))
+            modifiedBody = modifiedBody.replace('CV', renderToStaticMarkup(<a className="header-link inline">CV</a>))
 
         return <div
             ref={(c) => this.documentDiv = c}
@@ -284,15 +290,6 @@ class Document extends Component {
             <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
             </div>
         </div>
-    }
-
-    /***
-     * Adds a target to all anchors  This must skip internal anchors
-     * @param body
-     */
-    injectAnchorTarget(body) {
-        const regex = /(<a.*href='(?!#).*?)(>.*?)(<\/a>)/
-        return body.replace(regex, '$1 target="rescape_external"$2$3')
     }
 
     /***

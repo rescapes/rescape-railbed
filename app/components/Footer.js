@@ -21,29 +21,6 @@ import {getModelTops, calculateModelFadeAndToward} from '../utils/modelHelpers'
 class Footer extends Component {
 
     render() {
-        /*
-        const pageDownButton = !(this.props.modelKey && this.props.sceneKey) || (
-            this.props.models.get('entries').keySeq().last() == this.props.modelKey &&
-            this.props.models.getIn(['entries', this.props.modelKey, 'scenes', 'entries']).keySeq().last() == this.props.sceneKey) ?
-            <div/> :
-            <div className='page-down' onClick={ e=>this.props.scrollToNextModel() } >
-                <svg className='page-down-icon' version="1.1" viewBox="153 252 125 94">
-                    <defs>
-                        <linearGradient id="PageDownGradient">
-                            <stop offset="5%"  stopColor="white"/>
-                            <stop offset="95%" stopColor="rgba(77, 78, 83, .8)"/>
-                        </linearGradient>
-                    </defs>
-                    <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="url(#PageDownGradient)" fillOpacity="1">
-                        <g>
-                            <path d="M 167.24409 266.45669 L 215.43307 331.65354 L 263.62205 266.45669 Z" stroke="#6e2236" strokeLinecap="round" strokeWidth="8"/>
-                            <title>Scroll to the next section</title>
-                        </g>
-                    </g>
-                </svg>
-            </div>
-        */
-
         let model3dTitle = <span/>
         if (!this.props.overlayDocumentIsShowing && this.props.models && this.props.modelKey && this.props.document) {
             const modelTops = getModelTops(this.props.document, this.props.models, this.props.settings)

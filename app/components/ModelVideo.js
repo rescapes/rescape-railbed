@@ -35,6 +35,7 @@ class ModelVideo extends Component {
 
     onPlayerReady(event) {
         this.setState(Object.assign(this.state, {player:event.target}))
+        event.target.setPlaybackQuality('highres');
         // Seek to the start
         this.playOrReset()
     }
@@ -54,7 +55,7 @@ class ModelVideo extends Component {
         // If we are scrolling upward, meaning forward-progress in the document,
         // then play the animation transition
         else {
-            this.state.player.seekTo(this.state.start)
+            this.state.player.seekTo(this.state.start || .1)
             this.state.player.playVideo()
         }
     }
@@ -132,14 +133,14 @@ class ModelVideo extends Component {
             }
         };
 
-        if (!this.props.videoUrl) {
+        if (!this.props.videoId) {
             return <div className="model-video"/>
         }
         return <div key={this.props.videoId} className="model-video">
             <YouTube
                 videoId={this.props.videoId}
                 className='model-video-youtube'
-                suggestedQuality='hd1080'
+                suggestedQuality='highres'
                 opts={opts}
                 onReady={this._onPlayerReady}
                 onStateChange={this._onStateChange}
@@ -149,7 +150,6 @@ class ModelVideo extends Component {
 }
 
 ModelVideo.propTypes = {
-    videoUrl: PropTypes.string,
     videoId: PropTypes.string,
     start: PropTypes.number,
     end: PropTypes.number,

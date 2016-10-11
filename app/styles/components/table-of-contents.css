@@ -69,7 +69,7 @@
             transition: color 1000ms ease-in;
         }
     }
-    &.table-of-contents-nodes-leave {
+    &.table-of-contents-nodes-leave-active {
         color: black;
         display: none;
     }
