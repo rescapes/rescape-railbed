@@ -79,6 +79,9 @@ fades away where ever the document overlaps */
     }
     &.inline {
         padding: 0px;
+        /** This matches the Google Docs link style **/
+        color: #1155cc;
+        text-decoration: underline;
     }
 }
 

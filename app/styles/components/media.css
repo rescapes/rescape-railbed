@@ -219,6 +219,7 @@ div:not(#app) > div[data-reactroot] > div > div {
         position: absolute;
         left: 0px;
         width: 100%;
+        top: 0px;
         height: 100%;
 
         /* The header div */

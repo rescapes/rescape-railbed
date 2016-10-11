@@ -73,7 +73,7 @@ module.exports = {
                 include: APP
             },
             {
-                test: /\.(webm|mp4)$/,
+                test: /\.(webm)$/,
                 loader: 'file-loader?name=/videos/[name].[ext]',
                 include: APP
             },

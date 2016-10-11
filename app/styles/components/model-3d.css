@@ -193,7 +193,7 @@ video {
 .model-3d-title {
     z-index: 7;
     position: absolute;
-    top: 0;
+    margin-top: 5px;
     height: var(--model-3d-title-height);
     width: calc(var(--document-left) - 100px);
     left: 10px;

@@ -43,7 +43,7 @@ class ExtendedLightbox extends Lightbox {
         return <div className='footer-wrapper'>
             {ret}
             <span className='image-credit'>
-                <i>{title}</i>
+                <i>{title} </i>
                 {this.intersperse(links, ' and ')}
                 <span className='image-date'>{this.intersperse(dates, ' and ')}</span>
             </span>

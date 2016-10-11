@@ -384,7 +384,7 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         id: '843cbe82-5a4a-4453-9766-488049133e9d',
         anchorId: 'id.em6st57x7wbe',
-        videoId: 'EXgG7RLhrlA',
+        videoId: 'JnFyo6gauss',
         scenes: OrderedMap({ entries: Map({
             'Forward-facing Seats on AMTRAK': Map({
             }),
