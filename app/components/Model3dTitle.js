@@ -28,20 +28,16 @@ export default class Model3dTitle extends Component {
         // by creating a child element with the following classes
         // .scene-title-enter and .scene-title-enter-active to the entering element
         // .scene-title-leave and .scene-title-leave-active to the exiting element
-        // Safari has a bug that wrecks transitions
-        const contents = !isBrowser['safari'] ? <ReactCSSTransitionGroup
-            className="scene-title"
-            transitionName="scene-title"
-            transitionEnterTimeout={0}
-            transitionLeaveTimeout={0}
-        >
-            <span key={this.props.sceneKey}>: {this.props.sceneKey}</span>
-        </ReactCSSTransitionGroup> :
-            <span key={this.props.sceneKey}>: {this.props.sceneKey}</span>
-
         return <span className={`model-3d-title ${this.props.lightboxVisibility ? 'fade-out' : this.props.fade} ${this.props.toward}`}>
                     {this.props.model && normalizeModelName(this.props.modelKey, this.props.model)}
-
+            <ReactCSSTransitionGroup
+                className="scene-title"
+                transitionName="scene-title"
+                transitionEnterTimeout={300}
+                transitionLeaveTimeout={300}
+            >
+                <span key={this.props.sceneKey}>: {this.props.sceneKey}</span>
+            </ReactCSSTransitionGroup>
         </span>
 
     }

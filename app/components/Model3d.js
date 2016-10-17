@@ -104,9 +104,11 @@ class Model3d extends Component {
                 const modelKeyToLoad = (nextModels || models).get(key)
                 if (modelKeyToLoad)
                     this.props.fetchModelIfNeeded(modelKeyToLoad)
-                // Make sure comments are off if we are switching models
-                this.props.toggleModelComments(models.get(key), false)
-                this.props.toggleDocumentComments(this.props.documentKey, false)
+                // Make sure comments are off for the current model and the documnet if we are changing current
+                if (key=='curent') {
+                    this.props.toggleModelComments(models.get(key), false)
+                    this.props.toggleDocumentComments(this.props.documentKey, false)
+                }
             }
         }, this)
 
@@ -283,6 +285,7 @@ class Model3d extends Component {
 
                 model3dPresentation = <ModelVideo
                     className="model-3d-video"
+                    key={modelKey}
                     videoUrl={videoUrl}
                     videoId={videoId}
                     start={start}

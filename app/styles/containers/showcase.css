@@ -103,3 +103,18 @@
         }
     }
 }
+
+/***
+    Used by App.js to suggest rotating devices to landscape
+***/
+.please-rotate {
+    position: absolute;
+    top: calc(100% - var(--model-3d-padding-bottom));
+    bottom: var(--model-height);
+    left: 0;
+    width: var(--document-left);
+    text-align: center;
+    font-size: var(--h3-font-size);
+    background: black;
+    color: var(--rescape-love);
+}

@@ -14,6 +14,7 @@
 */
 
 export default  {
+    PRODUCTION_DOMAIN: 'rescapes.net',
     // Threshold for visually switching between 3d models in the showcase
     // The previous/next must be > 40% closer than the current model
     MODEL_THRESHOLD: .4,

@@ -66,8 +66,12 @@
     &.table-of-contents-nodes-enter.table-of-contents-nodes-enter-active {
         .outline {
             color: black;
-            transition: color 1000ms ease-in;
+            transition: color 200ms ease-in;
         }
+    }
+    &.table-of-contents-nodes-leave {
+        color: black;
+        display: none;
     }
     &.table-of-contents-nodes-leave-active {
         color: black;
@@ -166,8 +170,7 @@
         .outline {
             color: var(--rescape-love);
             height: var(--table-of-contents-model-current-height);
-            font-size: calc(2 * var(--table-of-contents-font-size) / 3);
-            font-size: var(--h6-font-size);
+            font-size: calc(var(--table-of-contents-font-size) * .75);
             border-radius: 5px;
             padding: calc(var(--table-of-contents-outline-padding) * .8);
         }
@@ -177,7 +180,7 @@
         height: var(--table-of-contents-model-height);
         margin-left: calc(-1 * var(--table-of-contents-model-height) / 2);
         margin-top: calc(-1 * var(--table-of-contents-model-height) / 2);
-        font-size: calc(2 * var(--table-of-contents-font-size) / 3);
+        font-size: calc(var(--table-of-contents-font-size) * .75);
         &:hover {
             font-size: var(--table-of-contents-font-size);
             cursor: pointer;
@@ -198,7 +201,7 @@
         .outline {
             height: 100%;
             border-radius: 5px;
-            padding: calc(var(--table-of-contents-outline-padding) * .4);
+            padding: calc(var(--table-of-contents-outline-padding) * .6);
         }
     }
 

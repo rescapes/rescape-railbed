@@ -146,6 +146,10 @@ class TableOfContents extends React.Component {
         }
     }
 
+    /***
+     * Renders the TableOfContents, which consists of nodes representing each general Model3d/Document section
+     * and of lines connecting the nodes. It also places comment counts next to the document and current model
+     */
     render() {
         const objs = this.getObjects()
         const nodes = this.getNodes(objs)

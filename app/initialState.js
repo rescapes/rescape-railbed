@@ -57,7 +57,7 @@ var amtrakStandardModels = OrderedMap({
                 date: 'November 2015'
             }),
             'AMTRAK Coast Starlight Parlour Car': Map({
-                caption: "AMTRAK's Coast Starlight first class parlour car offers the height of travel luxury on a quasi-publicly-operated train",
+                caption: "AMTRAK's Coast Starlight first class parlour car offers the height of travel luxury on a publicly-operated train",
                 sourceImageUrl: 'http://www.trainsandtravel.com/wp-content/uploads/2015/07/Parlour-Car-copy-1090x818.jpg',
                 sourceUrl: 'http://www.trainsandtravel.com/the-nickel-and-diming-continues/',
                 credit: 'Tranis & Travel with Jim Loomis',
@@ -522,7 +522,7 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'Jim Loomis, Trains & Travel',
             }),
             'Tramtrain': Map({
-                caption: "Karlsruhe, Germany's innovated tramtrain, which runs both on city tram track and regional rails, offers toilets onboard",
+                caption: "Karlsruhe, Germany's innovative tram-train, which runs both on city tram track and regional rails, offers toilets onboard",
                 sourceImageUrl: 'http://www.karlsruhe-tourismus.de/var/ka/storage/images/media/bilder/gruppenangebote/tramstadt_01/6905-1-ger-DE/tramstadt_01_front_colorbox.jpg',
                 sourceUrl: 'http://www.karlsruhe-tourismus.de/en/book/special-interest/the-tramtrain-system',
                 credit: 'Karlsruhe Tourismus',
@@ -544,6 +544,12 @@ var amtrakStandardModels = OrderedMap({
                 sourceUrl: 'http://rescapes.net',
                 credit: 'Rescape'
             }),
+            'Toronto Rocket Interior Gangway': Map({
+                caption: "Open gangway metro cars, like these in Toronto, would make accessing a toilet or café far easier",
+                sourceImageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Toronto_Rocket_Interior_Gangway.jpg/800px-Toronto_Rocket_Interior_Gangway.jpg',
+                sourceUrl: 'https://en.wikipedia.org/wiki/Gangway_connection#/media/File:Toronto_Rocket_Interior_Gangway.jpg',
+                credit: 'Justken87/Wikimedia'
+            })
 
         })
     }),
@@ -830,6 +836,12 @@ var amtrakStandardModels = OrderedMap({
                 sourceImageUrl: 'http://media.bizj.us/view/img/2106261/unionstationhotelnshflickr*750xx600-338-0-5.jpg',
                 sourceUrl: 'http://www.bizjournals.com/nashville/blog/real-estate/2014/11/nashvilles-iconic-union-station-hotel-up-for-sale.html',
                 credit: 'Geoff Stearns (tensafefrogs)/Flickr'
+            }),
+            '19th Street BART Upgrade': Map({
+                type: 'png',
+                caption: "Conceptual sketch from the official plan to improve the station modeled here. Faregates limit the improvement possibilities",
+                sourceUrl: 'http://www.bart.gov/sites/default/files/docs/FINAL%2019th%20Street%20Conceptual%20Design%20Plan%2020141031.pdf',
+                credit: 'AECOM/BART'
             }),
             'Bakery in Munich Hauptbahnhof': Map({
                 caption: 'Fresh bakeries are common in train stations throughout Europe, but especially in Bavaria',

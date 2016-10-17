@@ -13,10 +13,11 @@
     "bundle": "NODE_ENV=production webpack --production --config webpack.prod.config.js",
     "prestart": "npm run bundle",
     "start": "node server.js",
-    "deploy": "gcloud app deploy --project ",
+    "deploy": "firebase deploy",
     "buildDev": "NODE_ENV=development webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "profile": "NODE_ENV=production webpack --config webpack.prod.config.js --profile --json > profile.json"
+    "profile": "NODE_ENV=production webpack --config webpack.prod.config.js --profile --json > profile.json",
+    "grunt": "grunt responsive_images"
   },
   "author": "",
   "license": "ISC",
