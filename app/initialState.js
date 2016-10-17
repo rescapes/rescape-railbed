@@ -660,7 +660,7 @@ var amtrakStandardModels = OrderedMap({
         videoId: 'eEtg-TZSNpA',
         anchorId: 'id.phqdf6isq3v4',
         scenes: OrderedMap({entries: Map({
-            'Initial': Map({
+            'Regional Train': Map({
             }),
             'Personal Bike Storage on Regional Trains': Map({
             }),
@@ -766,7 +766,9 @@ var amtrakStandardModels = OrderedMap({
         videoId: 'n0BbZ2BcA9s',
         anchorId: 'id.phqdf6isq3v4',
         scenes: OrderedMap({entries: Map({
-            'External bike storage is limited and risky': Map({
+            'External bike storage': Map({
+            }),
+            'Internal bike storage': Map({
             }),
             'Wheelchairs on buses': Map({
             }),
@@ -865,21 +867,23 @@ var amtrakStandardModels = OrderedMap({
     'Station and Stop Amenities (Outside Poor)': Map({
         status: Statuses.INITIALIZED,
         id: '87320bcf-05d7-4df9-8e51-f5c1e8ed82d1',
-        videoId: 'vNNoZsauPC8',
+        videoId: '6PkubgWJI6I',
         anchorId: 'id.hcrfkm926ytq',
         scenes: OrderedMap({entries: Map({
-            'Initial': Map({
+            'Downtown Transit Center': Map({
             }),
             'Amenity-Poor Transit Center': Map({
             }),
         })}),
         media: OrderedMap({
+            /*
             'Oakland Transit Center': Map({
                 caption: "Transit centers like this one in Oakland, CA that connect buses to metro need tram and amenity upgrades",
                 sourceUrl: 'http://rescapes.org',
                 credit: 'Rescape',
                 date: 'October, 2016'
             }),
+            */
             'Los Angeles BRT Stop': Map({
                 caption: "Wise investment in Los Angeles BRT stops are wasted without high quality fixed-guideway transit like trams",
                 sourceUrl: 'http://rescapes.net',
@@ -909,7 +913,7 @@ var amtrakStandardModels = OrderedMap({
     'Station and Stop Amenities (Outside Improved)': Map({
         status: Statuses.INITIALIZED,
         id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
-        videoId: 'BDJhSfpYVfQ',
+        videoId: '3dTxvOKwGrs',
         anchorId: 'id.hcrfkm926ytq',
         scenes: OrderedMap({entries: Map({
             'Improved Transit Center': Map({
@@ -918,7 +922,7 @@ var amtrakStandardModels = OrderedMap({
             }),
         })}),
         media: OrderedMap({
-            'Montpelier Tram Stop': Map({
+            'Montpellier Tram Stop': Map({
                 caption: "Tram stops like this one in Montpelier, France are strategically situated right next to all the action",
                 sourceImageUrl: 'http://www.paddlesteamers.info/Montpellier%20tram.jpg',
                 sourceUrl: 'http://www.paddlesteamers.info/Trams/Montpellier/Montpellier%202014.html',
@@ -937,7 +941,7 @@ var amtrakStandardModels = OrderedMap({
                 credit: "Thierry Bonnet/Ville d'Angers"
             }),
             'Angers Tram Inauguration': Map({
-                caption: "Inauguration of tram service in Angers, France. The quality of transit should does matter to every citizen",
+                caption: "Inauguration of tram service in Angers, France. The quality of transit should matter to every citizen",
                 sourceImageUrl: 'http://www.angers.fr/fileadmin/_migrated/pics/006_ralliementJPC.jpg',
                 sourceUrl: 'http://www.angers.fr/actualites/photos/inauguration-du-tramway/',
                 credit: "Patrice Campion/Ville d'Angers"
@@ -955,7 +959,7 @@ var amtrakStandardModels = OrderedMap({
     'Funding High Quality Transit': Map({
         status: Statuses.INITIALIZED,
         id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
-        videoId: 'rjuJbTV_8t8',
+        videoId: '-3zmJ-goNt0',
         anchorId: 'id.btsrxfdifb6m',
         scenes: OrderedMap({entries: Map({
             'Tram Upgrade': Map({
@@ -974,9 +978,6 @@ var amtrakStandardModels = OrderedMap({
         anchorId: 'id.rguwchja4zl1',
         id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
         scenes: OrderedMap({entries: Map({
-            'Initial': Map({
-
-            })
         })}),
         media: OrderedMap({
         })
@@ -987,8 +988,6 @@ var amtrakStandardModels = OrderedMap({
         anchorId: 'id.uq68osxi5mc9',
         id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
         scenes: OrderedMap({entries: Map({
-            'Conclusion': Map({
-            }),
         })}),
         media: OrderedMap({
         })
