@@ -24,12 +24,12 @@ import {connect} from 'react-redux';
 import React, {Component, PropTypes} from 'react'
 import DocumentMeta from 'react-document-meta';
 import ImmutablePropTypes from 'react-immutable-proptypes'
-var himalaya = require('himalaya');
 import Comments from './Comments'
 import TableOfContents from './TableOfContents'
 import OverlayDocument from './OverlayDocument'
 import close_svg from '../images/close.svg'
 import * as documentActions from '../actions/document'
+import himalaya from 'himalaya'
 
 export class Site extends Component {
 
@@ -62,6 +62,10 @@ export class Site extends Component {
                         // Show Rescape here. We could show the Document title
                         if (v['tagName'] == 'title')
                             o[v['tagName']] = 'Rescape' // v.children && v.children[0].content
+                    }
+                    // tagName link wants an object, v.attributes has href in it
+                    else if (v['attributes'] && v['attributes'].rel == 'shortcut_icon') {
+                        o[v['tagName']] = v.attributes
                     }
                     return o
                 }, {});

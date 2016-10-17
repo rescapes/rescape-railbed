@@ -20,6 +20,7 @@ import * as actions from '../actions/document'
 import {connect} from 'react-redux';
 import DeviceOrientation, { Orientation } from 'react-screen-orientation'
 import {isBrowser} from '../utils/appHelpers'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 // The children are the components of the chosen route
 class App extends Component {
@@ -28,6 +29,12 @@ class App extends Component {
         this.props.setDocumentLocation(this.props.location)
     }
     componentWillReceiveProps(nextProps){
+
+        // Set the current document
+        if (this.props.documentKey != nextProps.documentKey)
+            this.props.showDocument(nextProps.documentKey)
+
+        // If the location hash came in the URL set that
         if (this.props.location.hash != nextProps.location.hash) {
             this.props.setDocumentLocation(nextProps.location)
         }
@@ -42,9 +49,10 @@ class App extends Component {
                     {React.cloneElement(this.props.children, {})}
                 </Orientation>
                 {/* Will stay in DOM, but is only visible in portrait */}
-                <Orientation orientation='portrait'>
-                    <div className="please-rotate">
-                        <p>Please rotate your device</p>
+                <Orientation orientation='portrait' alwaysRender={false}>
+                    <div>
+                        {React.cloneElement(this.props.children, {})}
+                        <div className="please-rotate"><span>Please rotate your device</span></div>
                     </div>
                 </Orientation>
             </DeviceOrientation>
@@ -56,8 +64,9 @@ class App extends Component {
                 case 90:
                     return React.cloneElement(this.props.children, {})
                 default:
-                    return <div className="please-rotate">
-                        <p>Please rotate your device</p>
+                    return <div>
+                        {React.cloneElement(this.props.children, {})}
+                        <div className="please-rotate"><span>Please rotate your device</span></div>
                     </div>
             }
         }
@@ -65,12 +74,38 @@ class App extends Component {
 };
 
 App.PropTypes = {
+    documentKey: PropTypes.string,
+    document: ImmutablePropTypes.map,
     location: React.PropTypes.object,
     orientation: React.PropTypes.bool
 }
 
-function mapStateToProps(state) {
-    return Object.assign(state.toObject(), {orientation: window.orientation})
+function mapStateToProps(state, props) {
+
+    // The key of the document if one was specified in the URL
+    const splat = props.params.splat
+    const documents = state.getIn(['documents', 'entries'])
+
+    let document = null
+    if (splat && documents.get(splat)) {
+        document = documents.get(splat)
+    }
+    else {
+        // Load and show the newest post that isn't marked in the future
+        // TODO this will need to be used by a post listing
+        const sortedDocuments = state.getIn(['documents', 'entries']).sort(
+            (a, b) => a.get('date') > b.get('date'))
+        const now = new Date();
+        // Get the newest document. Ignore documents like About and Contact that have no date
+        document = sortedDocuments.reverse().find(document => document.get('date') && document.get('date') <= now)
+    }
+    // Add the window.orientation so we can detect orientation in iOS devices
+    return Object.assign(state.toObject(), {
+        documentKey: documents.keyOf(document),
+        document: document,
+        orientation: window.orientation
+    })
+
 }
 
 export default connect(

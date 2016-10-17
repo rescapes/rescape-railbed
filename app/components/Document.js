@@ -27,6 +27,7 @@ import Scroll from 'react-scroll';
 import {getAnchorToModels, getSceneAnchors} from '../utils/documentHelpers'
 const scroll = Scroll.animateScroll;
 import bookmark_png from '../images_dist/bookmark-320.png'
+import config from '../config'
 
 class Document extends Component {
 
@@ -39,9 +40,6 @@ class Document extends Component {
         this.handleScrollBound = this.handleScroll.bind(this)
         const document = ReactDOM.findDOMNode(this.documentDiv)
         document.addEventListener('scroll', this.handleScrollBound);
-        document.addEventListener('scroll', function(e) {
-            console.log(document.scrollTop)
-        })
 
         if (this.props.scrollPosition)
             this.scrollTo(this.props.scrollPosition || 0)
@@ -75,17 +73,19 @@ class Document extends Component {
         // Add targets to external anchors since Google Docs won't do it
         const anchors = this.documentDiv.getElementsByTagName('a')
         var i;
+        var self = this
         for (i = 0; i < anchors.length; i++) {
-            if (!anchors[i].href.startsWith('#'))
+            if (anchors[i].href.indexOf(config.PRODUCTION_DOMAIN) >= 0 &&
+                anchors[i].text.indexOf(config.PRODUCTION_DOMAIN) < 0) {
+                // Localize the URL if it's a reference to our domain but the text doesn't match the domain
+                anchors[i].removeAttribute('href')
+                anchors[i].className = 'header-link inline'
+                const text = anchors[i].text.toLowerCase()
+                anchors[i].onclick = () => self.onClickHeaderLink(text)
+            }
+            else if (anchors[i].href && !anchors[i].href.startsWith('#')) {
+                // Make external links open in another tab
                 anchors[i].target = 'rescape_link'
-        }
-
-        // Hacks for the Contact page
-        if (this.props.document.get('title')=='Contact') {
-            const cvLink = this.documentDiv.getElementsByClassName("header-link")[0]
-            if (cvLink) {
-                const self = this
-                cvLink.onclick = () => self.onClickHeaderLink('cv')
             }
         }
     }
@@ -280,8 +280,6 @@ class Document extends Component {
         // 1) Replace pairs of <hr> elements with <div className='modelSection'>...</div>
         // This allows us to style each portion of the doc to match a corresponding 3D model
         let modifiedBody = this.injectStyledDivWrappers(body, this.getExtraHeaderHtml())
-        if (document.get('title') == 'Contact')
-            modifiedBody = modifiedBody.replace('CV', renderToStaticMarkup(<a className="header-link inline">CV</a>))
 
         return <div
             ref={(c) => this.documentDiv = c}

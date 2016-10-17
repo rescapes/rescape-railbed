@@ -134,8 +134,6 @@
     --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
     --document-width: calc( 100% );
     --document-margin-left: 10px;
-    /* Discounts the margin for use positioning the page up/down arrows */
-    --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
     /*
         Overlay documents (About, Contact, etc) are wider because they lack showcase stuff
     */
@@ -159,7 +157,7 @@
     --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
     --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
     /* This width is used to fit the wideset table-of-contents element but be minimum for hovering off the toc */
-    --table-of-contents-width: 240px;
+    --table-of-contents-width: 300px;
     --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
 
     --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
@@ -201,10 +199,17 @@
     --factor: 1;
 }
 
-@custom-media --lvp (min-width: 1280px);
-@custom-media --mvp (min-width: 769px) and (max-width: 1279px);
-@custom-media --svp (max-width: 768px);
+@custom-media --exlvp (min-width: 1280px);
+@custom-media --lvp (min-width: 960px) and (max-width: 1280px);
+@custom-media --mvp (min-width: 769px) and (max-width: 960px);
+@custom-media --svp (min-width: 481px) and (max-width: 768px);
+@custom-media --exsvp (max-width: 480px);
 
+@media (--exlvp) {
+    :root {
+        --factor: 1;
+    }
+}
 @media (--lvp) {
     :root {
         --factor: 1;
@@ -282,6 +287,56 @@
         --document-top: var(--header-bottom);
         --document-height: calc( 100% - var(--footer-height) );
         --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
+        --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
+        --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
+        --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
+        --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
+        --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
+        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
+        --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
+        --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
+        --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
+        --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
+        --comment-button-width: calc(var(--factor) * var(--comment-button-width));
+        --comment-button-width-small: calc(var(--comment-button-width) * .86);
+        --comment-button-height: calc(var(--comment-button-width) * .5);
+        --comment-button-height-small: calc(var(--comment-button-width-small) * .5);
+        --comment-count-font-size: calc(2.25 * var(--factor) * var(--comment-count-font-size));
+        --comment-count-font-size-small: calc(var(--comment-count-font-size) * .9);
+        --comment-count-top: calc(var(--factor) * var(--comment-count-top));
+        --model-3d-title-font-size: calc(var(--factor) * var(--model-3d-title-font-size));
+        --model-3d-title-height: calc(var(--factor) * var(--model-3d-title-height));
+        --header-link-font-size: calc(var(--factor) * var(--header-link-font-size));
+        --hidden-model-count-margin-left: calc(var(--factor) * var(--hidden-model-count-margin-left));
+        --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
+        --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
+        --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
+        --document-header-font-size: calc(var(--factor) * var(--document-header-font-size));
+        --document-font-size: calc(var(--factor) * var(--document-font-size));
+        --document-line-height: calc(2.2 * var(--factor) * var(--document-line-height));
+    }
+}
+@media (--svp) {
+    :root {
+        --factor: .5;
+        --header-height: calc(var(--factor) * var(--header-height));
+        --header-bottom: calc( var(--header-top) + var(--header-height) );
+        --rescape-icon-height: var(--header-height);
+        --footer-height: calc(var(--factor) * var(--footer-height));
+        --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
+        --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
+        --showcase-width: calc(1.75 * var(--factor) * var(--showcase-width));
+        --model-3d-top: calc(var(--header-height));
+        --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
+        --media-height: calc(var(--factor) * var(--media-height));
+        --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
+        --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));
+        --lightbox-top: calc(var(--factor) * var(--lightbox-top));
+        --image-credit-font-size: calc(1.5 * var(--factor) * var(--image-credit-font-size));
+        --lightbox-caption-font-size: calc(1.5 * var(--factor) * var(--lightbox-caption-font-size));
+        --document-top: var(--header-bottom);
+        --document-height: calc( 100% - var(--footer-height) );
+        --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
         --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
         --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
         --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
@@ -312,4 +367,106 @@
         --document-line-height: calc(2.2 * var(--factor) * var(--document-line-height));
     }
 }
+@media (--svp) {
+    :root {
+        --factor: .5;
+        --header-height: calc(var(--factor) * var(--header-height));
+        --header-bottom: calc(var(--header-top) + var(--header-height));
+        --rescape-icon-height: var(--header-height);
+        --footer-height: calc(var(--factor) * var(--footer-height));
+        --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
+        --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
+        --showcase-width: calc(1.75 * var(--factor) * var(--showcase-width));
+        --model-3d-top: calc(var(--header-height));
+        --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
+        --media-height: calc(var(--factor) * var(--media-height));
+        --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
+        --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));
+        --lightbox-top: calc(var(--factor) * var(--lightbox-top));
+        --image-credit-font-size: calc(1.5 * var(--factor) * var(--image-credit-font-size));
+        --lightbox-caption-font-size: calc(1.5 * var(--factor) * var(--lightbox-caption-font-size));
+        --document-top: var(--header-bottom);
+        --document-height: calc(100% - var(--footer-height));
+        --document-left: calc(var(--showcase-width) - var(--model-3d-document-overlap));
+        --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
+        --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
+        --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
+        --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
+        --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
+        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
+        --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
+        --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
+        --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
+        --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
+        --comment-button-width: calc(var(--factor) * var(--comment-button-width));
+        --comment-button-width-small: calc(var(--comment-button-width) * .86);
+        --comment-button-height: calc(var(--comment-button-width) * .5);
+        --comment-button-height-small: calc(var(--comment-button-width-small) * .5);
+        --comment-count-font-size: calc(2.25 * var(--factor) * var(--comment-count-font-size));
+        --comment-count-font-size-small: calc(var(--comment-count-font-size) * .9);
+        --comment-count-top: calc(var(--factor) * var(--comment-count-top));
+        --model-3d-title-font-size: calc(var(--factor) * var(--model-3d-title-font-size));
+        --model-3d-title-height: calc(var(--factor) * var(--model-3d-title-height));
+        --header-link-font-size: calc(var(--factor) * var(--header-link-font-size));
+        --hidden-model-count-margin-left: calc(var(--factor) * var(--hidden-model-count-margin-left));
+        --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
+        --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
+        --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
+        --document-header-font-size: calc(var(--factor) * var(--document-header-font-size));
+        --document-font-size: calc(var(--factor) * var(--document-font-size));
+        --document-line-height: calc(2.2 * var(--factor) * var(--document-line-height));
+    }
+}
+@media (--exsvp) {
+    :root {
+        --factor: .5;
+        --header-height: calc(var(--factor) * var(--header-height));
+        --header-bottom: calc( var(--header-top) + var(--header-height) );
+        --rescape-icon-height: var(--header-height);
+        --footer-height: calc(var(--factor) * var(--footer-height));
+        --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
+        --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
+        --showcase-width: calc(1.75 * var(--factor) * var(--showcase-width));
+        --model-3d-top: calc(var(--header-height));
+        --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
+        --media-height: calc(var(--factor) * var(--media-height));
+        --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
+        --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));
+        --lightbox-top: calc(var(--factor) * var(--lightbox-top));
+        --image-credit-font-size: calc(1.5 * var(--factor) * var(--image-credit-font-size));
+        --lightbox-caption-font-size: calc(1.5 * var(--factor) * var(--lightbox-caption-font-size));
+        --document-top: var(--header-bottom);
+        --document-height: calc( 100% - var(--footer-height) );
+        --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
+        --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
+        --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
+        --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
+        --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
+        --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
+        --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
+        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
+        --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
+        --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
+        --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
+        --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
+        --comment-button-width: calc(var(--factor) * var(--comment-button-width));
+        --comment-button-width-small: calc(var(--comment-button-width) * .86);
+        --comment-button-height: calc(var(--comment-button-width) * .5);
+        --comment-button-height-small: calc(var(--comment-button-width-small) * .5);
+        --comment-count-font-size: calc(2.25 * var(--factor) * var(--comment-count-font-size));
+        --comment-count-font-size-small: calc(var(--comment-count-font-size) * .9);
+        --comment-count-top: calc(var(--factor) * var(--comment-count-top));
+        --model-3d-title-font-size: calc(var(--factor) * var(--model-3d-title-font-size));
+        --model-3d-title-height: calc(var(--factor) * var(--model-3d-title-height));
+        --header-link-font-size: calc(var(--factor) * var(--header-link-font-size));
+        --hidden-model-count-margin-left: calc(var(--factor) * var(--hidden-model-count-margin-left));
+        --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
+        --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
+        --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
+        --document-header-font-size: calc(var(--factor) * var(--document-header-font-size));
+        --document-font-size: calc(var(--factor) * var(--document-font-size));
+        --document-line-height: calc(2.2 * var(--factor) * var(--document-line-height));
+    }
+}
+
 

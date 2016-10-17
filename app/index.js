@@ -18,7 +18,6 @@ import App from './components/App'
 import Site from './components/Site'
 import makeStore from './store'
 import {Provider} from 'react-redux';
-import {showDocument} from './actions/document'
 import {setState} from './actions/site'
 import initialState from './initialState'
 import { createHistory } from 'history'
@@ -48,7 +47,7 @@ firebase.initializeApp(firebaseConfig);
  * App is the common component for all of our routes
  */
 const routes = <Route component={App}>
-    <Route path="/" component={Site} />
+    <Route path="/*" component={Site} />
 </Route>;
 
 ReactDOM.render(
@@ -61,13 +60,3 @@ ReactDOM.render(
 
 store.dispatch(setState(initialState))
 
-const state = store.getState()
-// Load and show the newest post that isn't marked in the future
-// TODO this will need to be used by a post listing
-const sortedDocuments = state.getIn(['documents', 'entries']).sort(
-    (a, b) => a.get('date') > b.get('date'))
-// Pretend it's the distant future
-const now = new Date();
-// Get the newest document. Ignore documents like About and Contact that have no date
-const currentDocument = sortedDocuments.reverse().find(document => document.get('date') && document.get('date') <= now)
-store.dispatch(showDocument(sortedDocuments.keyOf(currentDocument)))

@@ -187,7 +187,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         // Update it to that of the anchor of the next distinct model
         // Scroll up a tad to make it look better
         if (nextForDistinctModel)
-            return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], nextForDistinctModel.offsetTop - 30)
+            return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], nextForDistinctModel.offsetTop - 20)
     }
     /***
      * If decrementing the scroll position to the anchor of the position model
@@ -209,7 +209,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         })
         // Scroll to the previous model. Adjust a tad to make it look better
         if (firstSceneOfPrevious) {
-            return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], firstSceneOfPrevious.offsetTop - 30)
+            return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], firstSceneOfPrevious.offsetTop - 20)
         }
     }
     /***

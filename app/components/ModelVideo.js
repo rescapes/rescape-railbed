@@ -15,24 +15,6 @@ import ReactDOM from 'react-dom'
 
 class ModelVideo extends Component {
 
-    reloadVideo() {
-        // When changing a HTML5 video, you have to reload it.
-        this.refs.video.load();
-        this.refs.video.play();
-    }
-
-    togglePlay() {
-        this.refs.video.togglePlay();
-    }
-
-    toggleMute() {
-        this.refs.video.toggleMute()
-    }
-
-    load() {
-        this.refs.video.load();
-    }
-
     onPlayerReady(event) {
         this.setState(Object.assign(this.state, {player:event.target}))
         event.target.setPlaybackQuality('highres');
@@ -50,12 +32,12 @@ class ModelVideo extends Component {
         // -1 so make sure we are still on the scene
         if  (this.props.scrollDirection == 'backward') {
             this.state.player.pauseVideo()
-            this.state.player.seekTo(this.state.end)
+            this.state.player.seekTo(this.state.end, true)
         }
         // If we are scrolling upward, meaning forward-progress in the document,
         // then play the animation transition
         else {
-            this.state.player.seekTo(this.state.start || .1)
+            this.state.player.seekTo(this.state.start || .1, true)
             this.state.player.playVideo()
         }
     }
@@ -63,7 +45,7 @@ class ModelVideo extends Component {
     onStateChange(event) {
         var self = this
         if (event.data == YT.PlayerState.PLAYING) {
-            if (event.target.getCurrentTime()  >= this.state.end) {
+            if (this.state.player.getCurrentTime()  >= this.state.end) {
                 this.state.player.pauseVideo();
             }
             else {
@@ -74,17 +56,12 @@ class ModelVideo extends Component {
         }
     }
 
-    pause() {
-        this.refs.video.pause();
-    }
-
     constructor(props) {
         super()
         this.state = {
             start: props.start || 0,
             end: props.end || 0,
         }
-        this._onProgress = (event)=>this.onProgress(event)
         this._onStateChange = (event)=>this.onStateChange(event)
         this._onPlayerReady = (event)=>this.onPlayerReady(event)
     }
@@ -120,8 +97,6 @@ class ModelVideo extends Component {
 
     render() {
         const opts = {
-            height: '390',
-            width: '640',
             playerVars:{
                 controls: 0,
                 disablekb: 0,
