@@ -201,7 +201,10 @@
         .outline {
             height: 100%;
             border-radius: 5px;
-            padding: calc(var(--table-of-contents-outline-padding) * .6);
+            padding-left: calc(var(--table-of-contents-outline-padding) * .6);
+            padding-right: calc(var(--table-of-contents-outline-padding) * .6);
+            padding-top: calc(var(--table-of-contents-outline-padding) * .4);
+            padding-bottom: calc(var(--table-of-contents-outline-padding) * .4);
         }
     }
 
