@@ -177,6 +177,10 @@ video {
     z-index: 5;
     left: 5px;
     margin-left: 5px;
+
+    &.toggle-3d-is-on {
+        display: none;
+    }
 }
 
 .model-credits {

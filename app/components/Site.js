@@ -51,9 +51,10 @@ export class Site extends Component {
         if (document) {
             const head = himalaya.parse(document.getIn(['content', 'head']))
             // In addition to the document's <head> tags add in a title since the document meta data doesn't include it
+            // ignore shortcut icons
             meta = document && document.get('content') && head.reduce(function (o, v) {
                     // sometimes garbage is parsed, so check for the tagName property
-                    if (v['tagName'] && v['attributes'].rel!='shortcut_icon') {
+                    if (v['tagName'] && v['attributes'].rel!='shortcut icon') {
                         // Set the tagName value key to the attributes
                         o[v['tagName']] = v['attributes'];
                         // Use _text to indicate text node content, if any
@@ -62,10 +63,6 @@ export class Site extends Component {
                         // Show Rescape here. We could show the Document title
                         if (v['tagName'] == 'title')
                             o[v['tagName']] = 'Rescape' // v.children && v.children[0].content
-                    }
-                    // tagName link wants an object, v.attributes has href in it
-                    else if (v['attributes'] && v['attributes'].rel == 'shortcut_icon') {
-                        o[v['tagName']] = v.attributes
                     }
                     return o
                 }, {});

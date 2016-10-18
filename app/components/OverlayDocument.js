@@ -19,9 +19,6 @@ import {RawDocument} from './Document'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
 class OverlayDocument extends Component {
-
-
-
     /***
      * Override to simplify. We don't need to inject headers
      * @returns {XML}
