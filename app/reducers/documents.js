@@ -13,6 +13,7 @@ import {Map, List} from 'immutable';
 import {SET_STATE} from '../actions/site'
 import * as actions from '../actions/document'
 import * as modelActions from '../actions/model'
+import {removeHash} from '../utils/documentHelpers'
 import Statuses from '../statuses'
 import config from '../config'
 
@@ -98,6 +99,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         }
     }
     // If an overlay Document is showing, close it.
+    // Make sure to clear the hash from the url since that can be used to load an overlay document
     else if (action.type == actions.CLOSE_OVERLAY_DOCUMENT) {
         return state.set('currentOverlay', null)
     }
