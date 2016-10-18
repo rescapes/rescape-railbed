@@ -39,6 +39,8 @@ export class Site extends Component {
      * This is here rather than in OverlayDocument so that it shows over the Header
      */
     onClickCloseButton() {
+        // Clear the hash from the URL if it exists
+        this.props.history.push('/');
         this.props.closeOverlayDocument()
     }
 

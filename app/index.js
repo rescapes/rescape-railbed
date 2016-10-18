@@ -27,22 +27,6 @@ const appHistory = useRouterHistory(createHistory)({ queryKey: false })
 const store = makeStore()
 window.store = store;
 
-// Initialize Firebase
-// TODO: Replace with your project's customized code snippet
-
-/*
-import firebase from "firebase/app";
-const firebaseConfig = {
-    apiKey: "AIzaSyB4Kz8zXJaqOTOzEu5ZvwEKiOfu_ZVUK-o",
-    authDomain: "rescape-railbed.firebaseapp.com",
-    databaseURL: "https://rescape-railbed.firebaseio.com",
-    storageBucket: "rescape-railbed.appspot.com",
-    messagingSenderId: "895444132656"
-};
-firebase.initializeApp(firebaseConfig);
-*/
-
-
 /***
  * App is the common component for all of our routes
  */

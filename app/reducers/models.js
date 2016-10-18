@@ -102,8 +102,6 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             return state.set('current', action.key);
         // Triggers loading of a model
         case actions.LOAD_MODEL:
-            // We can't use spaces in our file names, it confuses babel or webpack or something
-            const file = normalizeKeyToFilename(action.key)
             return state.mergeDeep({entries: { [action.key] : {
                 status: Statuses.LOADING,
                 url: action.url,

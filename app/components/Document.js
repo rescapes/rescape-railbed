@@ -80,7 +80,7 @@ class Document extends Component {
         for (i = 0; i < anchors.length; i++) {
             // Localize the URL if it's a reference to our domain but the text doesn't match the domain
             // We do this since we can make a local link in Google Docs
-            if (anchors[i].hostname == window.location.hostname &&
+            if ((anchors[i].search || '').indexOf(config.PRODUCTION_DOMAIN) >= 0 &&
                 anchors[i].text.indexOf(config.PRODUCTION_DOMAIN) < 0) {
                 anchors[i].removeAttribute('href')
                 anchors[i].className = 'header-link inline'

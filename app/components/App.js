@@ -29,7 +29,6 @@ class App extends Component {
         this.props.setDocumentLocation(this.props.location)
     }
     componentWillReceiveProps(nextProps){
-
         // Set the current document
         if (this.props.documentKey != nextProps.documentKey)
             this.props.showDocument(nextProps.documentKey)
