@@ -958,7 +958,7 @@ var amtrakStandardModels = OrderedMap({
 
     'Funding High Quality Transit': Map({
         status: Statuses.INITIALIZED,
-        id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
+        id: '5039b27f-d637-4862-89a4-fc5588b2515c',
         videoId: '-3zmJ-goNt0',
         anchorId: 'id.btsrxfdifb6m',
         scenes: OrderedMap({entries: Map({
@@ -976,7 +976,6 @@ var amtrakStandardModels = OrderedMap({
     'User-Experience Policy Recommendations': Map({
         status: Statuses.INITIALIZED,
         anchorId: 'id.rguwchja4zl1',
-        id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
         scenes: OrderedMap({entries: Map({
         })}),
         media: OrderedMap({
@@ -986,7 +985,6 @@ var amtrakStandardModels = OrderedMap({
     'Conclusion': Map({
         status: Statuses.INITIALIZED,
         anchorId: 'id.uq68osxi5mc9',
-        id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
         scenes: OrderedMap({entries: Map({
         })}),
         media: OrderedMap({
@@ -1062,8 +1060,6 @@ export default Map({
         baseUrl: id => (`https://my.sketchup.com/viewer/3dw?WarehouseModelId=${id}`),
         baseModelCreditUrl: id => (`https://3dwarehouse.sketchup.com/model.html?id=${id}`),
         baseVideoUrl: id => `https://youtu.be/${id}`,
-        //baseVideoUrl: modelKey => `/videos/${modelKey}.webm`,
-
         entries: amtrakStandardModels
     })
 })

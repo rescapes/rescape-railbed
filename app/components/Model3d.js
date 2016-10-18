@@ -309,7 +309,7 @@ class Model3d extends Component {
                         <p>Right-side button for scenes</p>
                     </span>
                 </div>
-            const modelCredits = <div className='model-credits-positioner'>
+            const modelCredits = <div className={`model-credits-positioner ${is3dSet ? 'toggle-3d-is-on' : ''}`}>
                 <span className='model-credits'>
                     <a target="credits" href={iterModel.get('modelCreditUrl')}>Credits</a>
                 </span>

@@ -46,12 +46,14 @@ class Document extends Component {
         else
             this.handleScroll()
 
+        /*
         function fixSafariScrolling(event) {
             event.target.style.overflowY = 'hidden';
             setTimeout(function () { event.target.style.overflowY = 'auto'; });
         }
 
         this.documentDiv.addEventListener('webkitAnimationEnd', fixSafariScrolling);
+        */
     }
 
     componentWillUnmount() {
@@ -62,7 +64,8 @@ class Document extends Component {
 
     /***
      * Likewise when the Document content updates we want to index anchors if we haven't done so.
-     * I'm not sure if this is needed if componentDidMount fires at the right time, unless we
+     * We also put in the scene anchors, which are just little hash marks indicating to the reader
+     * where the scene changes are.
      */
     componentDidUpdate() {
         this.indexAnchors()
@@ -75,19 +78,22 @@ class Document extends Component {
         var i;
         var self = this
         for (i = 0; i < anchors.length; i++) {
-            if (anchors[i].href.indexOf(config.PRODUCTION_DOMAIN) >= 0 &&
+            // Localize the URL if it's a reference to our domain but the text doesn't match the domain
+            // We do this since we can make a local link in Google Docs
+            if (anchors[i].hostname == window.location.hostname &&
                 anchors[i].text.indexOf(config.PRODUCTION_DOMAIN) < 0) {
-                // Localize the URL if it's a reference to our domain but the text doesn't match the domain
                 anchors[i].removeAttribute('href')
                 anchors[i].className = 'header-link inline'
                 const text = anchors[i].text.toLowerCase()
                 anchors[i].onclick = () => self.onClickHeaderLink(text)
             }
-            else if (anchors[i].href && !anchors[i].href.startsWith('#')) {
-                // Make external links open in another tab
+            // Make external links open in another tab
+            else if (anchors[i].href && anchors[i].hostname != window.location.hostname) {
                 anchors[i].target = 'rescape_link'
             }
         }
+        // Once we've finished adding classes make the document visible
+        this.documentDiv.removeAttribute('style')
     }
 
     /***
@@ -209,7 +215,8 @@ class Document extends Component {
             this.props.documentTellModelAnchorsChanged(closestAnchors)
 
         }
-        // If a hash is in the Router location scroll to it if we aren't already there
+        // If a hash is in the Router location scroll to it if we aren't already there or open the overlay
+        // doc if it represents a document key like contact, about, cv
         // This is only needed on initial load when the document isn't ready yet
         if (nextProps.anchorToModels != this.props.anchorToModels || (nextProps.location && this.props.location && nextProps.location.hash != this.props.location.hash)) {
             // If we have a Router location hash, scroll to it now
@@ -219,8 +226,20 @@ class Document extends Component {
                 const anchor = nextProps.anchorToModels.keySeq().find(
                     anchor => anchor.get('name') == hash.replace('#','')
                 )
-                // Update the Document scroll state to the first model of the matching anchor
-                this.props.scrollToModel(anchor.get('name'))
+                if (anchor) {
+                    // Update the Document scroll state to the first model of the matching anchor
+                    this.props.scrollToModel(anchor.get('name'))
+                }
+                else {
+                    // See if the hash matches a document key
+                    const documentKey = this.props.overlayDocumentKeys.find(
+                        overlayDocumentKey => overlayDocumentKey == hash.replace('#','')
+                    )
+                    // If so, open the document as an overlay
+                    if (documentKey) {
+                        this.props.overlayDocument(documentKey)
+                    }
+                }
             }
         }
         // If the desired document scrollPosition has been changed by clicking a table of contents button or similar
@@ -269,7 +288,6 @@ class Document extends Component {
      * @returns {XML}
      */
     render() {
-        // Since the HTML comes from a Google doc or similar we can completely trust it
         const document = this.props.document
         if (!document)
             return <div ref={(c) => this.documentDiv = c} />
@@ -281,9 +299,11 @@ class Document extends Component {
         // This allows us to style each portion of the doc to match a corresponding 3D model
         let modifiedBody = this.injectStyledDivWrappers(body, this.getExtraHeaderHtml())
 
+        // Set style to keep the contents invisible until componentDidUpdate
         return <div
             ref={(c) => this.documentDiv = c}
             className={`${this.props.className || 'document'} ${this.props.overlayDocumentIsShowing ? 'overlay-document-showing' : ''}`}
+            style={{visibility: 'hidden'}}
         >
             <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
             </div>
@@ -332,7 +352,9 @@ class Document extends Component {
             // ...content since last hr to this hr minus the spacer before hr ...
             // </div>
             // We remove the spacers in favor of padding/margin styling
-            // We move the anchor to the top of the section and give it an image wrapper
+            // We also move the section anchor to the top of the section and give it an image wrapper. If
+            // this is a document without sections like (Contact, About, etc) then add an anchor at the
+            // top that refers to this document
             const startSpacerMatch = hrSpacerRegexStart.exec(bodyContent)
             const startSpacerIndex = startSpacerMatch ? startSpacerMatch[0].length : undefined
             const endSpacerMatch = hrSpacerRegexEnd.exec(bodyContent)
@@ -340,10 +362,13 @@ class Document extends Component {
             const bodySlice = bodyContent.slice(startSpacerIndex, endSpacerIndex)
             const regex = /(<a.*?>)(<\/a>)/
             const match = regex.exec(bodySlice)
+            const anchorParts = match ? match.slice(1) : [`<a href='#${this.props.documentKey}'>`, '</a>']
             modifiedBody = modifiedBody.concat(
                 "<div class='model-section'>").concat(
-                match ? `${match[1]}<img class="bookmark-icon" src=${bookmark_png} />${match[2]}` : '').concat(
-                `${bodySlice.replace(regex, '')}</div>`)
+                    `${anchorParts[0]}<img class="bookmark-icon" src=${bookmark_png} />${anchorParts[1]}`)
+                .concat(
+                    `${bodySlice.replace(regex, '')}</div>`
+                )
 
             // Store the index after the <hr>
             startLocation = result.index + hrLength
@@ -382,6 +407,7 @@ Document.propTypes = {
     settings: ImmutablePropTypes.map,
     document: ImmutablePropTypes.map,
     documentKey: PropTypes.string,
+    overlayDocumentKeys: ImmutablePropTypes.list,
     models: ImmutablePropTypes.map,
     scrollPosition: PropTypes.number,
     // Tell the document if an overlay document is covering it
@@ -408,6 +434,10 @@ Document.propTypes = {
 function mapStateToProps(state) {
     const settings = state.get('settings')
     const documentKey = state.getIn(['documents', 'current'])
+    // We use the overlayDocumentKeys to resolve a url hash
+    const overlayDocumentKeys = state.getIn(['documents', 'entries']).filter(document =>
+        document.get('isHeaderDocument')
+    ).keySeq().toList()
     const document = state.getIn(['documents', 'entries', documentKey])
     const scrollPosition = document && document.get('scrollPosition')
     const modelKeysInDocument = document && document.get('modelKeys')
@@ -418,6 +448,7 @@ function mapStateToProps(state) {
         settings,
         document: document,
         documentKey,
+        overlayDocumentKeys,
         models: modelKeysInDocument &&
             state.getIn(['models', 'entries']).filter((value,key) => modelKeysInDocument.includes(key)),
         scrollPosition,
