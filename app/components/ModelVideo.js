@@ -24,8 +24,8 @@ class ModelVideo extends Component {
      * Plays from the current start to end or seeks the start if no start and end are set
      */
     playOrReset() {
-        // Never do anything while seeking a certain model
-        if (this.props.isSeeking || !this.state.player)
+        // Never do anything while seeking a certain model or an overlay is showing
+        if (this.props.isDisabled || !this.state.player)
             return
         // If scrolling backward go straight to the target scene
         // -1 so make sure we are still on the scene
@@ -119,8 +119,8 @@ ModelVideo.propTypes = {
     end: PropTypes.number,
     toward: PropTypes.string,
     scrollDirection: PropTypes.string,
-    // If true this meens we are seeking through the videos so don't play anything
-    isSeeking: PropTypes.bool,
+    // If true this means we are seeking through the videos or a document overlay is present, so don't play anything
+    isDisabled: PropTypes.bool,
     isCurrentModel: PropTypes.bool
 }
 

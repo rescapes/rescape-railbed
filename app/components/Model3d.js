@@ -346,7 +346,7 @@ Model3d.propTypes = {
     sceneKey: PropTypes.string,
     // This is from the parent, not the state
     modelTops: PropTypes.object,
-    isSeeking: PropTypes.bool,
+    isDisabled: PropTypes.bool,
 }
 
 function mapStateToProps(state) {
@@ -363,7 +363,7 @@ function mapStateToProps(state) {
     const is3dSet = models.getIn(['entries', modelKey, 'is3dSet'])
     const sceneKey = currentSceneKeyOfModel(models.getIn(['entries', modelKey]))
     // Are we currently seeking the desired document position
-    const seeking = isSeeking(document)
+    const isDisabled = isSeeking(document) || !!state.getIn(['documents', 'currentOverlay'])
     return {
         settings,
         documentKey,
@@ -372,7 +372,7 @@ function mapStateToProps(state) {
         defaultIs3dSet,
         sceneKey,
         is3dSet,
-        isSeeking:seeking,
+        isDisabled
     }
 }
 
