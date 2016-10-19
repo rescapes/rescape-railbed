@@ -166,7 +166,7 @@
     --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
     --table-of-contents-font-size: var(--h5-font-size);
     --table-of-contents-outline-padding: 5px;
-    --hidden-model-count-margin-left: -55px;
+    --hidden-model-count-margin-left: -65px;
 
     /**
     The width and height of the comment button expander that shows for each model

@@ -96,7 +96,7 @@ Showcase.propTypes = {
     sceneKey: PropTypes.string,
     sceneIndex: PropTypes.number,
     documentTitle: PropTypes.string,
-    postUrl: PropTypes.string,
+    postUrl: PropTypes.string
 }
 
 function mapStateToProps(state, props) {

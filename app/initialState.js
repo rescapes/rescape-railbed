@@ -959,7 +959,7 @@ var amtrakStandardModels = OrderedMap({
     'Funding High Quality Transit': Map({
         status: Statuses.INITIALIZED,
         id: '5039b27f-d637-4862-89a4-fc5588b2515c',
-        videoId: '-3zmJ-goNt0',
+        videoId: 'BruT_9ooP14',
         anchorId: 'id.btsrxfdifb6m',
         scenes: OrderedMap({entries: Map({
             'Tram Upgrade': Map({

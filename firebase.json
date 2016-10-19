@@ -5,8 +5,7 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**",
-      "app/images/**",
-      "app/videos/**"
+      "**/videos/**"
     ],
     "rewrites": [
       {
