@@ -21,6 +21,7 @@ import {connect} from 'react-redux';
 import DeviceOrientation, { Orientation } from 'react-screen-orientation'
 import {isBrowser} from '../utils/appHelpers'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import globalStyles from '../assets/styles/global.css';
 
 // The children are the components of the chosen route
 class App extends Component {

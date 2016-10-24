@@ -10,7 +10,7 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import rescape_png from '../images_dist/rescape-320.png'
+import rescape_png from '../images_dist/rescape-white-320.png'
 import * as documentActions from '../actions/document'
 import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
@@ -30,30 +30,6 @@ class Header extends Component {
         if (!this.props.models || !this.props.modelKey || !this.props.document)
             return <div/>
 
-        /*
-        // Show the page up button if we're notm at the top already
-        const pageUpButton = !(this.props.modelKey && this.props.sceneKey) || (
-            this.props.models.get('entries').keySeq().first() == this.props.modelKey &&
-            this.props.models.getIn(['entries', this.props.modelKey, 'scenes', 'entries']).keySeq().first() == this.props.sceneKey) ?
-            <div/> :
-            <div className='page-up' onClick={ e=>this.props.scrollToPreviousModel() } >
-                <svg className='page-up-icon' version="1.1" viewBox="153 252 125 94" >
-                    <defs>
-                        <linearGradient id="PageUpGradient">
-                            <stop offset="5%"  stopColor="white"/>
-                            <stop offset="95%" stopColor="rgba(77, 78, 83, .8)"/>
-                        </linearGradient>
-                    </defs>
-                    <g stroke="none" strokeOpacity="1" strokeDasharray="none" fill="url(#PageUpGradient)" fillOpacity="1">
-                        <g>
-                            <path d="M 263.62205 331.65354 L 215.43307 266.45669 L 167.24409 331.65354 Z" stroke="#6e2236" strokeLinecap="round" strokeWidth="8"/>
-                            <title>Scroll to the previous section</title>
-                        </g>
-                    </g>
-                </svg>
-            </div>
-        */
-
         const headerDocuments = this.props.documents.get('entries').entrySeq().filter(([key, document]) =>
             document.get('isHeaderDocument') && document.get('showHeaderLink')
         ).map(([key, document]) =>
@@ -62,7 +38,6 @@ class Header extends Component {
 
         return <div className='header'>
             <img className='header-icon' src={rescape_png}/>
-            <div className='header-gradient left' />
             <div className='header-links'>
                 {headerDocuments}
             </div>

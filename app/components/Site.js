@@ -99,8 +99,7 @@ export class Site extends Component {
         />
 
         // Our top and bottom table of contents
-        const tableOfContentsTop = this.makeTableOfContents(true)
-        const tableOfContentsBottom = this.makeTableOfContents(false)
+        const tableOfContents = this.makeTableOfContents(true)
 
         // DocumentMeta merges the head tag data in from the document's head tag data
         // Header of the overall web page
@@ -110,11 +109,10 @@ export class Site extends Component {
         return <div className='site'>
             <DocumentMeta {...meta} extend />
             {comments}
-            {tableOfContentsTop}
+            {tableOfContents}
             <Header />
             <Showcase />
             <Document/>
-            {tableOfContentsBottom}
             <Footer />
         </div>;
     }

@@ -5,7 +5,7 @@
     --red: tomato;
     --yellow: wheat;
     --black: #4D4E53; /* charcoal gray */
-    --rescape-love: #6E2236;
+    --rescape-love: white;
 
     --fadeblue: color(deepskyblue saturation(30%));
     --lightblue: color(deepskyblue lightness(80%));
@@ -50,11 +50,17 @@
     /**
         Header bar settings
     **/
-    --header-height: 100px;
-    --header-top: 0px;
+    --header-height: 50px;
+    --header-top: 0;
+    /*** Used for reference only **/
     --header-bottom: calc( var(--header-top) + var(--header-height) );
-    --rescape-icon-height: var(--header-height);
+    --rescape-icon-bottom: 5px;
+    --rescape-icon-height: calc(var(--header-height) - 10px);
+    --header-links-bottom: 5px;
     --header-link-font-size: var(--h5-font-size);
+    --header-background: linear-gradient(to right, rgb(68,136,40), rgb(59, 117, 34));
+    --header-margin-left: 0;
+    --header-margin-right: 0;
 
     /**
         Footer bar settings
@@ -127,6 +133,7 @@
 
     --document-top: var(--header-bottom);
     --document-height: calc( 100% - var(--footer-height) );
+    --document-notes: var(--faded-gray);
     /*
         The left side of the document bleeds over the 3d model
         The 3d model's right gradient fades the 3d model away so we can see the document
@@ -153,17 +160,20 @@
     /**
         The width and height of the table of contents and various nodes
     **/
+    --table-of-contents-left: 0;
+    --table-of-contents-background: black;
+    --table-of-contents-font: SourceSansPro;
     --table-of-contents-document-height: 30px;
     --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
-    --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
+    --table-of-contents-top: var(--header-bottom);
+    --table-of-contents-bottom: 0;
     /* This width is used to fit the wideset table-of-contents element but be minimum for hovering off the toc */
-    --table-of-contents-width: 300px;
+    --table-of-contents-width: 150px;
     --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
 
-    --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
+    --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
     --table-of-contents-bottom-offset: 15px;
     --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
-    --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
     --table-of-contents-font-size: var(--h5-font-size);
     --table-of-contents-outline-padding: 5px;
     --hidden-model-count-margin-left: -65px;
@@ -239,13 +249,12 @@
         --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
         --table-of-contents-document-height: calc(1.5 * var(--factor) * var(--table-of-contents-document-height));
         --table-of-contents-model-height: calc(1.5 * var(--table-of-contents-document-height) / 2);
-        --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
+        --table-of-contents-top: calc(5 * var(--table-of-contents-document-height) / 6);
         --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
         --table-of-contents-model-current-height: calc(3 * var(--table-of-contents-document-height) / 3);
-        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
+        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
         --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
         --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
-        --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
         --table-of-contents-font-size: calc(1.2 * var(--factor) * var(--table-of-contents-font-size));
         --comment-button-width: calc(1.5 * var(--factor) * var(--comment-button-width));
         --comment-button-width-small: calc(var(--comment-button-width) * .86);
@@ -289,114 +298,12 @@
         --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
         --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
         --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
-        --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
+        --table-of-contents-top: calc(5 * var(--table-of-contents-document-height) / 6);
         --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
         --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
-        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
+        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
         --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
         --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
-        --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
-        --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
-        --comment-button-width: calc(var(--factor) * var(--comment-button-width));
-        --comment-button-width-small: calc(var(--comment-button-width) * .86);
-        --comment-button-height: calc(var(--comment-button-width) * .5);
-        --comment-button-height-small: calc(var(--comment-button-width-small) * .5);
-        --comment-count-font-size: calc(2.25 * var(--factor) * var(--comment-count-font-size));
-        --comment-count-font-size-small: calc(var(--comment-count-font-size) * .9);
-        --comment-count-top: calc(var(--factor) * var(--comment-count-top));
-        --model-3d-title-font-size: calc(var(--factor) * var(--model-3d-title-font-size));
-        --model-3d-title-height: calc(var(--factor) * var(--model-3d-title-height));
-        --header-link-font-size: calc(var(--factor) * var(--header-link-font-size));
-        --hidden-model-count-margin-left: calc(var(--factor) * var(--hidden-model-count-margin-left));
-        --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
-        --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
-        --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
-        --document-header-font-size: calc(var(--factor) * var(--document-header-font-size));
-        --document-font-size: calc(var(--factor) * var(--document-font-size));
-        --document-line-height: calc(2.2 * var(--factor) * var(--document-line-height));
-    }
-}
-@media (--svp) {
-    :root {
-        --factor: .5;
-        --header-height: calc(var(--factor) * var(--header-height));
-        --header-bottom: calc( var(--header-top) + var(--header-height) );
-        --rescape-icon-height: var(--header-height);
-        --footer-height: calc(var(--factor) * var(--footer-height));
-        --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
-        --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
-        --showcase-width: calc(1.75 * var(--factor) * var(--showcase-width));
-        --model-3d-top: calc(var(--header-height));
-        --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
-        --media-height: calc(var(--factor) * var(--media-height));
-        --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
-        --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));
-        --lightbox-top: calc(var(--factor) * var(--lightbox-top));
-        --image-credit-font-size: calc(1.5 * var(--factor) * var(--image-credit-font-size));
-        --lightbox-caption-font-size: calc(1.5 * var(--factor) * var(--lightbox-caption-font-size));
-        --document-top: var(--header-bottom);
-        --document-height: calc( 100% - var(--footer-height) );
-        --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
-        --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
-        --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
-        --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
-        --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
-        --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
-        --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
-        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
-        --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
-        --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
-        --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
-        --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
-        --comment-button-width: calc(var(--factor) * var(--comment-button-width));
-        --comment-button-width-small: calc(var(--comment-button-width) * .86);
-        --comment-button-height: calc(var(--comment-button-width) * .5);
-        --comment-button-height-small: calc(var(--comment-button-width-small) * .5);
-        --comment-count-font-size: calc(2.25 * var(--factor) * var(--comment-count-font-size));
-        --comment-count-font-size-small: calc(var(--comment-count-font-size) * .9);
-        --comment-count-top: calc(var(--factor) * var(--comment-count-top));
-        --model-3d-title-font-size: calc(var(--factor) * var(--model-3d-title-font-size));
-        --model-3d-title-height: calc(var(--factor) * var(--model-3d-title-height));
-        --header-link-font-size: calc(var(--factor) * var(--header-link-font-size));
-        --hidden-model-count-margin-left: calc(var(--factor) * var(--hidden-model-count-margin-left));
-        --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
-        --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
-        --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
-        --document-header-font-size: calc(var(--factor) * var(--document-header-font-size));
-        --document-font-size: calc(var(--factor) * var(--document-font-size));
-        --document-line-height: calc(2.2 * var(--factor) * var(--document-line-height));
-    }
-}
-@media (--svp) {
-    :root {
-        --factor: .5;
-        --header-height: calc(var(--factor) * var(--header-height));
-        --header-bottom: calc(var(--header-top) + var(--header-height));
-        --rescape-icon-height: var(--header-height);
-        --footer-height: calc(var(--factor) * var(--footer-height));
-        --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
-        --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
-        --showcase-width: calc(1.75 * var(--factor) * var(--showcase-width));
-        --model-3d-top: calc(var(--header-height));
-        --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
-        --media-height: calc(var(--factor) * var(--media-height));
-        --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
-        --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));
-        --lightbox-top: calc(var(--factor) * var(--lightbox-top));
-        --image-credit-font-size: calc(1.5 * var(--factor) * var(--image-credit-font-size));
-        --lightbox-caption-font-size: calc(1.5 * var(--factor) * var(--lightbox-caption-font-size));
-        --document-top: var(--header-bottom);
-        --document-height: calc(100% - var(--footer-height));
-        --document-left: calc(var(--showcase-width) - var(--model-3d-document-overlap));
-        --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
-        --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
-        --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
-        --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
-        --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
-        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
-        --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
-        --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
-        --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
         --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
         --comment-button-width: calc(var(--factor) * var(--comment-button-width));
         --comment-button-width-small: calc(var(--comment-button-width) * .86);
@@ -441,13 +348,12 @@
         --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
         --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
         --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
-        --table-of-contents-top-offset: calc(5 * var(--table-of-contents-document-height) / 6);
+        --table-of-contents-top: calc(5 * var(--table-of-contents-document-height) / 6);
         --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
         --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
-        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top-offset));
+        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
         --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
         --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
-        --table-of-contents-height-expanded: calc(var(--showcase-height) - var(--showcase-footer-overlap));
         --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
         --comment-button-width: calc(var(--factor) * var(--comment-button-width));
         --comment-button-width-small: calc(var(--comment-button-width) * .86);

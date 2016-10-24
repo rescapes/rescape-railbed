@@ -5,7 +5,9 @@
     doc with <hr> elements)
 ***/
 
-
+body {
+    font-family: TrainStation;
+}
 
 /*
     If an overlay Document is showing like About or Contact, hide the main Document
@@ -102,7 +104,7 @@ fades away where ever the document overlaps */
 }
 
 #header {
-    color: var(--rescape-love);
+    color: black;
     font-size: var(--document-title-font-size);
 }
 /**
@@ -131,7 +133,7 @@ p,li {
 }
 
 .author {
-    color: var(--rescape-love);
+    color: var(--document-notes);
 }
 
 .bookmark-icon {

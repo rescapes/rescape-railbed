@@ -7,22 +7,23 @@
 .table-of-contents {
     position: fixed;
     z-index: 7;
+    font-family: var(--table-of-contents-font);
 
     &.top {
-         top: var(--table-of-contents-top-offset);
+         top: var(--table-of-contents-top);
          height: var(--table-of-contents-top-height);
-         left: var(--document-left);
+         left: var(--table-of-contents-left);
          width: var(--table-of-contents-width);
          &.expanded {
-            height: var(--table-of-contents-height-expanded);
-            background: var(--faded-gray-background);
+            bottom: var(--table-of-contents-bottom);
+            background: var(--table-of-contents-background);
          }
     }
 
     &.bottom {
         bottom: var(--table-of-contents-bottom-offset);
         height: var(--table-of-contents-bottom-height);
-        left: var(--document-left);
+        left: var(--table-of-contents-left);
         width: var(--table-of-contents-width);
         &.expanded {
             display: none;
