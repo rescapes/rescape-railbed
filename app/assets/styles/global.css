@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'SourceSansPro';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/SourceSansPro-Regular.ttf');
+    src: local('SourceSansPro');
+}
+@font-face {
+    font-family: 'SourceSansPro';
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/SourceSansPro-Bold.ttf');
+    src: local('SourceSansProBold');
+}
+@font-face {
+    font-family: 'TrainStation';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/TrainStation.ttf');
+    src: local('TrainStation');
+}

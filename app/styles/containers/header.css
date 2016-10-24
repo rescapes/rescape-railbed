@@ -6,13 +6,14 @@
     right: 0px;
     top: var(--header-top);
     height: var(--header-height);
-    margin-left: 10px;
-    margin-right: 10px;
-    background: linear-gradient(to right, var(--white), rgba(77, 78, 83, .8) 30%, rgba(77, 78, 83, 1) 50%);
+    margin-left: var(--header-margin-left);
+    margin-right: var(--header-margin-right);
+    background: var(--header-background);
 };
 
 .header-icon {
     position: absolute;
+    bottom: var(--rescape-icon-bottom);
     height: var(--rescape-icon-height);
     margin-left: var(--standard-left-margin)
 }
@@ -54,7 +55,7 @@ fades away where ever the document overlaps */
 
 .header-links {
     position: absolute;
-    top: 10px;
+    bottom: var(--header-links-bottom);
     right: 0px;
     padding-top: 2px;
     padding-bottom: 2px;
@@ -65,7 +66,6 @@ fades away where ever the document overlaps */
     justify-content: space-around;
     align-items: flex-end;
     align-content: center;
-    background: linear-gradient(to right, rgba(77, 78, 83, .8), rgba(255,255,255, .8) 20%, var(--white) 50%, rgba(255,255,255, .8) 80%, rgba(77, 78, 83, .8) 100%);
 }
 .header-link {
     color: var(--rescape-love);

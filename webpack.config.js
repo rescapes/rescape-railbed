@@ -20,7 +20,7 @@ const STYLE = __dirname + '/app/style.css';
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 8080;
 const TEMPLATE = __dirname + '/app/templates/index_default.html'
-const FONTS = __dirname + `/app/fonts/[name].[ext]`;
+const FONTS = __dirname + `/app/assets/fonts/[name].[ext]`;
 const postcssImport = require('postcss-easy-import');
 const postcssCustomMedia = require('postcss-custom-media');
 const postcssCssVariables = require('postcss-css-variables');
@@ -77,6 +77,10 @@ module.exports = {
                 loader: 'file-loader?name=/videos/[name].[ext]',
                 include: APP
             },
+            {
+                test: /\.(otf|eot|woff|woff2|ttf)$/,
+                loader: 'file-loader?limit=30000&name=[name]-[hash].[ext]'
+            }
         ]
     },
     postcss: function processPostcss(webpack) {
