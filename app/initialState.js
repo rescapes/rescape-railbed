@@ -640,7 +640,7 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'The Oregonian',
             }),
             'Berlin Smart Phone Inspection': Map({
-                caption: "Tickets purchased online are quickly inspected on Berlin's S-Bahn, and through Germany on Deutsche Bahn trains",
+                caption: "Tickets purchased online are quickly inspected on Berlin's S-Bahn, and throughout Germany on Deutsche Bahn trains",
                 sourceImageUrl: 'http://www.it-zoom.de/fileadmin/_processed_/csm_moba-sbahn_berlin-scanner_casio_192e0f5ea4.jpg',
                 sourceUrl: 'http://www.it-zoom.de/mobile-business/e/mobile-ticketkontrolle-9524/',
                 credit: 'Bianca Brandis/IT-Zoom',

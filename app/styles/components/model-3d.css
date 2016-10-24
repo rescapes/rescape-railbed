@@ -200,7 +200,6 @@ video {
     margin-top: 5px;
     height: var(--model-3d-title-height);
     width: calc(var(--document-left) - 100px);
-    left: 10px;
     right: -100px;
     color: var(--rescape-love);
     font-size: var(--model-3d-title-font-size);
