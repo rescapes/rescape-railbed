@@ -156,3 +156,13 @@ export function closestAnchorDistances(document, models) {
 export function normalizeModelName(modelKey, model) {
     return model.get('title') || modelKey.replace(/ \(.*?\)$/, '')
 }
+
+/***
+ *
+ * If defined on the model, use its 3d setting, otherwise default to the settings
+ * @param model
+ * @param defaultIs3dSet the default value for whether 3d is set. This is only consulted if is3dSet is not true or false
+ */
+export function checkIf3dSet(model, defaultIs3dSet) {
+    return model.get('is3dSet')===true || model.get('is3dSet')===false ? model.get('is3dSet') : defaultIs3dSet
+}

@@ -15,28 +15,15 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import {connect} from 'react-redux';
 import {Map} from 'immutable'
 import * as settingsActions from '../actions/settings'
-import Model3dTitle from './Model3dTitle'
 import {getModelTops, calculateModelFadeAndToward} from '../utils/modelHelpers'
 
 class Footer extends Component {
 
     render() {
         let model3dTitle = <span/>
-        if (!this.props.overlayDocumentIsShowing && this.props.models && this.props.modelKey && this.props.document) {
-            const modelTops = getModelTops(this.props.document, this.props.models, this.props.settings)
-            const [fade, toward] = calculateModelFadeAndToward(modelTops)
-            model3dTitle = <Model3dTitle
-                model={this.props.model}
-                modelKey={this.props.modelKey}
-                lightboxVisibility={this.props.lightboxVisibility}
-                sceneKey={this.props.sceneKey}
-                fade={fade}
-                toward={toward}
-            />
-        }
+
 
         return <div className='footer'>
-            {model3dTitle}
             <div className='footer-gradient left' />
         </div>;
     }

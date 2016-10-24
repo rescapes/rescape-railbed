@@ -18,11 +18,15 @@ import Model from './Model3d'
 import Media from './Media'
 import {connect} from 'react-redux'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import * as actions from '../actions/model'
 import * as siteActions from '../actions/site'
+import * as settingsActions from '../actions/settings'
 import { ShareButtons, generateShareIcon } from 'react-share'
-import {currentSceneKeyOfModel} from '../utils/modelHelpers'
+import {currentSceneKeyOfModel, checkIf3dSet} from '../utils/modelHelpers'
 import {getModelTops, calculateModelFadeAndToward} from '../utils/modelHelpers'
 import {Map} from 'immutable'
+import Model3dTitle from './Model3dTitle'
+import close_svg from '../images/close.svg'
 
 const {
     FacebookShareButton,
@@ -52,6 +56,16 @@ class Showcase extends Component {
         const { dispatch, url } = this.props
     }
 
+    /***
+     * Enable or disable 3d for the current model. Enabled means that Sketchup loads. Disabled means a video loads
+     * Returns a bound function with forced closed
+     */
+    bindToggle3d(force) {
+        return function() {
+            this.props.toggleModel3d(this.props.modelKey, force)
+        }.bind(this)
+    }
+
     render() {
         if (!this.props.models || !this.props.modelKey || !this.props.document || !this.props.postUrl)
             return <div className='showcase'/>
@@ -65,8 +79,48 @@ class Showcase extends Component {
         const modelTops = getModelTops(this.props.document, this.props.models, this.props.settings)
         const [fade, toward] = calculateModelFadeAndToward(modelTops)
         const shareTitle = `${documentTitle} (${modelKey})`
+        let model3dTitle = null
+
+        if (!this.props.overlayDocumentIsShowing && this.props.models && this.props.modelKey && this.props.document) {
+            const modelTops = getModelTops(this.props.document, this.props.models, this.props.settings)
+            const [fade, toward] = calculateModelFadeAndToward(modelTops)
+            model3dTitle = <Model3dTitle
+                model={this.props.model}
+                modelKey={this.props.modelKey}
+                lightboxVisibility={this.props.lightboxVisibility}
+                sceneKey={this.props.sceneKey}
+                fade={fade}
+                toward={toward}
+            />
+        }
+        else {
+            model3dTitle = <span/>
+        }
+
+        const is3dSet = checkIf3dSet(this.props.model, this.props.defaultIs3dSet)
+        const toggle3d = !is3dSet ?
+            <div className='toggle-3d-is-off'>
+                <span className='toggle-3d-is-off' onClick={this.bindToggle3d(!is3dSet)} />
+            </div> :
+            <div className='toggle-3d-is-on'>
+                <img className='toggle-3d-is-on-icon' src={close_svg} onClick={this.bindToggle3d(!is3dSet)} />
+                <span className='toggle-3d-is-on-text'>
+                        <p>Scroll to zoom (z)</p>
+                        <p>Drag to orbit (o)</p>
+                        <p>Shift-Drag to pan (h)</p>
+                        <p>Right-side button for scenes</p>
+                    </span>
+            </div>
+        const modelCredits = <div className={`model-credits-positioner ${is3dSet ? 'toggle-3d-is-on' : ''}`}>
+                <span className='model-credits'>
+                    <a target="credits" href={this.props.model.get('modelCreditUrl')}>Credits</a>
+                </span>
+        </div>
 
         return <div className='showcase'>
+            { model3dTitle }
+            { toggle3d }
+            { modelCredits }
             <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops} toward={toward} />
             <Media media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/> :
             // Share icons!
@@ -90,6 +144,7 @@ class Showcase extends Component {
 }
 
 Showcase.propTypes = {
+    defaultIs3dSet: PropTypes.bool,
     model: ImmutablePropTypes.map,
     models: ImmutablePropTypes.map,
     modelKey: PropTypes.string,
@@ -117,6 +172,7 @@ function mapStateToProps(state, props) {
     // Used to set a css class so we can smoothly transition scene titles
     const sceneIndex = model && model.getIn(['scenes', 'entries']).keySeq().indexOf(sceneKey)
     const commentsAreShowing = model && model.get('commentsAreShowing')
+    const defaultIs3dSet = state.getIn(['settings', settingsActions.SET_3D])
 
     return {
         settings,
@@ -129,7 +185,8 @@ function mapStateToProps(state, props) {
         sceneIndex,
         documentTitle,
         postUrl,
-        commentsAreShowing
+        commentsAreShowing,
+        defaultIs3dSet
     }
 }
 
@@ -139,5 +196,5 @@ function mapStateToProps(state, props) {
  */
 export default connect(
     mapStateToProps,
-    Object.assign(siteActions)
+    Object.assign(actions, siteActions)
 )(Showcase)

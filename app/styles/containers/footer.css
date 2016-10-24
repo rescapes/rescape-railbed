@@ -40,25 +40,3 @@
     display: none;
 }
 
-.scene-title {
-    span {
-        position: absolute;
-        width: 100%;
-    }
-}
-
-.scene-title-enter-active {
-    opacity: 1;
-    transition: opacity 200ms ease-in;
-    transition-delay: 300ms;
-}
-
-.scene-title-leave-active {
-    opacity: 0;
-    transition: opacity 300ms ease-in;
-}
-.scene-title-leave {
-    opacity: 0;
-    transition: opacity 300ms ease-in;
-}
-

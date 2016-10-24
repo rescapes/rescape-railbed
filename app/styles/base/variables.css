@@ -84,8 +84,6 @@
     --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
 
     --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
-    --table-of-contents-bottom-offset: 15px;
-    --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
     --table-of-contents-font-size: 13px;
     --table-of-contents-outline-padding: 5px;
     --hidden-model-count-margin-left: -65px;
@@ -117,10 +115,7 @@
     --document-font-size: 12pt;
     --document-line-height: 1.15;
 
-    /*
-        The showcase overlaps with the header completely and extends half way into the footer
-    */
-    --showcase-top: 0px;
+    --showcase-top: var(--header-height);
     /*
         Make the showcase extend half way into the footer
     */
@@ -135,7 +130,7 @@
         the 2 / 3 ration at this point, so it's a matter of adjusting the footer or header height
         along with the showcase-width percent
     */
-    --model-3d-top: calc(var(--header-height));
+    --model-3d-top: 30px;
     /**
         This forces the 16 * 9 aspect ratio that the videos need
     **/
@@ -144,9 +139,10 @@
     /**
         Toggle button to switch from video to 3d Model
     **/
-    --model-3d-toggle-height: 50px;
+    --model-3d-toggle-height: 10px;
+    --media-top: 450px;
 
-    --model-credits-font-size: var(--h6-font-size);
+    --model-credits-font-size: 12px;
     /*
         The model overlaps the document
     */
@@ -177,7 +173,8 @@
     /*
         The model and scene title in the footer
     */
-    --model-3d-title-font-size: var(--h4-font-size);
+    --model-3d-title-font-size: 14px;
+    --model-3d-title-top: 10px;
     --model-3d-title-height: 20px;
 
 
@@ -255,8 +252,6 @@
         --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
         --table-of-contents-model-current-height: calc(3 * var(--table-of-contents-document-height) / 3);
         --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
-        --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
-        --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
         --table-of-contents-font-size: calc(1.2 * var(--factor) * var(--table-of-contents-font-size));
         --comment-button-width: calc(1.5 * var(--factor) * var(--comment-button-width));
         --comment-button-width-small: calc(var(--comment-button-width) * .86);
@@ -303,8 +298,6 @@
         --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
         --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
         --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
-        --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
-        --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
         --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
         --comment-button-width: calc(var(--factor) * var(--comment-button-width));
         --comment-button-width-small: calc(var(--comment-button-width) * .86);
@@ -352,8 +345,6 @@
         --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
         --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
         --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
-        --table-of-contents-bottom-offset: calc(var(--factor) * var(--table-of-contents-bottom-offset));
-        --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
         --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
         --comment-button-width: calc(var(--factor) * var(--comment-button-width));
         --comment-button-width-small: calc(var(--comment-button-width) * .86);

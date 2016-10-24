@@ -3,8 +3,8 @@
 .media {
     position: absolute;
     z-index: 4;
+    top: var(--media-top);
     height: var(--media-height);
-    bottom: calc(var(--footer-height) / 2);
     width: 100%;
 }
 
@@ -159,10 +159,10 @@
     overflow: hidden;
     position: absolute;
     display: flex;
-    bottom: 0px;
+    top: 0px;
     flex-direction: row;
     justify-content: center;
-    align-items: flex-end;
+    align-items: flex-start;
     align-content: center;
 }
 .gallery-thumbnail {

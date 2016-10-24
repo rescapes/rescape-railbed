@@ -8,6 +8,8 @@
     position: fixed;
     z-index: 7;
     font-family: var(--table-of-contents-font);
+    padding-top: 20px;
+    padding-left: 5px;
 
     &.top {
          top: var(--table-of-contents-top);
@@ -140,10 +142,7 @@
             font-size: var(--table-of-contents-font-size);
             cursor: pointer;
             transition: width 200ms ease, height 200ms ease, margin-left 200ms ease, margin-top 200ms ease;
-            right: -200px;
             height: calc(var(--table-of-contents-model-height) + 10px);
-            margin-left: calc(-1 * (var(--table-of-contents-model-height) + 10px) / 2);
-            margin-top: calc(-1 * (var(--table-of-contents-model-height) + 10px) / 2);
         }
         .outline {
             height: 100%;
