@@ -17,7 +17,6 @@
  */
 
 import Header from './Header'
-import Footer from './Footer'
 import Showcase from './Showcase'
 import Document from './Document'
 import {connect} from 'react-redux';
@@ -83,7 +82,6 @@ export class Site extends Component {
                     <div className='showcase-screen' />
                     <OverlayDocument />
                 </div>
-                <Footer />
             </div>
         }
 
@@ -113,7 +111,6 @@ export class Site extends Component {
             <Header />
             <Showcase />
             <Document/>
-            <Footer />
         </div>;
     }
 
@@ -127,7 +124,7 @@ export class Site extends Component {
     makeTableOfContents(isTop) {
         return this.props.modelKey ?
             <TableOfContents isTop={isTop}
-                             isExpanded={this.props.isExpanded}
+                             isExpanded={true}
                              documentKey={this.props.documentKey}
                              documentTitle={this.props.documentTitle}
                              document={this.props.document}

@@ -56,12 +56,6 @@ export default class DocumentGraphNode extends React.Component {
                         key={node.key}
                         style={{left: `${node.x}%`, top: `${node.y}%`}}>
                 {documentCommentsButton}
-                <img className='circle'
-                     style={style} src={svg}
-                     onMouseEnter={()=>this.props.toggleTableOfContents(this.props.documentKey, true, true)}
-                     onClick={()=>this.props.toggleTableOfContents(this.props.documentKey)}
-                />
-                <div className="connector" />
                 <div ref="outline" className='outline'>
                     {node.key}
                 </div>
@@ -84,8 +78,6 @@ export default class DocumentGraphNode extends React.Component {
             // The current model
             return <div className='table-of-contents-node toc-model-current' key={node.key} style={{left: `${node.x}%`, top: `${node.y}%`}}>
                 {modelCommentsButton}
-                <img className='circle' src={model_circle_current_svg} />
-                <div className="connector" />
                 <div className='outline'>
                     {node.key}
                 </div>
@@ -101,8 +93,6 @@ export default class DocumentGraphNode extends React.Component {
             return <div className="table-of-contents-node toc-model" key={node.key} style={{left: `${node.x}%`, top: `${node.y}%`}}
                         onClick={()=>this.props.scrollToModel(node.key)}
             >
-                <img className='circle' src={model_circle_svg} />
-                <div className="connector" />
                 <div className='outline'>
                     {node.key}
                 </div>

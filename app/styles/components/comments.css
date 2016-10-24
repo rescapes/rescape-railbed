@@ -6,8 +6,8 @@
     &.showing {
         margin-left: 10px;
         top: calc(var(--model-3d-top));
-        left: 0px;
-        width: calc(var(--showcase-width) - var(--model-3d-document-overlap));
+        left: var(--showcase-left);
+        right: var(--showcase-right);
         height: var(--document-height);
     }
 }

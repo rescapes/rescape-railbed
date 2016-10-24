@@ -144,7 +144,9 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                     [action.key]: {
                         // status is initialized, nothing is loaded yet
                         status: Statuses.READY,
-                        content: action.content
+                        content: action.content,
+                        // Default the table of contents to expanded
+                        tableOfContentsIsExpanded: true
                     }
                 }
             })

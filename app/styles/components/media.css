@@ -207,7 +207,7 @@ div:not(#app) > div[data-reactroot] > div > div {
     top: var(--lightbox-top);
     height: var(--lightbox-height);
     left: var(--lightbox-left);
-    width: calc(var(--showcase-width) - var(--model-3d-document-overlap));
+    right: var(--showcase-right);
     background: rgba(0, 0, 0, .75);
     padding-left: 0px;
     padding-right: 0px;
