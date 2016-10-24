@@ -19,6 +19,7 @@ body {
     bottom: 0;
     left: var(--document-left);
     width: var(--document-width);
+    margin-top: 20px;
     z-index: 2;
     position: absolute;
 
@@ -122,10 +123,10 @@ p,li {
 /* This class is injected with divs to separate the documents by the 3d Model that goes with it */
 .model-section {
     background: white;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
     padding-left: 20px;
     padding-right: 20px;
 }

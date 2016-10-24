@@ -20,10 +20,8 @@ import Statuses from '../statuses'
 import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import ModelVideo from './ModelVideo'
-import {currentSceneKeyOfModel} from '../utils/modelHelpers'
+import {currentSceneKeyOfModel, checkIf3dSet} from '../utils/modelHelpers'
 import {isSeeking} from '../utils/documentHelpers'
-import load_3d_png from '../images_dist/load3d-320.png'
-import close_svg from '../images/close.svg'
 import config from '../config'
 
 // This garbage has to be done to force webpack to know about all the media files
@@ -159,7 +157,7 @@ class Model3d extends Component {
      */
     changeScene(model, sceneKey) {
 
-        if (this.is3dSet(model)) {
+        if (checkIf3dSet(model, this.props.defaultIs3dSet)) {
             // TODO not working do to cross domain security
             const dom = ReactDOM.findDOMNode(this).children['iframe']
             if (!dom)
@@ -175,15 +173,6 @@ class Model3d extends Component {
     }
 
     /***
-     *
-     * If defined on the model, use its 3d setting, otherwise default to the settings
-     * @param model
-     */
-    is3dSet(model) {
-        return model.get('is3dSet')===true || model.get('is3dSet')===false ? model.get('is3dSet') : this.props.defaultIs3dSet
-    }
-
-    /***
      * When no current scene is active or when the model first loads in the iframe, go to the first scene
      * TODO. Not sure if this is needed since a loaded model has a default camera view
      */
@@ -191,15 +180,6 @@ class Model3d extends Component {
         document.querySelectorAll('div.viewer-scene-option')[0].click()
     }
 
-    /***
-     * Enable or disable 3d for the current model. Enabled means that Sketchup loads. Disabled means a video loads
-     * Returns a bound function with forced closed
-     */
-    bindToggle3d(force) {
-        return function() {
-            this.props.toggleModel3d(this.props.modelKey, force)
-        }.bind(this)
-    }
 
     /***
      * Renders the model in an iframe. By setting the url we commence model loading here
@@ -257,7 +237,7 @@ class Model3d extends Component {
 
             // Determine whether to show the 3d model or video
             let model3dPresentation = null
-            const is3dSet = this.is3dSet(iterModel)
+            const is3dSet = checkIf3dSet(iterModel, this.props.defaultIs3dSet)
             if (is3dSet) {
                 // If it's already loaded, current, or in the loading queue (previous or next model), set the URL
                 // Setting the url of the iframe forces it to load if not yet loaded
@@ -296,33 +276,10 @@ class Model3d extends Component {
                 />
             }
 
-            const toggle3d = !is3dSet ?
-                <div className='toggle-3d-is-off'>
-                    <img className='toggle-3d-is-off-icon' src={load_3d_png} onClick={this.bindToggle3d(!is3dSet)} />
-                </div> :
-                <div className='toggle-3d-is-on'>
-                    <img className='toggle-3d-is-on-icon' src={close_svg} onClick={this.bindToggle3d(!is3dSet)} />
-                    <span className='toggle-3d-is-on-text'>
-                        <p>Scroll to zoom (z)</p>
-                        <p>Drag to orbit (o)</p>
-                        <p>Shift-Drag to pan (h)</p>
-                        <p>Right-side button for scenes</p>
-                    </span>
-                </div>
-            const modelCredits = <div className={`model-credits-positioner ${is3dSet ? 'toggle-3d-is-on' : ''}`}>
-                <span className='model-credits'>
-                    <a target="credits" href={iterModel.get('modelCreditUrl')}>Credits</a>
-                </span>
-            </div>
+
             // Return the iframe or video wrapped in a div. The div must have a unique key for React
             return <div key={modelKey} className={`${divClass} ${divStateClass}`} style={style}>
-                { toggle3d }
-                { modelCredits }
                 { model3dPresentation }
-                <div className='model-3d-gradient left'/>
-                <div className='model-3d-gradient right'/>
-                <div className='model-3d-gradient top'/>
-                <div className='model-3d-gradient bottom'/>
             </div>
         }, this).toArray() : [];
 
