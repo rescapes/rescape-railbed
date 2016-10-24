@@ -11,13 +11,13 @@
     --lightblue: color(deepskyblue lightness(80%));
     --fadesand: color(wheat saturation(30%));
     --sand: color(wheat lightness(80%));
-    --gray: color(var(--black) lightness(80%));
+    --gray: #999;
     --faded-gray: color(var(--white) a(90%));
     --faded-gray-background: color(var(--black) a(70%));
     --faded-black-background: color(var(--black) a(90%));
     --half-white: rgba(255, 255, 255, .7);
 
-    --font-stack: Railway, Arial, Helvetica, sans-serif;
+    --font-stack: SansSourcePro, Arial, Helvetica, sans-serif;
     --page-background: var(--black);
     --page-padding: 2em;
 
@@ -68,6 +68,55 @@
     --footer-height: 75px;
     --showcase-footer-overlap: 50px;
 
+
+    /**
+        The width and height of the table of contents and various nodes
+    **/
+    --table-of-contents-left: 0;
+    --table-of-contents-background: black;
+    --table-of-contents-font: SourceSansPro;
+    --table-of-contents-document-height: 30px;
+    --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
+    --table-of-contents-top: var(--header-bottom);
+    --table-of-contents-bottom: 0;
+    /* This width is used to fit the wideset table-of-contents element but be minimum for hovering off the toc */
+    --table-of-contents-width: 150px;
+    --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
+
+    --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
+    --table-of-contents-bottom-offset: 15px;
+    --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
+    --table-of-contents-font-size: 13px;
+    --table-of-contents-outline-padding: 5px;
+    --hidden-model-count-margin-left: -65px;
+
+
+    --document-top: var(--header-bottom);
+    --document-height: calc( 100% - var(--footer-height) );
+    --document-notes: var(--faded-gray);
+    /*
+        The left side of the document bleeds over the 3d model
+        The 3d model's right gradient fades the 3d model away so we can see the document
+    */
+    --document-left: var(--table-of-contents-width);
+    --document-width: 400px;
+    --document-margin-left: 10px;
+    /*
+        Overlay documents (About, Contact, etc) are wider because they lack showcase stuff
+    */
+    --overlay-document-left: calc(var(--document-left) - 200px);
+    /*
+        We inject this title and header into the Google Doc so we control the style
+    */
+    --document-title-font-size: var(--h3-font-size);
+    --document-header-font-size: 34px;
+    /*
+        We assume Google Docs names it's classes c1 - c9 and adjust the font-size
+        only for small devices
+    */
+    --document-font-size: 12pt;
+    --document-line-height: 1.15;
+
     /*
         The showcase overlaps with the header completely and extends half way into the footer
     */
@@ -76,8 +125,8 @@
         Make the showcase extend half way into the footer
     */
     --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
-    --showcase-left: 10px;
-    --showcase-width: 66%;
+    --showcase-left: calc(var(--table-of-contents-width) + var(--document-width));
+    --showcase-right: 10px;
 
     /*
         Make the model ratio should be 2 height to 3 width since that is what the Sketchup videos are.
@@ -131,52 +180,6 @@
     --model-3d-title-font-size: var(--h4-font-size);
     --model-3d-title-height: 20px;
 
-    --document-top: var(--header-bottom);
-    --document-height: calc( 100% - var(--footer-height) );
-    --document-notes: var(--faded-gray);
-    /*
-        The left side of the document bleeds over the 3d model
-        The 3d model's right gradient fades the 3d model away so we can see the document
-    */
-    --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
-    --document-width: calc( 100% );
-    --document-margin-left: 10px;
-    /*
-        Overlay documents (About, Contact, etc) are wider because they lack showcase stuff
-    */
-    --overlay-document-left: calc(var(--document-left) - 200px);
-    /*
-        We inject this title and header into the Google Doc so we control the style
-    */
-    --document-title-font-size: var(--h3-font-size);
-    --document-header-font-size: var(--h5-font-size);
-    /*
-        We assume Google Docs names it's classes c1 - c9 and adjust the font-size
-        only for small devices
-    */
-    --document-font-size: 12pt;
-    --document-line-height: 1.15;
-
-    /**
-        The width and height of the table of contents and various nodes
-    **/
-    --table-of-contents-left: 0;
-    --table-of-contents-background: black;
-    --table-of-contents-font: SourceSansPro;
-    --table-of-contents-document-height: 30px;
-    --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
-    --table-of-contents-top: var(--header-bottom);
-    --table-of-contents-bottom: 0;
-    /* This width is used to fit the wideset table-of-contents element but be minimum for hovering off the toc */
-    --table-of-contents-width: 150px;
-    --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
-
-    --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
-    --table-of-contents-bottom-offset: 15px;
-    --table-of-contents-bottom-height: calc(var(--footer-height) - var(--table-of-contents-bottom-offset));
-    --table-of-contents-font-size: var(--h5-font-size);
-    --table-of-contents-outline-padding: 5px;
-    --hidden-model-count-margin-left: -65px;
 
     /**
     The width and height of the comment button expander that shows for each model
@@ -234,7 +237,6 @@
         --footer-height: calc(2 * var(--factor) * var(--footer-height));
         --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
         --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
-        --showcase-width: calc(1.2 * var(--factor) * var(--showcase-width));
         --model-3d-top: calc(var(--header-height));
         --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
         --media-height: calc(var(--factor) * var(--media-height));
@@ -245,7 +247,7 @@
         --lightbox-caption-font-size: calc(1.2 * var(--factor) * var(--lightbox-caption-font-size));
         --document-top: var(--header-bottom);
         --document-height: calc( 100% - var(--footer-height) );
-        --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
+        --document-left: var(--table-of-contents-width);
         --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
         --table-of-contents-document-height: calc(1.5 * var(--factor) * var(--table-of-contents-document-height));
         --table-of-contents-model-height: calc(1.5 * var(--table-of-contents-document-height) / 2);
@@ -284,7 +286,6 @@
         --footer-height: calc(var(--factor) * var(--footer-height));
         --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
         --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
-        --showcase-width: calc(1.75 * var(--factor) * var(--showcase-width));
         --model-3d-top: calc(var(--header-height));
         --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
         --media-height: calc(var(--factor) * var(--media-height));
@@ -295,7 +296,7 @@
         --lightbox-caption-font-size: calc(1.5 * var(--factor) * var(--lightbox-caption-font-size));
         --document-top: var(--header-bottom);
         --document-height: calc( 100% - var(--footer-height) );
-        --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
+        --document-left: var(--table-of-contents-width);
         --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
         --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
         --table-of-contents-top: calc(5 * var(--table-of-contents-document-height) / 6);
@@ -333,7 +334,6 @@
         --footer-height: calc(var(--factor) * var(--footer-height));
         --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
         --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
-        --showcase-width: calc(1.75 * var(--factor) * var(--showcase-width));
         --model-3d-top: calc(var(--header-height));
         --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
         --media-height: calc(var(--factor) * var(--media-height));
@@ -344,7 +344,7 @@
         --lightbox-caption-font-size: calc(1.5 * var(--factor) * var(--lightbox-caption-font-size));
         --document-top: var(--header-bottom);
         --document-height: calc( 100% - var(--footer-height) );
-        --document-left: calc( var(--showcase-width) - var(--model-3d-document-overlap));
+        --document-left: var(--table-of-contents-width);
         --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
         --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
         --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);

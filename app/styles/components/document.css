@@ -7,6 +7,7 @@
 
 body {
     font-family: TrainStation;
+    background: var(--rescape-love);
 }
 
 /*
@@ -15,8 +16,9 @@ body {
 .document {
     overflow-y: scroll;
     top: var(--document-top);
-    height: calc(100% - var(--header-height) - var(--footer-height));
+    bottom: 0;
     left: var(--document-left);
+    width: var(--document-width);
     z-index: 2;
     position: absolute;
 
@@ -65,7 +67,7 @@ body {
     Author credit, date, etc.
 ***/
 .document-header {
-    font-size: var(--document-header-font-size);
+    font-size: var(--h5-font-size);
 }
 
 .document-gradient {
@@ -103,10 +105,6 @@ fades away where ever the document overlaps */
  }
 }
 
-#header {
-    color: black;
-    font-size: var(--document-title-font-size);
-}
 /**
     This matches the classes google uses for the document text
     we only want to override the font size for small devices
@@ -114,6 +112,7 @@ fades away where ever the document overlaps */
 p,li {
 
     &.c0,&.c1,&.c2,&.c3,&.c4,&.c5,&.c6,&.c7,&.c8,&.c9 {
+        font-family: SanSourcePro;
         font-size: var(--document-font-size);
         line-height: var(--document-line-height);
     }
@@ -122,8 +121,7 @@ p,li {
 
 /* This class is injected with divs to separate the documents by the 3d Model that goes with it */
 .model-section {
-    background: linear-gradient(to right, rgba(255, 255, 255, .7), var(--white));
-    border-radius: 5px;
+    background: white;
     margin-top: 10px;
     margin-bottom: 10px;
     padding-top: 15px;
@@ -132,8 +130,24 @@ p,li {
     padding-right: 20px;
 }
 
+#header {
+    color: black;
+    font-size: var(--document-title-font-size);
+}
+.document-credit {
+    color: var(--gray);
+    font-family: SanSourcePro;
+    font-size: var(--h5-font-size);
+}
 .author {
-    color: var(--document-notes);
+    color: var(--gray);
+    font-family: SanSourcePro;
+    font-size: var(--h5-font-size);
+}
+.document-date {
+    color: var(--gray);
+    font-family: SanSourcePro;
+    font-size: var(--h5-font-size);
 }
 
 .bookmark-icon {

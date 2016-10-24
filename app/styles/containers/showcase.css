@@ -4,7 +4,7 @@
     position: fixed;
     top: var(--showcase-top);
     height: var(--showcase-height);
-    width: var(--showcase-width);
+    right: var(--showcase-right);
     z-index: 2;
 }
 

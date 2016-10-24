@@ -11,23 +11,10 @@
 
     &.top {
          top: var(--table-of-contents-top);
-         height: var(--table-of-contents-top-height);
+         bottom: var(--table-of-contents-bottom);
          left: var(--table-of-contents-left);
          width: var(--table-of-contents-width);
-         &.expanded {
-            bottom: var(--table-of-contents-bottom);
-            background: var(--table-of-contents-background);
-         }
-    }
-
-    &.bottom {
-        bottom: var(--table-of-contents-bottom-offset);
-        height: var(--table-of-contents-bottom-height);
-        left: var(--table-of-contents-left);
-        width: var(--table-of-contents-width);
-        &.expanded {
-            display: none;
-        }
+         background: var(--table-of-contents-background);
     }
 }
 
@@ -86,14 +73,8 @@
         display: inline;
         z-index: 2;
         vertical-align: middle;
-        background: var(--half-white);
-        border-color: var(--rescape-love);
-        border-width: 2px;
-        border-style: solid;
-        font-family: var(--font-stack);
-        color: black;
+        color: var(--gray);
         text-align: center;
-
     }
     /***
         All circles have these properties
@@ -118,8 +99,6 @@
 
     &.toc-document {
         height: var(--table-of-contents-document-height);
-        margin-left: calc(-1 * var(--table-of-contents-document-height) / 2);
-        margin-top: calc(-1 * var(--table-of-contents-document-height) / 2);
 
         .document-comments-counter {
             position: absolute;
@@ -127,32 +106,18 @@
             left: calc(calc(-1 * var(--comment-button-width)) - 2px);
             width: var(--comment-button-width);
             height: var(--comment-button-height);
-
-        }
-        .circle {
-            z-index: 2;
-            height: 100%;
-            &:hover {
-                cursor: pointer;
-            }
-        }
-        .connector {
-            margin-left: calc(-1 * var(--table-of-contents-document-height) / 2  );
-            width: calc(var(--table-of-contents-document-height) / 2)
         }
         .outline {
+            color: var(--rescape-love);
             z-index: 2;
             height: 100%;
             font-size: var(--table-of-contents-font-size);
-            border-radius: 10px;
             padding: var(--table-of-contents-outline-padding);
         }
     }
 
     &.toc-model-current {
         height: var(--table-of-contents-model-current-height);
-        margin-left: calc(-1 * var(--table-of-contents-model-current-height) / 2);
-        margin-top: calc(-1 * var(--table-of-contents-model-current-height) / 2);
         .model-comments-counter {
             position: absolute;
             top: calc(-1 * calc(var(--table-of-contents-model-current-height) / 2));
@@ -160,27 +125,16 @@
             width: var(--comment-button-width-small);
             height: var(--comment-button-height-small);
         }
-        .circle {
-            width: var(--table-of-contents-model-current-height);
-            height: 100%;
-        }
-        .connector {
-            margin-left: calc(-1 * var(--table-of-contents-model-current-height) / 2  );
-            width: calc(var(--table-of-contents-document-height) / 2)
-        }
         .outline {
-            color: var(--rescape-love);
+            color: #64c83a;
             height: var(--table-of-contents-model-current-height);
             font-size: calc(var(--table-of-contents-font-size) * .75);
-            border-radius: 5px;
             padding: calc(var(--table-of-contents-outline-padding) * .8);
         }
     }
 
     &.toc-model {
         height: var(--table-of-contents-model-height);
-        margin-left: calc(-1 * var(--table-of-contents-model-height) / 2);
-        margin-top: calc(-1 * var(--table-of-contents-model-height) / 2);
         font-size: calc(var(--table-of-contents-font-size) * .75);
         &:hover {
             font-size: var(--table-of-contents-font-size);
@@ -191,17 +145,8 @@
             margin-left: calc(-1 * (var(--table-of-contents-model-height) + 10px) / 2);
             margin-top: calc(-1 * (var(--table-of-contents-model-height) + 10px) / 2);
         }
-
-        .circle {
-            height: 100%;
-        }
-        .connector {
-            margin-left: calc(-1 * var(--table-of-contents-model-height) / 2  );
-            width: calc(var(--table-of-contents-document-height) / 2)
-        }
         .outline {
             height: 100%;
-            border-radius: 5px;
             padding-left: calc(var(--table-of-contents-outline-padding) * .6);
             padding-right: calc(var(--table-of-contents-outline-padding) * .6);
             padding-top: calc(var(--table-of-contents-outline-padding) * .4);
