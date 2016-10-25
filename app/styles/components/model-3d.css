@@ -116,4 +116,20 @@ video {
     height: 100%;
 }
 
+.model-3d-help {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    padding: 4px;
+    background-color: rgba(255, 255, 255, .5);
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--rescape-love);
+    border-radius: 5px;
+    >p {
+         color: var(--gray);
+     }
+}
+
 

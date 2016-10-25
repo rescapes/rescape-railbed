@@ -17,8 +17,8 @@
     --faded-black-background: color(var(--black) a(90%));
     --half-white: rgba(255, 255, 255, .7);
 
-    --font-stack: SansSourcePro, Arial, Helvetica, sans-serif;
-    --page-background: var(--black);
+    --font-stack: SansSourcePro, sans-serif;
+    --page-background: var(--rescape-love);
     --page-padding: 2em;
 
     --h1-font-size: 3em;
@@ -74,13 +74,13 @@
     **/
     --table-of-contents-left: 0;
     --table-of-contents-background: black;
-    --table-of-contents-font: SourceSansPro;
+    --table-of-contents-font: SourceSansPro, sans-serif;
     --table-of-contents-document-height: 30px;
     --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
     --table-of-contents-top: var(--header-bottom);
     --table-of-contents-bottom: 0;
     /* This width is used to fit the wideset table-of-contents element but be minimum for hovering off the toc */
-    --table-of-contents-width: 150px;
+    --table-of-contents-width: 180px;
     --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
 
     --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
@@ -136,11 +136,6 @@
     **/
     --model-3d-padding-bottom: 56.26%;
     --model-3d-width: 100%;
-    /**
-        Toggle button to switch from video to 3d Model
-    **/
-    --model-3d-toggle-height: 10px;
-    --media-top: 450px;
 
     --model-credits-font-size: 12px;
     /*
@@ -148,7 +143,10 @@
     */
     --model-3d-document-overlap: 10px;
 
-    --media-height: 100px;
+    /***
+        For some reason the relatively positioned media overlaps the model-3d, so we add a margin
+     ***/
+    --media-margin-top: 35px;
     --gallery-thumbnail-width: 100px;
     --gallery-thumbnail-height: 75px;
     /*
@@ -159,13 +157,15 @@
         The lightbox top overlaps the header. We want the lightbox header
         to be in the header and the actual lightbox image to match the model-3d-top
     */
-    --lightbox-top: calc(var(--header-height) * .6);
+    --lightbox-top: var(--header-height);
     /*
         The lightbox footer overlaps the footer. We want the lightbox footer
         to be in the footer and the actual lightbox image to match the footer top
     */
-    --lightbox-height: calc( 100% - calc(var(--lightbox-top) + var(--footer-height)) + var(--showcase-footer-overlap) * .7);
-    --lightbox-left: var(--showcase-left);
+
+    --lightbox-footer-height: 20px;
+    --lightbox-height: calc(100% - var(--header-height));
+    --lightbox-left: calc(var(--showcase-left) - 5px);
     --lightbox-button-size: 40px;
     --lightbox-caption-font-size: var(--h5-font-size);
     --image-credit-font-size: var(--h5-font-size);
@@ -173,10 +173,11 @@
     /*
         The model and scene title in the footer
     */
-    --model-3d-title-font-size: 14px;
-    --model-3d-title-top: 10px;
-    --model-3d-title-height: 20px;
+    --model-3d-title-font-size: 13px;
+    --model-3d-title-height: 18px;
 
+    --showcase-links-height: 15px;
+    --showcase-links-font-size: 11px;
 
     /**
     The width and height of the comment button expander that shows for each model
@@ -235,8 +236,6 @@
         --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
         --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
         --model-3d-top: calc(var(--header-height));
-        --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
-        --media-height: calc(var(--factor) * var(--media-height));
         --gallery-thumbnail-width: calc(2 * var(--factor) * var(--gallery-thumbnail-width));
         --gallery-thumbnail-height: calc(2 * var(--factor) * var(--gallery-thumbnail-height));
         --lightbox-top: calc(var(--factor) * var(--lightbox-top));
@@ -282,8 +281,6 @@
         --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
         --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
         --model-3d-top: calc(var(--header-height));
-        --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
-        --media-height: calc(var(--factor) * var(--media-height));
         --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
         --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));
         --lightbox-top: calc(var(--factor) * var(--lightbox-top));
@@ -328,8 +325,6 @@
         --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
         --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
         --model-3d-top: calc(var(--header-height));
-        --model-3d-toggle-height: calc(var(--factor) * var(--model-3d-toggle-height));
-        --media-height: calc(var(--factor) * var(--media-height));
         --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
         --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));
         --lightbox-top: calc(var(--factor) * var(--lightbox-top));

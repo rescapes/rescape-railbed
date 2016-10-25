@@ -99,31 +99,23 @@ class Showcase extends Component {
 
         const is3dSet = checkIf3dSet(this.props.model, this.props.defaultIs3dSet)
         const toggle3d = !is3dSet ?
-            <div className='toggle-3d-is-off'>
-                <span className='toggle-3d-is-off' onClick={this.bindToggle3d(!is3dSet)} />
-            </div> :
-            <div className='toggle-3d-is-on'>
+            <span className='toggle-3d-is-off' onClick={this.bindToggle3d(!is3dSet)}>explore 3D model</span> :
+            <span className='toggle-3d-is-on'>
+                <span>exit 3D model</span>
                 <img className='toggle-3d-is-on-icon' src={close_svg} onClick={this.bindToggle3d(!is3dSet)} />
-                <span className='toggle-3d-is-on-text'>
-                        <p>Scroll to zoom (z)</p>
-                        <p>Drag to orbit (o)</p>
-                        <p>Shift-Drag to pan (h)</p>
-                        <p>Right-side button for scenes</p>
-                    </span>
-            </div>
-        const modelCredits = <div className={`model-credits-positioner ${is3dSet ? 'toggle-3d-is-on' : ''}`}>
-                <span className='model-credits'>
-                    <a target="credits" href={this.props.model.get('modelCreditUrl')}>Credits</a>
-                </span>
-        </div>
+            </span>
+        const modelCredits = <span className='model-credits'>
+            <a target="credits" href={this.props.model.get('modelCreditUrl')}>model credits</a>
+        </span>
 
         return <div className='showcase'>
             { model3dTitle }
-            { toggle3d }
-            { modelCredits }
+            <span className='showcase-links'>
+                { modelCredits }
+                { toggle3d }
+            </span>
             <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops} toward={toward} />
-            <Media media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/> :
-            // Share icons!
+            <Media media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
             <div className={`share-icons ${fade} ${toward}`}>
                 {SHARE_BUTTONS.map(function(shareButton, i) {
                     // TODO need a media URL for pinterest. Need scene-specific urls

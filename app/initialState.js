@@ -973,7 +973,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'User-Experience Policy Recommendations': Map({
+    'Policy Recommendations': Map({
         status: Statuses.INITIALIZED,
         anchorId: 'id.rguwchja4zl1',
         scenes: OrderedMap({entries: Map({

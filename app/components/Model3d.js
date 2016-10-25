@@ -244,11 +244,20 @@ class Model3d extends Component {
                 // TODO. We should add more intelligence to not load next/previous until current is fully loaded
                 const url = iterModel.get('url')
                 const iframeUrl = (isAlreadyLoaded || relevance) ? url : null
-                model3dPresentation = <Iframe className="model-3d-iframe" key={modelKey}
+
+                model3dPresentation = <div>
+                    <span className='model-3d-help'>
+                        <p>Scroll to zoom (z)</p>
+                        <p>Drag to orbit (o)</p>
+                        <p>Shift-Drag to pan (h)</p>
+                        <p>Right-side button for scenes</p>
+                    </span>
+                    <Iframe className="model-3d-iframe" key={modelKey}
                         src={iframeUrl}
                         name={`iframe_${modelKey}`}
                         onLoad={this.frameDidLoad.bind(this)}
-                />
+                    />
+                </div>
             }
             else {
                 // The videoUrl is that of the model if already loaded, current, or in the loading queue

@@ -8,8 +8,6 @@
     position: fixed;
     z-index: 7;
     font-family: var(--table-of-contents-font);
-    padding-top: 20px;
-    padding-left: 5px;
 
     &.top {
          top: var(--table-of-contents-top);
@@ -35,6 +33,8 @@
 
 .document-graph-circles {
     position: absolute;
+    margin-top: 20px;
+    margin-left: 10px;
     top: 0;
     left: 0;
     height: 100%;
