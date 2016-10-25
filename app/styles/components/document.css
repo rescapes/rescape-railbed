@@ -6,8 +6,6 @@
 ***/
 
 body {
-    font-family: TrainStation;
-    background: var(--rescape-love);
 }
 
 /*
@@ -110,10 +108,10 @@ fades away where ever the document overlaps */
     This matches the classes google uses for the document text
     we only want to override the font size for small devices
 **/
-p,li {
+p,li,span {
 
     &.c0,&.c1,&.c2,&.c3,&.c4,&.c5,&.c6,&.c7,&.c8,&.c9 {
-        font-family: SanSourcePro;
+        font-family: SanSourcePro, sans-serif;
         font-size: var(--document-font-size);
         line-height: var(--document-line-height);
     }
@@ -137,17 +135,17 @@ p,li {
 }
 .document-credit {
     color: var(--gray);
-    font-family: SanSourcePro;
+    font-family: SanSourcePro, sans-serif;
     font-size: var(--h5-font-size);
 }
 .author {
     color: var(--gray);
-    font-family: SanSourcePro;
+    font-family: SanSourcePro, sans-serif;
     font-size: var(--h5-font-size);
 }
 .document-date {
     color: var(--gray);
-    font-family: SanSourcePro;
+    font-family: SanSourcePro, sans-serif;
     font-size: var(--h5-font-size);
 }
 

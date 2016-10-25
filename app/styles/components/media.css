@@ -1,10 +1,9 @@
 
 /*** Media consists of a Gallery containing images that can be clicked to show a Lightbox ***/
 .media {
-    position: absolute;
+    position: relative;
+    margin-top: var(--media-margin-top);
     z-index: 4;
-    top: var(--media-top);
-    height: var(--media-height);
     width: 100%;
 }
 
@@ -153,13 +152,13 @@
 }
 
 .gallery {
+    position: absolute;
+    top: 0px;
     width: var(--gallery-width);
     margin-left: 5px;
     margin-right: var(--model-3d-document-overlap) + 5px;
     overflow: hidden;
-    position: absolute;
     display: flex;
-    top: 0px;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
@@ -167,7 +166,6 @@
 }
 .gallery-thumbnail {
     background-size: cover;
-    border-radius: 3px;
     float: left;
     bottom: 0px;
     height: auto;
@@ -207,7 +205,7 @@ div:not(#app) > div[data-reactroot] > div > div {
     top: var(--lightbox-top);
     height: var(--lightbox-height);
     left: var(--lightbox-left);
-    right: var(--showcase-right);
+    width: calc(100% - var(--lightbox-left));
     background: rgba(0, 0, 0, .75);
     padding-left: 0px;
     padding-right: 0px;
@@ -224,6 +222,7 @@ div:not(#app) > div[data-reactroot] > div > div {
 
         /* The header div */
         >div[class*="header"] {
+            background: rgba(0, 0, 0, .75);
             justify-content: flex-end;
             margin-right: 10px;
         }
@@ -239,16 +238,17 @@ div:not(#app) > div[data-reactroot] > div > div {
 
     /* The figure */
     >figure {
-         height: calc(100% - 20px);
+         height: calc(100% - var(lightbox-footer-height));
          -webkit-margin-before: 0em;
          -webkit-margin-after: 0em;
         /* The image */
         >img {
-             height: calc(100% - 20px);
+             height: 100%;
          }
         /* The footer */
         >div {
              color: var(--white);
+             font: var(--font-stack);
              font-size: var(--lightbox-caption-font-size);
              padding-left: 5px;
              padding-right: 5px;
@@ -267,7 +267,7 @@ div:not(#app) > div[data-reactroot] > div > div {
     color: var(--faded-gray);
     position: absolute;
     top: 6px;
-    right: 78px;
+    right: 85px;
     text-align: right;
     padding: 3px;
     border-radius: 3px;
