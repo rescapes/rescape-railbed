@@ -17,7 +17,7 @@
     --faded-black-background: color(var(--black) a(90%));
     --half-white: rgba(255, 255, 255, .7);
 
-    --font-stack: SansSourcePro, sans-serif;
+    --font-stack: 'Source Sans Pro', sans-serif;
     --page-background: var(--rescape-love);
     --page-padding: 2em;
 
@@ -75,17 +75,17 @@
     **/
     --table-of-contents-left: 0;
     --table-of-contents-background: black;
-    --table-of-contents-font: SourceSansPro, sans-serif;
+    --table-of-contents-font: 'Source Sans Pro', sans-serif;
+    --table-of-contents-font-size: 12px;
     --table-of-contents-document-height: 30px;
     --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
     --table-of-contents-top: var(--header-bottom);
     --table-of-contents-bottom: 0;
     /* This width is used to fit the wideset table-of-contents element but be minimum for hovering off the toc */
-    --table-of-contents-width: 180px;
+    --table-of-contents-width: 170px;
     --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
 
     --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
-    --table-of-contents-font-size: 13px;
     --table-of-contents-outline-padding: 5px;
     --hidden-model-count-margin-left: -65px;
 
@@ -113,9 +113,9 @@
         We assume Google Docs names it's classes c1 - c9 and adjust the font-size
         only for small devices
     */
-    --document-subheader-font-size: 15pt;
-    --document-font-size: 12pt;
-    --document-line-height: 1.15;
+    --document-subheader-font-size: 22px;
+    --document-font-size: 15px;
+    --document-line-height: 1.3;
 
     --showcase-top: var(--header-height);
     /*

@@ -20,10 +20,9 @@
 
 .header-links {
     position: absolute;
+    font-family: TrainStation;
     bottom: var(--header-links-bottom);
     right: 0px;
-    padding-left: 20px;
-    padding-right: var(--document-margin-left);
     display: flex;
     flex-direction: row;
     justify-content: space-around;

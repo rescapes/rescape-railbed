@@ -25,19 +25,8 @@
         height: 16px;
 
         &:hover {
-            div {
-                height: auto;
-                width: 32px;
-                svg: {
-                    height: 32px;
-                    width: 32px;
-                }
-            }
-            transition: width 300ms ease, height 300ms ease;
-            margin: 0px;
+            transform: scale(1.1);
         }
-        transition: width 300ms ease, height 300ms ease;
-
     }
 }
 
@@ -126,7 +115,7 @@
     height: var(--model-3d-title-height);
     right: 50%;
     color: var(--gray);
-    font-family: SanSourcePro, sans-serif;
+    font-family: var(--font-stack);
     font-size: var(--model-3d-title-font-size);
     padding-top: 0px;
     padding-bottom: 2px;
@@ -160,7 +149,7 @@
     right: 0px;
     height: var(--showcase-links-height);
     top: calc(var(--model-3d-top) - var(--showcase-links-height));
-    font-family: SanSourcePro, sans-serif;
+    font-family: var(--font-stack);
     font-size: var(--showcase-links-font-size);
     color: var(--gray);
     display: flex;

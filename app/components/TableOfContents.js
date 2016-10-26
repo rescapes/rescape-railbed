@@ -172,13 +172,6 @@ class TableOfContents extends React.Component {
                 {...modifiedProps}
             />, this)
 
-        const documentGraphCircleGroup = <ReactCSSTransitionGroup
-            transitionName="table-of-contents-nodes"
-            transitionEnterTimeout={200}
-            transitionLeaveTimeout={200}>
-            {documentGraphCircles}
-        </ReactCSSTransitionGroup>
-
         const hiddenModelsCount = this.hiddenModelsCount(totalObjectCount, nodes.length)
 
         const hiddenModelDom = !this.props.isExpanded && hiddenModelsCount > 0 ?
@@ -193,14 +186,8 @@ class TableOfContents extends React.Component {
         return <div className={`table-of-contents ${this.props.isTop ? 'top': 'bottom'} ${this.props.isExpanded ? 'expanded' : ''}`}
                     onMouseLeave={()=>this.props.toggleTableOfContents(this.props.documentKey, false, true)}
         >
-            <DocumentGraphLineSegments {...Object.assign({},
-                    modifiedProps,
-                    {viewboxWidth: this.props.containerWidth,
-                    viewboxHeight: this.props.containerHeight,
-                    lineRadius: 5,
-                    hiddenModelsCount}) } />
             <div className="document-graph-circles">
-                {documentGraphCircleGroup}
+                {documentGraphCircles}
                 {hiddenModelDom}
             </div>
         </div>

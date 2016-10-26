@@ -384,7 +384,6 @@ class Document extends Component {
      * Inject scene circles into the document div
      * This happens post render once we have create the scene anchors
      * Create a marker for each scene other than the first scene of the model or model group
-     * We don't mark the first scene because it's clearly marked by the start of the model or model group
      * @param documentDiv
      * @param sceneAnchors
      */
@@ -397,12 +396,10 @@ class Document extends Component {
         documentDiv.appendChild(list)
 
         sceneAnchors.forEach((sceneAnchor) => {
-            if (sceneAnchor.index != 0) {
-                var node = document.createElement("div");
-                node.className = 'toc-scene'
-                node.style.top = `${sceneAnchor.offsetTop}px`
-                list.appendChild(node)
-            }
+            var node = document.createElement("div");
+            node.className = 'toc-scene'
+            node.style.top = `${sceneAnchor.offsetTop}px`
+            list.appendChild(node)
         })
     }
 }
