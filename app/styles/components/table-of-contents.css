@@ -153,26 +153,6 @@
         }
     }
 
-    &.toc-scene {
-         left: -5px;
-         height: 2px;
-         width: 10px;
-         background: black;
-    }
-
-    &.hidden-model-count {
-        /*** Push the text away from the line **/
-        height: 10px;
-        margin-left: var(--hidden-model-count-margin-left);
-        font-size: calc(2 * var(--table-of-contents-font-size) / 3);
-        .outline {
-             font-size: var(--table-of-contents-font-size);
-             height: 10px;
-             margin-left: 2px;
-             border-radius: 5px;
-             padding: calc(var(--table-of-contents-outline-padding) * .4);
-        }
-    }
 }
 
 /***

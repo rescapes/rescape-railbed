@@ -54,11 +54,12 @@
     --header-top: 0;
     /*** Used for reference only **/
     --header-bottom: calc( var(--header-top) + var(--header-height) );
-    --rescape-icon-bottom: 5px;
+    --rescape-icon-bottom: 2px;
     --rescape-icon-height: calc(var(--header-height) - 10px);
     --header-links-bottom: 5px;
     --header-link-font-size: var(--h5-font-size);
-    --header-background: linear-gradient(to right, rgb(68,136,40), rgb(59, 117, 34));
+    --header-green-left: rgb(68, 136, 40);
+    --header-background: linear-gradient(to right, var(--header-green-left), rgb(59, 117, 34));
     --header-margin-left: 0;
     --header-margin-right: 0;
 
@@ -112,6 +113,7 @@
         We assume Google Docs names it's classes c1 - c9 and adjust the font-size
         only for small devices
     */
+    --document-subheader-font-size: 15pt;
     --document-font-size: 12pt;
     --document-line-height: 1.15;
 
@@ -163,7 +165,7 @@
         to be in the footer and the actual lightbox image to match the footer top
     */
 
-    --lightbox-footer-height: 20px;
+    --lightbox-footer-height: 40px;
     --lightbox-height: calc(100% - var(--header-height));
     --lightbox-left: calc(var(--showcase-left) - 5px);
     --lightbox-button-size: 40px;
