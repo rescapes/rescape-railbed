@@ -318,8 +318,8 @@ class Document extends Component {
         const regex = /<hr>/g,
             hrLength = '<hr>'.length,
             // The length of the spacer before and after each hr
-            hrSpacerRegexStart = /^((?:<p class="c\d+?"><span class="c\d+?"><\/span><\/p>)+)/,
-            hrSpacerRegexEnd = /((?:<p class="c\d+?"><span class="c\d+?"><\/span><\/p>)+)$/,
+            hrSpacerRegexStart = /^((?:<p class="c\d+(?: c\d+)*"><span class="c\d+?"><\/span><\/p>)+)/,
+            hrSpacerRegexEnd = /((?:<p class="c\d+(?: c\d+)*"><span class="c\d+?"><\/span><\/p>)+)$/,
             contentsDiv = '<div id="contents">',
             contentsDivLength = contentsDiv.length,
             // For the top of the document
@@ -364,11 +364,15 @@ class Document extends Component {
             const match = regex.exec(bodySlice)
             const anchorParts = match ? match.slice(1) : [`<a href='#${this.props.documentKey}'>`, '</a>']
             modifiedBody = modifiedBody.concat(
+                // Put in the anchor as a # mark
                 "<div class='model-section'>").concat(
-                    `${anchorParts[0]}<img class="bookmark-icon" src=${bookmark_png} />${anchorParts[1]}`)
+                    `${anchorParts[0]}#${anchorParts[1]}`)
+                // Everything else
                 .concat(
                     `${bodySlice.replace(regex, '')}</div>`
                 )
+                // Inject the space before the hr
+                .concat(startSpacerMatch ? startSpacerMatch[0] : '')
 
             // Store the index after the <hr>
             startLocation = result.index + hrLength
@@ -380,7 +384,7 @@ class Document extends Component {
      * Inject scene circles into the document div
      * This happens post render once we have create the scene anchors
      * Create a marker for each scene other than the first scene of the model or model group
-     * We don't mark the first scene because it's clearly marekd by the start of the model or model group
+     * We don't mark the first scene because it's clearly marked by the start of the model or model group
      * @param documentDiv
      * @param sceneAnchors
      */
@@ -395,7 +399,7 @@ class Document extends Component {
         sceneAnchors.forEach((sceneAnchor) => {
             if (sceneAnchor.index != 0) {
                 var node = document.createElement("div");
-                node.className = 'table-of-contents-node toc-scene'
+                node.className = 'toc-scene'
                 node.style.top = `${sceneAnchor.offsetTop}px`
                 list.appendChild(node)
             }

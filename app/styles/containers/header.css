@@ -18,41 +18,6 @@
     margin-left: var(--standard-left-margin)
 }
 
-.header-gradient {
-    position: absolute;
-    z-index: 7;
-    top: 0;
-    bottom: 0;
-    left:0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-
-    &.left {
-        background: linear-gradient(to left, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
-        width: 10px;
-        right: auto;
-}
-
-/* This gradient matches the overlap of the 3d model and document so that the 3d model
-fades away where ever the document overlaps */
-&.right {
-     background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
-     width: 10px;
-     left: auto;
- }
-&.top {
-     background: linear-gradient(to top, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
-     height: 10px;
-     bottom: auto;
- }
-&.bottom {
-     background: linear-gradient(to bottom, rgba(77, 78, 83,0), rgba(77, 78, 83,1));
-     height: 10px;
-     top: auto;
- }
-}
-
 .header-links {
     position: absolute;
     bottom: var(--header-links-bottom);

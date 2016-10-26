@@ -5,15 +5,13 @@
     doc with <hr> elements)
 ***/
 
-body {
-}
-
 /*
     If an overlay Document is showing like About or Contact, hide the main Document
 */
 .document {
     overflow-y: scroll;
     top: var(--document-top);
+    font-family: TrainStation;
     bottom: 0;
     left: var(--document-left);
     width: var(--document-width);
@@ -69,53 +67,33 @@ body {
     font-size: var(--h5-font-size);
 }
 
-.document-gradient {
-    top: var(--document-top);
-    position: fixed;
-    margin-right: var(--document-margin-left);
-    z-index: 2;
-    bottom: 0;
-    left:0;
-    right: 0;
-    width: var(--document-width);
-    height: var(--document-height);
-
-/* This gradient matches the overlap of the 3d model and document so that the 3d model
-fades away where ever the document overlaps */
-&.left {
-     background: linear-gradient(to left, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
-     width: 10px;
-     right: auto;
- }
-&.right {
-     background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
-     width: 10px;
-     left: auto;
- }
-&.top {
-     background: linear-gradient(to top, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
-     height: 10px;
-     bottom: auto;
- }
-&.bottom {
-     background: linear-gradient(to bottom, rgba(77, 78, 83,0), rgba(77, 78, 83,1));
-     height: 10px;
-     top: auto;
- }
-}
-
 /**
     This matches the classes google uses for the document text
     we only want to override the font size for small devices
 **/
 p,li,span {
 
-    &.c0,&.c1,&.c2,&.c3,&.c4,&.c5,&.c6,&.c7,&.c8,&.c9 {
-        font-family: SanSourcePro, sans-serif;
+    &.c0,&.c1,&.c2,&.c3,&.c5,&.c6,&.c7,&.c8,&.c9 {
+        font-family: var(--font-stack);
         font-size: var(--document-font-size);
         line-height: var(--document-line-height);
     }
+}
 
+h3 {
+    /** Document headers **/
+    &.c10, &.c11, &.c12 {
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        >span {
+            margin-left: 10px;
+            font-family: TrainStation;
+            font-size: var(--document-subheader-font-size);
+            line-height: var(--document-line-height);
+        }
+    }
 }
 
 /* This class is injected with divs to separate the documents by the 3d Model that goes with it */
@@ -149,10 +127,24 @@ p,li,span {
     font-size: var(--h5-font-size);
 }
 
-.bookmark-icon {
-    position: relative;
-    float: right;
-    margin-right: -8px;
-    margin-top: -8px;
-    height: 15px;
+.model-section {
+    >a {
+        position: relative;
+        float: left;
+    }
+}
+.scene-circles {
+}
+
+.toc-scene {
+    position: absolute;
+    right: 0px;
+    margin-right: 10px;
+    height: 10px;
+    width: 10px;
+    border-radius: 5px;
+    background: var(--gray);
+    &.active {
+        background: var(--header-green-left);
+    }
 }

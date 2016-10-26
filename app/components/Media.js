@@ -51,13 +51,14 @@ export default class Media extends Component {
                 },
             },
             arrow__size__medium: {
-                borderRadius: 40,
-                height: 40,
-                marginTop: -20,
+                borderRadius: 20,
+                height: 20,
+                marginTop: -10,
 
                 '@media (min-width: 768px)': {
-                    height: 70,
-                    padding: 15,
+                    width: 40,
+                    height: 40,
+                    padding: 10,
                 },
             },
             arrow__direction__left: { marginLeft: 0 },
