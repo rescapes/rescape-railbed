@@ -5,6 +5,11 @@
     doc with <hr> elements)
 ***/
 
+
+::-webkit-scrollbar {
+    display: none;
+}
+
 /*
     If an overlay Document is showing like About or Contact, hide the main Document
 */
@@ -18,6 +23,7 @@
     margin-top: 20px;
     z-index: 2;
     position: absolute;
+
 
     &.overlay-document-showing {
         display: none;
@@ -73,7 +79,7 @@
 **/
 p,li,span {
 
-    &.c0,&.c1,&.c2,&.c3,&.c5,&.c6,&.c7,&.c8,&.c9 {
+    &.c0,&.c1,&.c2,&.c4,&.c3,&.c5,&.c6,&.c7,&.c8,&.c9 {
         font-family: var(--font-stack);
         font-size: var(--document-font-size);
         line-height: var(--document-line-height);
@@ -82,13 +88,12 @@ p,li,span {
 
 h3 {
     /** Document headers **/
-    &.c10, &.c11, &.c12 {
+    &.c10, &.c11, &.c12, &.c13, &.c14, &.c15 {
         padding-top: 0;
         padding-bottom: 0;
         margin-top: 0;
         margin-bottom: 0;
         >span {
-            margin-left: 10px;
             font-family: TrainStation;
             font-size: var(--document-subheader-font-size);
             line-height: var(--document-line-height);
@@ -103,8 +108,8 @@ h3 {
     margin-bottom: 0;
     padding-top: 0;
     padding-bottom: 0;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 35px;
+    padding-right: 52px;
 }
 
 #header {
@@ -113,24 +118,25 @@ h3 {
 }
 .document-credit {
     color: var(--gray);
-    font-family: SanSourcePro, sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: var(--h5-font-size);
 }
 .author {
     color: var(--gray);
-    font-family: SanSourcePro, sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: var(--h5-font-size);
 }
 .document-date {
     color: var(--gray);
-    font-family: SanSourcePro, sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
     font-size: var(--h5-font-size);
 }
 
 .model-section {
     >a {
-        position: relative;
-        float: left;
+        position: absolute;
+        left: 15px;
+        margin-top: 4px;
     }
 }
 .scene-circles {
@@ -139,7 +145,7 @@ h3 {
 .toc-scene {
     position: absolute;
     right: 0px;
-    margin-right: 10px;
+    margin-right: 22px;
     height: 10px;
     width: 10px;
     border-radius: 5px;

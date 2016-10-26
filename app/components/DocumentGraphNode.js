@@ -53,8 +53,7 @@ export default class DocumentGraphNode extends React.Component {
 
 
             return <div className={`table-of-contents-node toc-document ${this.props.isExpanded ? 'expanded' : ''}`}
-                        key={node.key}
-                        style={{left: `${node.x}%`, top: `${node.y}%`}}>
+                        key={node.key} >
                 {documentCommentsButton}
                 <div ref="outline" className='outline'>
                     {node.key}
@@ -76,7 +75,7 @@ export default class DocumentGraphNode extends React.Component {
                 /> : <span/>
 
             // The current model
-            return <div className='table-of-contents-node toc-model-current' key={node.key} style={{left: `${node.x}%`, top: `${node.y}%`}}>
+            return <div className='table-of-contents-node toc-model-current' key={node.key} >
                 {modelCommentsButton}
                 <div className='outline'>
                     {node.key}
@@ -85,12 +84,12 @@ export default class DocumentGraphNode extends React.Component {
         }
         else if (['start', 'end'].includes(this.props.node.key)) {
             // A fake node representing the start/end of the line
-            return <div className='table-of-contents-node toc-end' key={node.key} style={{left: `${node.x}%`, top: `${node.y}%`}}>
+            return <div className='table-of-contents-node toc-end' key={node.key} >
             </div>
         }
         else {
             // All other model nodes
-            return <div className="table-of-contents-node toc-model" key={node.key} style={{left: `${node.x}%`, top: `${node.y}%`}}
+            return <div className="table-of-contents-node toc-model" key={node.key}
                         onClick={()=>this.props.scrollToModel(node.key)}
             >
                 <div className='outline'>
