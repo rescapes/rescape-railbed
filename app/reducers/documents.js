@@ -58,16 +58,20 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
      * Used by two reduces to register the current scroll position and find the closest anchors
      * @param documentKey
      * @param scrollPosition
+     * @param offset: Half the size of the document div, which is used to change scenes in the center of the div
      * @returns {*}
      */
-    var setScrollPosition = function (documentKey, scrollPosition) {
+    var setScrollPosition = function (documentKey, scrollPosition, offset) {
 
         // Filter out anchors with an undefined name, meaning they didn't match anything in our initial state
         // If a is closer the function will return <0, so a wins. If b is closer then >0 so b wins
-        const {current, next, previous, nextForDistinctModel, previousForDistinctModel} = getRelevantAnchors(scrollPosition)
+        const {current, next, previous, nextForDistinctModel, previousForDistinctModel} = getRelevantAnchors(
+            scrollPosition, documentKey, offset
+        )
 
         return state
             .setIn(['entries', documentKey, 'scrollPosition'], scrollPosition)
+            .setIn(['entries', documentKey, 'offset'], offset)
             .setIn(['entries', documentKey, 'closestAnchors'], Map({
                 current,
                 previous,
@@ -172,7 +176,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     // anchors represent different models (as opposed to different scenes)
     // The scrollPosition is recording in the state of the Document or the OverlayDocument if the latter is showing
     else if (action.type==actions.REGISTER_SCROLL_POSITION) {
-        return setScrollPosition(currentDocumentKey, action.position)
+        return setScrollPosition(currentDocumentKey, action.position, action.offset)
     }
     /**
      * Tracks if we are actively scrolling to a model.
@@ -182,48 +186,15 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         return state .setIn(['entries', currentDocumentKey, 'isScrolling'], action.isScrolling)
     }
     /***
-     * If incrementing the scroll position to the anchor of the next model
-     */
-    else if (action.type==actions.SCROLL_TO_NEXT_MODEL) {
-        // Get the current scroll position
-        const scrollPosition = state.getIn(['entries', currentDocumentKey, 'scrollPosition'])
-        const {nextForDistinctModel} = getRelevantAnchors(scrollPosition)
-        // Update it to that of the anchor of the next distinct model
-        // Scroll up a tad to make it look better
-        if (nextForDistinctModel)
-            return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], nextForDistinctModel.offsetTop - 20)
-    }
-    /***
-     * If decrementing the scroll position to the anchor of the position model
-     */
-    else if (action.type==actions.SCROLL_TO_PREVIOUS_MODEL) {
-        // Get the current scroll position
-        const scrollPosition = state.getIn(['entries', currentDocumentKey, 'scrollPosition'])
-
-        // The scroll up button goes first scene of the previous model (or current model if
-        // there is no previous)
-        const {previousForDistinctModel, previous} = getRelevantAnchors(scrollPosition)
-        const whichPrevious = previousForDistinctModel || previous
-        const modelKey = resolveModelKeyFromAnchor(whichPrevious)
-        const sceneAnchors = getSceneAnchors(currentDocumentKey)
-        // Start at 0 and search up until whichPrevious. Take the first model match
-        const firstSceneOfPrevious = sceneAnchors.slice(0, sceneAnchors.indexOf(whichPrevious)+1).find(function(anchor) {
-            const seek = resolveModelKeyFromAnchor(anchor)
-            return seek==modelKey
-        })
-        // Scroll to the previous model. Adjust a tad to make it look better
-        if (firstSceneOfPrevious) {
-            return state.setIn(['entries', currentDocumentKey, 'scrollPosition'], firstSceneOfPrevious.offsetTop - 20)
-        }
-    }
-    /***
      * Handles and action to scroll to the given model
      */
     else if (action.type==actions.SCROLL_TO_MODEL) {
         const document = state.getIn(['entries', currentDocumentKey])
         // Get the current scroll position
         const scrollPosition = document.get('scrollPosition')
-        const {previousForDistinctModel, previous} = getRelevantAnchors(scrollPosition)
+        const {previousForDistinctModel, previous} = getRelevantAnchors(
+            scrollPosition, currentDocumentKey, state.getIn(['entries', currentDocumentKey, 'offset'])
+        )
         // Use the model anchor
         const soughtModelAnchorModels = document.get('anchorToModels').entrySeq().find(([anchor, models]) =>
             anchor.get('name') == action.key
@@ -310,12 +281,13 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
      * scroll position in the document
      * @param scrollPosition
      * @param documentKey The current document
+     * @param offset Half the height of the document div, used to make our scene change position the middle
+     * of the div rather than the top
      * @returns {{current: *, previous: *, next: *, nextForDistinctModel: *, previousForDistinctModel: *}}
      */
-    function getRelevantAnchors(scrollPosition, documentKey) {
-        // Correct our scrollPosition to be down a bit
-        // The actual position right at the visible top of the document isn't ideal
-        const adjustedScrollPosition = scrollPosition + 50
+    function getRelevantAnchors(scrollPosition, documentKey, offset) {
+        // Correct our scrollPosition to be the middle of the document div
+        const adjustedScrollPosition = scrollPosition + offset
 
         documentKey = documentKey || currentDocumentKey
         const sceneAnchors = getSceneAnchors(documentKey)
@@ -357,7 +329,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             current
         )
 
-        /*console.log(`Scroll Position: ${scrollPosition}`)
+        console.log(`Scroll Position: ${adjustedScrollPosition}`)
         function nameAndPosition(anchor) {
             return `${anchor.name} ${anchor.offsetTop}`
         }
@@ -365,7 +337,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         console.log(`Previous: ${previous && nameAndPosition(previous)}`)
         console.log(`Current: ${current && nameAndPosition(current)}`)
         console.log(`Next: ${next && nameAndPosition(next)}`)
-        console.log(`Next Distinct: ${nextForDistinctModel && nameAndPosition(nextForDistinctModel)}`)*/
+        console.log(`Next Distinct: ${nextForDistinctModel && nameAndPosition(nextForDistinctModel)}`)
         return {current, previous, next, nextForDistinctModel, previousForDistinctModel}
     }
 

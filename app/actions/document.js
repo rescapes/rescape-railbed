@@ -155,9 +155,10 @@ export function registerAnchors(anchorToModels, sceneAnchors) {
  * Stores the scroll position in the state so the reducers can determine which anchor
  * is closest to the scroll postion, thus determining the current model and scene
  * @param position
+ * @param offset: Half the size of the div used to make the scene transition in the middle of the div (rather than the top)
  */
-export function registerScrollPosition(position) {
-    return { type: REGISTER_SCROLL_POSITION, position }
+export function registerScrollPosition(position, offset) {
+    return { type: REGISTER_SCROLL_POSITION, position, offset }
 }
 /***
  * Sets the scroll position to the next model away from the current scroll position

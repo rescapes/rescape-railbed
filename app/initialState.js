@@ -17,7 +17,7 @@ var amtrakStandardModels = OrderedMap({
     'AMTRAK Superliner': Map({
         status: Statuses.INITIALIZED,
         id: '2b495238-e77d-4edf-bb23-b186daf0640f',
-        anchorId: 'id.5ktmpvprnx88',
+        anchorId: 'id.kyro9gyfwbn7',
         videoId: 'S3Xf3gUZSKI',
         scenes: OrderedMap({ entries: Map({
             'Outside': Map({

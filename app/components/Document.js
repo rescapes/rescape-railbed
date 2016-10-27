@@ -26,8 +26,9 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import Scroll from 'react-scroll';
 import {getAnchorToModels, getSceneAnchors} from '../utils/documentHelpers'
 const scroll = Scroll.animateScroll;
-import bookmark_png from '../images_dist/bookmark-320.png'
 import config from '../config'
+import {currentSceneKeyOfModel} from '../utils/modelHelpers'
+import SceneCircles from './SceneCircles'
 
 class Document extends Component {
 
@@ -69,10 +70,6 @@ class Document extends Component {
      */
     componentDidUpdate() {
         this.indexAnchors()
-        if (this.props.sceneAnchors) {
-            // Once we have registered anchors add scene circles to the Document div
-            this.injectSceneCircles(this.documentDiv, this.props.sceneAnchors)
-        }
         // Add targets to external anchors since Google Docs won't do it
         const anchors = this.documentDiv.getElementsByTagName('a')
         var i;
@@ -134,7 +131,8 @@ class Document extends Component {
 
     /***
      * Whenever the scrollTop changes send an action so we can recalculate the closest anchor tag to the scroll
-     * position. A timer is used to prevent too many events from passing through
+     * position. We consider the scroll position the vertical center of the document div.
+     * A timer is used to prevent too many events from passing through
      * @param event: The scroll event. If undefined we get the scrollTop from the body element (which we
      * could do in any case)
      */
@@ -147,8 +145,9 @@ class Document extends Component {
         const now = new Date()
         if (now - (this.state && this.state.lastScrollTime || 0) > interval) {
             // Tell the reducers the scroll position so that they can determine what model and scene
-            // are current
-            this.props.registerScrollPosition(scrollTop)
+            // are current. The second argument is the half the height of the div; we change the current
+            // scene when we the scene marker is in the vertical center of the div
+            this.props.registerScrollPosition(scrollTop, this.documentDiv.offsetHeight/2)
             this.setState({lastScrollTime: now })
         }
     }
@@ -305,6 +304,7 @@ class Document extends Component {
             className={`${this.props.className || 'document'} ${this.props.overlayDocumentIsShowing ? 'overlay-document-showing' : ''}`}
             style={{visibility: 'hidden'}}
         >
+            <SceneCircles modelKey={this.props.modelKey} sceneKey={this.props.sceneKey} sceneAnchors={this.props.sceneAnchors} />
             <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
             </div>
         </div>
@@ -337,9 +337,12 @@ class Document extends Component {
         do {
             let bodyContent = null
             if (index == 0) {
+                // For the first segment we have to handle the content div, putting the header div
+                // inside of it
                 // <div id="content">
                 modifiedBody = body.slice(contentDivIndex, contentDivIndex + contentsDivLength)
                 // <div id="header>header</div>...spacer<hr> (not including spacer<hr>)
+                // the extra header html is stuff like the author and date
                 bodyContent = body.slice(0, contentDivIndex) +
                     extraHeaderHtml +
                     body.slice(contentDivIndex + contentsDivLength, result.index)
@@ -362,17 +365,20 @@ class Document extends Component {
             const bodySlice = bodyContent.slice(startSpacerIndex, endSpacerIndex)
             const regex = /(<a.*?>)(<\/a>)/
             const match = regex.exec(bodySlice)
+            // Grab the starting and ending <a> or create one for pages like Contact
             const anchorParts = match ? match.slice(1) : [`<a href='#${this.props.documentKey}'>`, '</a>']
             modifiedBody = modifiedBody.concat(
-                // Put in the anchor as a # mark
-                "<div class='model-section'>").concat(
-                    `${anchorParts[0]}#${anchorParts[1]}`)
-                // Everything else
+                // Inject the space before the hr
+                startSpacerMatch ? startSpacerMatch[0] : '')
+                .concat(
+                    // Put in the anchor as a # mark
+                    "<div class='model-section'>").concat(
+                        `${anchorParts[0]}#${anchorParts[1]}`
+                )
+                // Everything else without the anchor
                 .concat(
                     `${bodySlice.replace(regex, '')}</div>`
                 )
-                // Inject the space before the hr
-                .concat(startSpacerMatch ? startSpacerMatch[0] : '')
 
             // Store the index after the <hr>
             startLocation = result.index + hrLength
@@ -380,28 +386,7 @@ class Document extends Component {
         } while (result = regex.exec(body))
         return modifiedBody
     }
-    /***
-     * Inject scene circles into the document div
-     * This happens post render once we have create the scene anchors
-     * Create a marker for each scene other than the first scene of the model or model group
-     * @param documentDiv
-     * @param sceneAnchors
-     */
-    injectSceneCircles(documentDiv, sceneAnchors) {
-        const oldList = documentDiv.getElementsByClassName("scene-circles")[0];
-        if (oldList)
-            documentDiv.removeChild(oldList)
-        const list = document.createElement('div')
-        list.className = "scene-circles";
-        documentDiv.appendChild(list)
 
-        sceneAnchors.forEach((sceneAnchor) => {
-            var node = document.createElement("div");
-            node.className = 'toc-scene'
-            node.style.top = `${sceneAnchor.offsetTop}px`
-            list.appendChild(node)
-        })
-    }
 }
 
 Document.propTypes = {
@@ -444,11 +429,15 @@ function mapStateToProps(state) {
     const modelKeysInDocument = document && document.get('modelKeys')
     const anchorToModels = document.get('anchorToModels')
     const sceneAnchors = document.get('sceneAnchors')
+    const modelKey = state.getIn(['models', 'current'])
+    const sceneKey = currentSceneKeyOfModel(state.getIn(['models', 'entries', modelKey]))
     const location = state.getIn(['documents', 'location'])
     return {
         settings,
         document: document,
         documentKey,
+        modelKey,
+        sceneKey,
         overlayDocumentKeys,
         models: modelKeysInDocument &&
             state.getIn(['models', 'entries']).filter((value,key) => modelKeysInDocument.includes(key)),
