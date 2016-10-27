@@ -26,7 +26,6 @@ import {currentSceneKeyOfModel, checkIf3dSet} from '../utils/modelHelpers'
 import {getModelTops, calculateModelFadeAndToward} from '../utils/modelHelpers'
 import {Map} from 'immutable'
 import Model3dTitle from './Model3dTitle'
-import close_svg from '../images/close.svg'
 
 const {
     FacebookShareButton,
@@ -100,10 +99,7 @@ class Showcase extends Component {
         const is3dSet = checkIf3dSet(this.props.model, this.props.defaultIs3dSet)
         const toggle3d = !is3dSet ?
             <span className='toggle-3d-is-off' onClick={this.bindToggle3d(!is3dSet)}>explore 3D model</span> :
-            <span className='toggle-3d-is-on'>
-                <span>exit 3D model</span>
-                <img className='toggle-3d-is-on-icon' src={close_svg} onClick={this.bindToggle3d(!is3dSet)} />
-            </span>
+            <span className='toggle-3d-is-on' onClick={this.bindToggle3d(!is3dSet)}>exit 3D model</span>
         const modelCredits = <span className='model-credits'>
             <a target="credits" href={this.props.model.get('modelCreditUrl')}>model credits</a>
         </span>

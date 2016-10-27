@@ -19,6 +19,8 @@ var amtrakStandardModels = OrderedMap({
         id: '2b495238-e77d-4edf-bb23-b186daf0640f',
         anchorId: 'id.kyro9gyfwbn7',
         videoId: 'S3Xf3gUZSKI',
+        // We don't show a subheader for this model in the document because it's at the top
+        noSubheading: true,
         scenes: OrderedMap({ entries: Map({
             'Outside': Map({
             }),
@@ -71,6 +73,8 @@ var amtrakStandardModels = OrderedMap({
         id: '9b7bbfe8-2ad5-4074-ae81-7bc0645dfce9',
         videoId: 'vzRX6L4zK6s',
         anchorId: 'id.bc4p3rsjqez8',
+        // We don't show a subheader for this model in the document because it's at the top
+        noSubheading: true,
         scenes: OrderedMap({ entries: Map({
             'Seating': Map({
             }),
@@ -195,7 +199,7 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'CNN'
             }),
             'Funicular': Map({
-                caption: "Feniculars like this classic one in Budapest, Hungary are also a viable fixed-guideway option for hills and mountains",
+                caption: "Funiculars like this classic one in Budapest, Hungary are also a viable fixed-guideway option for hills and mountains",
                 sourceImageUrl: 'http://www.budapest.com/w/assignables/galleries/51/funicular_02.jpg',
                 sourceUrl: 'http://www.budapest.com/city_guide/sights/monuments_of_art/buda_castle_funicular.en.html',
                 credit: 'Budapest.com'

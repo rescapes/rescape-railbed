@@ -30,6 +30,7 @@ import {normalizeKeyToFilename} from '../utils/fileHelpers'
  *      commentsAreShowing: null,
  *      commentsHaveShown: null,
  *      sceneTransitionTime: null,
+ *      noSubheading: null,
  *      entries: {
  *      }
  *  } (default): No model is loaded and no model has stored state
@@ -50,6 +51,7 @@ import {normalizeKeyToFilename} from '../utils/fileHelpers'
  *         status: on of actions.Statuses
  *         url: the complete url of the 3d model
  *         videoUrl: the complete video url of the 3d model
+ *         noSubheading: true if the document doesn't have a subheading for this model, like the first model,
  *         scenes: {
  *            keys: [known scene keys of the model] 
  *            current: the current scene of this model

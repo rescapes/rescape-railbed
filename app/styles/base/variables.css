@@ -56,6 +56,7 @@
     --header-bottom: calc( var(--header-top) + var(--header-height) );
     --rescape-icon-bottom: 5px;
     --rescape-icon-height: calc(var(--header-height) - 15px);
+    --header-links-color: var(--gray);
     --header-links-bottom: 5px;
     --header-link-font-size: var(--h5-font-size);
     --header-green-left: rgb(68, 136, 40);
@@ -67,7 +68,6 @@
         Footer bar settings
     **/
     --footer-height: 75px;
-    --showcase-footer-overlap: 50px;
 
 
     /**
@@ -121,7 +121,7 @@
     /*
         Make the showcase extend half way into the footer
     */
-    --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
+    --showcase-height: calc(100% - var(--footer-height));
     --showcase-left: calc(var(--table-of-contents-width) + var(--document-width));
     --showcase-right: 10px;
 
@@ -235,8 +235,7 @@
         --header-bottom: calc( var(--header-top) + var(--header-height) );
         --rescape-icon-height: var(--header-height);
         --footer-height: calc(2 * var(--factor) * var(--footer-height));
-        --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
-        --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
+        --showcase-height: calc(100% - var(--footer-height));
         --model-3d-top: calc(var(--header-height));
         --gallery-thumbnail-width: calc(2 * var(--factor) * var(--gallery-thumbnail-width));
         --gallery-thumbnail-height: calc(2 * var(--factor) * var(--gallery-thumbnail-height));
@@ -279,8 +278,7 @@
         --header-bottom: calc( var(--header-top) + var(--header-height) );
         --rescape-icon-height: var(--header-height);
         --footer-height: calc(var(--factor) * var(--footer-height));
-        --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
-        --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
+        --showcase-height: calc(100% - var(--footer-height));
         --model-3d-top: calc(var(--header-height));
         --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
         --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));
@@ -322,8 +320,6 @@
         --header-bottom: calc( var(--header-top) + var(--header-height) );
         --rescape-icon-height: var(--header-height);
         --footer-height: calc(var(--factor) * var(--footer-height));
-        --showcase-footer-overlap: calc(var(--factor) * var(--showcase-footer-overlap));
-        --showcase-height: calc(100% - var(--footer-height) + var(--showcase-footer-overlap));
         --model-3d-top: calc(var(--header-height));
         --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
         --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));

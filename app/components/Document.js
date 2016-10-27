@@ -304,7 +304,12 @@ class Document extends Component {
             className={`${this.props.className || 'document'} ${this.props.overlayDocumentIsShowing ? 'overlay-document-showing' : ''}`}
             style={{visibility: 'hidden'}}
         >
-            <SceneCircles modelKey={this.props.modelKey} sceneKey={this.props.sceneKey} sceneAnchors={this.props.sceneAnchors} />
+            <SceneCircles
+                models={this.props.models}
+                modelKey={this.props.modelKey}
+                sceneKey={this.props.sceneKey}
+                sceneAnchors={this.props.sceneAnchors}
+            />
             <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
             </div>
         </div>
@@ -367,12 +372,15 @@ class Document extends Component {
             const match = regex.exec(bodySlice)
             // Grab the starting and ending <a> or create one for pages like Contact
             const anchorParts = match ? match.slice(1) : [`<a href='#${this.props.documentKey}'>`, '</a>']
+            // A couple models have no subheading displayed, so add a class to indicate it
+            // Start at index==1 since index 0 is not a model but the document title
+            const noSubheading = index > 0 && this.props.models.toIndexedSeq().get(index - 1).get('noSubheading')
             modifiedBody = modifiedBody.concat(
                 // Inject the space before the hr
                 startSpacerMatch ? startSpacerMatch[0] : '')
                 .concat(
                     // Put in the anchor as a # mark
-                    "<div class='model-section'>").concat(
+                   `<div class="model-section${noSubheading ? ' no-subheading':''}">`).concat(
                         `${anchorParts[0]}#${anchorParts[1]}`
                 )
                 // Everything else without the anchor
@@ -394,6 +402,7 @@ Document.propTypes = {
     document: ImmutablePropTypes.map,
     documentKey: PropTypes.string,
     overlayDocumentKeys: ImmutablePropTypes.list,
+    model: ImmutablePropTypes.map,
     models: ImmutablePropTypes.map,
     scrollPosition: PropTypes.number,
     // Tell the document if an overlay document is covering it
@@ -430,12 +439,14 @@ function mapStateToProps(state) {
     const anchorToModels = document.get('anchorToModels')
     const sceneAnchors = document.get('sceneAnchors')
     const modelKey = state.getIn(['models', 'current'])
-    const sceneKey = currentSceneKeyOfModel(state.getIn(['models', 'entries', modelKey]))
+    const model = state.getIn(['models', 'entries', modelKey])
+    const sceneKey = currentSceneKeyOfModel(model)
     const location = state.getIn(['documents', 'location'])
     return {
         settings,
         document: document,
         documentKey,
+        model,
         modelKey,
         sceneKey,
         overlayDocumentKeys,
