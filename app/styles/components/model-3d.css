@@ -26,81 +26,40 @@ iframe {
 
     &.current {
         display: block;
-        &.solo {
-            transition: top 1s ease, bottom 1s ease;
-        }
-        &.duo {
-            transition: top 1s ease, bottom 1s ease;
-        }
     }
     &.previous {
-        display: none;
-        top: -200%;
+        visibility: hidden;
+        opacity: 0;
         &.active {
-            display: block;
-            transition: top 1s ease, bottom 1s ease;
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 1s ease;
         }
         &.inactive {
-            transition: top 1s ease, bottom 1s ease, display 1s ease;
+            transition: opacity 1s ease, visibility 1s ease;
         }
     }
     &.next {
-        display: none;
-        top: 200%;
+        visibility: hidden;
+        opacity: 0;
         &.active {
-            display: block;
-            transition: top 1s ease, bottom 1s ease;
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 1s ease;
         }
         &.inactive {
-            transition: top 1s ease, bottom 1s ease, display 1s ease;
+            transition: opacity 1s ease, visibility 1s ease;
         }
-    }
-}
-.model-3d-iframe {
-    width: calc(100% - var(--model-3d-document-overlap) - 10px);
-}
-.model-3d-video {
-
-}
-
-.model-3d-gradient {
-    position: absolute;
-    z-index: 1;
-    top: 0;
-    bottom: 0;
-    left:0;
-    right: 0;
-    width: var(--model-3d-width);
-    height: var(--showcase-3d-height);
-
-    &.left {
-        background: linear-gradient(to left, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
-        width: 10px;
-        right: auto;
-    }
-     /* This gradient matches the overlap of the 3d model and document so that the 3d model
-     fades away where ever the document overlaps */
-    &.right {
-         background: linear-gradient(to right, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
-         width: var(--model-3d-document-overlap);
-         left: auto;
-    }
-    &.top {
-        background: linear-gradient(to top, rgba(77, 78, 83, 0), rgba(77, 78, 83, 1));
-        height: 10px;
-        bottom: auto;
-    }
-    &.bottom {
-        background: linear-gradient(to bottom, rgba(77, 78, 83,0), rgba(77, 78, 83,1));
-        height: 10px;
-        top: auto;
     }
 }
 
 .model-video {
-   position: absolute;
+    position: absolute;
     width: 100%;
     height: 100%;
+    &.sketchup-active {
+        display: none;
+    }
 }
 
 .video {
@@ -118,6 +77,8 @@ video {
 
 .model-3d-help {
     position: absolute;
+    margin-top: 2px;
+    margin-left: 2px;
     top: 0;
     left: 0;
 
@@ -128,8 +89,10 @@ video {
     border-color: var(--rescape-love);
     border-radius: 5px;
     >p {
-         color: var(--gray);
-     }
+        font-family: var(--font-stack);
+        font-size: 10px;
+        color: var(--header-green-left);
+    }
 }
 
 

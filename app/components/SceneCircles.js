@@ -11,20 +11,31 @@
 
 import React, { Component, PropTypes } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import {Map, OrderedMap, List} from 'immutable'
+import {Map} from 'immutable'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 /***
  * Absolute positioned scene markers that go alongside the document
- * The current model/scene is marked active
+ * The current model/scene is marked active. We also mark the first scene of a model that has no subheading
+ * in the document with no-subheading
  */
 export default class SceneCircles extends Component {
 
     render() {
-        const sceneCircles = (this.props.sceneAnchors || []).map(sceneAnchor =>
-            <div key={sceneAnchor.name} className={`toc-scene${sceneAnchor.name == [this.props.modelKey, this.props.sceneKey].join('_') ?
-                ' active' : ''}`}
-                 style={{top:`${sceneAnchor.offsetTop}px`}} />,
-            this)
+        // Wait for the model to be active
+        if (!this.props.modelKey)
+            return <div className="scene-circles"/>
+
+        const sceneCircles = (this.props.sceneAnchors || []).map(function(sceneAnchor) {
+            const [modelKey, sceneKey] = sceneAnchor.name.split('_')
+            const active = sceneAnchor.name == [this.props.modelKey, this.props.sceneKey].join('_') ? ' active' : ''
+            const noSubheading = this.props.models.get(modelKey).get('noSubheading') &&
+                    this.props.models.get(modelKey).getIn(['scenes', 'entries']).keySeq().indexOf(sceneKey)==0 ?
+                ' no-subheading': ''
+            return <div key={sceneAnchor.name}
+                className={`toc-scene${active}${noSubheading}`}
+                style={{top:`${sceneAnchor.offsetTop}px`}} />
+        }, this)
         return <div className="scene-circles">
                 {sceneCircles}
         </div>
@@ -32,6 +43,7 @@ export default class SceneCircles extends Component {
 }
 
 SceneCircles.propTypes = {
+    models: ImmutablePropTypes.map,
     modelKey: PropTypes.string,
     sceneKey: PropTypes.string,
     sceneAnchors: PropTypes.array

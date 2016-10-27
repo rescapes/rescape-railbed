@@ -12,17 +12,15 @@
 import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom'
 import {connect} from 'react-redux'
-import Iframe from './Iframe'
 import * as actions from '../actions/model'
 import * as documentActions from '../actions/document'
 import * as settingsActions from '../actions/settings'
 import Statuses from '../statuses'
 import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import ModelVideo from './ModelVideo'
+import ModelAndVideo from './ModelAndVideo'
 import {currentSceneKeyOfModel, checkIf3dSet} from '../utils/modelHelpers'
 import {isSeeking} from '../utils/documentHelpers'
-import config from '../config'
 
 // This garbage has to be done to force webpack to know about all the media files
 var req = require.context('../videos/', true, /\.(webm)$/)
@@ -173,15 +171,6 @@ class Model3d extends Component {
     }
 
     /***
-     * When no current scene is active or when the model first loads in the iframe, go to the first scene
-     * TODO. Not sure if this is needed since a loaded model has a default camera view
-     */
-    firstScene() {
-        document.querySelectorAll('div.viewer-scene-option')[0].click()
-    }
-
-
-    /***
      * Renders the model in an iframe. By setting the url we commence model loading here
      * @returns {XML}
      */
@@ -201,96 +190,9 @@ class Model3d extends Component {
         // We don't want to set the url of the iframe or video until it is desired to load a certain model
         // (e.g. when it is the current model or about to become the current one)
         // Once the model is loaded, we never want to unload it by clearing its URL
-        const iframes = (modelLoadingOrReady && modelEntries) ? modelEntries.map(function (iterModel, modelKey) {
-            const status = iterModel.get('status')
-            const isAlreadyLoaded = !!(status & loadingOrReady)
-            const isCurrentModel = model == iterModel
-            const modelRelevance = Map({
-                current: isCurrentModel,
-                previous: !isCurrentModel && modelKey == models.get('previous'),
-                next: !isCurrentModel && modelKey == models.get('next'),
-            })
-            // Node the relevance if any
-            const relevance = modelRelevance.findKey((value, key)=>value) || null
-
-            // When the previous/next model anchor is closer than the current, we want to show the closer
-            // model above/below the current model to create a scroll-controlled transition effect
-            const divClass = `model-3d ${relevance || ''} `.trim()
-            var divStateClass = null
-            if (relevance == 'current') {
-                // Track whether the current is on its own or showing with previous or next
-                // We do this just to animate the transit of the 'top' property
-                divStateClass = modelTops['previous'] || modelTops['next'] ? 'duo' : 'solo'
-            }
-            else {
-                // Otherwise see if the previous or next is visible
-                // We do this just to animate the transit of the 'top' property
-                divStateClass = modelTops[relevance] ? 'active' : 'inactive'
-            }
-
-            // If this iframe has relevance then set the top style to the percent of relevance
-            const style = relevance && modelTops[relevance] ? {
-                top: `${Math.round(modelTops[relevance]*100)}%`,
-                bottom: `${-1 * Math.round(modelTops[relevance]*100)}%`,
-            } : {}
-
-
-            // Determine whether to show the 3d model or video
-            let model3dPresentation = null
-            const is3dSet = checkIf3dSet(iterModel, this.props.defaultIs3dSet)
-            if (is3dSet) {
-                // If it's already loaded, current, or in the loading queue (previous or next model), set the URL
-                // Setting the url of the iframe forces it to load if not yet loaded
-                // TODO. We should add more intelligence to not load next/previous until current is fully loaded
-                const url = iterModel.get('url')
-                const iframeUrl = (isAlreadyLoaded || relevance) ? url : null
-
-                model3dPresentation = <div>
-                    <span className='model-3d-help'>
-                        <p>Scroll to zoom (z)</p>
-                        <p>Drag to orbit (o)</p>
-                        <p>Shift-Drag to pan (h)</p>
-                        <p>Right-side button for scenes</p>
-                    </span>
-                    <Iframe className="model-3d-iframe" key={modelKey}
-                        src={iframeUrl}
-                        name={`iframe_${modelKey}`}
-                        onLoad={this.frameDidLoad.bind(this)}
-                    />
-                </div>
-            }
-            else {
-                // The videoUrl is that of the model if already loaded, current, or in the loading queue
-                const videoUrl = iterModel.get('videoUrl')
-                // The Youtube video id
-                const videoId = iterModel.get('videoId')
-                const sceneKey =  currentSceneKeyOfModel(iterModel)
-                // Get the time to play the video to transition from one scene to the next
-                const sceneTransitionTime = iterModel.get('sceneTransitionTime') || config.SCENE_TRANSITION_TIME
-                const sceneIndex = (iterModel.getIn(['scenes', 'entries']) || Map()).keySeq().indexOf(sceneKey)
-                // We need to transition from the last scene (or position) to the current scene
-                const start = (sceneIndex-1 >= 0 ? sceneIndex-1 : 0) * sceneTransitionTime,
-                      end = (sceneIndex >=0 ? sceneIndex : 0) * sceneTransitionTime
-
-                model3dPresentation = <ModelVideo
-                    className="model-3d-video"
-                    key={modelKey}
-                    videoUrl={videoUrl}
-                    videoId={videoId}
-                    start={start}
-                    end={end}
-                    scrollDirection={this.state.scrollDirection}
-                    isSeeking={this.props.isSeeking}
-                    isCurrentModel={iterModel==model}
-                />
-            }
-
-
-            // Return the iframe or video wrapped in a div. The div must have a unique key for React
-            return <div key={modelKey} className={`${divClass} ${divStateClass}`} style={style}>
-                { model3dPresentation }
-            </div>
-        }, this).toArray() : [];
+        const iframes = (modelLoadingOrReady && modelEntries) ? modelEntries.map((iterModel, modelKey) =>
+            <ModelAndVideo model={iterModel} models={models} modelKey={modelKey} modelTops={modelTops} currentModel={model} scrollDirection={this.state.scrollDirection}/>, this
+        ).toArray() : [];
 
         // Our final product is the list of iframes. All have the same styling except that only
         // the one of the current model is visible

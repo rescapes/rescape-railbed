@@ -40,36 +40,8 @@ class App extends Component {
         }
     }
 
-
     render() {
-        if (!isBrowser()['isSafari']) {
-            return <DeviceOrientation lockOrientation={'landscape'}>
-                {/* Will only be in DOM in landscape */}
-                <Orientation orientation='landscape' alwaysRender={false}>
-                    {React.cloneElement(this.props.children, {})}
-                </Orientation>
-                {/* Will stay in DOM, but is only visible in portrait */}
-                <Orientation orientation='portrait' alwaysRender={false}>
-                    <div>
-                        {React.cloneElement(this.props.children, {})}
-                        <div className="please-rotate"><span>Please rotate your device</span></div>
-                    </div>
-                </Orientation>
-            </DeviceOrientation>
-        }
-        else {
-            switch (this.props.orientation) {
-                case undefined:
-                case -90:
-                case 90:
-                    return React.cloneElement(this.props.children, {})
-                default:
-                    return <div>
-                        {React.cloneElement(this.props.children, {})}
-                        <div className="please-rotate"><span>Please rotate your device</span></div>
-                    </div>
-            }
-        }
+        return React.cloneElement(this.props.children, {})
     }
 };
 

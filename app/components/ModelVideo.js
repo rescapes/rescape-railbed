@@ -86,7 +86,7 @@ class ModelVideo extends Component {
      */
     render() {
         if (!this.props.videoUrl)
-            return <div className="model-video"/>
+            return <div className={this.props.className} />
 
         const opts = {
             playerVars: {
@@ -100,7 +100,7 @@ class ModelVideo extends Component {
             }
         };
 
-        return <div key={this.props.videoId} className="model-video">
+        return <div key={this.props.videoId} className={this.props.className}>
             <YouTube
                 videoId={this.props.videoId}
                 className='model-video-youtube'
@@ -121,7 +121,8 @@ ModelVideo.propTypes = {
     scrollDirection: PropTypes.string,
     // If true this means we are seeking through the videos or a document overlay is present, so don't play anything
     isDisabled: PropTypes.bool,
-    isCurrentModel: PropTypes.bool
+    isCurrentModel: PropTypes.bool,
+    className: PropTypes.string
 }
 
 export default ModelVideo
