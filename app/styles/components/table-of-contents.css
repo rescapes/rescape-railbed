@@ -124,18 +124,18 @@
         .outline {
             font-size: var(--table-of-contents-font-size);
             line-height: 1.0;
-            color: #64c83a;
+            color: var(--table-of-contents-current-color);
         }
     }
 
     &.toc-model {
-        &:hover {
-            cursor: pointer;
-            color: white;
-        }
         .outline {
             font-size: var(--table-of-contents-font-size);
             line-height: 1.0;
+            &:hover {
+                cursor: pointer;
+                color: white;
+            }
         }
     }
 

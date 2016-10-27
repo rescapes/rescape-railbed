@@ -54,8 +54,8 @@
     --header-top: 0;
     /*** Used for reference only **/
     --header-bottom: calc( var(--header-top) + var(--header-height) );
-    --rescape-icon-bottom: 2px;
-    --rescape-icon-height: calc(var(--header-height) - 10px);
+    --rescape-icon-bottom: 5px;
+    --rescape-icon-height: calc(var(--header-height) - 15px);
     --header-links-bottom: 5px;
     --header-link-font-size: var(--h5-font-size);
     --header-green-left: rgb(68, 136, 40);
@@ -87,8 +87,7 @@
 
     --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
     --table-of-contents-outline-padding: 5px;
-    --hidden-model-count-margin-left: -65px;
-
+    --table-of-contents-current-color: #64c83a;
 
     --document-top: var(--header-bottom);
     --document-height: calc( 100% - var(--footer-height) );
@@ -103,7 +102,8 @@
     /*
         Overlay documents (About, Contact, etc) are wider because they lack showcase stuff
     */
-    --overlay-document-left: calc(var(--document-left) - 200px);
+    --overlay-document-left: 0;
+    --overlay-document-width: calc(var(--document-left) + var(--document-width));
     /*
         We inject this title and header into the Google Doc so we control the style
     */
@@ -264,7 +264,6 @@
         --model-3d-title-font-size: calc(1.5 * var(--factor) * var(--model-3d-title-font-size));
         --model-3d-title-height: calc(1.5 * var(--factor) * var(--model-3d-title-height));
         --header-link-font-size: calc(.8 * var(--factor) * var(--header-link-font-size));
-        --hidden-model-count-margin-left: calc(var(--factor) * var(--hidden-model-count-margin-left));
         --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
         --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
         --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
@@ -308,7 +307,6 @@
         --model-3d-title-font-size: calc(var(--factor) * var(--model-3d-title-font-size));
         --model-3d-title-height: calc(var(--factor) * var(--model-3d-title-height));
         --header-link-font-size: calc(var(--factor) * var(--header-link-font-size));
-        --hidden-model-count-margin-left: calc(var(--factor) * var(--hidden-model-count-margin-left));
         --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
         --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
         --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
@@ -353,7 +351,6 @@
         --model-3d-title-font-size: calc(var(--factor) * var(--model-3d-title-font-size));
         --model-3d-title-height: calc(var(--factor) * var(--model-3d-title-height));
         --header-link-font-size: calc(var(--factor) * var(--header-link-font-size));
-        --hidden-model-count-margin-left: calc(var(--factor) * var(--hidden-model-count-margin-left));
         --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
         --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
         --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
