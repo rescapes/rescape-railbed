@@ -20,7 +20,7 @@
     bottom: 0;
     left: var(--document-left);
     width: var(--document-width);
-    margin-top: 20px;
+    margin-top: 15px;
     z-index: 2;
     position: absolute;
 
@@ -80,27 +80,22 @@
     This matches the classes google uses for the document text
     we only want to override the font size for small devices
 **/
-p,li,span {
-
-    &.c0,&.c1,&.c2,&.c4,&.c3,&.c5,&.c6,&.c7,&.c8,&.c9 {
-        font-family: var(--font-stack);
-        font-size: var(--document-font-size);
-        line-height: var(--document-line-height);
-    }
+p,li,span[class^="c"] {
+    font-family: var(--font-stack);
+    font-size: var(--document-font-size);
+    line-height: var(--document-line-height);
 }
 
-h3 {
+h3[class^="c"] {
     /** Document headers **/
-    &.c10, &.c11, &.c12, &.c13, &.c14, &.c15 {
-        padding-top: 0;
-        padding-bottom: 0;
-        margin-top: 0;
-        margin-bottom: 0;
-        >span {
-            font-family: TrainStation;
-            font-size: var(--document-subheader-font-size);
-            line-height: var(--document-line-height);
-        }
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    >span {
+        font-family: TrainStation;
+        font-size: var(--document-subheader-font-size);
+        line-height: var(--document-line-height);
     }
 }
 

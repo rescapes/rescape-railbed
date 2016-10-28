@@ -26,6 +26,7 @@ export const LOAD_MODEL = 'LOAD_MODEL'
 export const RECEIVE_MODEL = 'RECEIVE_MODEL'
 export const MODEL_ERRED = 'MODEL_ERRED'
 export const SHOW_MODEL = 'SHOW_MODEL'
+export const REGISTER_MODEL_CENTER = 'REGISTER_MODEL_CENTER'
 
 export const TOGGLE_MODEL_COMMENTS = 'TOGGLE_MODEL_COMMENTS'
 export const TOGGLE_MODEL_3D = 'TOGGLE_MODEL_3D'
@@ -81,7 +82,7 @@ class ModelLoader extends ActionLoader {
 
     /***
      * Indicates that the model is being received. 
-     * Since the iframe loads the content, the Model3d component will call this when the iframe finishes loading
+     * Since the iframe loads the content, the ModelAndVideos component will call this when the iframe finishes loading
      * The content is thus always null
      * @param key: The key of the model
      * @param content: The content if there were any
@@ -108,7 +109,7 @@ class ModelLoader extends ActionLoader {
 
     /***
      * Override to not actually fetch. We let the iframe do the loading to prevent cross-domain madness.
-     * We do nothing here and expect the Model3d code to call our exposed receive method
+     * We do nothing here and expect the ModelAndVideos code to call our exposed receive method
      * @param dispatch
      * @param entryKey
      * @param url
@@ -131,8 +132,8 @@ class ModelLoader extends ActionLoader {
 }
 
 /***
- * Toggles the Model3d's is3dSet value
- * @param key: The Model3d key
+ * Toggles the ModelAndVideos's is3dSet value
+ * @param key: The ModelAndVideos key
  * @param force: Force a certain value, true or false
  */
 export function toggleModel3d(key, force) {
@@ -140,8 +141,8 @@ export function toggleModel3d(key, force) {
 }
 
 /***
- * Toggles the Model3d's comments on and off
- * @param key: The Model3d key
+ * Toggles the ModelAndVideos's comments on and off
+ * @param key: The ModelAndVideos key
  * @param force: Force a certain value, true or false
  */
 export function toggleModelComments(key, force) {
@@ -194,9 +195,17 @@ export function registerModel(key) {
     return { type: REGISTER_MODEL, key }
 }
 
+/***
+ * Reports the center of the model3d frame so that the document knows what the scene change point i
+ * @param position
+ */
+export function registerModelCenter(position) {
+    return { type: REGISTER_MODEL_CENTER, position}
+}
+
 // Export the public methods of the ModelLoader
 const modelLoader = new ModelLoader()
 export const showModel = modelLoader.show.bind(modelLoader)
 export const fetchModelIfNeeded = modelLoader.fetchIfNeeded.bind(modelLoader)
-// We expose this so that we can call it from the Model3d component when the iframe finishes loading
+// We expose this so that we can call it from the ModelAndVideos component when the iframe finishes loading
 export const receiveModel = modelLoader.receive.bind(modelLoader)

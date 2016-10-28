@@ -14,7 +14,7 @@ import Iframe from './Iframe'
 import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import ModelVideo from './ModelVideo'
-import {currentSceneKeyOfModel, checkIf3dSet} from '../utils/modelHelpers'
+import {currentSceneKeyOfModel} from '../utils/modelHelpers'
 import config from '../config'
 import Statuses from '../statuses'
 
@@ -26,12 +26,13 @@ export default class ModelAndVideo extends Component {
      */
     render() {
         const modelTops = this.props.modelTops
+        const model = this.props.model
         const models = this.props.models
         const modelKey = this.props.modelKey
         const loadingOrReady = Statuses.LOADING | Statuses.READY
-        const status = this.props.model.get('status')
+        const status = model.get('status')
         const isAlreadyLoaded = !!(status & loadingOrReady)
-        const isCurrentModel = this.props.currentModel == this.props.model
+        const isCurrentModel = this.props.currentModel == model
         const modelRelevance = Map({
             current: isCurrentModel,
             previous: !isCurrentModel && modelKey == models.get('previous'),
@@ -55,21 +56,13 @@ export default class ModelAndVideo extends Component {
             divStateClass = modelTops[relevance] ? 'active' : 'inactive'
         }
 
-        // If this iframe has relevance then set the top style to the percent of relevance
-        const style = relevance && modelTops[relevance] ? {
-            top: `${Math.round(modelTops[relevance] * 100)}%`,
-            bottom: `${-1 * Math.round(modelTops[relevance] * 100)}%`,
-        } : {}
-
-
         // Determine whether to show the 3d model or video
         let model3dSketchup = <span/>
-        const is3dSet = checkIf3dSet(this.props.model, this.props.defaultIs3dSet)
-        if (is3dSet) {
+        if (this.props.is3dSet) {
             // If it's already loaded, current, or in the loading queue (previous or next model), set the URL
             // Setting the url of the iframe forces it to load if not yet loaded
             // TODO. We should add more intelligence to not load next/previous until current is fully loaded
-            const url = this.props.get('url')
+            const url = model.get('url')
             const iframeUrl = (isAlreadyLoaded || relevance) ? url : null
 
             model3dSketchup = [
@@ -82,24 +75,25 @@ export default class ModelAndVideo extends Component {
                 <Iframe className="model-3d-iframe" key={modelKey}
                         src={iframeUrl}
                         name={`iframe_${modelKey}`}
-                        onLoad={this.frameDidLoad.bind(this)}
                 />]
         }
 
         // The videoUrl is that of the model if already loaded, current, or in the loading queue
-        const videoUrl = this.props.model.get('videoUrl')
+        const videoUrl = model.get('videoUrl')
         // The Youtube video id
-        const videoId = this.props.model.get('videoId')
-        const sceneKey = currentSceneKeyOfModel(this.props.model)
+        const videoId = model.get('videoId')
+        const sceneKey = currentSceneKeyOfModel(model)
         // Get the time to play the video to transition from one scene to the next
-        const sceneTransitionTime = this.props.model.get('sceneTransitionTime') || config.SCENE_TRANSITION_TIME
-        const sceneIndex = (this.props.model.getIn(['scenes', 'entries']) || Map()).keySeq().indexOf(sceneKey)
+        const sceneTransitionTime = model.get('sceneTransitionTime') || config.SCENE_TRANSITION_TIME
+        const sceneIndex = (model.getIn(['scenes', 'entries']) || Map()).keySeq().indexOf(sceneKey)
         // We need to transition from the last scene (or position) to the current scene
         const start = (sceneIndex - 1 >= 0 ? sceneIndex - 1 : 0) * sceneTransitionTime,
             end = (sceneIndex >= 0 ? sceneIndex : 0) * sceneTransitionTime
 
+        // We always render the ModelVideo so that it doesn't have to reload if we toggle Sketchup on and off
+        // If Sketchup is active we use a class name to make it invisible
         const model3dVideo = <ModelVideo
-            className={`model-video${is3dSet ? ' sketchup-active' : ''}`}
+            className={`model-video${this.props.is3dSet ? ' sketchup-active' : ''}`}
             key={modelKey}
             videoUrl={videoUrl}
             videoId={videoId}
@@ -111,8 +105,8 @@ export default class ModelAndVideo extends Component {
         />
 
 
-        // Return the iframe or video wrapped in a div. The div must have a unique key for React
-        return <div key={this.props.modelKey} className={`${divClass} ${divStateClass}`} style={style}>
+        // Return the optional Sketchup and video wrapped in a div. The div must have a unique key for React
+        return <div key={modelKey} className={`${divClass} ${divStateClass}`} >
             { model3dVideo }
             { model3dSketchup }
         </div>
@@ -125,6 +119,7 @@ ModelAndVideo.propTypes = {
     modelKey: PropTypes.string,
     modelTops: PropTypes.object,
     currentModel: ImmutablePropTypes.map,
-    scrollDirection: PropTypes.string
+    scrollDirection: PropTypes.string,
+    is3dSet: PropTypes.bool
 }
 

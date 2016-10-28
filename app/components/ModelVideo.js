@@ -69,10 +69,14 @@ class ModelVideo extends Component {
      * @returns {boolean}
      */
     shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.documentIsScrolling)
+            return false
+
         return !this.state || !this.state.player ||
             this.props.start != nextProps.start ||
             this.props.end != nextProps.end ||
-            nextProps.isCurrentModel && !this.props.isCurrentModel
+            nextProps.isCurrentModel && !this.props.isCurrentModel ||
+            nextProps.className != this.props.className
     }
 
     componentDidUpdate() {
@@ -122,7 +126,8 @@ ModelVideo.propTypes = {
     // If true this means we are seeking through the videos or a document overlay is present, so don't play anything
     isDisabled: PropTypes.bool,
     isCurrentModel: PropTypes.bool,
-    className: PropTypes.string
+    className: PropTypes.string,
+    documentIsScrolling: PropTypes.bool
 }
 
 export default ModelVideo

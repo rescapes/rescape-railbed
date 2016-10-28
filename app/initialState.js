@@ -123,11 +123,11 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Smoothness and Comfort of Travel': Map({
+    'Smoothness & Comfort of Travel': Map({
         status: Statuses.INITIALIZED,
         id: '419df1d2-949f-4e60-adbc-59da24a5c6ce',
         videoId: 'NSSX8nh0uoU',
-        anchorId: 'id.2y8fqiblaq2h',
+        anchorId: 'id.gb6gqppdt1ee',
         scenes: OrderedMap({ entries: Map({
             'All Transit': Map({
             }),
@@ -322,7 +322,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Space and Seat Comfort (Metro and Tram)': Map({
+    'Space & Seat Comfort (Metro and Tram)': Map({
         status: Statuses.INITIALIZED,
         videoId: 'a3uqlomIX1I',
         id: 'f3ad4189-7150-4048-a4c9-c3e9652e9482',
@@ -384,7 +384,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Space and Seat Comfort (AMTRAK and Bus)': Map({
+    'Space & Seat Comfort (AMTRAK and Bus)': Map({
         status: Statuses.INITIALIZED,
         id: '843cbe82-5a4a-4453-9766-488049133e9d',
         anchorId: 'id.em6st57x7wbe',
@@ -435,7 +435,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Personal Space and Privacy': Map({
+    'Personal Space & Privacy': Map({
         status: Statuses.INITIALIZED,
         id: '268c95fd-8a33-4636-bf72-ceaff2c1e997',
         videoId: 'jn9FTIrR0sk',
@@ -658,7 +658,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Personal Transportation and Freight (AMTRAK)': Map({
+    'Personal Transportation & Freight (AMTRAK)': Map({
         status: Statuses.INITIALIZED,
         id: '659a315f-97b4-4a9c-8a29-4ca5f6e8cbac',
         videoId: 'eEtg-TZSNpA',
@@ -698,7 +698,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Personal Transportation and Freight (Metro)': Map({
+    'Personal Transportation & Freight (Metro)': Map({
         status: Statuses.INITIALIZED,
         id: '04163027-d8a3-4912-9997-0f30573fd0fc',
         videoId: 'h81Q3QmAm04',
@@ -731,7 +731,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Personal Transportation and Freight (Tram)': Map({
+    'Personal Transportation & Freight (Tram)': Map({
         status: Statuses.INITIALIZED,
         id: 'f04baa96-4c29-43ab-9f51-c8520c907d25',
         videoId: 'rxJW-0bQY64',
@@ -764,7 +764,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Personal Transportation and Freight (Bus)': Map({
+    'Personal Transportation & Freight (Bus)': Map({
         status: Statuses.INITIALIZED,
         id: 'eaaae7b6-5a68-4f3e-a9f0-21ba35ec73b7',
         videoId: 'n0BbZ2BcA9s',
@@ -818,7 +818,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Station and Stop Amenities (Inside)': Map({
+    'Station & Stop Amenities (Inside)': Map({
         status: Statuses.INITIALIZED,
         id: '731899d7-02b7-4f47-9a3b-7ae84454e0c7',
         videoId: '9yBM8mTY670',
@@ -868,7 +868,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Station and Stop Amenities (Outside Poor)': Map({
+    'Station & Stop Amenities (Outside Poor)': Map({
         status: Statuses.INITIALIZED,
         id: '87320bcf-05d7-4df9-8e51-f5c1e8ed82d1',
         videoId: '6PkubgWJI6I',
@@ -914,7 +914,7 @@ var amtrakStandardModels = OrderedMap({
         }),
     }),
 
-    'Station and Stop Amenities (Outside Improved)': Map({
+    'Station & Stop Amenities (Outside Improved)': Map({
         status: Statuses.INITIALIZED,
         id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
         videoId: '3dTxvOKwGrs',
