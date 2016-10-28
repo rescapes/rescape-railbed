@@ -26,6 +26,7 @@ import config from '../config'
  *      baseUrl: null,
  *      postUrl: null,
  *      location: null,
+ *      sceneChangePosition: null,
  *      entries: {
  *      }
  *  } (default): The documents is not loaded 
@@ -35,6 +36,8 @@ import config from '../config'
  *   baseUrl: base url of the documents, the url of the entry completes the url
  *   siteUrl: base url of the blog site, the postUrl of the entry completes the url
  *   location: The Router location object, used for reading the presence of a hash in the URL
+ *   sceneChangePosition: The center of position of the model frame, which indicates at what scroll offset
+ *   of the document we should change scenes or models
  *   entries: {
  *      [documents key]: {
  *         status: one of Statuses
@@ -169,6 +172,11 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             .setIn(['entries', currentDocumentKey, 'anchorToModels'], action.anchorToModels)
             .setIn(['entries', currentDocumentKey, 'sceneAnchors'], action.sceneAnchors)
     }
+
+    // The Model component tells us what position it's center is. This let's us set up the scene change position
+    else if (action.type==modelActions.REGISTER_MODEL_CENTER) {
+        return state.set('sceneChangePosition', action.position)
+    }
     // Sets the scroll position and closest anchor. The models reducer reacts to this by setting
     // the current model and scene based on the model or scene matching the anchor.
     // Also set the distance from the scroll position to the closest anchor, previous anchor, and next anchor.
@@ -176,7 +184,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
     // anchors represent different models (as opposed to different scenes)
     // The scrollPosition is recording in the state of the Document or the OverlayDocument if the latter is showing
     else if (action.type==actions.REGISTER_SCROLL_POSITION) {
-        return setScrollPosition(currentDocumentKey, action.position, action.offset)
+        return setScrollPosition(currentDocumentKey, action.position, action.offset || 0)
     }
     /**
      * Tracks if we are actively scrolling to a model.

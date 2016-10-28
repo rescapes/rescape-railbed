@@ -14,7 +14,7 @@
  */
 
 import React, { Component, PropTypes } from 'react'
-import Model from './Model3d'
+import ModelAndVideos from './ModelAndVideos'
 import Media from './Media'
 import {connect} from 'react-redux'
 import ImmutablePropTypes from 'react-immutable-proptypes'
@@ -110,7 +110,7 @@ class Showcase extends Component {
                 { modelCredits }
                 { toggle3d }
             </span>
-            <Model model={model} modelKey={this.props.modelKey} modelTops={modelTops} toward={toward} />
+            <ModelAndVideos model={model} modelKey={this.props.modelKey} modelTops={modelTops} toward={toward} />
             <Media media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
             <div className={`share-icons ${fade} ${toward}`}>
                 {SHARE_BUTTONS.map(function(shareButton, i) {

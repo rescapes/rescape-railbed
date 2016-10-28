@@ -10,7 +10,6 @@
  */
 
 import React, {Component, PropTypes} from 'react'
-import ReactDOM from 'react-dom'
 import {connect} from 'react-redux'
 import * as actions from '../actions/model'
 import * as documentActions from '../actions/document'
@@ -28,7 +27,7 @@ req.keys().forEach(function(key){
     req(key);
 })
 
-class Model3d extends Component {
+class ModelAndVideos extends Component {
     /***
      * This seems like the place to bind methods (?)
      * @param props
@@ -46,9 +45,8 @@ class Model3d extends Component {
      * text. It could be any 3d model since the URL loaded might have an anchor
      */
     componentDidMount() {
-        const {dispatch, url} = this.props
-        if (this.refs.iframe)
-            this.refs.iframe.getDOMNode().addEventListener('load', this.frameDidLoad);
+        // Report the position of the middle of the model
+        this.props.registerModelCenter(this.model3dsDiv.offsetTop + this.model3dsDiv.offsetHeight/2)
 
         // Load the current, previous, and next models
         // These might all be present depending on the position at which we loaded the document
@@ -65,20 +63,8 @@ class Model3d extends Component {
     }
 
     componentDidUpdate() {
-    }
-
-    /***
-     * Call the receive action when the frame loads
-     * TODO this is firing too early. We need it to fire when the embedded model if fully loaded
-     * We probably need to check the status of the 3d model network resource or tap into the js of the loader code
-     * @param event
-     */
-    frameDidLoad(event) {
-        this.props.receiveModel(this.props.modelKey)
-        const sceneKey = this.currentSceneKey()
-        // Once loaded change the scene if one is specified
-        if (sceneKey)
-            this.changeScene(this.props.model, sceneKey)
+        // Report the position of the middle of the model
+        this.props.registerModelCenter(this.model3dsDiv.offsetTop + this.model3dsDiv.offsetHeight/2)
     }
 
     /***
@@ -92,7 +78,8 @@ class Model3d extends Component {
     componentWillReceiveProps(nextProps) {
         const nextModels = nextProps.models,
             models = this.props.models;
-        if (!models)
+        // Never load models while we are seeking a model, meaning isDisabled is true
+        if (!models || this.props.isDisabled)
             return
 
         ['current', 'previous', 'next', 'previousForDistinctModel', 'nextForDistinctModel'].forEach(function(key) {
@@ -118,17 +105,6 @@ class Model3d extends Component {
 
         // Set the current model and scene
         const nextModelKey = props.modelKey
-        const modelChanged = this.props.modelKey != nextModelKey
-        const sceneKey = this.currentSceneKey()
-        const nextSceneKey = props.model && props.model.getIn(['scenes', 'current'])
-        // If the model changed or the scene changed
-        // and the next model has a READY status, we can also set the scene to the current scene calling
-        // an action on the scene panel within the iframe. Otherwise we set the scene in frameDidLoad
-        if (nextModelKey && nextSceneKey &&
-            props.model.get('status') == Statuses.READY &&
-            (modelChanged || sceneKey != nextSceneKey)) {
-            this.changeScene(props.model, nextSceneKey)
-        }
 
         // Figure out if we are scrolling forward or backward based on model state
         const direction = (props.scrollPosition || 0) - (this.props.scrollPosition || 0)
@@ -138,36 +114,6 @@ class Model3d extends Component {
             this.setState({scrollDirection: 'backward'})
         else
             this.setState({scrollDirection: null})
-    }
-
-    /***
-     * Returns the current scene key of the current model
-     */
-    currentSceneKey() {
-        return this.props.model && this.props.model.getIn(['scenes', 'current'])
-    }
-
-
-    /***
-     * Changes the scene of the 3D model in the iframe to the scene with the given key
-     * @param model
-     * @param sceneKey
-     */
-    changeScene(model, sceneKey) {
-
-        if (checkIf3dSet(model, this.props.defaultIs3dSet)) {
-            // TODO not working do to cross domain security
-            const dom = ReactDOM.findDOMNode(this).children['iframe']
-            if (!dom)
-                return
-            const sceneDiv = dom.querySelectorAll(`div.viewer-scene-option[title="${sceneKey}"]`)[0]
-            if (sceneDiv) {
-                sceneDiv.click()
-            }
-        }
-        else {
-
-        }
     }
 
     /***
@@ -191,26 +137,36 @@ class Model3d extends Component {
         // (e.g. when it is the current model or about to become the current one)
         // Once the model is loaded, we never want to unload it by clearing its URL
         const iframes = (modelLoadingOrReady && modelEntries) ? modelEntries.map((iterModel, modelKey) =>
-            <ModelAndVideo model={iterModel} models={models} modelKey={modelKey} modelTops={modelTops} currentModel={model} scrollDirection={this.state.scrollDirection}/>, this
+            <ModelAndVideo
+                key={modelKey}
+                model={iterModel}
+                models={models}
+                modelKey={modelKey}
+                modelTops={modelTops}
+                currentModel={model}
+                scrollDirection={this.state.scrollDirection}
+                is3dSet={checkIf3dSet(iterModel, this.props.defaultIs3dSet)}
+                isDisabled={this.props.isDisabled}
+            />,
+            this
         ).toArray() : [];
 
         // Our final product is the list of iframes. All have the same styling except that only
         // the one of the current model is visible
-        return <div className="model-3ds">
+        return <div ref={(c) => this.model3dsDiv = c} className="model-3ds">
             {iframes}
         </div>
     }
 
 }
 
-Model3d.propTypes = {
+ModelAndVideos.propTypes = {
     settings: ImmutablePropTypes.map,
     models: ImmutablePropTypes.map,
     defaultIs3dSet: PropTypes.bool,
     documentKey: PropTypes.string,
     scrollPosition: PropTypes.number,
     modelKey: PropTypes.string,
-    is3dSet: PropTypes.bool,
     sceneKey: PropTypes.string,
     // This is from the parent, not the state
     modelTops: PropTypes.object,
@@ -227,8 +183,6 @@ function mapStateToProps(state) {
     // Pass modelKey and sceneKey so that React recalculates the current
     // scene when it changes
     const modelKey = models.get('current')
-    // Note if 3d is set for the current model
-    const is3dSet = models.getIn(['entries', modelKey, 'is3dSet'])
     const sceneKey = currentSceneKeyOfModel(models.getIn(['entries', modelKey]))
     // Are we currently seeking the desired document position
     const isDisabled = isSeeking(document) || !!state.getIn(['documents', 'currentOverlay'])
@@ -239,7 +193,6 @@ function mapStateToProps(state) {
         models,
         defaultIs3dSet,
         sceneKey,
-        is3dSet,
         isDisabled
     }
 }
@@ -247,5 +200,5 @@ function mapStateToProps(state) {
 export default connect(
     mapStateToProps,
     Object.assign(actions, documentActions, settingsActions)
-)(Model3d)
+)(ModelAndVideos)
 

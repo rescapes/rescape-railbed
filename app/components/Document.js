@@ -94,7 +94,7 @@ class Document extends Component {
     }
 
     /***
-     * Get the Model3d anchor elements. The models have an anchorId that corresponds to one of the anchor ids
+     * Get the ModelAndVideos anchor elements. The models have an anchorId that corresponds to one of the anchor ids
      * in the document HTML. Related models share the same anchor. We create pseudo-anchors for each scene
      * of the models, giving the pseudo-anchors an offset that evenly spaces them. If models share the same anchor,
      * we spread the pseudo-anchors for all the scenes of the shared models evenly.
@@ -147,7 +147,7 @@ class Document extends Component {
             // Tell the reducers the scroll position so that they can determine what model and scene
             // are current. The second argument is the half the height of the div; we change the current
             // scene when we the scene marker is in the vertical center of the div
-            this.props.registerScrollPosition(scrollTop, this.documentDiv.offsetHeight/2)
+            this.props.registerScrollPosition(scrollTop, this.props.sceneChangePosition)
             this.setState({lastScrollTime: now })
         }
     }
@@ -245,8 +245,8 @@ class Document extends Component {
         else if (
             nextProps.document.get('scrollPosition') != this.props.scrollPosition &&
             nextProps.document.get('scrollPosition') != this.documentDiv.scrollTop) {
-            // Scroll in 100 ms. This updates the this.documentDiv.scrollTop incrementally to the value
-            this.scrollTo(nextProps.document.get('scrollPosition'), 100)
+            // Scroll to the position
+            this.scrollTo(nextProps.document.get('scrollPosition'))
         }
     }
 
@@ -442,6 +442,7 @@ function mapStateToProps(state) {
     const model = state.getIn(['models', 'entries', modelKey])
     const sceneKey = currentSceneKeyOfModel(model)
     const location = state.getIn(['documents', 'location'])
+    const sceneChangePosition = state.getIn(['documents', 'sceneChangePosition'])
     return {
         settings,
         document: document,
@@ -455,7 +456,8 @@ function mapStateToProps(state) {
         scrollPosition,
         anchorToModels,
         sceneAnchors,
-        location
+        location,
+        sceneChangePosition
     }
 }
 

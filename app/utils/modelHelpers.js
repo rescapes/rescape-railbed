@@ -12,7 +12,7 @@ import {Map} from 'immutable'
 import config from '../config'
 
 /**
- * Gets the current Scene key of the given Model3d used when iterating through all models
+ * Gets the current Scene key of the given ModelAndVideos used when iterating through all models
  * @param model
  * @returns {*}
  */
@@ -21,7 +21,7 @@ export function currentSceneKeyOfModel(model) {
 }
 
 /**
- * The current Scene of the given Model3d
+ * The current Scene of the given ModelAndVideos
  * @param model
  * @returns {*}
  */
