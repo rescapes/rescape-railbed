@@ -46,6 +46,7 @@ import {normalizeKeyToFilename} from '../utils/fileHelpers'
  *   commentsAreShowing: true if the comments are open for this model, otherwise null or false
  *   commentsHaveShown: true if commentsAreShowing has been true for this model. This helps us cache the comments,
  *   sceneTransitionTime: Override the default scene transition time for models with long transitions
+ *   noComments: True if no comment button should be shown for this model. Only true of the first couple models
  *   entries: {
  *      model key: {
  *         status: on of actions.Statuses

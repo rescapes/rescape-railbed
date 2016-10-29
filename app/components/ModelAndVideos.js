@@ -87,7 +87,7 @@ class ModelAndVideos extends Component {
                 const modelKeyToLoad = (nextModels || models).get(key)
                 if (modelKeyToLoad)
                     this.props.fetchModelIfNeeded(modelKeyToLoad)
-                // Make sure comments are off for the current model and the documnet if we are changing current
+                // Make sure comments are off for the current model and the document if we are changing current
                 if (key=='curent') {
                     this.props.toggleModelComments(models.get(key), false)
                     this.props.toggleDocumentComments(this.props.documentKey, false)
@@ -191,6 +191,7 @@ function mapStateToProps(state) {
         documentKey,
         scrollPosition,
         models,
+        modelKey,
         defaultIs3dSet,
         sceneKey,
         isDisabled

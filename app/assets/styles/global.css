@@ -60,3 +60,21 @@
     src: url('../fonts/TrainStation.ttf');
     src: local('TrainStation');
 }
+@font-face {
+    font-family: 'TrainStation';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/strongvoid-webfont.woff2') format('woff2'),
+    url('../fonts/strongvoid-webfont.woff') format('woff'),
+    url('../fonts/strongvoid-webfont.ttf') format('truetype');
+    unicode-range: U+26-26
+}
+
+@font-face {
+    font-family: 'Strong Void';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/strongvoid-webfont.woff2') format('woff2'),
+    url('../fonts/strongvoid-webfont.woff') format('woff'),
+    url('../fonts/strongvoid-webfont.ttf') format('truetype');
+}
