@@ -622,7 +622,7 @@ var amtrakStandardModels = OrderedMap({
         })}),
         media: OrderedMap({
             'Munich U-Bahn Inspection': Map({
-                caption: "On board ticket inspection on the Munich Ü-Bahn (metro system)",
+                caption: "On board ticket inspection on the Munich U-Bahn (metro system)",
                 sourceImageUrl: 'http://polpix.sueddeutsche.com/bild/1.997485.1356593680/900x600/ein-kontrolleur-muenchner-verkehrsgesellschaft-mvg-muenchner-ubahn.jpg',
                 sourceUrl: 'http://www.sueddeutsche.de/muenchen/muenchner-tatsachen-verruchte-boazn-und-eine-geheimmission-1.1142794-5',
                 credit: 'Süddeutsche Zeitung',
@@ -660,7 +660,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Personal Transportation and Freight (AMTRAK)': Map({
+    'Active Transportation and Freight (AMTRAK)': Map({
         status: Statuses.INITIALIZED,
         id: '659a315f-97b4-4a9c-8a29-4ca5f6e8cbac',
         videoId: 'eEtg-TZSNpA',
@@ -700,7 +700,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Personal Transportation and Freight (Metro)': Map({
+    'Active Transportation and Freight (Metro)': Map({
         status: Statuses.INITIALIZED,
         id: '04163027-d8a3-4912-9997-0f30573fd0fc',
         videoId: 'h81Q3QmAm04',
@@ -733,7 +733,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Personal Transportation and Freight (Tram)': Map({
+    'Active Transportation and Freight (Tram)': Map({
         status: Statuses.INITIALIZED,
         id: 'f04baa96-4c29-43ab-9f51-c8520c907d25',
         videoId: 'rxJW-0bQY64',
@@ -766,7 +766,7 @@ var amtrakStandardModels = OrderedMap({
         })
     }),
 
-    'Personal Transportation and Freight (Bus)': Map({
+    'Active Transportation and Freight (Bus)': Map({
         status: Statuses.INITIALIZED,
         id: 'eaaae7b6-5a68-4f3e-a9f0-21ba35ec73b7',
         videoId: 'n0BbZ2BcA9s',

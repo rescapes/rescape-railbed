@@ -88,7 +88,7 @@ class ModelAndVideos extends Component {
                 if (modelKeyToLoad)
                     this.props.fetchModelIfNeeded(modelKeyToLoad)
                 // Make sure comments are off for the current model and the document if we are changing current
-                if (key=='curent') {
+                if (key=='current') {
                     this.props.toggleModelComments(models.get(key), false)
                     this.props.toggleDocumentComments(this.props.documentKey, false)
                 }
