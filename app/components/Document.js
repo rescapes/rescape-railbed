@@ -29,6 +29,8 @@ const scroll = Scroll.animateScroll;
 import config from '../config'
 import {currentSceneKeyOfModel} from '../utils/modelHelpers'
 import SceneCircles from './SceneCircles'
+import CommentsButton from './CommentsButton'
+import {normalizeModelName} from '../utils/modelHelpers'
 
 class Document extends Component {
 
@@ -296,7 +298,7 @@ class Document extends Component {
         // The only processing we do to the Google doc HTML is the following:
         // 1) Replace pairs of <hr> elements with <div className='modelSection'>...</div>
         // This allows us to style each portion of the doc to match a corresponding 3D model
-        let modifiedBody = this.injectStyledDivWrappers(body, this.getExtraHeaderHtml())
+        const modifiedBody = this.injectStyledDivWrappers(body, this.getExtraHeaderHtml())
 
         // Set style to keep the contents invisible until componentDidUpdate
         return <div
@@ -310,8 +312,7 @@ class Document extends Component {
                 sceneKey={this.props.sceneKey}
                 sceneAnchors={this.props.sceneAnchors}
             />
-            <div dangerouslySetInnerHTML={{__html: modifiedBody }}>
-            </div>
+            {modifiedBody}
         </div>
     }
 
@@ -320,11 +321,12 @@ class Document extends Component {
      * which part of the text corresponds to which 3d model
      */
     injectStyledDivWrappers(body, extraHeaderHtml) {
+
         const regex = /<hr>/g,
             hrLength = '<hr>'.length,
             // The length of the spacer before and after each hr
-            hrSpacerRegexStart = /^((?:<p class="c\d+(?: c\d+)*"><span class="c\d+?"><\/span><\/p>)+)/,
-            hrSpacerRegexEnd = /((?:<p class="c\d+(?: c\d+)*"><span class="c\d+?"><\/span><\/p>)+)$/,
+            hrSpacerRegexStart = /^((?:<p class="c\d+(?: c\d+)*"><span class="c\d+(?: c\d+)*"><\/span><\/p>)+)/,
+            hrSpacerRegexEnd = /((?:<p class="c\d+(?: c\d+)*"><span class="c\d+(?: c\d+)*"><\/span><\/p>)+)$/,
             contentsDiv = '<div id="contents">',
             contentsDivLength = contentsDiv.length,
             // For the top of the document
@@ -333,11 +335,13 @@ class Document extends Component {
 
 
         var index = 0,
-            modifiedBody = null,
+            outerElement = null,
+            elements = [],
             startLocation = null,
             // Look for <hr> tags separating the document. If there are none make a pseudo
             // one representing the whole document except for the div footer
-            result = regex.exec(body) || {index: body.indexOf('<div id="footer">')}
+            result = regex.exec(body) || {index: body.indexOf('<div id="footer">')},
+            modelEntries = this.props.models.entrySeq()
         // For each <hr> or for the single pseudo one
         do {
             let bodyContent = null
@@ -345,7 +349,7 @@ class Document extends Component {
                 // For the first segment we have to handle the content div, putting the header div
                 // inside of it
                 // <div id="content">
-                modifiedBody = body.slice(contentDivIndex, contentDivIndex + contentsDivLength)
+                outerElement = body.slice(contentDivIndex, contentDivIndex + contentsDivLength)
                 // <div id="header>header</div>...spacer<hr> (not including spacer<hr>)
                 // the extra header html is stuff like the author and date
                 bodyContent = body.slice(0, contentDivIndex) +
@@ -375,24 +379,50 @@ class Document extends Component {
             // A couple models have no subheading displayed, so add a class to indicate it
             // Start at index==1 since index 0 is not a model but the document title
             const noSubheading = index > 0 && this.props.models.toIndexedSeq().get(index - 1).get('noSubheading')
-            modifiedBody = modifiedBody.concat(
-                // Inject the space before the hr
-                startSpacerMatch ? startSpacerMatch[0] : '')
-                .concat(
-                    // Put in the anchor as a # mark
-                   `<div class="model-section${noSubheading ? ' no-subheading':''}">`).concat(
-                        `${anchorParts[0]}#${anchorParts[1]}`
-                )
-                // Everything else without the anchor
-                .concat(
-                    `${bodySlice.replace(regex, '')}</div>`
-                )
+            // Inject the space before the hr
+            if (startSpacerMatch)
+                elements.push(<span key={`${index}-spacer`} dangerouslySetInnerHTML={{__html:startSpacerMatch[0]}} />)
+
+            const anchorRegex = /id=(?:'|")(.+?)(?:'|")/
+            const anchorIdMatch = anchorRegex.exec(anchorParts[0])
+            const anchorId = anchorIdMatch && anchorIdMatch[1]
+            let modelKey = null, model = null, modelTitle = null
+            if (anchorId) {
+                [modelKey, model] = modelEntries.find(([modelKey, model]) => model.get('anchorId') == anchorId)
+                modelTitle = normalizeModelName(modelKey, model)
+            }
+            const modelCommentsButton = model && !model.get('noComments') ?
+                <CommentsButton
+                    key={modelTitle}
+                    modelTitle={modelTitle}
+                    documentTitle={this.props.documentTitle}
+                    documentKey={this.props.documentKey}
+                    document={this.props.document}
+                /> :
+                (!model ? <CommentsButton
+                    key={this.props.documentKey}
+                    document={this.props.document}
+                    documentKey={this.props.documentKey}
+                    documentTitle={this.props.documentTitle}
+                /> :
+                <span key={modelTitle}/>)
+            // Put in the anchor as a # mark
+            elements.push(
+                <div key={`${index}-model-section`} className={`model-section${noSubheading ? ' no-subheading':''}`}>
+                    {modelCommentsButton}
+                    <span
+                        dangerouslySetInnerHTML={{__html:
+                            `${anchorParts[0]}#${anchorParts[1]}${bodySlice.replace(regex, '')}`
+                        }}
+                    />
+                </div>
+            )
 
             // Store the index after the <hr>
             startLocation = result.index + hrLength
             index++
         } while (result = regex.exec(body))
-        return modifiedBody
+        return <div id="content">{elements}</div>
     }
 
 }
@@ -434,6 +464,7 @@ function mapStateToProps(state) {
         document.get('isHeaderDocument')
     ).keySeq().toList()
     const document = state.getIn(['documents', 'entries', documentKey])
+    const documentTitle = document && document.get('title')
     const scrollPosition = document && document.get('scrollPosition')
     const modelKeysInDocument = document && document.get('modelKeys')
     const anchorToModels = document.get('anchorToModels')
@@ -446,6 +477,7 @@ function mapStateToProps(state) {
     return {
         settings,
         document: document,
+        documentTitle,
         documentKey,
         model,
         modelKey,

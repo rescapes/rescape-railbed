@@ -16,7 +16,7 @@
 .document {
     overflow-y: scroll;
     top: var(--document-top);
-    font-family: TrainStation;
+    font-family: var(--header-font-stack);
     bottom: 0;
     left: var(--document-left);
     width: var(--document-width);
@@ -80,7 +80,7 @@
     This matches the classes google uses for the document text
     we only want to override the font size for small devices
 **/
-p,li,span[class^="c"] {
+p[class^="c"],ol[class^="c"],li[class^="c"],span[class^="c"] {
     font-family: var(--font-stack);
     font-size: var(--document-font-size);
     line-height: var(--document-line-height);
@@ -93,7 +93,7 @@ h3[class^="c"] {
     margin-top: 0;
     margin-bottom: 0;
     >span {
-        font-family: TrainStation;
+        font-family: var(--header-font-stack);
         font-size: var(--document-subheader-font-size);
         line-height: var(--document-line-height);
     }
@@ -101,6 +101,7 @@ h3[class^="c"] {
 
 /* This class is injected with divs to separate the documents by the 3d Model that goes with it */
 .model-section {
+    position: relative;
     background: white;
     margin-top: 0;
     margin-bottom: 0;
@@ -109,7 +110,7 @@ h3[class^="c"] {
     padding-left: 35px;
     padding-right: 52px;
 
-    >a {
+    >span>a {
         position: absolute;
         left: 15px;
         margin-top: 4px;
@@ -117,21 +118,24 @@ h3[class^="c"] {
     }
      /*** A couple model sections at the start lack a subheading, so don't adjust the a to match the ***/
     &.no-subheading {
-        >a {
+        >span>a {
             margin-top: 0;
         }
     }
     &:hover {
         &.no-subheading {
-            >a {
+            >span>a {
                 margin-top: 0;
             }
         }
-        >a {
+        >span>a {
             position: absolute;
             left: 15px;
             margin-top: 4px;
             visibility: visible;
+        }
+        >.comment-counter {
+            display: block;
         }
     }
 }
@@ -142,29 +146,31 @@ h3[class^="c"] {
 }
 .document-credit {
     color: var(--gray);
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: var(--font-stack);
     font-size: var(--h5-font-size);
 }
 .author {
     color: var(--gray);
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: var(--font-stack);
     font-size: var(--h5-font-size);
 }
 .document-date {
     color: var(--gray);
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: var(--font-stack);
     font-size: var(--h5-font-size);
 }
 
 .scene-circles {
+    z-index: 5;
 }
 
 .toc-scene {
+    z-index: 5;
     position: absolute;
     right: 0px;
-    margin-top: 4px;
+    margin-top: 8px;
     &.no-subheading {
-        marginp-top: 0;
+        margin-top: 0;
     }
     margin-right: 22px;
     height: 10px;

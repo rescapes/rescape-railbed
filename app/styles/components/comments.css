@@ -4,56 +4,52 @@
     position: fixed;
     z-index: 10;
     &.showing {
-        margin-left: 10px;
-        top: calc(var(--model-3d-top));
+        top: calc(var(--header-height) + 5px);
         left: var(--showcase-left);
         right: var(--showcase-right);
-        height: var(--document-height);
+        height: calc(var(--showcase-height));
     }
 }
 
 .disqus-close-icon {
     position: absolute;
     top: 2px;
-    height: 24px;
-    width: 24px;
+    height: 15px;
+    width: 15px;
     right: 0px;
     padding: 2px;
     &:hover {
          cursor: pointer;
-         width: 30px;
-         height: 30px;
-         transition: width 300ms ease, height 300ms ease
+         transform: scale(1.2);
     }
 }
 
 .disqus-comment-count {
-
+    display: none;
 }
 
 .comment-description {
 
 }
 
-
 .disqus-comment-thread-container {
     position: absolute;
-    top: 0px;
-    bottom: var(--footer-height);
-    left: 0px;
-    right: 0px;
-    background-color: color(var(--black) alpha(90%));
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: color(var(--rescape-love) alpha(90%));
 }
 
 .disqus-comment-thread-header {
-    height: 30px;
+    height: var(--header-height);
 }
 
 .disqus-comment-thread {
     position: absolute;
     padding: 5px;
-    top: 30px;
-    bottom: var(--footer-height);
+    top: var(--header-height);
+    bottom: 0px;
     left: 0px;
     right: 0px;
     overflow-y: scroll;
@@ -61,8 +57,56 @@
 }
 
 .disqus-header-title {
-    color: rgb(195, 60, 96);
-    font-size: var(--h3-and-a-half-font-size);
+    color: var(--header-green-left);
+    font-size: var(--h3-font-size);
+    font-family: var(--header-font-stack);
+    letter-spacing: 1px;
     font-weight: 700;
     line-height: 1.25em;
+    margin-left: 2px;
 }
+
+.models-comments-counter {
+    position: absolute;
+}
+
+.comments-counter {
+    z-index: 10;
+}
+
+.comment-counter {
+    /* Display when model-section container is hovered */
+    display: none;
+    position: absolute;
+    top: 0px;
+    right: 0;
+    margin-right: 18px;
+    &.comment-counter-document {
+        margin-top: 4px;
+    }
+    &.comment-counter-model {
+        margin-top: 15px;
+    }
+    color: var(--rescape-love);
+    &:hover {
+         cursor: pointer;
+         transform: scale(1.1);
+    }
+}
+.comment-icon {
+    width: 20px;
+    height: 18px;
+}
+
+.comment-count {
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: var(--comment-count-top);
+    left: 10%;
+    text-align: left;
+    line-height: 10px;
+    vertical-align: middle;
+}
+

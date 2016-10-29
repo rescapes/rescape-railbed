@@ -29,7 +29,8 @@ export function getAnchorToModels(anchors, models) {
         // Models with the same anchors use (difference) to differentiate their keys
         const modelKeyNormalized = normalizeModelName(modelKey, model)
         // Make a pseudoAnchor since DOM elements don't hash properly
-        const pseudoAnchor = Map({name: modelKeyNormalized, offsetTop: anchor.offsetTop})
+        // We use offsetParent since anchors are inside of .model-sections
+        const pseudoAnchor = Map({name: modelKeyNormalized, offsetTop: anchor.offsetParent.offsetTop})
         const models = (reduction.get(pseudoAnchor) || OrderedMap()).set(modelKey, model)
         if (models.count() == 1) {
             // Side-effect: put a name and href on the anchor so it can be used for url navigation

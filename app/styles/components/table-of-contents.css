@@ -8,14 +8,14 @@
     position: fixed;
     z-index: 7;
     font-family: var(--table-of-contents-font);
+    padding-top: 15px;
+    padding-left: 10px;
 
-    &.top {
-         top: var(--table-of-contents-top);
-         bottom: var(--table-of-contents-bottom);
-         left: var(--table-of-contents-left);
-         width: var(--table-of-contents-width);
-         background: var(--table-of-contents-background);
-    }
+    top: var(--table-of-contents-top);
+    bottom: var(--table-of-contents-bottom);
+    left: var(--table-of-contents-left);
+    width: var(--table-of-contents-width);
+    background: var(--table-of-contents-background);
 }
 
 .table-of-contents-icon {
@@ -29,12 +29,6 @@
     position: absolute;
     width: 100%;
     height: 100%;
-}
-
-.document-graph-circles {
-    margin-top: 20px;
-    margin-left: 15px;
-    margin-right: 15px;
 }
 
 .table-of-contents-node {
@@ -74,36 +68,8 @@
         color: var(--gray);
         text-align: center;
     }
-    /***
-        All circles have these properties
-    ***/
-    .circle {
-        position: relative;
-        z-index: 2;
-        vertical-align: middle;
-    }
-
-    /***
-        Connects circles with outlines
-    ***/
-    .connector {
-        position: relative;
-        z-index: 1;
-        display:inline-block;
-        vertical-align: middle;
-        height: 1px;
-        background: black;
-    }
 
     &.toc-document {
-
-        .document-comments-counter {
-            position: absolute;
-            top: calc(-1 * calc(var(--table-of-contents-document-height) / 2) + calc(var(--comment-button-height) / 6));
-            left: calc(calc(-1 * var(--comment-button-width)) - 2px);
-            width: var(--comment-button-width);
-            height: var(--comment-button-height);
-        }
         .outline {
             font-size: var(--table-of-contents-font-size);
             line-height: 1.0;
@@ -114,13 +80,6 @@
     }
 
     &.toc-model-current {
-        .model-comments-counter {
-            position: absolute;
-            top: calc(-1 * calc(var(--table-of-contents-model-current-height) / 2));
-            left: calc(calc(-1 * var(--comment-button-width-small)) - 2px);
-            width: var(--comment-button-width-small);
-            height: var(--comment-button-height-small);
-        }
         .outline {
             font-size: var(--table-of-contents-font-size);
             line-height: 1.0;
@@ -138,82 +97,5 @@
             }
         }
     }
-
 }
-
-/***
-    The vertical line segments connecting the table of contents nodes
-***/
-.line-segments {
-    position: absolute;
-    height: 100%;
-    left: -1px;
-    width: 2px;
-}
-.line-segment {
-    position: absolute;
-    width: 2px;
-    background: black;
-
-    /***
-        The line representing missing nodes
-    ***/
-    &.dashed {
-        left: 0px;
-        background: none;
-        border-left: 2px dotted black;
-    }
-}
-
-.comments-counter {
-    z-index: 10;
-}
-
-.comment-counter {
-    position: relative;
-    right: 0;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    color: var(--rescape-love);
-    transition: right 300ms ease, width 300ms ease, height 300ms ease;
-    &.comment-counter-document {
-        font-size: var(--comment-count-font-size);
-        &:hover {
-            font-size: calc(var(--comment-count-font-size) * 1.1);
-        }
-    }
-    &.comment-counter-model {
-        font-size: var(--comment-count-font-size-small);
-        &:hover {
-            font-size: calc(var(--comment-count-font-size-small) * 1.1);
-        }
-    }
-    &:hover {
-         cursor: pointer;
-         left: -10%;
-         width: calc(110%);
-         height: calc(110%);
-         transition: right 300ms ease, width 300ms ease, height 300ms ease, font-size 300ms ease;
-     }
-}
-.comment-icon {
-    z-index: 0;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.comment-count {
-    z-index: 1;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: var(--comment-count-top);
-    left: 10%;
-    text-align: left;
-    line-height: 10px;
-    vertical-align: middle;
-}
-
 

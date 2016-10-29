@@ -13,13 +13,13 @@ import React, { Component, PropTypes } from 'react'
 import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import {normalizeKeyToFilename} from "../utils/fileHelpers";
-import comment_svg from '../images/comment.svg'
+import comment_png from '../images/comment.png'
 import * as documentActions from '../actions/document'
 import * as modelActions from '../actions/model'
 import statuses from '../statuses'
 import {isSeeking} from '../utils/documentHelpers'
 
-class Comments extends Component {
+class CommentsButton extends Component {
     constructor () {
         super()
         this.state = {
@@ -32,12 +32,12 @@ class Comments extends Component {
      * @returns {*}
      */
     commentObjectKey() {
-        return this.props.modelKey ? this.props.modelKey : this.props.documentKey
+        return this.props.modelTitle ? this.props.modelTitle : this.props.documentKey
     }
 
     componentWillMount() {
         this.setState({
-            toggle: this.props.modelKey ? this.props.toggleModelComments : this.props.toggleDocumentComments
+            toggle: this.props.modelTitle ? this.props.toggleModelComments : this.props.toggleDocumentComments
         })
     }
 
@@ -90,17 +90,14 @@ class Comments extends Component {
     render() {
         if (!this.props.document)
             return <div/>
-        return <div className={this.props.className} >
-            <div
-                className={`comment-counter
-                    ${this.props.modelKey ? 'comment-counter-model' : 'comment-counter-document'}
-                    ${this.props.documentStatus != statuses.READY ? 'loading' : ''} `}
-                style={{display: this.props.commentsAreShowing ? 'none' : 'block'}}
-                onClick={this.onClickCommentButton.bind(this)} >
-                <img className='comment-icon' src={comment_svg} />
-                <div className='comment-count'>
-                    <div ref='counter' className="disqus-comment-count" />
-                </div>
+        return <div className={`comment-counter
+                ${this.props.modelTitle ? 'comment-counter-model' : 'comment-counter-document'}
+                ${this.props.documentStatus != statuses.READY ? 'loading' : ''} `}
+            style={this.props.style || {}}
+            onClick={this.onClickCommentButton.bind(this)} >
+            <img className='comment-icon' src={comment_png} />
+            <div className='comment-count'>
+                <div ref='counter' className="disqus-comment-count" />
             </div>
         </div>
     }
@@ -113,23 +110,23 @@ class Comments extends Component {
      */
     formArticleKey(props) {
         const documentUrlKey = normalizeKeyToFilename((props || this.props).documentTitle)
-        const modelKey = (props ||this.props).modelKey
-        const modelUrlKey = modelKey && normalizeKeyToFilename(modelKey)
-        return modelKey ? `${documentUrlKey}__${modelUrlKey}` : documentUrlKey
+        const modelTitle = (props ||this.props).modelTitle
+        const modelUrlKey = modelTitle && normalizeKeyToFilename(modelTitle)
+        return modelTitle ? `${documentUrlKey}__${modelUrlKey}` : documentUrlKey
     }
 }
 
-Comments.propKeys = {
-    className: PropTypes.string,
+CommentsButton.propKeys = {
     document: ImmutablePropTypes.map,
     documentTitle: PropTypes.string,
     documentKey: PropTypes.string,
-    modelKey: PropTypes.string,
-    model: ImmutablePropTypes.map,
+    // Normalized named of the model group
+    modelTitle: PropTypes.string,
     commentsAreShowing: PropTypes.bool,
     documentStatus: PropTypes.bool,
     // Don't load the comment count if we are seeking
-    isSeeking: PropTypes.bool
+    isSeeking: PropTypes.bool,
+    style: PropTypes.object
 }
 
 function mapStateToProps(state, props) {
@@ -150,4 +147,4 @@ function mapStateToProps(state, props) {
 export default connect(
     mapStateToProps,
     Object.assign(documentActions, modelActions)
-)(Comments)
+)(CommentsButton)
