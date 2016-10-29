@@ -263,7 +263,7 @@ class Document extends Component {
         // Add in the document credit and date
         return renderToStaticMarkup(<div className="document-header">
             {document.get('author') ?
-                <div className="document-credit">by <span className="author">{document.get('author')}</span></div> :
+                <div className="document-credit">by <span className="author" onClick={() => self.onClickHeaderLink('contact')}>{document.get('author')}</span></div> :
                 <span/>}
             {document.get('date') ?
                 <div className="document-date">

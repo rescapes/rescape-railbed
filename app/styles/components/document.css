@@ -153,6 +153,9 @@ h3[class^="c"] {
     color: var(--gray);
     font-family: var(--font-stack);
     font-size: var(--h5-font-size);
+    &:hover {
+         cursor: pointer;
+    }
 }
 .document-date {
     color: var(--gray);
