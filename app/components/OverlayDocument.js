@@ -36,7 +36,7 @@ class OverlayDocument extends Component {
      * Downloads the underlying document
      */
     handleDownload() {
-        forceDownload(this.documentDiv, this.props.document.get('url'))
+        forceDownload(document, this.props.document.get('url'))
     }
 
     /***
