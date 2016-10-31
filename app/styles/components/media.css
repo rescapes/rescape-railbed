@@ -250,6 +250,7 @@ div:not(#app) > div[data-reactroot] > div > div {
 
             /* The counter */
             >div {
+                 margin-right: 4px;
                  color: var(--white);
                  font-size: var(--h5-font-size);
              }
@@ -261,7 +262,7 @@ div:not(#app) > div[data-reactroot] > div > div {
     font-size: var(--image-credit-font-size);
     color: var(--faded-gray);
     position: absolute;
-    top: 6px;
+    top: 2px;
     right: 85px;
     text-align: right;
     padding: 3px;

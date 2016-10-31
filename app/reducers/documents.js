@@ -337,11 +337,12 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             current
         )
 
-        console.log(`Scroll Position: ${adjustedScrollPosition}`)
+
+        console.debug(`Scroll Position: ${adjustedScrollPosition}`)
         function nameAndPosition(anchor) {
             return `${anchor.name} ${anchor.offsetTop}`
         }
-        console.log(`Previous Distinct: ${previousForDistinctModel && nameAndPosition(previousForDistinctModel)}`)
+        console.debug(`Previous Distinct: ${previousForDistinctModel && nameAndPosition(previousForDistinctModel)}`)
         console.log(`Previous: ${previous && nameAndPosition(previous)}`)
         console.log(`Current: ${current && nameAndPosition(current)}`)
         console.log(`Next: ${next && nameAndPosition(next)}`)

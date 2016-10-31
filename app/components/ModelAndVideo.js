@@ -25,8 +25,13 @@ export default class ModelAndVideo extends Component {
      * @returns {XML}
      */
     render() {
-        const modelTops = this.props.modelTops
+
         const model = this.props.model
+        // If this model doesn't have a video/3d model, do nothing
+        if (!model || (!model.get('id') || !model.get('videoId')))
+            return <span/>
+
+        const modelTops = this.props.modelTops
         const models = this.props.models
         const modelKey = this.props.modelKey
         const loadingOrReady = Statuses.LOADING | Statuses.READY
@@ -58,6 +63,7 @@ export default class ModelAndVideo extends Component {
 
         // Determine whether to show the 3d model or video
         let model3dSketchup = <span/>
+
         if (this.props.is3dSet) {
             // If it's already loaded, current, or in the loading queue (previous or next model), set the URL
             // Setting the url of the iframe forces it to load if not yet loaded
@@ -120,6 +126,8 @@ ModelAndVideo.propTypes = {
     modelTops: PropTypes.object,
     currentModel: ImmutablePropTypes.map,
     scrollDirection: PropTypes.string,
-    is3dSet: PropTypes.bool
+    is3dSet: PropTypes.bool,
+    // True if this model section has no actual 3 Model/video
+    noModel: PropTypes.bool
 }
 

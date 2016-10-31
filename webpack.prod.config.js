@@ -73,8 +73,12 @@ module.exports = {
             },
             {
                 test: /\.(webm)$/,
-                loader: 'file-loader?name=videos/[name].[ext]',
+                loader: 'file-loader?name=/videos/[name].[ext]',
                 include: APP
+            },
+            {
+                test: /\.(otf|eot|woff|woff2|ttf)$/,
+                loader: 'file-loader?limit=30000&name=[name]-[hash].[ext]'
             },
             // Process JSON data fixtures
             {

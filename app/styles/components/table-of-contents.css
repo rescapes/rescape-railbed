@@ -10,6 +10,7 @@
     font-family: var(--table-of-contents-font);
     padding-top: 15px;
     padding-left: 10px;
+    padding-right: 10px;
 
     top: var(--table-of-contents-top);
     bottom: var(--table-of-contents-bottom);
@@ -76,6 +77,10 @@
             color: var(--rescape-love);
             z-index: 2;
             font-weight: bold;
+            &:hover {
+                cursor: pointer;
+                color: white;
+            }
         }
     }
 

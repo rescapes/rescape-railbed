@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import ExtendedLightbox from './ExtendedLightbox';
 import DownloadButton from './DownloadButton';
 import * as settingsActions from '../actions/settings'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 
 class Gallery extends Component {
 	constructor () {
@@ -18,6 +19,20 @@ class Gallery extends Component {
 		this.gotoPrevious = this.gotoPrevious.bind(this);
 		this.handleClickImage = this.handleClickImage.bind(this);
 		this.openLightbox = this.openLightbox.bind(this);
+	}
+
+	/***
+	 * If the store has been updated to lightbox open false, reflect it in the state
+	 * The store never turns the lightbox on, that is done by openLightbox or forceOpen
+	 * @param nextProps
+	 */
+	componentWillReceiveProps(nextProps) {
+		if (!nextProps.isOpen) {
+			this.setState({
+				currentImage: 0,
+				lightboxIsOpen: false,
+			})
+		}
 	}
 	openLightbox (index, event) {
 		event.preventDefault();
@@ -102,15 +117,13 @@ class Gallery extends Component {
 		];
 		return (
 			<div className="section">
-				{this.props.heading && <h2>{this.props.heading}</h2>}
-				{this.props.subheading && <p>{this.props.subheading}</p>}
 				{this.renderGallery()}
 				<ExtendedLightbox
 					backdropClosesModal
 					currentImage={this.state.currentImage}
 					customControls={customControls}
 					images={this.props.images}
-					isOpen={this.state.lightboxIsOpen}
+					isOpen={this.props.forceOpen || this.state.lightboxIsOpen}
 					onClickPrev={this.gotoPrevious}
 					onClickNext={this.gotoNext}
 					onClickImage={this.handleClickImage}
@@ -124,6 +137,12 @@ class Gallery extends Component {
 
 Gallery.displayName = 'Gallery';
 Gallery.propTypes = {
+	media: ImmutablePropTypes.orderedMap,
+	theme: PropTypes.object,
+	modelKey: PropTypes.string,
+	forceOpen: PropTypes.bool,
+	// The current state of openness of the lightbox
+	isOpen: PropTypes.bool,
 };
 
 function mapStateToProps(state) {

@@ -35,8 +35,8 @@ class ExtendedLightbox extends Lightbox {
             <div key={i}>{date}</div> :
             <span key={i} />)
 
-        const sourceUrls = image.sourceUrl.split(',')
-        const credits = image.credit.split(',')
+        const sourceUrls = image.sourceUrl ? image.sourceUrl.split(',') : []
+        const credits = image.credit ? image.credit.split(',') : []
         const links = sourceUrls.map((sourceUrl, i) =>
             <a key={credits[i]} target="rescape_source" href={sourceUrls[i]}>{credits[i]}</a>)
         const title = links.length > 1 ? 'Sources:' : 'Source:'

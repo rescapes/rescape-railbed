@@ -91,6 +91,7 @@ class ModelAndVideos extends Component {
                 if (key=='current') {
                     this.props.toggleModelComments(models.get(key), false)
                     this.props.toggleDocumentComments(this.props.documentKey, false)
+                    this.props.setLightboxVisibility(false)
                 }
             }
         }, this)
@@ -136,7 +137,8 @@ class ModelAndVideos extends Component {
         // We don't want to set the url of the iframe or video until it is desired to load a certain model
         // (e.g. when it is the current model or about to become the current one)
         // Once the model is loaded, we never want to unload it by clearing its URL
-        const iframes = (modelLoadingOrReady && modelEntries) ? modelEntries.map((iterModel, modelKey) =>
+        // If the current model has no model (video and 3d model), we'll show nothing for it
+        const iframes = (this.props.noModel || (modelLoadingOrReady && modelEntries)) ? modelEntries.map((iterModel, modelKey) =>
             <ModelAndVideo
                 key={modelKey}
                 model={iterModel}
@@ -171,6 +173,8 @@ ModelAndVideos.propTypes = {
     // This is from the parent, not the state
     modelTops: PropTypes.object,
     isDisabled: PropTypes.bool,
+    // True for sections with no model to show as a video or 3d model
+    noModel: PropTypes.bool
 }
 
 function mapStateToProps(state) {
@@ -183,7 +187,8 @@ function mapStateToProps(state) {
     // Pass modelKey and sceneKey so that React recalculates the current
     // scene when it changes
     const modelKey = models.get('current')
-    const sceneKey = currentSceneKeyOfModel(models.getIn(['entries', modelKey]))
+    const model = models.getIn(['entries', modelKey])
+    const sceneKey = currentSceneKeyOfModel(model)
     // Are we currently seeking the desired document position
     const isDisabled = isSeeking(document) || !!state.getIn(['documents', 'currentOverlay'])
     return {
@@ -191,6 +196,7 @@ function mapStateToProps(state) {
         documentKey,
         scrollPosition,
         models,
+        model,
         modelKey,
         defaultIs3dSet,
         sceneKey,
