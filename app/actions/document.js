@@ -89,7 +89,7 @@ class DocumentLoader extends ActionLoader {
      * @param url: The url of the documents (e.g. a Google Docs url)
      * @returns {{type: string, url: *}}
      */
-    loadIt(key, url) {
+    loadIt(state, key, url) {
         return {
             type: LOAD_DOCUMENT,
             key,

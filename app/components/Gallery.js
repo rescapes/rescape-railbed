@@ -4,6 +4,7 @@ import ExtendedLightbox from './ExtendedLightbox';
 import DownloadButton from './DownloadButton';
 import * as settingsActions from '../actions/settings'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import {forceDownload} from '../utils/fileHelpers'
 
 class Gallery extends Component {
 	constructor () {
@@ -97,18 +98,9 @@ class Gallery extends Component {
 	}
 	// from http://stackoverflow.com/questions/283956/
 	handleDownload() {
-		var link = document.createElement('a');
 		// Use the largest image from the srcset
         const src = this.props.images[this.state.currentImage].srcset[0].split(' ')[0]
-		if (typeof link.download === 'string') {
-			document.body.appendChild(link); //Firefox requires the link to be in the body
-			link.download = ''
-			link.href = src
-			link.click();
-			document.body.removeChild(link); //remove the link when done
-		} else {
-			location.replace(src);
-		}
+		forceDownload(document, src)
 	}
 
 	render () {

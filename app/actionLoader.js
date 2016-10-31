@@ -23,7 +23,7 @@ import fetch from 'isomorphic-fetch'
 export default class ActionLoader {
 
     // Abstract actions. Implement in subclass
-    loadIt(state, url) {}
+    loadIt(state, key, url) {}
     receive(url, json) {}
     erred(url) {}
     showIt(key) {}
