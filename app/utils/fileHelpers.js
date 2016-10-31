@@ -18,3 +18,21 @@ export function normalizeKeyToFilename(key) {
         .replace(/é/g, 'e')
         .replace(/(\(|\))/g, '')
 }
+
+/***
+ * Force the download of a file by creating a link and clicking it
+ * @param document
+ * @param src
+ */
+export function forceDownload(document, src) {
+    var link = document.createElement('a');
+    if (typeof link.download === 'string') {
+        document.body.appendChild(link); //Firefox requires the link to be in the body
+        link.download = ''
+        link.href = src
+        link.click();
+        document.body.removeChild(link); //remove the link when done
+    } else {
+        location.replace(src);
+    }
+}

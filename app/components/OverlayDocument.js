@@ -17,6 +17,8 @@ import * as siteActions from '../actions/site'
 import {RawDocument} from './Document'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import close_svg from '../images/close.svg'
+import DownloadButton from './DownloadButton';
+import {forceDownload} from '../utils/fileHelpers'
 
 class OverlayDocument extends Component {
 
@@ -31,14 +33,24 @@ class OverlayDocument extends Component {
     }
 
     /***
+     * Downloads the underlying document
+     */
+    handleDownload() {
+        forceDownload(this.documentDiv, this.props.document.get('url'))
+    }
+
+    /***
      * Override to simplify. We don't need to inject headers
      * @returns {XML}
      */
     render() {
-        return <div>
+        return <div ref={(c) => this.documentDiv = c} >
             <div className='showcase-screen' />
             <ModifiedPropsDocument/>
-            <img className='overlay-document-close-icon' src={close_svg} onClick={this.onClickCloseButton.bind(this)} />,
+            <div className='overlay-buttons'>
+                <DownloadButton key="Download" color="black" handler={this.handleDownload.bind(this)} />
+                <img className='overlay-document-close-icon' src={close_svg} onClick={this.onClickCloseButton.bind(this)} />
+            </div>
         </div>
     }
 }
@@ -55,18 +67,24 @@ function mapStateToProps(state) {
     if (!document) {
         return {}
     }
-
+    // We use the overlayDocumentKeys to resolve a url hash
+    const overlayDocumentKeys = state.getIn(['documents', 'entries']).filter(document =>
+        document.get('isHeaderDocument')
+    ).keySeq().toList()
     const scrollPosition = document && document.get('scrollPosition')
     const modelKeysInDocument = document && document.get('modelKeys')
     const className = 'document overlay'
+    const location = state.getIn(['documents', 'location'])
     return {
         settings,
         document: document,
         documentKey,
         models: modelKeysInDocument &&
-        state.getIn(['models', 'entries']).filter((value,key) => modelKeysInDocument.includes(key)),
+            state.getIn(['models', 'entries']).filter((value,key) => modelKeysInDocument.includes(key)),
+        overlayDocumentKeys,
         scrollPosition,
         className,
+        location
     }
 }
 
@@ -82,6 +100,7 @@ ModifiedPropsDocument.propTypes = {
     settings: ImmutablePropTypes.map,
     document: ImmutablePropTypes.map,
     models: ImmutablePropTypes.map,
+    overlayDocumentKeys: ImmutablePropTypes.list,
     scrollPosition: PropTypes.number,
     className: PropTypes.string,
     history: PropTypes.object

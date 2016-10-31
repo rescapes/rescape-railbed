@@ -6,6 +6,7 @@ class DownloadButton extends Component {
         super();
     }
     render () {
+        const icon = this.props.color ? DownloadIcon.replace(/white/g, this.props.color) : 'white'
         return (
             <button
                 title="Download"
@@ -13,11 +14,15 @@ class DownloadButton extends Component {
                 onClick={this.props.handler}
             >
                 <span
-                    dangerouslySetInnerHTML={{ __html: DownloadIcon }}
+                    dangerouslySetInnerHTML={{ __html: icon }}
                 />
             </button>
         )
     }
+}
+
+DownloadButton.propTypes = {
+    color: PropTypes.string
 }
 
 export default DownloadButton;

@@ -47,6 +47,7 @@ class App extends Component {
 
 App.PropTypes = {
     documentKey: PropTypes.string,
+    overlayDocumentKey: PropTypes.string,
     document: ImmutablePropTypes.map,
     location: React.PropTypes.object,
     orientation: React.PropTypes.bool
@@ -57,6 +58,7 @@ function mapStateToProps(state, props) {
     // The key of the document if one was specified in the URL
     const splat = props.params.splat
     const documents = state.getIn(['documents', 'entries'])
+    const overlayDocumentKey = state.getIn(['documents', 'currentOverlay'])
 
     let document = null
     if (splat && documents.get(splat)) {
@@ -75,6 +77,7 @@ function mapStateToProps(state, props) {
     return Object.assign(state.toObject(), {
         documentKey: documents.keyOf(document),
         document: document,
+        overlayDocumentKey,
         orientation: window.orientation
     })
 

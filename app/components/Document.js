@@ -66,7 +66,6 @@ class Document extends Component {
         // Add targets to external anchors since Google Docs won't do it
         const anchors = this.documentDiv.getElementsByTagName('a')
         var i;
-        var self = this
         for (i = 0; i < anchors.length; i++) {
             // Localize the URL if it's a reference to our domain but the text doesn't match the domain
             // We do this since we can make a local link in Google Docs
@@ -75,7 +74,7 @@ class Document extends Component {
                 anchors[i].removeAttribute('href')
                 anchors[i].className = 'header-link inline'
                 const text = anchors[i].text.toLowerCase()
-                anchors[i].onclick = () => self.onClickHeaderLink(text)
+                anchors[i].href = `#${text}`
             }
             // Make external links open in another tab
             else if (anchors[i].href && anchors[i].hostname != window.location.hostname) {
@@ -215,7 +214,7 @@ class Document extends Component {
             // The Router can't do this for us because the Document isn't loaded
             const hash = nextProps.location.hash
             if (hash) {
-                const anchor = nextProps.anchorToModels.keySeq().find(
+                const anchor = nextProps.anchorToModels && nextProps.anchorToModels.keySeq().find(
                     anchor => anchor.get('name') == hash.replace('#','')
                 )
                 if (anchor) {
@@ -265,14 +264,6 @@ class Document extends Component {
                 <span/>}
             </div>
         )
-    }
-
-    /***
-     * Overlay the header document when the link is clicked
-     * @param documentKey
-     */
-    onClickHeaderLink(documentKey) {
-        this.props.overlayDocument(documentKey)
     }
 
     /***

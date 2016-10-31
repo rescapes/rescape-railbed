@@ -921,7 +921,7 @@ var amtrakStandardModels = OrderedMap({
     'Station and Stop Amenities (Outside Improved)': Map({
         status: Statuses.INITIALIZED,
         id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
-        videoId: '3dTxvOKwGrs',
+        videoId: '22LjUvUJWok',
         anchorId: 'id.hcrfkm926ytq',
         scenes: OrderedMap({entries: Map({
             'Pedestrianized Street': Map({
