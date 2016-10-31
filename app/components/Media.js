@@ -11,7 +11,6 @@
 
 import React, { Component, PropTypes } from 'react'
 import {Map} from 'immutable'
-import {connect} from 'react-redux'
 import Gallery from './Gallery'
 import {normalizeKeyToFilename} from '../utils/fileHelpers'
 import ImmutablePropTypes from 'react-immutable-proptypes'
@@ -66,6 +65,8 @@ export default class Media extends Component {
 
             // header
             close: {
+                // Don't show the close button if we are forced open
+                display: this.props.forceOpen ? 'none': 'block',
                 fill: '#D40000',
                 opacity: 0.6,
                 transition: 'all 200ms',
@@ -94,6 +95,8 @@ export default class Media extends Component {
             <Gallery
                 images={this.configureMedia()}
                 theme={theme}
+                forceOpen={this.props.forceOpen}
+                isOpen={this.props.isOpen}
             />
         </div>
     }
@@ -135,6 +138,9 @@ Media.propTypes = {
     fade: PropTypes.string,
     toward: PropTypes.string,
     media: ImmutablePropTypes.orderedMap,
-    modelKey: PropTypes.string
+    modelKey: PropTypes.string,
+    forceOpen: PropTypes.bool,
+    // The current state of openness of the lightbox
+    isOpen: PropTypes.bool,
 }
 

@@ -12,11 +12,9 @@
 import React, { Component, PropTypes } from 'react'
 import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import DocumentGraphLineSegments from './DocumentGraphLineSegments';
 import DocumentGraphNode from './DocumentGraphNode';
 import {OrderedMap, Map, List} from 'immutable'
 import * as documentActions from '../actions/document'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import {normalizeModelName} from '../utils/modelHelpers'
 import config from '../config'
 

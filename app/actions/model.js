@@ -31,11 +31,6 @@ export const REGISTER_MODEL_CENTER = 'REGISTER_MODEL_CENTER'
 export const TOGGLE_MODEL_COMMENTS = 'TOGGLE_MODEL_COMMENTS'
 export const TOGGLE_MODEL_3D = 'TOGGLE_MODEL_3D'
 
-// scene actions--currently unused
-export const SHOW_SCENE = 'SHOW_SCENE'
-export const FREE_SCENE = 'FREE_SCENE'
-
-
 /*
  * Action creators. 
  * List in the same order as the action types.
@@ -147,31 +142,6 @@ export function toggleModel3d(key, force) {
  */
 export function toggleModelComments(key, force) {
     return { type: TOGGLE_MODEL_COMMENTS, key, force }
-}
-
-// scene actions
-
-/***
- * Sets the current 3D model to its closest scene based on the user's position in the DOM
- * if FREE_SCENE had been previously called, this relocks to a scene so that subsequent
- * movement by the user in the DOM will change scenes
- *
- * @param modelKey: The model key
- * @param key: The invariable key of a model's scene (e.g. 'elephant_in_the_room')
- * @returns {{type: string, current: *}}
- */
-export function showScene(modelKey, key) {
-    return { type: SHOW_SCENE, key }
-}
-
-/***
- * Frees the current 3d model from changing scenes automatically, instead
- * remaining at the current scene or where the user manually positioned the model
- * @param modelKey: The model key
- * @returns {{type: *, current: *}}
- */
-export function freeScene(modelKey) {
-    return { type: FREE_SCENE }
 }
 
 /*

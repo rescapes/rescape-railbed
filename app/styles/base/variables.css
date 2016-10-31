@@ -83,7 +83,7 @@
     --table-of-contents-top: var(--header-bottom);
     --table-of-contents-bottom: 0;
     /* This width is used to fit the wideset table-of-contents element but be minimum for hovering off the toc */
-    --table-of-contents-width: 170px;
+    --table-of-contents-width: 140px;
     --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
 
     --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
@@ -97,7 +97,7 @@
         The left side of the document bleeds over the 3d model
         The 3d model's right gradient fades the 3d model away so we can see the document
     */
-    --document-left: var(--table-of-contents-width);
+    --document-left: calc(var(--table-of-contents-width) + 20px);
     --document-width: 400px;
     --document-margin-left: 10px;
     /*
@@ -123,7 +123,7 @@
         Make the showcase extend half way into the footer
     */
     --showcase-height: calc(100% - var(--footer-height));
-    --showcase-left: calc(var(--table-of-contents-width) + var(--document-width));
+    --showcase-left: calc(var(--table-of-contents-width) + 20px + var(--document-width));
     --showcase-right: 10px;
 
     /*

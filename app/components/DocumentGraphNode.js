@@ -23,17 +23,18 @@ export default class DocumentGraphNode extends React.Component {
         const node = this.props.node
         let style = null
         // The normalized model name
-        const normalizedModelName = normalizeModelName(this.props.modelKey, this.props.model)
+        const normalizedCurrentModelName = normalizeModelName(this.props.modelKey, this.props.model)
+        const normalizedModelName = normalizeModelName(node.key, this.props.model)
         if (this.props.isTop && node.key==this.props.documentTitle) {
             // The document.
             return <div className={`table-of-contents-node toc-document ${this.props.isExpanded ? 'expanded' : ''}`}
                         key={node.key} >
-                <div ref="outline" className='outline'>
+                <a ref="outline" className='outline' href={`#${this.props.documentKey}`}>
                     {node.key}
-                </div>
+                </a>
             </div>
         }
-        else if (this.props.isTop && this.props.node.key == normalizedModelName) {
+        else if (this.props.isTop && node.key == normalizedCurrentModelName) {
             // The current model
             return <div className='table-of-contents-node toc-model-current' key={node.key} >
                 <div className='outline'>
@@ -41,19 +42,17 @@ export default class DocumentGraphNode extends React.Component {
                 </div>
             </div>
         }
-        else if (['start', 'end'].includes(this.props.node.key)) {
+        else if (['start', 'end'].includes(node.key)) {
             // A fake node representing the start/end of the line
             return <div className='table-of-contents-node toc-end' key={node.key} >
             </div>
         }
         else {
             // All other model nodes
-            return <div className="table-of-contents-node toc-model" key={node.key}
-                        onClick={()=>this.props.scrollToModel(node.key)}
-            >
-                <div className='outline'>
+            return <div className="table-of-contents-node toc-model" key={node.key} >
+                <a href={`#${normalizedModelName}`} className='outline'>
                     {node.key}
-                </div>
+                </a>
             </div>
         }
     }

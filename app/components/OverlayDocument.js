@@ -9,7 +9,6 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 import React, { Component, PropTypes } from 'react'
-import ReactDOM from 'react-dom'
 import { renderToStaticMarkup } from 'react-dom/server'
 import {connect} from 'react-redux';
 import {Map, List} from 'immutable'
@@ -17,14 +16,30 @@ import * as actions from '../actions/document'
 import * as siteActions from '../actions/site'
 import {RawDocument} from './Document'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import close_svg from '../images/close.svg'
 
 class OverlayDocument extends Component {
+
+    /***
+     * Close the Overlay Document when the close button is clicked
+     * This is here rather than in OverlayDocument so that it shows over the Header
+     */
+    onClickCloseButton() {
+        // Clear the hash from the URL if it exists
+        this.props.history.push('/');
+        this.props.closeOverlayDocument()
+    }
+
     /***
      * Override to simplify. We don't need to inject headers
      * @returns {XML}
      */
     render() {
-        return <ModifiedPropsDocument/>
+        return <div>
+            <div className='showcase-screen' />
+            <ModifiedPropsDocument/>
+            <img className='overlay-document-close-icon' src={close_svg} onClick={this.onClickCloseButton.bind(this)} />,
+        </div>
     }
 }
 
@@ -69,6 +84,7 @@ ModifiedPropsDocument.propTypes = {
     models: ImmutablePropTypes.map,
     scrollPosition: PropTypes.number,
     className: PropTypes.string,
+    history: PropTypes.object
 }
 
 /***

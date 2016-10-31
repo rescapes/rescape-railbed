@@ -48,15 +48,6 @@ class Document extends Component {
             this.scrollTo(this.props.scrollPosition || 0)
         else
             this.handleScroll()
-
-        /*
-        function fixSafariScrolling(event) {
-            event.target.style.overflowY = 'hidden';
-            setTimeout(function () { event.target.style.overflowY = 'auto'; });
-        }
-
-        this.documentDiv.addEventListener('webkitAnimationEnd', fixSafariScrolling);
-        */
     }
 
     componentWillUnmount() {
@@ -263,7 +254,7 @@ class Document extends Component {
         // Add in the document credit and date
         return renderToStaticMarkup(<div className="document-header">
             {document.get('author') ?
-                <div className="document-credit">by <span className="author" onClick={() => self.onClickHeaderLink('contact')}>{document.get('author')}</span></div> :
+                <div className="document-credit">by <a className="author" href="#contact">{document.get('author')}</a></div> :
                 <span/>}
             {document.get('date') ?
                 <div className="document-date">
@@ -341,7 +332,8 @@ class Document extends Component {
             // Look for <hr> tags separating the document. If there are none make a pseudo
             // one representing the whole document except for the div footer
             result = regex.exec(body) || {index: body.indexOf('<div id="footer">')},
-            modelEntries = this.props.models.entrySeq()
+            modelEntries = this.props.models.entrySeq(),
+            document = this.props.document
         // For each <hr> or for the single pseudo one
         do {
             let bodyContent = null
@@ -375,7 +367,7 @@ class Document extends Component {
             const regex = /(<a.*?>)(<\/a>)/
             const match = regex.exec(bodySlice)
             // Grab the starting and ending <a> or create one for pages like Contact
-            const anchorParts = match ? match.slice(1) : [`<a href='#${this.props.documentKey}'>`, '</a>']
+            const anchorParts = match ? match.slice(1) : [`<a name='${this.props.documentKey}' href='#${this.props.documentKey}'>`, '</a>']
             // A couple models have no subheading displayed, so add a class to indicate it
             // Start at index==1 since index 0 is not a model but the document title
             const noSubheading = index > 0 && this.props.models.toIndexedSeq().get(index - 1).get('noSubheading')
@@ -391,7 +383,9 @@ class Document extends Component {
                 [modelKey, model] = modelEntries.find(([modelKey, model]) => model.get('anchorId') == anchorId)
                 modelTitle = normalizeModelName(modelKey, model)
             }
-            const modelCommentsButton = model && !model.get('noComments') ?
+            // Create a model comment button or document comment button, but only if noComments is false
+            // for the Model and the Document isn't a header document (like About, Contact, etc)
+            const modelCommentsButton = model && !model.get('noComments') && !document.get('isHeaderDocument') ?
                 <CommentsButton
                     key={modelTitle}
                     modelTitle={modelTitle}
@@ -399,7 +393,7 @@ class Document extends Component {
                     documentKey={this.props.documentKey}
                     document={this.props.document}
                 /> :
-                (!model ? <CommentsButton
+                (!model && !document.get('isHeaderDocument') ? <CommentsButton
                     key={this.props.documentKey}
                     document={this.props.document}
                     documentKey={this.props.documentKey}
@@ -476,7 +470,7 @@ function mapStateToProps(state) {
     const sceneChangePosition = state.getIn(['documents', 'sceneChangePosition'])
     return {
         settings,
-        document: document,
+        document,
         documentTitle,
         documentKey,
         model,

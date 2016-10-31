@@ -22,7 +22,7 @@ export default  {
     MODEL_PADDING: .1,
     // Don't put scene anchors more than this close to the next model
     // This prevents switching scenes and models at the same time.
-    MAX_SCENE_POSITION: .8,
+    MAX_SCENE_POSITION: .9,
     // Video scenes are 4 seconds long,
     // This can be overridden in each model if needed
     SCENE_TRANSITION_TIME: 4,

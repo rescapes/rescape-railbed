@@ -16,6 +16,7 @@
 .document {
     overflow-y: scroll;
     top: var(--document-top);
+    background: white;
     font-family: var(--header-font-stack);
     bottom: 0;
     left: var(--document-left);
@@ -23,18 +24,19 @@
     margin-top: 15px;
     z-index: 2;
     position: absolute;
-
+    padding-bottom: 10px;
 
     &.overlay-document-showing {
         display: none;
     }
 
     &.overlay {
-        left: var(--overlay-document-left);
+        left: 0;
         width: var(--overlay-document-width);
+        margin-top: 5px;
+        padding-top: 10px;
         margin-left: 5px;
         margin-right: 5px;
-        display: block;
     }
 }
 
@@ -46,26 +48,23 @@
     z-index: 2;
     background-color: var(--faded-black-background);
     top: var(--document-top);
-    height: var(--showcase-height);
+    bottom: 0;
     left: 0;
     right: 0;
 }
 
 .overlay-document-close-icon {
-    position: fixed;
+    position: absolute;
     z-index: 10;
-    top: calc(var(--document-top) - 30px);
+    top: var(--document-top);
+    margin-top: 18px;
+    left: calc(var(--overlay-document-width) - 28px);
     height: 24px;
     width: 24px;
-    right: 0;
-    margin-right: var(--document-margin-left);
-    padding-right: 10px;
 
     &:hover {
         cursor: pointer;
-        width: 30px;
-        height: 30px;
-        transition: width 300ms ease, height 300ms ease;
+        transform: scale(1.1);
     }
 }
 
@@ -173,7 +172,7 @@ h3[class^="c"] {
     right: 0px;
     margin-top: 8px;
     &.no-subheading {
-        margin-top: 0;
+        margin-top: 4px;
     }
     margin-right: 22px;
     height: 10px;

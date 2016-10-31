@@ -664,7 +664,7 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         id: '659a315f-97b4-4a9c-8a29-4ca5f6e8cbac',
         videoId: 'eEtg-TZSNpA',
-        anchorId: 'id.phqdf6isq3v4',
+        anchorId: 'id.3jpuwiamho80',
         scenes: OrderedMap({entries: Map({
             'Regional Train': Map({
             }),
@@ -704,7 +704,7 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         id: '04163027-d8a3-4912-9997-0f30573fd0fc',
         videoId: 'h81Q3QmAm04',
-        anchorId: 'id.phqdf6isq3v4',
+        anchorId: 'id.3jpuwiamho80',
         scenes: OrderedMap({entries: Map({
             'Space for personal mobility, freight, and strollers': Map({
             }),
@@ -737,7 +737,7 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         id: 'f04baa96-4c29-43ab-9f51-c8520c907d25',
         videoId: 'rxJW-0bQY64',
-        anchorId: 'id.phqdf6isq3v4',
+        anchorId: 'id.3jpuwiamho80',
         scenes: OrderedMap({entries: Map({
             'Long trams have plentiful bike storage': Map({
             }),
@@ -770,7 +770,7 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         id: 'eaaae7b6-5a68-4f3e-a9f0-21ba35ec73b7',
         videoId: 'n0BbZ2BcA9s',
-        anchorId: 'id.phqdf6isq3v4',
+        anchorId: 'id.3jpuwiamho80',
         scenes: OrderedMap({entries: Map({
             'External bike storage': Map({
             }),
@@ -798,6 +798,11 @@ var amtrakStandardModels = OrderedMap({
                 sourceImageUrl: 'http://www.lightrailnow.org/images02/la-bus-brt-orangeline-pax-stroller-deboarding-n-hollywood-80116-20060927brx2_D-Dobbs.jpg',
                 sourceUrl: 'http://www.lightrailnow.org/facts/fa_brt_2006-10a-5.htm',
                 credit: 'Dave Dobbs/Light Rail Now',
+            }),
+            'Bus Stroller': Map({
+                caption: "Getting a stroller on a bus--especially a crowded one--is a harrowing experience. Trams solve this with many level doors",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
             }),
             'Level Boarding Bus': Map({
                 caption: "This bus in the Nuremberg, Germany region has on level boarding for strollers, but needs a ramp for wheelchairs. Trams by contrast have a dozen for each",
@@ -873,7 +878,7 @@ var amtrakStandardModels = OrderedMap({
     'Station and Stop Amenities (Outside Poor)': Map({
         status: Statuses.INITIALIZED,
         id: '87320bcf-05d7-4df9-8e51-f5c1e8ed82d1',
-        videoId: '6PkubgWJI6I',
+        videoId: 'geWDsWAXEa4',
         anchorId: 'id.hcrfkm926ytq',
         scenes: OrderedMap({entries: Map({
             'Downtown Transit Center': Map({
@@ -882,14 +887,6 @@ var amtrakStandardModels = OrderedMap({
             }),
         })}),
         media: OrderedMap({
-            /*
-            'Oakland Transit Center': Map({
-                caption: "Transit centers like this one in Oakland, CA that connect buses to metro need tram and amenity upgrades",
-                sourceUrl: 'http://rescapes.org',
-                credit: 'Rescape',
-                date: 'October, 2016'
-            }),
-            */
             'Los Angeles BRT Stop': Map({
                 caption: "Wise investment in Los Angeles BRT stops are wasted without high quality fixed-guideway transit like trams",
                 sourceUrl: 'http://rescapes.net',
@@ -907,6 +904,11 @@ var amtrakStandardModels = OrderedMap({
                 sourceUrl: 'http://movechiro.com/',
                 credit: 'Move',
             }),
+            'MacArthur BART Station': Map({
+                caption: "Caltrans (Highway Department) and BART abuse transit users in Oakland, CA, exposing them to dangerous noise and emissions of a freeway junction when clear barriers and other remedies are readily available",
+                sourceUrl: 'http://rescapes.net',
+                credit: 'Rescape',
+            }),
             'Frankfurt Tram Stop': Map({
                 caption: "Despite having high quality tram service in Frankfurt, Germany, stops lacks amenities like platforms with shelter",
                 sourceUrl: 'http://rescapes.org',
@@ -922,6 +924,8 @@ var amtrakStandardModels = OrderedMap({
         videoId: '3dTxvOKwGrs',
         anchorId: 'id.hcrfkm926ytq',
         scenes: OrderedMap({entries: Map({
+            'Pedestrianized Street': Map({
+            }),
             'Improved Transit Center': Map({
             }),
             'Transit Center Amenities': Map({
@@ -983,8 +987,15 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         anchorId: 'id.rguwchja4zl1',
         scenes: OrderedMap({entries: Map({
+            '': Map({})
         })}),
         media: OrderedMap({
+            'Copenhagen': Map({
+                caption: "A transit center and plaza in Copenhagen",
+                sourceUrl: 'http://rescapes.net',
+                credit: "Rescape",
+                date: 'July 2016'
+            })
         })
     }),
 
@@ -992,8 +1003,15 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         anchorId: 'id.uq68osxi5mc9',
         scenes: OrderedMap({entries: Map({
+            '': Map({})
         })}),
         media: OrderedMap({
+            'Chamonix': Map({
+                caption: "High quality rail service near Chamonix in the French Alps",
+                sourceUrl: 'http://rescapes.net',
+                credit: "Rescape",
+                date: 'July 2016'
+            })
         })
     })
 });

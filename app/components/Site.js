@@ -26,22 +26,13 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import Comments from './Comments'
 import TableOfContents from './TableOfContents'
 import OverlayDocument from './OverlayDocument'
-import close_svg from '../images/close.svg'
 import * as documentActions from '../actions/document'
 import himalaya from 'himalaya'
 
 export class Site extends Component {
 
 
-    /***
-     * Close the Overlay Document when the close button is clicked
-     * This is here rather than in OverlayDocument so that it shows over the Header
-     */
-    onClickCloseButton() {
-        // Clear the hash from the URL if it exists
-        this.props.history.push('/');
-        this.props.closeOverlayDocument()
-    }
+
 
     render() {
         // Convert the <head> tag elements from the document into JSON so that we can merge them into
@@ -77,11 +68,7 @@ export class Site extends Component {
                 <DocumentMeta {...meta} extend />
                 <Header />
                 <Showcase />
-                <div>
-                    <img className='overlay-document-close-icon' src={close_svg} onClick={this.onClickCloseButton.bind(this)} />,
-                    <div className='showcase-screen' />
-                    <OverlayDocument />
-                </div>
+                <OverlayDocument history={this.props.history} />
             </div>
         }
 

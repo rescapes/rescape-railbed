@@ -79,8 +79,10 @@ class Showcase extends Component {
         const [fade, toward] = calculateModelFadeAndToward(modelTops)
         const shareTitle = `${documentTitle} (${modelKey})`
         let model3dTitle = null
+        // If we have no model (3d model/video), just show the media already open
+        const noModel = this.props.noModel
 
-        if (!this.props.overlayDocumentIsShowing && this.props.models && this.props.modelKey && this.props.document) {
+        if (!noModel && !this.props.overlayDocumentIsShowing && this.props.models && this.props.modelKey && this.props.document) {
             const modelTops = getModelTops(this.props.document, this.props.models, this.props.settings)
             const [fade, toward] = calculateModelFadeAndToward(modelTops)
             model3dTitle = <Model3dTitle
@@ -104,29 +106,35 @@ class Showcase extends Component {
             <a target="credits" href={this.props.model.get('modelCreditUrl')}>model credits</a>
         </span>
 
-        return <div className='showcase'>
-            { model3dTitle }
+        const showcaseLinks = !noModel ?
             <span className='showcase-links'>
                 { modelCredits }
                 { toggle3d }
-            </span>
-            <ModelAndVideos model={model} modelKey={this.props.modelKey} modelTops={modelTops} toward={toward} />
-            <Media media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
+            </span> : <span className='showcase-links'/>
+
+        const shareIcons = !noModel ?
             <div className={`share-icons ${fade} ${toward}`}>
                 {SHARE_BUTTONS.map(function(shareButton, i) {
                     // TODO need a media URL for pinterest. Need scene-specific urls
                     return React.createElement(
                         shareButton,
                         Object.assign({key:i, title: shareTitle, url: this.props.postUrl},
-                         shareButton == PinterestShareButton ? {media:
-                         `http://img.youtube.com/vi/${this.props.model.get('videoId')}/0.jpg`} : {}
+                            shareButton == PinterestShareButton ? {media:
+                                `http://img.youtube.com/vi/${this.props.model.get('videoId')}/0.jpg`} : {}
                         ),
                         // size: null keeps the icons from setting there style width/height
                         // so that we can do it with css
                         React.createElement(SHARE_ICONS[i], {key:i, size:null, round:true })
                     )
                 }, this)}
-            </div>
+            </div> : <span />
+
+        return <div className='showcase'>
+            { model3dTitle }
+            { showcaseLinks }
+            <ModelAndVideos noModel={noModel} model={model} modelKey={this.props.modelKey} modelTops={modelTops} toward={toward} />
+            <Media isOpen={this.props.isOpen} forceOpen={noModel} media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
+            { shareIcons }
         </div>
     }
 }
@@ -134,6 +142,7 @@ class Showcase extends Component {
 Showcase.propTypes = {
     defaultIs3dSet: PropTypes.bool,
     model: ImmutablePropTypes.map,
+    noModel: PropTypes.bool,
     models: ImmutablePropTypes.map,
     modelKey: PropTypes.string,
     sceneKey: PropTypes.string,
@@ -153,6 +162,8 @@ function mapStateToProps(state, props) {
 
     const modelKey = models && models.get('current')
     const model = modelKey && models.getIn(['entries', modelKey])
+    const noModel = model && (!model.get('id') || !model.get('videoId'))
+    const isOpen = settings.get(settingsActions.SET_LIGHTBOX_VISIBILITY)
     const document = state.getIn(['documents', 'entries', documentKey])
     const postUrl = document && document.get('postUrl')
     const documentTitle = document && document.get('title')
@@ -168,6 +179,8 @@ function mapStateToProps(state, props) {
         documentKey,
         models,
         model,
+        isOpen,
+        noModel,
         modelKey,
         sceneKey,
         sceneIndex,
