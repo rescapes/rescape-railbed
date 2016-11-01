@@ -2,7 +2,7 @@
 
 .comments {
     position: fixed;
-    z-index: 10;
+    z-index: 20;
     &.showing {
         top: calc(var(--header-height) + 5px);
         left: var(--showcase-left);
@@ -38,7 +38,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: color(var(--rescape-love) alpha(90%));
+    background-color: color(var(--rescape-love) alpha(95%));
 }
 
 .disqus-comment-thread-header {
@@ -85,7 +85,7 @@
         margin-top: 4px;
     }
     &.comment-counter-model {
-        margin-top: 45px;
+        margin-top: 5px;
     }
     color: var(--rescape-love);
     &:hover {

@@ -55,9 +55,9 @@
 
 .overlay-buttons {
     z-index: 10;
-    margin-top: 18px;
+    margin-top: 10px;
     top: var(--document-top);
-    left: calc(var(--overlay-document-width) - 64px);
+    left: calc(var(--overlay-document-width) - 50px);
     position: absolute;
     display: flex;
     flex-direction: row;
@@ -68,8 +68,8 @@
     >img, button {
         height: 24px;
         width: 24px;
-        padding-left: 5px;
-        padding-right: 5px;
+        padding-left: 2px;
+        padding-right: 2px;
         &:hover {
             cursor: pointer;
             transform: scale(1.1);
@@ -109,6 +109,7 @@ h3[class^="c"] {
     >span {
         font-family: var(--header-font-stack);
         font-size: var(--document-subheader-font-size);
+        letter-spacing: .1px;
         line-height: var(--document-line-height);
     }
 }
@@ -157,6 +158,7 @@ h3[class^="c"] {
 #header {
     color: black;
     font-size: var(--document-title-font-size);
+    letter-spacing: .2px;
 }
 .document-credit {
     color: var(--gray);

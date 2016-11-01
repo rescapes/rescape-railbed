@@ -42,7 +42,7 @@ class ExtendedLightbox extends Lightbox {
         const title = links.length > 1 ? 'Sources:' : 'Source:'
         return <div className='footer-wrapper'>
             {ret}
-            <span className={`image-credit ${image.date ? 'date' : ''}`}>
+            <span className={`image-credit ${this.props.force ? 'force-open' : ''} ${image.date ? 'date' : ''}`}>
                 <i>{title} </i>
                 {this.intersperse(links, ' and ')}
                 <span className='image-date'>{this.intersperse(dates, ' and ')}</span>
@@ -67,5 +67,9 @@ class ExtendedLightbox extends Lightbox {
         }, [arr[0]]);
     }
 }
+
+ExtendedLightbox.propTypes = Object.assign(Lightbox.propTypes, {
+    force: PropTypes.bool
+})
 
 export default ExtendedLightbox
