@@ -104,7 +104,7 @@
         Overlay documents (About, Contact, etc) are wider because they lack showcase stuff
     */
     --overlay-document-left: 0;
-    --overlay-document-width: calc(var(--document-left) + var(--document-width));
+    --overlay-document-width: 800px;
     /*
         We inject this title and header into the Google Doc so we control the style
     */

@@ -50,24 +50,15 @@
     url('../fonts/sourcesanspro-regular-webfont.svg#source_sans_proregular') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
 
 @font-face {
     font-family: 'TrainStation';
-    font-style: normal;
+    src: url('../fonts/trainstation-webfont.woff2') format('woff2'),
+    url('../fonts/trainstation-webfont.woff') format('woff'),
+    url('../fonts/trainstation-webfont.ttf') format('truetype');
     font-weight: normal;
-    src: url('../fonts/TrainStation.ttf');
-    src: local('TrainStation');
-}
-@font-face {
-    font-family: 'TrainStation';
     font-style: normal;
-    font-weight: normal;
-    src: url('../fonts/strongvoid-webfont.woff2') format('woff2'),
-    url('../fonts/strongvoid-webfont.woff') format('woff'),
-    url('../fonts/strongvoid-webfont.ttf') format('truetype');
-    unicode-range: U+26-26
 }
 
 @font-face {

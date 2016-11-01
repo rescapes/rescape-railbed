@@ -219,7 +219,7 @@ div:not(#app) > div[data-reactroot] > div > div {
         >div[class*="header"] {
             background: rgba(0, 0, 0, .75);
             justify-content: flex-end;
-            padding-right: 10px;
+            padding-right: 20px;
         }
 
     }
@@ -245,8 +245,8 @@ div:not(#app) > div[data-reactroot] > div > div {
              color: var(--white);
              font: var(--font-stack);
              font-size: var(--lightbox-caption-font-size);
-             padding-left: 5px;
-             padding-right: 5px;
+             margin-left: 25px;
+             margin-right: 25px;
 
             /* The counter */
             >div {
@@ -264,9 +264,12 @@ div:not(#app) > div[data-reactroot] > div > div {
     position: absolute;
     top: 8px;
     &.date {
-         top: 2px;
+        top: 2px;
     }
-    right: 85px;
+    right: 100px;
+    &.force-open {
+        right: 60px;
+    }
     text-align: right;
     padding: 3px;
     border-radius: 3px;

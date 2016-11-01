@@ -115,7 +115,8 @@ class Gallery extends Component {
 					currentImage={this.state.currentImage}
 					customControls={customControls}
 					images={this.props.images}
-					isOpen={this.props.forceOpen || this.state.lightboxIsOpen}
+					isOpen={this.props.force!=false && (this.props.force==true || this.state.lightboxIsOpen)}
+					force={this.props.force}
 					onClickPrev={this.gotoPrevious}
 					onClickNext={this.gotoNext}
 					onClickImage={this.handleClickImage}

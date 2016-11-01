@@ -49,6 +49,7 @@ export function getAnchorToModels(anchors, models) {
  * @param scrollHeight: Used for the spread between the last model and the bottom of the document
  */
 export function getSceneAnchors(anchorToModels, scrollHeight) {
+    const minScenePosition = config.MIN_SCENE_POSITION
     const maxScenePosition = config.MAX_SCENE_POSITION
     return anchorToModels.entrySeq().flatMap(function ([anchor, models], i) {
         // Find the next anchor position or failing that the bottom of the dom element
@@ -68,9 +69,13 @@ export function getSceneAnchors(anchorToModels, scrollHeight) {
                     // Used for displaying the scene circles
                     index: counter++,
                     // Position the scene between this anchor and the next (or bottom of document)
-                    // The first scene is positioned at the anchor and the last somewhere before the next anchor
+                    // The first scene is positioned at a fixed pixel distance below the anchor,
+                    // and the last somewhere before the next anchor
                     // Use maxScenePosition % (e.g. .8) to make sure no scene is too close to the next model
-                    offsetTop: anchor.get('offsetTop') + maxScenePosition * (nextAnchorOffsetTop - anchor.get('offsetTop')) * sceneKeys.indexOf(sceneKey) / allScenesCount
+                    offsetTop: anchor.get('offsetTop') + minScenePosition +
+                        (nextAnchorOffsetTop - anchor.get('offsetTop') - minScenePosition - maxScenePosition) *
+                        sceneKeys.indexOf(sceneKey) /
+                        allScenesCount
                 }
             })
         )

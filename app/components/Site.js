@@ -31,9 +31,6 @@ import himalaya from 'himalaya'
 
 export class Site extends Component {
 
-
-
-
     render() {
         // Convert the <head> tag elements from the document into JSON so that we can merge them into
         // our existing <head> tags

@@ -129,11 +129,13 @@ class Showcase extends Component {
                 }, this)}
             </div> : <span />
 
+        // force is true to force the Media open, false to force it closed, or null to hae no influence
+        const force = this.props.commentsAreShowing ? false : (noModel ? true : null)
         return <div className='showcase'>
             { model3dTitle }
             { showcaseLinks }
             <ModelAndVideos noModel={noModel} model={model} modelKey={this.props.modelKey} modelTops={modelTops} toward={toward} />
-            <Media isOpen={this.props.isOpen} forceOpen={noModel} media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
+            <Media isOpen={this.props.isOpen} force={force} media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
             { shareIcons }
         </div>
     }
@@ -148,7 +150,8 @@ Showcase.propTypes = {
     sceneKey: PropTypes.string,
     sceneIndex: PropTypes.number,
     documentTitle: PropTypes.string,
-    postUrl: PropTypes.string
+    postUrl: PropTypes.string,
+    commentsAreShowing: PropTypes.bool
 }
 
 function mapStateToProps(state, props) {
@@ -170,9 +173,8 @@ function mapStateToProps(state, props) {
     const sceneKey = currentSceneKeyOfModel(model)
     // Used to set a css class so we can smoothly transition scene titles
     const sceneIndex = model && model.getIn(['scenes', 'entries']).keySeq().indexOf(sceneKey)
-    const commentsAreShowing = model && model.get('commentsAreShowing')
+    const commentsAreShowing = (document && document.get('commentsAreShowing')) || (model && model.get('commentsAreShowing'))
     const defaultIs3dSet = state.getIn(['settings', settingsActions.SET_3D])
-
     return {
         settings,
         document,

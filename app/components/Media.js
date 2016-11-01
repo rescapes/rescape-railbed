@@ -66,7 +66,7 @@ export default class Media extends Component {
             // header
             close: {
                 // Don't show the close button if we are forced open
-                display: this.props.forceOpen ? 'none': 'block',
+                display: this.props.force ? 'none': 'block',
                 fill: '#D40000',
                 opacity: 0.6,
                 transition: 'all 200ms',
@@ -95,7 +95,7 @@ export default class Media extends Component {
             <Gallery
                 images={this.configureMedia()}
                 theme={theme}
-                forceOpen={this.props.forceOpen}
+                force={this.props.force}
                 isOpen={this.props.isOpen}
             />
         </div>
@@ -139,7 +139,7 @@ Media.propTypes = {
     toward: PropTypes.string,
     media: ImmutablePropTypes.orderedMap,
     modelKey: PropTypes.string,
-    forceOpen: PropTypes.bool,
+    force: PropTypes.bool,
     // The current state of openness of the lightbox
     isOpen: PropTypes.bool,
 }

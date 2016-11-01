@@ -217,7 +217,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         // Scroll up a tad to make it look better
         return state.setIn(
             ['entries', currentDocumentKey, 'scrollPosition'],
-            soughtModelAnchor.get('offsetTop') - config.SCROLL_OFFSET
+            soughtModelAnchor.get('offsetTop')
         )
     }
     // Toggle comments showing or hidden for the current document
@@ -338,6 +338,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         )
 
 
+        /*
         console.debug(`Scroll Position: ${adjustedScrollPosition}`)
         function nameAndPosition(anchor) {
             return `${anchor.name} ${anchor.offsetTop}`
@@ -347,6 +348,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         console.log(`Current: ${current && nameAndPosition(current)}`)
         console.log(`Next: ${next && nameAndPosition(next)}`)
         console.log(`Next Distinct: ${nextForDistinctModel && nameAndPosition(nextForDistinctModel)}`)
+        */
         return {current, previous, next, nextForDistinctModel, previousForDistinctModel}
     }
 

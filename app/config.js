@@ -20,14 +20,14 @@ export default  {
     MODEL_THRESHOLD: .4,
     // Padding between models when switching
     MODEL_PADDING: .1,
+    // Put the first scene 100px below the heading
+    MIN_SCENE_POSITION: 100,
     // Don't put scene anchors more than this close to the next model
     // This prevents switching scenes and models at the same time.
-    MAX_SCENE_POSITION: .9,
+    MAX_SCENE_POSITION: 150,
     // Video scenes are 4 seconds long,
     // This can be overridden in each model if needed
     SCENE_TRANSITION_TIME: 4,
     // The normal number of model nodes to show for both the top and bottom table of contents
-    TABLE_OF_CONTENTS_MODEL_NODE_COUNT: 2,
-    // When scrolling to a section of the document, use this offset to make it look better
-    SCROLL_OFFSET: 30
+    TABLE_OF_CONTENTS_MODEL_NODE_COUNT: 2
 }
