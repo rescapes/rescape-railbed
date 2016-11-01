@@ -21,14 +21,15 @@ export function normalizeKeyToFilename(key) {
 
 /***
  * Force the download of a file by creating a link and clicking it
- * @param document
- * @param src
+ * @param document: The document dom element
+ * @param src: The src URL
+ * @param suggestedName: Optional name of the file when downloaded
  */
-export function forceDownload(document, src) {
+export function forceDownload(document, src, suggestedName) {
     var link = document.createElement('a');
     if (typeof link.download === 'string') {
         document.body.appendChild(link); //Firefox requires the link to be in the body
-        link.download = ''
+        link.download = suggestedName || ''
         link.href = src
         link.click();
         document.body.removeChild(link); //remove the link when done

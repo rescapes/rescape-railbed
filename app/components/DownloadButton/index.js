@@ -6,7 +6,7 @@ class DownloadButton extends Component {
         super();
     }
     render () {
-        const icon = this.props.color ? DownloadIcon.replace(/white/g, this.props.color) : 'white'
+        const icon = this.props.color ? DownloadIcon.replace(/white/g, this.props.color) : DownloadIcon
         return (
             <button
                 title="Download"
