@@ -57,7 +57,7 @@
     z-index: 10;
     margin-top: 18px;
     top: var(--document-top);
-    left: calc(var(--overlay-document-width) - 52px);
+    left: calc(var(--overlay-document-width) - 64px);
     position: absolute;
     display: flex;
     flex-direction: row;

@@ -42,7 +42,7 @@ class ExtendedLightbox extends Lightbox {
         const title = links.length > 1 ? 'Sources:' : 'Source:'
         return <div className='footer-wrapper'>
             {ret}
-            <span className='image-credit'>
+            <span className={`image-credit ${image.date ? 'date' : ''}`}>
                 <i>{title} </i>
                 {this.intersperse(links, ' and ')}
                 <span className='image-date'>{this.intersperse(dates, ' and ')}</span>

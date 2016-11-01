@@ -262,7 +262,10 @@ div:not(#app) > div[data-reactroot] > div > div {
     font-size: var(--image-credit-font-size);
     color: var(--faded-gray);
     position: absolute;
-    top: 2px;
+    top: 8px;
+    &.date {
+         top: 2px;
+    }
     right: 85px;
     text-align: right;
     padding: 3px;
