@@ -5,6 +5,39 @@
     margin-top: var(--media-margin-top);
     z-index: 4;
     width: 100%;
+
+    /* This is only used for the corner case where we have an overlay document */
+    /* Normally lightbox is added to the end of the document */
+    >.section {
+        width: 100%;
+        >div[class*="container"] {
+            top: var(--lightbox-top);
+            height: var(--lightbox-height);
+            left: var(--lightbox-left);
+            width: calc(100% - var(--lightbox-left));
+            background: rgba(0, 0, 0, .75);
+            padding-left: 0px;
+            padding-right: 0px;
+            padding-top: 0px;
+            padding-bottom: 0px;
+
+            /* The content div */
+            >div {
+                position: absolute;
+                left: 0px;
+                width: 100%;
+                top: 0px;
+                height: 100%;
+
+                /* The header div */
+                >div[class*="header"] {
+                    background: rgba(0, 0, 0, .75);
+                    justify-content: flex-end;
+                    padding-right: 20px;
+                }
+            }
+        }
+    }
 }
 
 
@@ -142,13 +175,6 @@
     td {
         border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
-}
-
-// Miscellaneous
-// ------------------------------
-
-.section {
-    width: 100%;
 }
 
 .gallery {

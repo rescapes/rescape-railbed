@@ -23,9 +23,7 @@ import {Map, OrderedMap, List} from 'immutable'
 import * as actions from '../actions/document'
 import * as siteActions from '../actions/site'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import Scroll from 'react-scroll';
-import {getAnchorToModels, getSceneAnchors} from '../utils/documentHelpers'
-const scroll = Scroll.animateScroll;
+import {getAnchorToModels, getSceneAnchors, replaceHash} from '../utils/documentHelpers'
 import config from '../config'
 import {currentSceneKeyOfModel} from '../utils/modelHelpers'
 import SceneCircles from './SceneCircles'
@@ -33,7 +31,6 @@ import CommentsButton from './CommentsButton'
 import {normalizeModelName} from '../utils/modelHelpers'
 
 class Document extends Component {
-
 
     /***
      * When the Document content is loaded we want to index all of the anhors in the document text
@@ -204,8 +201,12 @@ class Document extends Component {
         if ((!previousClosestAnchors && closestAnchors) || (previousClosestAnchors && !previousClosestAnchors.equals(closestAnchors))) {
             // Have the Model3ds react to the new closest anchors
             this.props.documentTellModelAnchorsChanged(closestAnchors)
-
         }
+        // If the current model changed update the location hash
+        if (nextProps.modelKey != this.props.modelKey) {
+            replaceHash(normalizeModelName(nextProps.modelKey, nextProps.model))
+        }
+
         // If a hash is in the Router location scroll to it if we aren't already there or open the overlay
         // doc if it represents a document key like contact, about, cv
         // This is only needed on initial load when the document isn't ready yet
@@ -222,7 +223,7 @@ class Document extends Component {
                     this.props.scrollToModel(anchor.get('name'))
                 }
                 else {
-                    // See if the hash matches a document key
+                    // See if the hash matches an overlay document key
                     const documentKey = this.props.overlayDocumentKeys.find(
                         overlayDocumentKey => overlayDocumentKey == hash.replace('#','')
                     )

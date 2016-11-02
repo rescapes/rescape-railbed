@@ -1059,7 +1059,7 @@ export default Map({
                 modelKeys: List()
             }),
             'the_amtrak_standard': Map({
-                date: new Date(2016, 9),
+                date: new Date(2016, 10),
                 author: 'Andy Likuski',
                 status: Statuses.INITIALIZED,
                 title: 'The AMTRAK Standard',

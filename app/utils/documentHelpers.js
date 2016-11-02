@@ -111,3 +111,12 @@ export function removeHash () {
         document.body.scrollLeft = scrollH;
     }
 }
+
+export function replaceHash(hash) {
+    const loc = window.location;
+    if ("pushState" in history)
+        history.pushState("", document.title, `${loc.pathname}#${hash}${loc.search}`);
+    else {
+        loc.hash = `#${hash}`;
+    }
+}
