@@ -135,7 +135,7 @@ class Showcase extends Component {
             { model3dTitle }
             { showcaseLinks }
             <ModelAndVideos noModel={noModel} model={model} modelKey={this.props.modelKey} modelTops={modelTops} toward={toward} />
-            <Media isOpen={this.props.isOpen} force={force} media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
+            <Media isOpen={this.props.isOpen} force={force} overlayDocumentIsShowing={this.props.overlayDocumentIsShowing} media={media} modelKey={this.props.modelKey} fade={fade} toward={toward}/>
             { shareIcons }
         </div>
     }
@@ -151,7 +151,8 @@ Showcase.propTypes = {
     sceneIndex: PropTypes.number,
     documentTitle: PropTypes.string,
     postUrl: PropTypes.string,
-    commentsAreShowing: PropTypes.bool
+    commentsAreShowing: PropTypes.bool,
+    overlayDocumentIsShowing: PropTypes.bool
 }
 
 function mapStateToProps(state, props) {
@@ -167,6 +168,7 @@ function mapStateToProps(state, props) {
     const model = modelKey && models.getIn(['entries', modelKey])
     const noModel = model && (!model.get('id') || !model.get('videoId'))
     const isOpen = settings.get(settingsActions.SET_LIGHTBOX_VISIBILITY)
+    const documents = state.get('documents')
     const document = state.getIn(['documents', 'entries', documentKey])
     const postUrl = document && document.get('postUrl')
     const documentTitle = document && document.get('title')
@@ -175,6 +177,7 @@ function mapStateToProps(state, props) {
     const sceneIndex = model && model.getIn(['scenes', 'entries']).keySeq().indexOf(sceneKey)
     const commentsAreShowing = (document && document.get('commentsAreShowing')) || (model && model.get('commentsAreShowing'))
     const defaultIs3dSet = state.getIn(['settings', settingsActions.SET_3D])
+    const overlayDocumentIsShowing = !!(documents && documents.get('currentOverlay'))
     return {
         settings,
         document,
@@ -189,7 +192,8 @@ function mapStateToProps(state, props) {
         documentTitle,
         postUrl,
         commentsAreShowing,
-        defaultIs3dSet
+        defaultIs3dSet,
+        overlayDocumentIsShowing
     }
 }
 

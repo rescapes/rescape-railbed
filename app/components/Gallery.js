@@ -116,7 +116,9 @@ class Gallery extends Component {
 					customControls={customControls}
 					images={this.props.images}
 					isOpen={this.props.force!=false && (this.props.force==true || this.state.lightboxIsOpen)}
+					overlayDocumentIsShowing={this.props.overlayDocumentIsShowing}
 					force={this.props.force}
+					showCloseButton={!this.props.force}
 					onClickPrev={this.gotoPrevious}
 					onClickNext={this.gotoNext}
 					onClickImage={this.handleClickImage}
@@ -136,6 +138,7 @@ Gallery.propTypes = {
 	forceOpen: PropTypes.bool,
 	// The current state of openness of the lightbox
 	isOpen: PropTypes.bool,
+	overlayDocumentIsShowing: PropTypes.bool
 };
 
 function mapStateToProps(state) {

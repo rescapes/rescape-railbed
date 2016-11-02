@@ -13,9 +13,7 @@ import {Map, List} from 'immutable';
 import {SET_STATE} from '../actions/site'
 import * as actions from '../actions/document'
 import * as modelActions from '../actions/model'
-import {removeHash} from '../utils/documentHelpers'
 import Statuses from '../statuses'
-import config from '../config'
 
 /***
  * Reduces the state of the documents

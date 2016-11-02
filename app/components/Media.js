@@ -65,8 +65,6 @@ export default class Media extends Component {
 
             // header
             close: {
-                // Don't show the close button if we are forced open
-                display: this.props.force ? 'none': 'block',
                 fill: '#D40000',
                 opacity: 0.6,
                 transition: 'all 200ms',
@@ -96,6 +94,7 @@ export default class Media extends Component {
                 images={this.configureMedia()}
                 theme={theme}
                 force={this.props.force}
+                overlayDocumentIsShowing={this.props.overlayDocumentIsShowing}
                 isOpen={this.props.isOpen}
             />
         </div>
@@ -142,5 +141,6 @@ Media.propTypes = {
     force: PropTypes.bool,
     // The current state of openness of the lightbox
     isOpen: PropTypes.bool,
+    overlayDocumentIsShowing: PropTypes.bool
 }
 

@@ -10,6 +10,7 @@
  */
 import Lightbox from 'react-images';
 import React, { Component, PropTypes } from 'react';
+import Portal from 'react-images/lib/components/Portal';
 
 /***
  * Extends Lightbox from react-images to add a credit link an other niceties
@@ -49,6 +50,19 @@ class ExtendedLightbox extends Lightbox {
             </span>
         </div>
     }
+
+    render () {
+        if (!this.props.overlayDocumentIsShowing) {
+            // return this.renderDialog();
+            return (
+                <Portal>
+                    {this.renderDialog()}
+                </Portal>
+            );
+        }
+        return this.renderDialog()
+    }
+
     /*
      * http://stackoverflow.com/questions/23618744/rendering-comma-separated-list-of-links
      * intersperse: Return an array with the separator interspersed between
@@ -69,7 +83,8 @@ class ExtendedLightbox extends Lightbox {
 }
 
 ExtendedLightbox.propTypes = Object.assign(Lightbox.propTypes, {
-    force: PropTypes.bool
+    force: PropTypes.bool,
+    overlayDocumentIsShowing: PropTypes.bool
 })
 
 export default ExtendedLightbox
