@@ -113,7 +113,7 @@
     left: 0px;
     top: calc(var(--model-3d-top) - var(--model-3d-title-height));
     height: var(--model-3d-title-height);
-    right: 50%;
+    right: 25%;
     color: var(--gray);
     font-family: var(--font-stack);
     font-size: var(--model-3d-title-font-size);
