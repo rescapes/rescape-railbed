@@ -57,7 +57,7 @@
     --header-bottom: calc( var(--header-top) + var(--header-height) );
     --rescape-icon-bottom: 5px;
     --rescape-icon-height: calc(var(--header-height) - 15px);
-    --header-links-color: var(--gray);
+    --header-links-color: rgb(128, 128, 128);
     --header-links-bottom: 5px;
     --header-link-font-size: var(--h5-font-size);
     --header-green-left: rgb(68, 136, 40);

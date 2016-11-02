@@ -718,6 +718,12 @@ var amtrakStandardModels = OrderedMap({
                 sourceUrl: 'http://www.bart.gov/about/projects/cars/new-features',
                 credit: 'Bay Area Rapid Transit',
             }),
+            'Bombardier BART Car': Map({
+                caption: "Bikes deserve dedicate space, at the same time many more bikes fit comfortable beyond what the racks hold",
+                sourceImageUrl: 'https://prixdesign.com/wp-content/uploads/2015/01/BombardierBART_MorelliDesigners_VELO_TrainSanFrancisco_ImageSynthese3_HR.jpg',
+                sourceUrl: 'https://prixdesign.com/portfolio/bombardier-bart-bay-area-rapid-transit-san-francisco-2/',
+                credit: 'Grand Prix du Design',
+            }),
             'Wheelchairs on BART': Map({
                 caption: "Wheelchairs can easily board most metro systems, like the Bay Area's BART system, as long as elevators exist and work",
                 sourceImageUrl: 'https://i.ytimg.com/vi/nlPELKb1KFU/hqdefault.jpg',
@@ -762,6 +768,12 @@ var amtrakStandardModels = OrderedMap({
                 sourceImageUrl: 'https://www.uestra.de/fileadmin/_processed_/csm_barrierefrei_tw6000_web_4d199a78aa.jpg',
                 sourceUrl: 'https://www.uestra.de/kundenservice/barrierefreie-uestra/barrierefreiheit-in-der-stadtbahn/',
                 credit: 'üstra',
+            }),
+            "Strollers on Trams": Map({
+                caption: "Modern trams make it easy to use strollers of any size",
+                sourceImageUrl: 'http://www.kidsinprague.com/images/uploads/DSC03289_thumb.JPG',
+                sourceUrl: 'http://www.kidsinprague.com/post/prague-public-transport/',
+                credit: 'Kids in Prague',
             }),
         })
     }),

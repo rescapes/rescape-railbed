@@ -271,7 +271,7 @@ div:not(#app) > div[data-reactroot] > div > div {
              color: var(--white);
              font: var(--font-stack);
              font-size: var(--lightbox-caption-font-size);
-             margin-left: 25px;
+             margin-left: 12px;
              margin-right: 25px;
 
             /* The counter */

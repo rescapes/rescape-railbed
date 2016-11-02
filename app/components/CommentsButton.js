@@ -77,7 +77,7 @@ class CommentsButton extends Component {
      */
     onClickCommentButton() {
         // Close the model or document comments if open
-        this.state.toggle(this.commentObjectKey(), true)
+        this.state.toggle(this.commentObjectKey())
     }
 
     /***

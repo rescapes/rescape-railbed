@@ -218,6 +218,13 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
             soughtModelAnchor.get('offsetTop')
         )
     }
+    // Scroll to the top of the document
+    else if (action.type==actions.SCROLL_TO_TOP) {
+        return state.setIn(
+            ['entries', currentDocumentKey, 'scrollPosition'],
+            0
+        )
+    }
     // Toggle comments showing or hidden for the current document
     else if (action.type == actions.TOGGLE_DOCUMENT_COMMENTS) {
         return state.setIn(

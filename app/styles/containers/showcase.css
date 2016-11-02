@@ -114,7 +114,7 @@
     top: calc(var(--model-3d-top) - var(--model-3d-title-height));
     height: var(--model-3d-title-height);
     right: 25%;
-    color: var(--gray);
+    color: var(--header-links-color);
     font-family: var(--font-stack);
     font-size: var(--model-3d-title-font-size);
     padding-top: 0px;
@@ -152,7 +152,7 @@
     margin-left: 5px;
     font-family: var(--font-stack);
     font-size: var(--showcase-links-font-size);
-    color: var(--gray);
+    color: var(--header-links-color);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -168,7 +168,7 @@
 }
 .model-credits {
     >a {
-        color: var(--gray);
+        color: var(--header-links-color);
     }
 }
 

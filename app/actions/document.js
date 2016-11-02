@@ -33,6 +33,7 @@ export const REGISTER_SCROLL_POSITION = 'REGISTER_SCROLL_POSITION'
 export const SCROLL_TO_NEXT_MODEL = 'SCROLL_TO_NEXT_MODEL'
 export const SCROLL_TO_PREVIOUS_MODEL = 'SCROLL_TO_PREVIOUS_MODEL'
 export const SCROLL_TO_MODEL = 'SCROLL_TO_MODEL'
+export const SCROLL_TO_TOP = 'SCROLL_TO_TOP'
 export const DOCUMENT_IS_SCROLLING = 'DOCUMENT_IS_SCROLLING'
 
 export const TOGGLE_DOCUMENT_COMMENTS = 'TOGGLE_DOCUMENT_COMMENTS'
@@ -172,6 +173,13 @@ export function scrollToNextModel() {
  */
 export function scrollToPreviousModel() {
     return { type: SCROLL_TO_PREVIOUS_MODEL }
+}
+
+/***
+ * Sets the scroll position to the top of the document
+ */
+export function scrollToTop() {
+    return { type: SCROLL_TO_TOP}
 }
 
 /***

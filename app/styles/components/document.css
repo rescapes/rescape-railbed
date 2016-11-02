@@ -24,7 +24,7 @@
     margin-top: 15px;
     z-index: 2;
     position: absolute;
-    padding-bottom: 10px;
+    padding-bottom: 40px;
 
     &.overlay-document-showing {
         display: none;
@@ -166,7 +166,7 @@ h3[class^="c"] {
     font-size: var(--h5-font-size);
 }
 .author {
-    font-weight: normal;
+    color: var(--gray);
     &:hover {
          cursor: pointer;
     }
