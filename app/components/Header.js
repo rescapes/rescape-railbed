@@ -37,7 +37,7 @@ class Header extends Component {
         )
 
         return <div className='header'>
-            <img className='header-icon' src={rescape_png}/>
+            <a href="/"><img className='header-icon' src={rescape_png}/></a>
             <div className='header-links'>
                 {headerDocuments}
             </div>

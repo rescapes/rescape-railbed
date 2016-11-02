@@ -203,9 +203,12 @@ class Document extends Component {
             this.props.documentTellModelAnchorsChanged(closestAnchors)
         }
         // If the current model changed update the location hash
+        // Don't do this; it's too noticeable
+        /*
         if (nextProps.modelKey != this.props.modelKey) {
             replaceHash(normalizeModelName(nextProps.modelKey, nextProps.model))
         }
+        */
 
         // If a hash is in the Router location scroll to it if we aren't already there or open the overlay
         // doc if it represents a document key like contact, about, cv
@@ -359,7 +362,7 @@ class Document extends Component {
             const regex = /(<a.*?>)(<\/a>)/
             const match = regex.exec(bodySlice)
             // Grab the starting and ending <a> or create one for pages like Contact
-            const anchorParts = match ? match.slice(1) : [`<a name='${this.props.documentKey}' href='#${this.props.documentKey}'>`, '</a>']
+            const anchorParts = match ? match.slice(1) : [`<a name='${this.props.documentKey}' href='#top'>`, '</a>']
             // A couple models have no subheading displayed, so add a class to indicate it
             // Start at index==1 since index 0 is not a model but the document title
             const noSubheading = index > 0 && this.props.models.toIndexedSeq().get(index - 1).get('noSubheading')

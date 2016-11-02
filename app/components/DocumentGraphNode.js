@@ -28,17 +28,17 @@ export default class DocumentGraphNode extends React.Component {
         if (this.props.isTop && node.key==this.props.documentTitle) {
             // The document.
             return <div className={`table-of-contents-node toc-document ${this.props.isExpanded ? 'expanded' : ''}`}
-                        key={node.key} >
-                <a ref="outline" className='outline' href={`#${this.props.documentKey}`}>
+                        onClick={()=>this.props.scrollToTop()} key={node.key} >
+                <div className='outline'>
                     {node.key}
-                </a>
+                </div>
             </div>
         }
         else if (this.props.isTop && node.key == normalizedCurrentModelName) {
             // The current model
             return <div className='table-of-contents-node toc-model-current' key={node.key} >
                 <div className='outline'>
-                    {node.key}
+                    {node.key}s
                 </div>
             </div>
         }
@@ -49,10 +49,12 @@ export default class DocumentGraphNode extends React.Component {
         }
         else {
             // All other model nodes
-            return <div className="table-of-contents-node toc-model" key={node.key} >
-                <a href={`#${normalizedModelName}`} className='outline'>
+            return <div className="table-of-contents-node toc-model" key={node.key}
+                        onClick={()=>this.props.scrollToModel(node.key)}
+            >
+                <div className='outline'>
                     {node.key}
-                </a>
+                </div>
             </div>
         }
     }
