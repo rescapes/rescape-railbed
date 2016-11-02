@@ -166,9 +166,7 @@ h3[class^="c"] {
     font-size: var(--h5-font-size);
 }
 .author {
-    color: var(--gray);
-    font-family: var(--font-stack);
-    font-size: var(--h5-font-size);
+    font-weight: normal;
     &:hover {
          cursor: pointer;
     }
