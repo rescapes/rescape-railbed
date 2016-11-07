@@ -82,6 +82,7 @@
     --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
     --table-of-contents-top: var(--header-bottom);
     --table-of-contents-bottom: 0;
+    --table-of-contents-margin-bottom: 10px;
     /* This width is used to fit the wideset table-of-contents element but be minimum for hovering off the toc */
     --table-of-contents-width: 140px;
     --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
@@ -100,6 +101,7 @@
     --document-left: calc(var(--table-of-contents-width) + 20px);
     --document-width: 400px;
     --document-margin-left: 10px;
+    --document-credit-font-size : var(--h5-font-size);
     /*
         Overlay documents (About, Contact, etc) are wider because they lack showcase stuff
     */
@@ -125,7 +127,7 @@
     --showcase-height: calc(100% - var(--footer-height));
     --showcase-left: calc(var(--table-of-contents-width) + 20px + var(--document-width));
     --showcase-right: 10px;
-
+    --share-icons-top: calc(var(--header-height) - 20px);
     /*
         Make the model ratio should be 2 height to 3 width since that is what the Sketchup videos are.
         The Sketchup models don't care what the ratio is but look best at that ration
@@ -153,10 +155,6 @@
     --gallery-thumbnail-width: 100px;
     --gallery-thumbnail-height: 75px;
     /*
-        The gallery containing the lightbox doesn't quite extend to the document
-    */
-    --gallery-width: calc( var(--model-3d-width) - var(--model-3d-document-overlap) - 5px);
-    /*
         The lightbox top overlaps the header. We want the lightbox header
         to be in the header and the actual lightbox image to match the model-3d-top
     */
@@ -178,6 +176,7 @@
     */
     --model-3d-title-font-size: 13px;
     --model-3d-title-height: 18px;
+    --model-3d-title-top: calc(var(--model-3d-top) - var(--model-3d-title-height));
 
     --showcase-links-height: 15px;
     --showcase-links-font-size: 11px;
@@ -232,28 +231,29 @@
 @media (--mvp) {
     :root {
         --factor: .85;
-        --header-height: calc(2 * var(--factor) * var(--header-height));
+        --header-height: calc(var(--factor) * var(--header-height));
         --header-bottom: calc( var(--header-top) + var(--header-height) );
-        --rescape-icon-height: var(--header-height);
-        --footer-height: calc(2 * var(--factor) * var(--footer-height));
+        --table-of-contents-top: var(--header-bottom);
+        --table-of-contents-width: calc(2 * var(--factor) * var(--table-of-contents-width));
+        --rescape-icon-height: calc(var(--header-height) - 15px);
+        --footer-height: calc(var(--factor) * var(--footer-height));
         --showcase-height: calc(100% - var(--footer-height));
         --model-3d-top: calc(var(--header-height));
         --gallery-thumbnail-width: calc(2 * var(--factor) * var(--gallery-thumbnail-width));
         --gallery-thumbnail-height: calc(2 * var(--factor) * var(--gallery-thumbnail-height));
         --lightbox-top: calc(var(--factor) * var(--lightbox-top));
-        --image-credit-font-size: calc(1.5 * var(--factor) * var(--image-credit-font-size));
-        --lightbox-caption-font-size: calc(1.2 * var(--factor) * var(--lightbox-caption-font-size));
+        --image-credit-font-size: calc(var(--factor) * var(--image-credit-font-size));
+        --lightbox-caption-font-size: calc(var(--factor) * var(--lightbox-caption-font-size));
         --document-top: var(--header-bottom);
+        --document-width: calc(var(--factor) * var(--document-width));
         --document-height: calc( 100% - var(--footer-height) );
-        --document-left: var(--table-of-contents-width);
-        --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
+        --document-left: calc(var(--table-of-contents-width) + 20px);
+        --document-credit-font-size : calc(var(--factor) * var(--document-credit-font-size));
         --table-of-contents-document-height: calc(1.5 * var(--factor) * var(--table-of-contents-document-height));
         --table-of-contents-model-height: calc(1.5 * var(--table-of-contents-document-height) / 2);
-        --table-of-contents-top: calc(5 * var(--table-of-contents-document-height) / 6);
-        --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
         --table-of-contents-model-current-height: calc(3 * var(--table-of-contents-document-height) / 3);
-        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
-        --table-of-contents-font-size: calc(1.2 * var(--factor) * var(--table-of-contents-font-size));
+        --table-of-contents-font-size: calc(var(--factor) * var(--table-of-contents-font-size));
+        --table-of-contents-margin-bottom: calc(var(--factor) * var(--table-of-contents-margin-bottom));
         --comment-button-width: calc(1.5 * var(--factor) * var(--comment-button-width));
         --comment-button-width-small: calc(var(--comment-button-width) * .86);
         --comment-button-height: calc(var(--comment-button-width) * .5);
@@ -261,14 +261,18 @@
         --comment-count-font-size: calc(1.8 * var(--factor) * var(--comment-count-font-size));
         --comment-count-font-size-small: calc(var(--comment-count-font-size) * .9);
         --comment-count-top: calc(1.2 * var(--factor) * var(--comment-count-top));
-        --model-3d-title-font-size: calc(1.5 * var(--factor) * var(--model-3d-title-font-size));
-        --model-3d-title-height: calc(1.5 * var(--factor) * var(--model-3d-title-height));
+        --model-3d-title-font-size: calc(var(--factor) * var(--model-3d-title-font-size));
+        --model-3d-title-height: calc(var(--factor) * var(--model-3d-title-height));
+        --model-3d-title-top: calc(var(--model-3d-top) - var(--model-3d-title-height));
         --header-link-font-size: calc(.8 * var(--factor) * var(--header-link-font-size));
+        --showcase-left: calc(var(--table-of-contents-width) + 20px + var(--document-width));
+        --showcase-links-height: calc(var(--factor) * var(--showcase-links-height));
+        --showcase-links-font-size: calc(var(--factor) * var(--showcase-links-font-size));
+        --share-icons-top: var(--header-height);
         --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
+        --lightbox-left: calc(var(--showcase-left) - 5px);
         --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
         --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
-        --document-header-font-size: calc(var(--factor) * var(--document-header-font-size));
-        --document-font-size: calc(var(--factor) * var(--document-font-size));
         --document-line-height: calc(2.2 * var(--factor) * var(--document-line-height));
     }
 }
@@ -277,25 +281,28 @@
         --factor: .5;
         --header-height: calc(var(--factor) * var(--header-height));
         --header-bottom: calc( var(--header-top) + var(--header-height) );
-        --rescape-icon-height: var(--header-height);
+        --table-of-contents-top: var(--header-bottom);
+        --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
+        --rescape-icon-height: calc(var(--header-height) - 15px);
         --footer-height: calc(var(--factor) * var(--footer-height));
         --showcase-height: calc(100% - var(--footer-height));
         --model-3d-top: calc(var(--header-height));
         --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
         --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));
         --lightbox-top: calc(var(--factor) * var(--lightbox-top));
-        --image-credit-font-size: calc(1.5 * var(--factor) * var(--image-credit-font-size));
-        --lightbox-caption-font-size: calc(1.5 * var(--factor) * var(--lightbox-caption-font-size));
+        --image-credit-font-size: calc(var(--factor) * var(--image-credit-font-size));
+        --lightbox-caption-font-size: calc(var(--factor) * var(--lightbox-caption-font-size));
         --document-top: var(--header-bottom);
+        --document-width: calc(var(--factor) * var(--document-width));
         --document-height: calc( 100% - var(--footer-height) );
-        --document-left: var(--table-of-contents-width);
+        --document-left: calc(var(--table-of-contents-width) + 20px);
+        --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
+        --document-credit-font-size : calc(var(--factor) * var(--document-credit-font-size));
         --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
         --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
-        --table-of-contents-top: calc(5 * var(--table-of-contents-document-height) / 6);
-        --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
         --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
-        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
-        --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
+        --table-of-contents-font-size: calc(var(--factor) * var(--table-of-contents-font-size));
+        --table-of-contents-margin-bottom: calc(var(--factor) * var(--table-of-contents-margin-bottom));
         --comment-button-width: calc(var(--factor) * var(--comment-button-width));
         --comment-button-width-small: calc(var(--comment-button-width) * .86);
         --comment-button-height: calc(var(--comment-button-width) * .5);
@@ -305,12 +312,16 @@
         --comment-count-top: calc(var(--factor) * var(--comment-count-top));
         --model-3d-title-font-size: calc(var(--factor) * var(--model-3d-title-font-size));
         --model-3d-title-height: calc(var(--factor) * var(--model-3d-title-height));
+        --model-3d-title-top: calc(var(--model-3d-top) - var(--model-3d-title-height));
         --header-link-font-size: calc(var(--factor) * var(--header-link-font-size));
+        --showcase-left: calc(var(--table-of-contents-width) + 20px + var(--document-width));
+        --showcase-links-height: calc(var(--factor) * var(--showcase-links-height));
+        --showcase-links-font-size: calc(var(--factor) * var(--showcase-links-font-size));
+        --share-icons-top: var(--header-height);
         --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
+        --lightbox-left: calc(var(--showcase-left) - 5px);
         --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
         --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
-        --document-header-font-size: calc(var(--factor) * var(--document-header-font-size));
-        --document-font-size: calc(var(--factor) * var(--document-font-size));
         --document-line-height: calc(2.2 * var(--factor) * var(--document-line-height));
     }
 }
@@ -319,25 +330,26 @@
         --factor: .5;
         --header-height: calc(var(--factor) * var(--header-height));
         --header-bottom: calc( var(--header-top) + var(--header-height) );
-        --rescape-icon-height: var(--header-height);
+        --table-of-contents-top: var(--header-bottom);
+        --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
+        --rescape-icon-height: calc(var(--header-height) - 15px);
         --footer-height: calc(var(--factor) * var(--footer-height));
         --model-3d-top: calc(var(--header-height));
         --gallery-thumbnail-width: calc(var(--factor) * var(--gallery-thumbnail-width));
         --gallery-thumbnail-height: calc(var(--factor) * var(--gallery-thumbnail-height));
         --lightbox-top: calc(var(--factor) * var(--lightbox-top));
-        --image-credit-font-size: calc(1.5 * var(--factor) * var(--image-credit-font-size));
-        --lightbox-caption-font-size: calc(1.5 * var(--factor) * var(--lightbox-caption-font-size));
+        --image-credit-font-size: calc(var(--factor) * var(--image-credit-font-size));
+        --lightbox-caption-font-size: calc(var(--factor) * var(--lightbox-caption-font-size));
         --document-top: var(--header-bottom);
+        --document-width: calc(var(--factor) * var(--document-width));
         --document-height: calc( 100% - var(--footer-height) );
-        --document-left: var(--table-of-contents-width);
-        --document-absolute-left: calc( var(--document-left) - var(--document-margin-left));
+        --document-left: calc(var(--table-of-contents-width) + 20px);
+        --document-credit-font-size : calc(var(--factor) * var(--document-credit-font-size));
         --table-of-contents-document-height: calc(.8 * var(--factor) * var(--table-of-contents-document-height));
         --table-of-contents-model-height: calc(var(--table-of-contents-document-height) / 2);
-        --table-of-contents-top: calc(5 * var(--table-of-contents-document-height) / 6);
-        --table-of-contents-width: calc(var(--factor) * var(--table-of-contents-width));
         --table-of-contents-model-current-height: calc(2 * var(--table-of-contents-document-height) / 3);
-        --table-of-contents-top-height: calc(var(--header-height) - var(--table-of-contents-top));
-        --table-of-contents-font-size: calc(.9 * var(--factor) * var(--table-of-contents-font-size));
+        --table-of-contents-font-size: calc(var(--factor) * var(--table-of-contents-font-size));
+        --table-of-contents-margin-bottom: calc(var(--factor) * var(--table-of-contents-margin-bottom));
         --comment-button-width: calc(var(--factor) * var(--comment-button-width));
         --comment-button-width-small: calc(var(--comment-button-width) * .86);
         --comment-button-height: calc(var(--comment-button-width) * .5);
@@ -347,12 +359,16 @@
         --comment-count-top: calc(var(--factor) * var(--comment-count-top));
         --model-3d-title-font-size: calc(var(--factor) * var(--model-3d-title-font-size));
         --model-3d-title-height: calc(var(--factor) * var(--model-3d-title-height));
+        --model-3d-title-top: calc(var(--model-3d-top) - var(--model-3d-title-height));
         --header-link-font-size: calc(var(--factor) * var(--header-link-font-size));
+        --showcase-left: calc(var(--table-of-contents-width) + 20px + var(--document-width));
+        --showcase-links-height: calc(var(--factor) * var(--showcase-links-height));
+        --showcase-links-font-size: calc(var(--factor) * var(--showcase-links-font-size));
+        --share-icons-top: var(--header-height);
         --model-credits-font-size: calc(1.5 * var(--factor) * var(--model-credits-font-size));
+        --lightbox-left: calc(var(--showcase-left) - 5px);
         --table-of-contents-outline-padding: calc(var(--factor) * var(--table-of-contents-outline-padding));
         --document-title-font-size: calc(var(--factor) * var(--document-title-font-size));
-        --document-header-font-size: calc(var(--factor) * var(--document-header-font-size));
-        --document-font-size: calc(var(--factor) * var(--document-font-size));
         --document-line-height: calc(2.2 * var(--factor) * var(--document-line-height));
     }
 }

@@ -166,9 +166,11 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
         // The sceneAnchors are a flat array of pseudo-anchors representing the position of each scene of each model
         // all of the <a id=...> tags it finds. These represent anchors to the models
         // or their scenes.
-        return state
-            .setIn(['entries', currentDocumentKey, 'anchorToModels'], action.anchorToModels)
-            .setIn(['entries', currentDocumentKey, 'sceneAnchors'], action.sceneAnchors)
+        if (!state.get('currentOverlay')) {
+            return state
+                .setIn(['entries', currentDocumentKey, 'anchorToModels'], action.anchorToModels)
+                .setIn(['entries', currentDocumentKey, 'sceneAnchors'], action.sceneAnchors)
+        }
     }
 
     // The Model component tells us what position it's center is. This let's us set up the scene change position

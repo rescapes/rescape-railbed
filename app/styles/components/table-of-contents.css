@@ -33,7 +33,7 @@
 }
 
 .table-of-contents-node {
-    margin-bottom: 10px;
+    margin-bottom: var(--table-of-contents-margin-bottom);
 
     /***
         Fade the text of new nodes in so the user notices the change

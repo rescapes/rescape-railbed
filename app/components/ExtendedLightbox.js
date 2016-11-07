@@ -11,12 +11,27 @@
 import Lightbox from 'react-images';
 import React, { Component, PropTypes } from 'react';
 import Portal from 'react-images/lib/components/Portal';
+import Arrow from 'react-images/lib/components/Arrow';
 
 /***
  * Extends Lightbox from react-images to add a credit link an other niceties
  */
 class ExtendedLightbox extends Lightbox {
 
+    // corrects typo in title
+    renderArrowNext () {
+        if (this.props.currentImage === (this.props.images.length - 1)) return null;
+
+        return (
+            <Arrow
+                direction="right"
+                icon="arrowRight"
+                onClick={this.gotoNext}
+                title="Next (Right arrow key)"
+                type="button"
+            />
+        );
+    }
     /***
      * Override the super class method to wrap the images in a div so we can add image credits
      * @returns {*}
@@ -41,7 +56,7 @@ class ExtendedLightbox extends Lightbox {
         const links = sourceUrls.map((sourceUrl, i) =>
             <a key={credits[i]} target="rescape_source" href={sourceUrls[i]}>{credits[i]}</a>)
         const title = links.length > 1 ? 'Sources:' : 'Source:'
-        return <div className='footer-wrapper'>
+        return <div ref='wrapper' className='footer-wrapper'>
             {ret}
             <span className={`image-credit ${this.props.force ? 'force-open' : ''} ${image.date ? 'date' : ''}`}>
                 <i>{title} </i>
