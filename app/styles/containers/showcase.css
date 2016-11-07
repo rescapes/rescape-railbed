@@ -11,7 +11,7 @@
 .share-icons {
     display: flex;
     position: absolute;
-    top: calc(var(--header-height) - 20px);
+    top: var(--share-icons-top);
     height: 32px;
     right: 5px;
     &:hover {
@@ -111,7 +111,7 @@
     z-index: 7;
     position: absolute;
     left: 0px;
-    top: calc(var(--model-3d-top) - var(--model-3d-title-height));
+    top: var(--model-3d-title-top);
     height: var(--model-3d-title-height);
     right: 25%;
     color: var(--header-links-color);

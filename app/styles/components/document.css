@@ -163,7 +163,7 @@ h3[class^="c"] {
 .document-credit {
     color: var(--gray);
     font-family: var(--font-stack);
-    font-size: var(--h5-font-size);
+    font-size: var(--document-credit-font-size);
 }
 .author {
     color: var(--gray);
@@ -174,7 +174,7 @@ h3[class^="c"] {
 .document-date {
     color: var(--gray);
     font-family: var(--font-stack);
-    font-size: var(--h5-font-size);
+    font-size: var(--document-credit-font-size);
 }
 
 .scene-circles {

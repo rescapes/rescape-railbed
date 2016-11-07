@@ -719,7 +719,7 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'Bay Area Rapid Transit',
             }),
             'Bombardier BART Car': Map({
-                caption: "Bikes deserve dedicate space, at the same time many more bikes fit comfortable beyond what the racks hold",
+                caption: "Bikes deserve dedicate space, at the same time many more bikes fit comfortably beyond what the racks hold",
                 sourceImageUrl: 'https://prixdesign.com/wp-content/uploads/2015/01/BombardierBART_MorelliDesigners_VELO_TrainSanFrancisco_ImageSynthese3_HR.jpg',
                 sourceUrl: 'https://prixdesign.com/portfolio/bombardier-bart-bay-area-rapid-transit-san-francisco-2/',
                 credit: 'Grand Prix du Design',

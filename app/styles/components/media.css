@@ -253,9 +253,12 @@ div:not(#app) > div[data-reactroot] > div > div {
 
 /* We use ExtendedLightbox to wrap the Lightbox and add components to it */
 .footer-wrapper {
+    display: block;
     width: 100%;
     height: calc(100% - 5px);
     background: rgba(0, 0, 0, .75);
+    overflow: hidden;
+    padding-bottom: 75%;
 
     /* The figure */
     >figure {
@@ -278,7 +281,7 @@ div:not(#app) > div[data-reactroot] > div > div {
             >div {
                  margin-right: 4px;
                  color: var(--white);
-                 font-size: var(--h5-font-size);
+                 font-size: var(--lightbox-caption-font-size);
              }
         }
     }
