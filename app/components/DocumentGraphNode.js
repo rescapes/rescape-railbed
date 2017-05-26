@@ -38,7 +38,7 @@ export default class DocumentGraphNode extends React.Component {
             // The current model
             return <div className='table-of-contents-node toc-model-current' key={node.key} >
                 <div className='outline'>
-                    {node.key}s
+                    {node.key}
                 </div>
             </div>
         }
