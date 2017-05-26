@@ -73,7 +73,7 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         id: '9b7bbfe8-2ad5-4074-ae81-7bc0645dfce9',
         videoId: 'vzRX6L4zK6s',
-        anchorId: 'id.bc4p3rsjqez8',
+        anchorId: 'id.qcujg6xjyfnw',
         // We don't show a subheader for this model in the document because it's at the top
         noSubheading: true,
         noComments: true,
@@ -546,7 +546,7 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'Jim Loomis, Trains & Travel'
             }),
             'Munich Tram Helpful Digital Station List': Map({
-                caption: "This first-class compartment in Denver is spacious and functional",
+                caption: "Munich's trams list the upcoming stations in a clear, helpful fashion",
                 sourceUrl: 'http://rescapes.net',
                 credit: 'Rescape'
             }),
@@ -577,7 +577,7 @@ var amtrakStandardModels = OrderedMap({
         })}),
         media: OrderedMap({
             'BART Powell St Station': Map({
-                caption: "Faregates needlessly delay passengers existing BART's Powell St Station in San Francisco",
+                caption: "Faregates needlessly delay passengers at existing BART's Powell St. Station in San Francisco",
                 sourceImageUrl: 'http://subwaynut.com/california/bart/powell/powell39.jpg',
                 sourceUrl: 'http://subwaynut.com/california/bart/powell/p2.php',
                 credit: 'Jeremiah Cox/SubwayNut.com',
@@ -692,7 +692,7 @@ var amtrakStandardModels = OrderedMap({
                 credit: 'radreise-wiki.de',
             }),
             'AMTRAK Retractable Platforms': Map({
-                caption: "Although many North American train station platforms outdated and not level with train floors, retractable platforms can help disabled passengers on modern platforms",
+                caption: "Although many North American train station platforms are outdated and not level with train floors, retractable platforms can help disabled passengers on modern platforms",
                 sourceImageUrl: 'http://www.crainsdetroit.com/article/20150728/news01/150729870/amtrak-testing-retractable-platform-at-ann-arbor-train-station',
                 sourceUrl: 'http://www.crainsdetroit.com/article/20150728/news01/150729870/amtrak-testing-retractable-platform-at-ann-arbor-train-station',
                 credit: 'Chuck Gomez/AMTRAK',
@@ -1079,7 +1079,6 @@ export default Map({
                 modelKeys: List(amtrakStandardModels.keys())
             }),
             'the_new_rules_of_the_road': Map({
-                date: new Date(2017, 0),
                 author: 'Andy Likuski',
                 status: Statuses.INITIALIZED,
                 title: 'The New Rules of the Road',

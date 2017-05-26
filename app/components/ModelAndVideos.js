@@ -21,12 +21,6 @@ import ModelAndVideo from './ModelAndVideo'
 import {currentSceneKeyOfModel, checkIf3dSet} from '../utils/modelHelpers'
 import {isSeeking} from '../utils/documentHelpers'
 
-// This garbage has to be done to force webpack to know about all the media files
-var req = require.context('../videos/', true, /\.(webm)$/)
-req.keys().forEach(function(key){
-    req(key);
-})
-
 class ModelAndVideos extends Component {
     /***
      * This seems like the place to bind methods (?)
