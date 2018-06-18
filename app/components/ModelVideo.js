@@ -16,6 +16,7 @@ class ModelVideo extends Component {
 
     onPlayerReady(event) {
         this.setState({player:event.target})
+        event.target.mute();
         event.target.setPlaybackQuality('highres');
         // Seek to the start
         this.playOrReset()
