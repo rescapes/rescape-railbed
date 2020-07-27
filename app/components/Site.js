@@ -20,7 +20,8 @@ import Header from './Header'
 import Showcase from './Showcase'
 import Document from './Document'
 import {connect} from 'react-redux';
-import React, {Component, PropTypes} from 'react'
+import PropTypes from 'prop-types';
+import React, {Component} from 'react'
 import DocumentMeta from 'react-document-meta';
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Comments from './Comments'

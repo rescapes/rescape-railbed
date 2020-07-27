@@ -10,37 +10,37 @@
  */
 
 // Do this once before any other code in your app (http://redux.js.org/docs/advanced/AsyncActions.html)
-import 'babel-polyfill'
-import React from 'react'
+import 'babel-polyfill';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, useRouterHistory} from 'react-router';
-import App from './components/App'
-import Site from './components/Site'
-import makeStore from './store'
+import {HashRouter, Route, Switch, withRouter} from 'react-router-dom';
+import App from './components/App';
+import Site from './components/Site';
+import makeStore from './store';
 import {Provider} from 'react-redux';
-import {setState} from './actions/site'
-import initialState from './initialState'
-import { createHistory } from 'history'
-// useRouterHistory creates a composable higher-order function
-const appHistory = useRouterHistory(createHistory)({ queryKey: false })
+import {setState} from './actions/site';
+import initialState from './initialState';
 
-const store = makeStore()
+const store = makeStore();
 window.store = store;
+const AppWithRouter  = withRouter(props => <App {...props}/>);
 
 /***
  * App is the common component for all of our routes
  */
-const routes = <Route component={App}>
-    <Route path="/*" component={Site} />
-</Route>;
-
 ReactDOM.render(
-    <Provider store={store}>
-        <Router history={appHistory}>{routes}</Router>
-    </Provider>,
-    document.getElementById('app')
+  <Provider store={store}>
+    <HashRouter>
+      <AppWithRouter>
+        <Switch>
+          <Route path="/*" component={Site}/>
+        </Switch>
+      </AppWithRouter>
+    </HashRouter>;
+  </Provider>,
+  document.getElementById('app')
 );
 
 
-store.dispatch(setState(initialState))
+store.dispatch(setState(initialState));
 

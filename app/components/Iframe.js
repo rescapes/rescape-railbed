@@ -9,7 +9,8 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component} from 'react'
 
 // https://gist.github.com/iest/3b571a6ddcdd9ddab3cf
 class Iframe extends Component {
@@ -31,10 +32,10 @@ class Iframe extends Component {
 }
 
 Iframe.propTypes = {
-    src: React.PropTypes.string,
-    width: React.PropTypes.number,
-    height: React.PropTypes.number,
-    onLoad: React.PropTypes.func
+    src: PropTypes.string,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    onLoad: PropTypes.func
 }
 
 export default Iframe

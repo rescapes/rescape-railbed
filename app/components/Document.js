@@ -14,7 +14,8 @@
  * and displaying a documents from an external source (e.g. Google Docs)
  */
 
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component} from 'react'
 import ReactDOM from 'react-dom'
 import { renderToStaticMarkup } from 'react-dom/server'
 import moment from 'moment';
