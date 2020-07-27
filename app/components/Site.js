@@ -37,7 +37,7 @@ export class Site extends Component {
         const currentDocumentKey = this.props.documents.get('current');
         const document = currentDocumentKey && this.props.documents.getIn(['entries', currentDocumentKey]);
         var meta = {}
-        if (document) {
+        if (document && document.getIn(['content', 'head'])) {
             const head = himalaya.parse(document.getIn(['content', 'head']))
             // In addition to the document's <head> tags add in a title since the document meta data doesn't include it
             // ignore shortcut icons

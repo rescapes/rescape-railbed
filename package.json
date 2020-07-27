@@ -24,6 +24,7 @@
   "dependencies": {
     "@cycle/run": "^3.1.0",
     "express": "^4.14.0",
+    "grunt": "^1.2.1",
     "himalaya": "^0.2.0",
     "moment": "^2.15.0",
     "postcss-calc": "^5.3.1",

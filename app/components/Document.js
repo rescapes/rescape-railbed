@@ -39,6 +39,9 @@ class Document extends Component {
     componentDidMount() {
         this.handleScrollBound = this.handleScroll.bind(this)
         const document = ReactDOM.findDOMNode(this.documentDiv)
+        if (!document) {
+            return
+        }
         document.addEventListener('scroll', this.handleScrollBound);
 
         if (this.props.scrollPosition)
@@ -93,6 +96,9 @@ class Document extends Component {
     indexAnchors() {
 
         const domElement = ReactDOM.findDOMNode(this)
+        if (!domElement) {
+            return
+        }
         const models = this.props.models
         const anchors = List([...domElement.querySelectorAll('a[id]')])
         // If no models or anchors yet or our anchors are already named return
@@ -278,7 +284,12 @@ class Document extends Component {
         const document = this.props.document
         if (!document)
             return <div ref={(c) => this.documentDiv = c} />
-        const body = document.getIn(['content', 'body'])
+        let body = document.getIn(['content', 'body'])
+        if (!body)
+            return <div ref={(c) => this.documentDiv = c} />
+        body = body.replace(/<span>Updated.*?<\/span>/, '')
+
+
         if (!body)
             return <div ref={(c) => this.documentDiv = c} />
         // The only processing we do to the Google doc HTML is the following:
