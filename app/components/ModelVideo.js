@@ -16,7 +16,7 @@ import ReactPlayer from 'react-player';
 class ModelVideo extends Component {
 
   onPlayerReady(event) {
-    this.setState({player: event.target});
+    this.setState({player: event.player});
     // Seek to the start
     this.playOrReset();
   }
