@@ -28,10 +28,6 @@ const postcssCalc = require("postcss-calc")
 
 var path = require('path');
 var mainPath = path.resolve(__dirname, 'app', 'index.js');
-// Note that the hex code here is the version of Sketchup's js code. It might need to be replaced
-// with an updated version at some point by requested a model from 3d warehouse and copying the
-// startup_*.js and compiled_*.js code that is returned
-var sketchupStartupPath = path.resolve(__dirname, 'app', 'startup_b56fb52.js');
 const precss = require('precss');
 const autoprefixer = require('autoprefixer');
 

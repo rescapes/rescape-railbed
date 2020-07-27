@@ -291,7 +291,9 @@ class Document extends Component {
         const document = this.props.document
         if (!document)
             return <div ref={(c) => this.documentDiv = c} />
-        const body = document.getIn(['content', 'body'])
+        let body = document.getIn(['content', 'body'])
+        // Get rid of new Updated every 5 minutes garbage
+        body = body.replace(/<span>Updated.*?<\/span>/, '')
         if (!body)
             return <div ref={(c) => this.documentDiv = c} />
         // The only processing we do to the Google doc HTML is the following:

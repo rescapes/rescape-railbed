@@ -1004,7 +1004,7 @@ export default Map({
         [settingsActions.SET_LIGHTBOX_VISIBILITY]: false
     }),
     documents: Map({
-        keys: List(['about', 'contact', 'cv', 'ths_amtrak_standard', 'the_new_rules_of_the_road']),
+        keys: List(['about', 'contact', 'cv', 'ths_amtrak_standard']),
         // The URL of the source document
         baseUrl: id => (`https://docs.google.com/document/d/${id}/pub`),
         // The URL of the site
@@ -1041,12 +1041,6 @@ export default Map({
                 title: 'The AMTRAK Standard',
                 id: '1GbrsFkL4hlMP9o-J1JLw4Qu08j6hEPde_ElJdanJX5U',
                 modelKeys: List(amtrakStandardModels.keys())
-            }),
-            'the_new_rules_of_the_road': Map({
-                date: new Date(2017, 0),
-                author: 'Andy Likuski',
-                status: Statuses.INITIALIZED,
-                title: 'The New Rules of the Road',
             })
         })
     }),

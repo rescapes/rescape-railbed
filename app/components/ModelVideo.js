@@ -43,7 +43,12 @@ class ModelVideo extends Component {
 
     onStateChange(event) {
         var self = this
-        if (event.data == YT.PlayerState.PLAYING) {
+
+        // The hope here is to prevent related videos from showing. Nothing else
+        if (event.data == YT.PlayerState.ENDED)  {
+            this.state.player.stopVideo();
+        }
+        else if (event.data == YT.PlayerState.PLAYING) {
             if (this.state.player.getCurrentTime()  >= this.props.end) {
                 this.state.player.pauseVideo();
             }
