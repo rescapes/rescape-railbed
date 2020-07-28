@@ -19,7 +19,6 @@ import React, {Component} from 'react';
 import * as actions from '../actions/document';
 import {connect} from 'react-redux';
 import ImmutablePropTypes from 'react-immutable-proptypes';
-import {useLocation} from 'react-router-dom';
 
 // The children are the components of the chosen route
 class App extends Component {

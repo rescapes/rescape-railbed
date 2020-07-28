@@ -25,32 +25,47 @@ class ModelVideo extends Component {
    * Plays from the current start to end or seeks the start if no start and end are set
    */
   playOrReset() {
+    if (!this.props.isCurrentModel) {
+      return;
+    }
     // Never do anything while seeking a certain model or an overlay is showing
     if (this.props.isDisabled || !this.state.player)
       return;
     // If scrolling backward go straight to the target scene
     // -1 so make sure we are still on the scene
     if (this.props.scrollDirection == 'backward') {
-      this.state.player.playing = false;
-      this.state.player.seekTo(this.state.end, true);
+      this.state.playingPromise && this.state.playingPromise.then(_ => {
+        this.state.player.player.player.pause();
+        this.setState({playingPromise: null});
+        this.state.player.player.player.currentTime = this.props.end;
+      });
     }
       // If we are scrolling upward, meaning forward-progress in the document,
     // then play the animation transition
     else {
-      this.state.player.seekTo(this.props.start || .1, true);
-      this.state.player.playing = true;
+      const current = this.props.start || .1;
+      if (this.state.player.getCurrentTime() != current || !this.state.playingPromise) {
+        this.state.player.player.player.currentTime = current;
+        if (!this.state.playingPromise) {
+          this.setState({playingPromise: this.state.player.player.player.play()});
+        }
+      }
     }
   }
 
   onStateChange(event) {
-    var self = this;
-    if (event.data == this.state.player.playing) {
-      if (this.state.player.getCurrentTime() >= this.props.end) {
-        this.state.player.playing = false;
-      } else {
-        setTimeout(function () {
-          self._onStateChange(event);
-        }, 200);
+    if (!this.props.isCurrentModel)
+      this.state.playingPromise && this.state.playingPromise.then(_ => {
+        this.state.player.player.player.pause();
+        this.setState({playingPromise: null});
+      });
+    else if (this.state.playingPromise) {
+      // Time to stop if we are at or pass the end of the current scene
+      if (event.playedSeconds >= this.props.end) {
+        this.state.playingPromise && this.state.playingPromise.then(_ => {
+          this.state.player.player.player.pause();
+          this.setState({playingPromise: null});
+        });
       }
     }
   }
@@ -112,12 +127,14 @@ class ModelVideo extends Component {
         controls={false}
         light={false}
         volume={0}
+        muted={true}
         pip={false}
         className='model-video-youtube'
         width={'100%'}
         height={'100%'}
         onReady={this._onPlayerReady}
-        onStart={this._onStateChange}
+        progressInterval={50}
+        onProgress={this._onStateChange}
       />
     </div>;
   }
@@ -125,6 +142,7 @@ class ModelVideo extends Component {
 
 ModelVideo.propTypes = {
   videoId: PropTypes.string,
+  scenekey: PropTypes.string,
   start: PropTypes.number,
   end: PropTypes.number,
   toward: PropTypes.string,
