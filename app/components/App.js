@@ -13,7 +13,6 @@
  * The App container. It is responsible for rendering the matching route
  */
 // Do this once before any other code in your app (http://redux.js.org/docs/advanced/AsyncActions.html)
-import 'babel-polyfill';
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import * as actions from '../actions/document';

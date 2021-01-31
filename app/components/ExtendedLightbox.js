@@ -11,8 +11,7 @@
 import Lightbox from 'react-images';
 import PropTypes from 'prop-types'
 import React, { Component} from 'react';
-import Portal from 'react-images/lib/components/Portal';
-import Arrow from 'react-images/lib/components/Arrow';
+
 
 /***
  * Extends Lightbox from react-images to add a credit link an other niceties

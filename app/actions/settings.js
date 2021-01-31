@@ -13,8 +13,7 @@
  * Defines the all actions of the application used manipulate the DOM.
  */
 
-import fetch from 'isomorphic-fetch'
-import ActionLoader from '../actionLoader'
+
 
 /*
  * Settings Actions. See methods for explanations below

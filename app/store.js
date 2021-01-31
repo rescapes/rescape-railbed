@@ -14,7 +14,6 @@
  */
 
 // Do this once before any other code in your app (http://redux.js.org/docs/advanced/AsyncActions.html)
-import 'babel-polyfill'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import { createStore, applyMiddleware, compose } from 'redux'

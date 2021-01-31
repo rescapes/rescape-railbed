@@ -13,7 +13,7 @@
  * Defines the all actions of the application used manipulate the DOM.
  */
 
-import fetch from 'isomorphic-fetch'
+
 
 // Cross-component communication actions
 
