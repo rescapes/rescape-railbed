@@ -1,6 +1,6 @@
 import Statuses from "./statuses";
-import fetch from 'isomorphic-fetch'
 
+import fetch from './helpers/fetchHttpOrFile'
 /**
  * Created by Andy Likuski on 2016.06.01
  * Copyright (c) 2016 Andy Likuski

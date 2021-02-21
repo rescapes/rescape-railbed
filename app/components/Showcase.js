@@ -21,25 +21,18 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import * as actions from '../actions/model';
 import * as siteActions from '../actions/site';
 import * as settingsActions from '../actions/settings';
-import {ShareButtons, generateShareIcon} from 'react-share';
+import {
+  FacebookShareButton, TwitterShareButton, LinkedinShareButton, PinterestShareButton, VKShareButton,
+  FacebookIcon, TwitterIcon, LinkedinIcon, PinterestIcon, VKIcon
+} from 'react-share';
 import {currentSceneKeyOfModel, checkIf3dSet} from '../utils/modelHelpers';
 import {getModelTops, calculateModelFadeAndToward} from '../utils/modelHelpers';
 import {Map} from 'immutable';
 import Model3dTitle from './Model3dTitle';
 
-const {
-  FacebookShareButton,
-  TwitterShareButton,
-  GooglePlusShareButton,
-  LinkedinShareButton,
-  PinterestShareButton,
-  VKShareButton
-} = ShareButtons;
 
-const SHARE_ICONS = ['facebook', 'twitter', 'google', 'linkedin', 'pinterest', 'vk'].map(
-  key => generateShareIcon(key)
-);
-const SHARE_BUTTONS = [FacebookShareButton, TwitterShareButton, GooglePlusShareButton, LinkedinShareButton, PinterestShareButton, VKShareButton];
+const SHARE_ICONS = [FacebookIcon, TwitterIcon, LinkedinIcon, PinterestIcon, VKIcon];
+const SHARE_BUTTONS = [FacebookShareButton, TwitterShareButton, LinkedinShareButton, PinterestShareButton, VKShareButton];
 
 class Showcase extends Component {
 

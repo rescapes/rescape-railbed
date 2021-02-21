@@ -28,7 +28,7 @@ import Comments from './Comments'
 import TableOfContents from './TableOfContents'
 import OverlayDocument from './OverlayDocument'
 import * as documentActions from '../actions/document'
-import himalaya from 'himalaya'
+import {parse} from 'himalaya'
 
 export class Site extends Component {
 
@@ -39,7 +39,7 @@ export class Site extends Component {
         const document = currentDocumentKey && this.props.documents.getIn(['entries', currentDocumentKey]);
         var meta = {}
         if (document && document.getIn(['content', 'head'])) {
-            const head = himalaya.parse(document.getIn(['content', 'head']))
+            const head = parse(document.getIn(['content', 'head']))
             // In addition to the document's <head> tags add in a title since the document meta data doesn't include it
             // ignore shortcut icons
             meta = document && document.get('content') && head.reduce(function (o, v) {
@@ -57,8 +57,9 @@ export class Site extends Component {
                     return o
                 }, {});
         }
-        if (!this.props.documentKey)
+        if (!this.props.documentKey) {
             return <div className="site"/>
+        }
 
         // This is our layout if an overlay document is showing (About, Contact, etc)
         if (this.props.overlayDocumentIsShowing) {

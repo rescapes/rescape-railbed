@@ -1,6 +1,6 @@
 /**
- * Created by Andy Likuski on 2016.05.23
- * Copyright (c) 2016 Andy Likuski
+ * Created by Andy Likuski on 2018.03.30
+ * Copyright (c) 2018 Andy Likuski
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
@@ -9,37 +9,38 @@
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// Do this once before any other code in your app (http://redux.js.org/docs/advanced/AsyncActions.html)
-import React from 'react';
-import ReactDOM from 'react-dom';
-import {HashRouter, Route, Switch, withRouter} from 'react-router-dom';
-import App from './components/App';
-import Site from './components/Site';
-import makeStore from './store';
-import {Provider} from 'react-redux';
-import {setState} from './actions/site';
-import initialState from './initialState';
+import fs from 'fs';
+import path from 'path';
 
-const store = makeStore();
-window.store = store;
-const AppWithRouter  = withRouter(props => <App {...props}/>);
+import nodeFetch from 'node-fetch';
 
-/***
- * App is the common component for all of our routes
- */
-ReactDOM.render(
-  <Provider store={store}>
-    <HashRouter>
-      <AppWithRouter>
-        <Switch>
-          <Route path="/*" component={Site}/>
-        </Switch>
-      </AppWithRouter>
-    </HashRouter>;
-  </Provider>,
-  document.getElementById('app')
-);
+const Request = nodeFetch.Request;
+const Response = nodeFetch.Response;
 
-
-store.dispatch(setState(initialState));
-
+export default function (url, options) {
+  const request = new Request(url, options);
+  if (request.url.substring(0, 5) === 'file:') {
+    return new Promise((resolve, reject) => {
+      const filePath = path.normalize(url.substring('file://'.length));
+      if (!fs.existsSync(filePath)) {
+        reject(`File not found: ${filePath}`);
+      }
+      try {
+        const readStream = fs.createReadStream(filePath);
+        readStream.on('open', function () {
+          resolve(new Response(readStream, {
+            url: request.url,
+            status: 200,
+            statusText: 'OK',
+            size: fs.statSync(filePath).size,
+            timeout: request.timeout
+          }));
+        });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  } else {
+    return nodeFetch(url, options);
+  }
+};
