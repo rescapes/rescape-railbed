@@ -17,7 +17,7 @@ import * as settingsActions from '../actions/settings'
 import Statuses from '../statuses'
 import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import ModelAndVideo from './ModelAndVideo'
+import ModelAndVideo from './ModelVideoNew'
 import {currentSceneKeyOfModel, checkIf3dSet} from '../utils/modelHelpers'
 import {isSeeking} from '../utils/documentHelpers'
 

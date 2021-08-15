@@ -103,6 +103,7 @@ export default class ModelAndVideo extends Component {
             key={modelKey}
             videoUrl={videoUrl}
             videoId={videoId}
+            sceneKey={sceneKey}
             start={start}
             end={end}
             scrollDirection={this.props.scrollDirection}
