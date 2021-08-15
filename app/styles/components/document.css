@@ -198,3 +198,4 @@ h3[class^="c"] {
         background: var(--table-of-contents-current-color);
     }
 }
+style + div { padding: 0 !important; }

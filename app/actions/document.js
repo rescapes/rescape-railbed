@@ -40,6 +40,7 @@ export const TOGGLE_DOCUMENT_COMMENTS = 'TOGGLE_DOCUMENT_COMMENTS'
 export const TOGGLE_DOCUMENT_TABLE_OF_CONTENTS = 'TOGGLE_DOCUMENT_TABLE_OF_CONTENTS'
 
 export const CLOSE_OVERLAY_DOCUMENT = 'CLOSE_OVERLAY_DOCUMENT'
+
 /*
  * Action creators. 
  * List in the same order as the action types.
@@ -52,7 +53,7 @@ export const CLOSE_OVERLAY_DOCUMENT = 'CLOSE_OVERLAY_DOCUMENT'
  * @returns {{type: string, location: *}}
  */
 export function setDocumentLocation(location) {
-    return { type: SET_DOCUMENT_LOCATION, location }
+  return {type: SET_DOCUMENT_LOCATION, location}
 }
 
 /***
@@ -63,82 +64,87 @@ export function setDocumentLocation(location) {
  * @returns {{type: string, key: *}}
  */
 export function register(key) {
-    return { type: REGISTER_DOCUMENT, key }
+  return {type: REGISTER_DOCUMENT, key}
 }
 
 class DocumentLoader extends ActionLoader {
 
-    constructor() {
-        super()
-        this.key = 'documents'
-    }
+  constructor() {
+    super()
+    this.key = 'documents'
+  }
 
-    /***
-     * The baseUrl for the documents state has a parameter to accept the documents's id
-     * @param settings: The global settings
-     * @param state: The substate for documents
-     * @param entry: The documents to be loaded
-     * @returns {*}
-     */
-    makeLoadUrl(settings, state, entry) {
-        // This will normally need overriding
-        return state.get('baseUrl')(entry.get('id'))
-    }
+  /***
+   * The baseUrl for the documents state has a parameter to accept the documents's id
+   * @param settings: The global settings
+   * @param state: The substate for documents
+   * @param entry: The documents to be loaded
+   * @returns {*}
+   */
+  makeLoadUrl(settings, state, entry) {
+    // This will normally need overriding
+    return state.get('baseUrl')(entry.get('id'))
+  }
 
-    /***
-     * Indicates that the documents is loading
-     * @param url: The url of the documents (e.g. a Google Docs url)
-     * @returns {{type: string, url: *}}
-     */
-    loadIt(state, key, url) {
-        return {
-            type: LOAD_DOCUMENT,
-            key,
-            url
-        }
+  /***
+   * Indicates that the documents is loading
+   * @param url: The url of the documents (e.g. a Google Docs url)
+   * @returns {{type: string, url: *}}
+   */
+  loadIt(state, key, url) {
+    return {
+      type: LOAD_DOCUMENT,
+      key,
+      url
     }
+  }
 
-    /***
-     * Indicates that the documents is being received. Since we get back a full HTML document,
-     * we split it into the head and html portion so we can inject the HTML into the proper
-     * components
-     * @param key: The key of the document
-     * @param html: The json of the documents
-     * @returns {{type: string, url: *, content: *, receivedAt: number}}
-     */
-    receive(key, html) {
-        const parser = new DOMParser();
-        const htmlDoc = parser.parseFromString(html, "text/html")
-        const head = htmlDoc.head.innerHTML
-        const body = htmlDoc.body.innerHTML
-        return {
-            type: RECEIVE_DOCUMENT,
-            key,
-            content: Map({head, body}),
-            receivedAt: Date.now()
-        }
+  /***
+   * Indicates that the documents is being received. Since we get back a full HTML document,
+   * we split it into the head and html portion so we can inject the HTML into the proper
+   * components
+   * @param key: The key of the document
+   * @param html: The json of the documents
+   * @returns {{type: string, url: *, content: *, receivedAt: number}}
+   */
+  receive(key, html) {
+    const parser = new DOMParser();
+    const htmlDoc = parser.parseFromString(html, "text/html")
+    const head = htmlDoc.head.innerHTML
+    let body = htmlDoc.body.innerHTML;
+    // Removing Google Docs garbage
+    const index1 = htmlDoc.body.innerHTML.indexOf('<div id="banners">')
+    const index2 = htmlDoc.body.innerHTML.indexOf('<div id="contents">')
+    body = body.substr(0, index1 - 1) + '<div id="title-banner">\n' +
+      '        <h3 id="title">The Amtrak Standard</h3></div>' + body.substr(index2)
+    return {
+      type: RECEIVE_DOCUMENT,
+      key,
+      content: Map({head, body}),
+      receivedAt: Date.now()
     }
+  }
 
-    /***
-     * Indicates that the loading of the documents erred
-     *
-     * @param url: The invariable url of the documents
-     * @returns {{type: string, key: *}}
-     */
-    erred(url) {
-        return { type: DOCUMENT_ERRED, url }
-    }
+  /***
+   * Indicates that the loading of the documents erred
+   *
+   * @param url: The invariable url of the documents
+   * @returns {{type: string, key: *}}
+   */
+  erred(url) {
+    return {type: DOCUMENT_ERRED, url}
+  }
 
-    /***
-     * Shows the given medium of the model
-     *
-     * @param key: The key of the 3D model (e.g. 'denver_train_station')
-     * @param options: Object of options isOverlay is currently the only option
-     * @returns {{type: string, key: *}}
-     */
-    showIt(key, options) {
-        return { type: SHOW_DOCUMENT, key, options }
-    }
+  /***
+   * Shows the given medium of the model
+   *
+   * @param key: The key of the 3D model (e.g. 'denver_train_station')
+   * @param options: Object of options isOverlay is currently the only option
+   * @returns {{type: string, key: *}}
+   */
+  showIt(key, options) {
+    return {type: SHOW_DOCUMENT, key, options}
+  }
 }
 
 /***
@@ -150,8 +156,9 @@ class DocumentLoader extends ActionLoader {
  * @returns {{type: string, anchors: *}}
  */
 export function registerAnchors(anchorToModels, sceneAnchors) {
-    return { type: REGISTER_ANCHORS, anchorToModels, sceneAnchors }
+  return {type: REGISTER_ANCHORS, anchorToModels, sceneAnchors}
 }
+
 /***
  * Stores the scroll position in the state so the reducers can determine which anchor
  * is closest to the scroll postion, thus determining the current model and scene
@@ -159,27 +166,28 @@ export function registerAnchors(anchorToModels, sceneAnchors) {
  * @param offset: Half the size of the div used to make the scene transition in the middle of the div (rather than the top)
  */
 export function registerScrollPosition(position, offset) {
-    return { type: REGISTER_SCROLL_POSITION, position, offset }
+  return {type: REGISTER_SCROLL_POSITION, position, offset}
 }
+
 /***
  * Sets the scroll position to the next model away from the current scroll position
  */
 export function scrollToNextModel() {
-    return { type: SCROLL_TO_NEXT_MODEL }
+  return {type: SCROLL_TO_NEXT_MODEL}
 }
 
 /***
  * Sets the scroll position to the next model away from the current scroll position
  */
 export function scrollToPreviousModel() {
-    return { type: SCROLL_TO_PREVIOUS_MODEL }
+  return {type: SCROLL_TO_PREVIOUS_MODEL}
 }
 
 /***
  * Sets the scroll position to the top of the document
  */
 export function scrollToTop() {
-    return { type: SCROLL_TO_TOP}
+  return {type: SCROLL_TO_TOP}
 }
 
 /***
@@ -187,11 +195,11 @@ export function scrollToTop() {
  * @param modelKey
  */
 export function scrollToModel(modelKey) {
-    return { type: SCROLL_TO_MODEL, key: modelKey }
+  return {type: SCROLL_TO_MODEL, key: modelKey}
 }
 
 export function documentIsScrolling(isScrolling) {
-    return { type: DOCUMENT_IS_SCROLLING, isScrolling }
+  return {type: DOCUMENT_IS_SCROLLING, isScrolling}
 }
 
 /***
@@ -200,7 +208,7 @@ export function documentIsScrolling(isScrolling) {
  * @param force: Force a certain value, true or false
  */
 export function toggleDocumentComments(key, force) {
-    return { type: TOGGLE_DOCUMENT_COMMENTS, key, force }
+  return {type: TOGGLE_DOCUMENT_COMMENTS, key, force}
 }
 
 /***
@@ -210,7 +218,7 @@ export function toggleDocumentComments(key, force) {
  * @param isHover: True if the result of a hover. This means that mouse exit will turn it off
  */
 export function toggleTableOfContents(key, force, isHover) {
-    return { type: TOGGLE_DOCUMENT_TABLE_OF_CONTENTS, key, force, isHover }
+  return {type: TOGGLE_DOCUMENT_TABLE_OF_CONTENTS, key, force, isHover}
 }
 
 // Use an ActionLoader to remotely load models
@@ -219,12 +227,12 @@ export const documentLoader = new DocumentLoader();
 export const fetchDocumentIfNeeded = documentLoader.fetchIfNeeded.bind(documentLoader)
 export const showDocument = documentLoader.show.bind(documentLoader)
 // Like show document but overlays a document over the current one
-export const overlayDocument = (key) => documentLoader.show(key, {isOverlay:  true})
+export const overlayDocument = (key) => documentLoader.show(key, {isOverlay: true})
 
 /***
  * Closes an overlay Document (About, Contact, etc) if open
  */
 export function closeOverlayDocument() {
-    return { type: CLOSE_OVERLAY_DOCUMENT }
+  return {type: CLOSE_OVERLAY_DOCUMENT}
 }
 
