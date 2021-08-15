@@ -60,9 +60,6 @@ iframe {
     &.sketchup-active {
         display: none;
     }
-    >div {
-         height: 100%;
-    }
 }
 
 .video {

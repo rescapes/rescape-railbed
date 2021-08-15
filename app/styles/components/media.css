@@ -258,7 +258,7 @@ div:not(#app) > div[data-reactroot] > div > div {
     height: calc(100% - 5px);
     background: rgba(0, 0, 0, .75);
     overflow: hidden;
-    padding-bottom: 75%;
+    /* padding-bottom: 75%; */
 
     /* The figure */
     >figure {

@@ -15,7 +15,7 @@ import ReactPlayer from 'react-player';
 class ModelVideo extends Component {
 
   onPlayerReady(event) {
-    this.setState({player: event.player});
+    this.setState({player: this.reactPlayer});
     // Seek to the start
     this.playOrReset();
   }
@@ -27,47 +27,61 @@ class ModelVideo extends Component {
     if (!this.props.isCurrentModel) {
       return;
     }
+    //console.log(this.state.playingStatus)
     // Never do anything while seeking a certain model or an overlay is showing
     if (this.props.isDisabled || !this.state.player)
       return;
     // If scrolling backward go straight to the target scene
     // -1 so make sure we are still on the scene
-    if (this.props.scrollDirection == 'backward') {
-      this.state.playingPromise && this.state.playingPromise.then(_ => {
-        this.state.player.player.player.pause();
-        this.setState({playingPromise: null});
-        this.state.player.player.player.currentTime = this.props.end;
-      });
+    if (this.props.scrollDirection === 'backward') {
+      this.state.player.player.player.pause();
+      this.state.player.player.player.currentTime = this.props.end;
+      //console.log('Backwards SEEK and STOP');
+      this.setState({playingStatus: null});
     }
       // If we are scrolling upward, meaning forward-progress in the document,
     // then play the animation transition
     else {
       const current = this.props.start || .1;
-      if (this.state.player.getCurrentTime() != current || !this.state.playingPromise) {
+      if (!this.state.playingStatus && this.state.player.getCurrentTime() < this.props.end) {
         this.state.player.player.player.currentTime = current;
-        if (!this.state.playingPromise) {
-          this.setState({playingPromise: this.state.player.player.player.play()});
+        if (!this.state.playingStatus) {
+          this.setState({playingStatus: 'beginning'});
+          this.state.player.player.player.muted = true
+          this.state.player.player.player.play().then(() => {
+            this.setState({playingStatus: 'started'});
+            //console.log('Start PLAYING');
+          })
         }
       }
     }
   }
 
   onStateChange(event) {
-    if (!this.props.isCurrentModel)
-      this.state.playingPromise && this.state.playingPromise.then(_ => {
+      if (this.props.isCurrentModel) {
+        if (this._changing) {
+          return
+        }
+        this._changing = true
+        try {
+          if (this.state.playingStatus === 'started' && this.state.player.getCurrentTime() >= this.props.end) {
+            //console.log(`Exceeded scene end ${this.props.end}, ENDING`)
+            this.state.player.player.player.pause();
+            // Set null so we can start again next time the scene changes
+            this.setState({playingStatus: null});
+          } else {
+            // Keep playing
+            //console.log(`Keep PLAYING ${event.playedSeconds}`);
+          }
+        }
+        finally {
+          this._changing = false
+        }
+      } else if (this.state.playingStatus === 'started') {
         this.state.player.player.player.pause();
-        this.setState({playingPromise: null});
-      });
-    else if (this.state.playingPromise) {
-      // Time to stop if we are at or pass the end of the current scene
-      if (event.playedSeconds >= this.props.end) {
-        this.state.playingPromise && this.state.playingPromise.then(_ => {
-          this.state.player.player.player.pause();
-          this.setState({playingPromise: null});
-        });
+        this.setState({playingStatus: null});
       }
     }
-  }
 
   constructor(props) {
     super(props);
@@ -83,14 +97,14 @@ class ModelVideo extends Component {
    * @returns {boolean}
    */
   shouldComponentUpdate(nextProps, nextState) {
+    // Don't mess with the video during active scrolling
     if (this.props.documentIsScrolling)
       return false;
 
     return !this.state || !this.state.player ||
-      this.props.start != nextProps.start ||
-      this.props.end != nextProps.end ||
+      this.props.sceneKey !== nextProps.sceneKey ||
       nextProps.isCurrentModel && !this.props.isCurrentModel ||
-      nextProps.className != this.props.className;
+      nextProps.className !== this.props.className;
   }
 
   componentDidUpdate() {
@@ -99,7 +113,7 @@ class ModelVideo extends Component {
   }
 
   /***
-   * Renders the video if the videoUrl has been set, meaning the video should be loaded
+   * Renders the video if the this.props.videoUrl has been set, meaning the video should be loaded
    * @returns {XML}
    */
   render() {
@@ -120,6 +134,7 @@ class ModelVideo extends Component {
 
     return <div key={this.props.videoId} className={this.props.className}>
       <ReactPlayer
+        ref={(c) => this.reactPlayer = c}
         url={this.props.videoUrl}
         playing={false}
         loop={false}
@@ -141,7 +156,7 @@ class ModelVideo extends Component {
 
 ModelVideo.propTypes = {
   videoId: PropTypes.string,
-  scenekey: PropTypes.string,
+  sceneKey: PropTypes.string,
   start: PropTypes.number,
   end: PropTypes.number,
   toward: PropTypes.string,

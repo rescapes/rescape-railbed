@@ -20,16 +20,12 @@ var req = require.context('../images_dist/', true, /\.(jpg|png|gif)$/)
 req.keys().forEach(function(key){
     req(key);
 })
+var req = require.context('../videos/', true, /\.(webm)$/)
+req.keys().forEach(function(key){
+    req(key);
+})
 
 export default class Media extends Component {
-    /***
-     * This seems like the place to bind methods (?)
-     * @param props
-     */
-    constructor(props) {
-        super(props)
-    }
-
     render() {
 
         // Other styling is in media.css

@@ -17,9 +17,10 @@ import * as settingsActions from '../actions/settings'
 import Statuses from '../statuses'
 import {Map} from 'immutable'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import ModelAndVideo from './ModelVideoNew'
+import ModelAndVideo from './ModelAndVideo'
 import {currentSceneKeyOfModel, checkIf3dSet} from '../utils/modelHelpers'
 import {isSeeking} from '../utils/documentHelpers'
+import config from "../config";
 
 class ModelAndVideos extends Component {
     /***
@@ -134,6 +135,7 @@ class ModelAndVideos extends Component {
         // If the current model has no model (video and 3d model), we'll show nothing for it
         const iframes = (this.props.noModel || (modelLoadingOrReady && modelEntries)) ? modelEntries.map((iterModel, modelKey) =>
             <ModelAndVideo
+                className={`model-video${this.props.is3dSet ? ' sketchup-active' : ''}`}
                 key={modelKey}
                 model={iterModel}
                 models={models}

@@ -18,7 +18,8 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         id: '2b495238-e77d-4edf-bb23-b186daf0640f',
         anchorId: 'id.kyro9gyfwbn7',
-        videoId: 'S3Xf3gUZSKI',
+        //videoId: 'S3Xf3gUZSKI',
+        videoId: 'AMTRAK_Superliner',
         // We don't show a subheader for this model in the document because it's at the top
         noSubheading: true,
         noComments: true,
@@ -72,7 +73,8 @@ var amtrakStandardModels = OrderedMap({
     'AMTRAK Café Car': Map({
         status: Statuses.INITIALIZED,
         id: '9b7bbfe8-2ad5-4074-ae81-7bc0645dfce9',
-        videoId: 'vzRX6L4zK6s',
+        //videoId: 'vzRX6L4zK6s',
+        videoId: 'AMTRAK_Cafe_Car',
         anchorId: 'id.qcujg6xjyfnw',
         // We don't show a subheader for this model in the document because it's at the top
         noSubheading: true,
@@ -128,7 +130,8 @@ var amtrakStandardModels = OrderedMap({
     'Smoothness and Comfort of Travel': Map({
         status: Statuses.INITIALIZED,
         id: '419df1d2-949f-4e60-adbc-59da24a5c6ce',
-        videoId: 'NSSX8nh0uoU',
+        //videoId: 'NSSX8nh0uoU',
+        videoId: 'Smoothness_and_Comfort_of_Travel',
         anchorId: 'id.gb6gqppdt1ee',
         scenes: OrderedMap({ entries: Map({
             'All Transit': Map({
@@ -212,7 +215,8 @@ var amtrakStandardModels = OrderedMap({
     'Types of Right-of-Way': Map({
         status: Statuses.INITIALIZED,
         id: '510744fa-42ef-452d-87af-2096ae064d40',
-        videoId: 'A8o2MKvBogA',
+        //videoId: 'A8o2MKvBogA',
+        videoId: 'Types_of_Right_of_Way',
         anchorId: 'id.18woithqdgdg',
         scenes: OrderedMap({ entries: Map({
             'Class A ROW': Map({
@@ -274,7 +278,8 @@ var amtrakStandardModels = OrderedMap({
     'Frequency of Transit Stops': Map({
         status: Statuses.INITIALIZED,
         id: '9173b60e-b557-44bf-a736-2e352e4f7a86',
-        videoId: 'KnmfAKDQ58I',
+        //videoId: 'KnmfAKDQ58I',
+        videoId: 'Frequency_of_Transit_Stops',
         anchorId: 'id.6d96nseqjwad',
         scenes: OrderedMap({ entries: Map({
             'Current Conditions': Map({
@@ -326,7 +331,8 @@ var amtrakStandardModels = OrderedMap({
 
     'Space and Seat Comfort (Metro and Tram)': Map({
         status: Statuses.INITIALIZED,
-        videoId: 'a3uqlomIX1I',
+        //videoId: 'a3uqlomIX1I',
+        videoId: 'Space_and_Seat_Comfort_Metro_and_Tram',
         id: 'f3ad4189-7150-4048-a4c9-c3e9652e9482',
         anchorId: 'id.em6st57x7wbe',
         // Scenes aren't able to transition fast enough for this model, so everide the usual time
@@ -390,7 +396,8 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         id: '843cbe82-5a4a-4453-9766-488049133e9d',
         anchorId: 'id.em6st57x7wbe',
-        videoId: 'JnFyo6gauss',
+        //videoId: 'JnFyo6gauss',
+        videoId: 'Space_and_Seat_Comfort_AMTRAK_and_Bus',
         scenes: OrderedMap({ entries: Map({
             'Forward-facing Seats on AMTRAK': Map({
             }),
@@ -440,7 +447,8 @@ var amtrakStandardModels = OrderedMap({
     'Personal Space and Privacy': Map({
         status: Statuses.INITIALIZED,
         id: '268c95fd-8a33-4636-bf72-ceaff2c1e997',
-        videoId: 'jn9FTIrR0sk',
+        //videoId: 'jn9FTIrR0sk',
+        videoId: 'Personal_Space_and_Privacy',
         anchorId: 'id.n0mwt01mtot1',
         scenes: OrderedMap({ entries: Map({
             'Train Compartment': Map({
@@ -506,7 +514,8 @@ var amtrakStandardModels = OrderedMap({
     'Access to Amenities': Map({
         status: Statuses.INITIALIZED,
         id: '6d32b9a2-8ef9-4b3f-8065-00d08ee87c05',
-        videoId: 'GReHUvzJsh4',
+        //videoId: 'GReHUvzJsh4',
+        videoId: 'Access_to_Amenities',
         anchorId: 'id.c784pbnlt1sa',
         scenes: OrderedMap({ entries: Map({
             'AMTRAK Toilet': Map({
@@ -563,7 +572,8 @@ var amtrakStandardModels = OrderedMap({
     'Expectation of Good Behavior (Poor)': Map({
         status: Statuses.INITIALIZED,
         id: '605a8f98-af02-4b26-8145-cfe247f91dba',
-        videoId: 'wl13zWcvFiU',
+        //videoId: 'wl13zWcvFiU',
+        videoId: 'Expectation_of_Good_Behavior_Poor',
         anchorId: 'id.97xvu0r03y0e',
         scenes: OrderedMap({entries: Map({
             'Metro Entrance with Faregates': Map({
@@ -609,7 +619,8 @@ var amtrakStandardModels = OrderedMap({
         status: Statuses.INITIALIZED,
         id: '1ed98a7a-99ec-4bb7-9fb1-41df8361c2ce',
         anchorId: 'id.97xvu0r03y0e',
-        videoId: '72iqdi13OUw',
+        //videoId: '72iqdi13OUw',
+        videoId: 'Expectation_of_Good_Behavior_Improved',
         scenes: OrderedMap({entries: Map({
             'Validators Replace Faregates and Barriers': Map({
             }),
@@ -663,7 +674,8 @@ var amtrakStandardModels = OrderedMap({
     'Active Transportation and Freight (AMTRAK)': Map({
         status: Statuses.INITIALIZED,
         id: '659a315f-97b4-4a9c-8a29-4ca5f6e8cbac',
-        videoId: 'eEtg-TZSNpA',
+        //videoId: 'eEtg-TZSNpA',
+        videoId: 'Personal_Transportation_and_Freight_AMTRAK',
         anchorId: 'id.3jpuwiamho80',
         scenes: OrderedMap({entries: Map({
             'Regional Train': Map({
@@ -703,7 +715,8 @@ var amtrakStandardModels = OrderedMap({
     'Active Transportation and Freight (Metro)': Map({
         status: Statuses.INITIALIZED,
         id: '04163027-d8a3-4912-9997-0f30573fd0fc',
-        videoId: 'h81Q3QmAm04',
+        //videoId: 'h81Q3QmAm04',
+        videoId: 'Personal_Transportation_and_Freight_Metro',
         anchorId: 'id.3jpuwiamho80',
         scenes: OrderedMap({entries: Map({
             'Space for personal mobility, freight, and strollers': Map({
@@ -742,7 +755,8 @@ var amtrakStandardModels = OrderedMap({
     'Active Transportation and Freight (Tram)': Map({
         status: Statuses.INITIALIZED,
         id: 'f04baa96-4c29-43ab-9f51-c8520c907d25',
-        videoId: 'rxJW-0bQY64',
+        //videoId: 'rxJW-0bQY64',
+        videoId: 'Personal_Transportation_and_Freight_Tram',
         anchorId: 'id.3jpuwiamho80',
         scenes: OrderedMap({entries: Map({
             'Long trams have plentiful bike storage': Map({
@@ -781,7 +795,8 @@ var amtrakStandardModels = OrderedMap({
     'Active Transportation and Freight (Bus)': Map({
         status: Statuses.INITIALIZED,
         id: 'eaaae7b6-5a68-4f3e-a9f0-21ba35ec73b7',
-        videoId: 'n0BbZ2BcA9s',
+        //videoId: 'n0BbZ2BcA9s',
+        videoId: 'Personal_Transportation_and_Freight_Bus',
         anchorId: 'id.3jpuwiamho80',
         scenes: OrderedMap({entries: Map({
             'External bike storage': Map({
@@ -840,7 +855,8 @@ var amtrakStandardModels = OrderedMap({
     'Station and Stop Amenities (Inside)': Map({
         status: Statuses.INITIALIZED,
         id: '731899d7-02b7-4f47-9a3b-7ae84454e0c7',
-        videoId: '9yBM8mTY670',
+        //videoId: '9yBM8mTY670',
+        videoId: 'Station_and_Stop_Amenities_Inside',
         anchorId: 'id.hcrfkm926ytq',
         scenes: OrderedMap({entries: Map({
             'Lobby': Map({
@@ -890,7 +906,8 @@ var amtrakStandardModels = OrderedMap({
     'Station and Stop Amenities (Outside Poor)': Map({
         status: Statuses.INITIALIZED,
         id: '87320bcf-05d7-4df9-8e51-f5c1e8ed82d1',
-        videoId: 'geWDsWAXEa4',
+        //videoId: 'geWDsWAXEa4',
+        videoId: 'Station_and_Stop_Amenities_Outside_Poor',
         anchorId: 'id.hcrfkm926ytq',
         scenes: OrderedMap({entries: Map({
             'Downtown Transit Center': Map({
@@ -933,7 +950,8 @@ var amtrakStandardModels = OrderedMap({
     'Station and Stop Amenities (Outside Improved)': Map({
         status: Statuses.INITIALIZED,
         id: 'e2157bf5-de7d-413f-b80d-ec9ffc095a13',
-        videoId: '22LjUvUJWok',
+        //videoId: '22LjUvUJWok',
+        videoId: 'Station_and_Stop_Amenities_Outside_Improved',
         anchorId: 'id.hcrfkm926ytq',
         scenes: OrderedMap({entries: Map({
             'Pedestrianized Street': Map({
@@ -981,7 +999,8 @@ var amtrakStandardModels = OrderedMap({
     'Funding High Quality Transit': Map({
         status: Statuses.INITIALIZED,
         id: '5039b27f-d637-4862-89a4-fc5588b2515c',
-        videoId: 'AdsPWTppwDA',
+        //videoId: 'AdsPWTppwDA',
+        videoId: 'Funding_High_Quality_Transit',
         anchorId: 'id.btsrxfdifb6m',
         scenes: OrderedMap({entries: Map({
             'Tram Upgrade': Map({
@@ -1094,7 +1113,7 @@ export default Map({
          */
         baseUrl: id => (`https://my.sketchup.com/viewer/3dw?WarehouseModelId=${id}`),
         baseModelCreditUrl: id => (`https://3dwarehouse.sketchup.com/model.html?id=${id}`),
-        baseVideoUrl: id => `https://youtu.be/${id}`,
+        baseVideoUrl: id => `./videos/${id}.webm`,
         entries: amtrakStandardModels
     })
 })
