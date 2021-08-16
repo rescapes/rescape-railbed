@@ -21,6 +21,7 @@ const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 8080;
 const TEMPLATE = __dirname + '/app/templates/index_default.html'
 const FONTS = __dirname + `/app/assets/fonts/[name].[ext]`;
+const VIDEOS = __dirname + `/app/assets/videos/[name].[ext]`;
 const postcssImport = require('postcss-easy-import');
 const postcssCustomMedia = require('postcss-custom-media');
 const postcssCssVariables = require('postcss-css-variables');
@@ -36,85 +37,85 @@ const precss = require('precss');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
-    node: {fs: "empty"},
-    entry: {
-        main: [
-            // For hot style updates
-            'webpack/hot/dev-server',
+  node: {fs: "empty"},
+  entry: {
+    main: [
+      // For hot style updates
+      'webpack/hot/dev-server',
 
-            // The script refreshing the browser on none hot updates
-            'webpack-dev-server/client?http://localhost:8080',
+      // The script refreshing the browser on none hot updates
+      'webpack-dev-server/client?http://localhost:8080',
 
-            mainPath
-        ],
-        style: STYLE,
-    },
-    output: {
-        path: BUILD,
-        filename: '[name].bundle.js'
-    },
-    resolve: {
-        extensions: ['', '.js', '.jsx']
-    },
-    module: {
-        loaders: [
-            {
-                test: /\.jsx?$/,
-                loaders: ['babel?cacheDirectory'],
-                include: APP
-            }, {
-                test: /\.css$/,
-                loaders: ['style', 'css', 'postcss'],
-                include: APP
-            },
-            {
-                test: /\.(jpg|png|gif|svg)$/,
-                loader: 'file-loader?name=/images/[name].[ext]',
-                include: APP
-            },
-            {
-                test: /\.(webm)$/,
-                loader: 'file-loader?name=/videos/[name].[ext]',
-                include: APP
-            },
-            {
-                test: /\.(otf|eot|woff|woff2|ttf)$/,
-                loader: 'file-loader?limit=30000&name=[name]-[hash].[ext]'
-            }
-        ]
-    },
-    postcss: function processPostcss(webpack) {
-        return [
-            postcssImport({
-                addDependencyTo: webpack
-            }),
-            postcssCustomMedia(),
-            postcssCssVariables(),
-            postcssCalc(),
-            precss,
-            autoprefixer({ browsers: ['last 2 versions'] })
-        ];
-    },
-    devtool: 'inline-source-map',
-    devServer: {
-        contentBase: './dist',
-        hot: true,
-        historyApiFallback: true,
-        inline: true,
-        progress: true,
-        //stats: 'errors-only',
-        'display-modules': true,
-        host: HOST,
-        port: PORT
-    },
-    plugins: [
-        new webpack.ProvidePlugin({
-            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-        }),
-        new HtmlWebpackPlugin({
-            template: TEMPLATE, inject: 'body'
-        }),
-        new webpack.HotModuleReplacementPlugin(),
+      mainPath
+    ],
+    style: STYLE,
+  },
+  output: {
+    path: BUILD,
+    filename: '[name].bundle.js'
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel?cacheDirectory'],
+        include: APP
+      }, {
+        test: /\.css$/,
+        loaders: ['style', 'css', 'postcss'],
+        include: APP
+      },
+      {
+        test: /\.(jpg|png|gif|svg)$/,
+        loader: 'file-loader?name=/images/[name].[ext]',
+        include: APP
+      },
+      {
+        test: /\.(webm)$/,
+        loader: 'file-loader?name=/videos/[name].[ext]',
+        include: APP
+      },
+      {
+        test: /\.(otf|eot|woff|woff2|ttf)$/,
+        loader: 'file-loader?limit=30000&name=[name]-[hash].[ext]'
+      }
+    ]
+  },
+  postcss: function processPostcss(webpack) {
+    return [
+      postcssImport({
+        addDependencyTo: webpack
+      }),
+      postcssCustomMedia(),
+      postcssCssVariables(),
+      postcssCalc(),
+      precss,
+      autoprefixer({browsers: ['last 2 versions']})
+    ];
+  },
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: './dist',
+    hot: true,
+    historyApiFallback: true,
+    inline: true,
+    progress: true,
+    //stats: 'errors-only',
+    'display-modules': true,
+    host: HOST,
+    port: PORT
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    }),
+    new HtmlWebpackPlugin({
+      template: TEMPLATE, inject: 'body'
+    }),
+    new webpack.HotModuleReplacementPlugin(),
 
         new CopyWebpackPlugin([
             {from: PUBLIC, to: BUILD}
