@@ -33,7 +33,7 @@
     "react-disqus-thread": "^0.4.0",
     "react-document-meta": "^2.0.3",
     "react-dom": "^15.3.1",
-    "react-images": "^0.5.1",
+    "react-images": "git://github.com/calocan/react-images.git",
     "react-immutable-proptypes": "^2.1.0",
     "react-player": "0.25.3",
     "react-redux": "^4.4.5",
