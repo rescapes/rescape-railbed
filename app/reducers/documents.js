@@ -171,6 +171,7 @@ export default function(state = Map({keys: List(), current: null, entries: Map({
                 .setIn(['entries', currentDocumentKey, 'anchorToModels'], action.anchorToModels)
                 .setIn(['entries', currentDocumentKey, 'sceneAnchors'], action.sceneAnchors)
         }
+        return state
     }
 
     // The Model component tells us what position it's center is. This let's us set up the scene change position
